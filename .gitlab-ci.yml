@@ -1,4 +1,8 @@
-image: alpine:latest
+image: node:latest
+
+stages:
+  - lint
+  - deploy
 
 pages:
   stage: deploy
@@ -11,3 +15,12 @@ pages:
   - master
   tags:
   - docker
+
+eslint:
+  stage: lint
+  before_script:
+  - npm install --save-dev eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
+  script:
+  - npx eslint scripts/
+  tags:
+  - docker 
