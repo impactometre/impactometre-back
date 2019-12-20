@@ -14,4 +14,15 @@ Ce projet respecte les [règles syntaxiques standard](https://standardjs.com/rul
 $ npx eslint .
 ```
 
+### IDE
+VS Code fonctionne bien pour des projets Javascript, en intégrant notamment un plugin pour `eslint`. Pour installer l'IDE avec Linux :
+```bash
+$ snap install code --classic
+$ code
+```
+Avec Windows : [voir la page dédiée](https://code.visualstudio.com/download).
+
+
+
+
 
