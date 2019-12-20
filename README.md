@@ -8,21 +8,16 @@ $ sudo apt-get install -y nodejs
 ```
 Avec Windows : [télécharger le .msi](https://nodejs.org/dist/v12.14.0/node-v12.14.0-x86.msi)
 
+### Pour lancer le projet
+```bash
+# Installer les dépendances
+$ npm install
+# Lancer le projet
+$ npm run devstart
+```
+
 ### Vérifier la syntaxe
 Ce projet respecte les [règles syntaxiques standard](https://standardjs.com/rules.html) de Javascript. Pour vérifier le code :
 ```bash
-$ npx eslint .
+$ npm run lint
 ```
-
-### IDE
-VS Code fonctionne bien pour des projets Javascript, en intégrant notamment un plugin pour `eslint`. Pour installer l'IDE avec Linux :
-```bash
-$ snap install code --classic
-$ code
-```
-Avec Windows : [voir la page dédiée](https://code.visualstudio.com/download).
-
-
-
-
-
