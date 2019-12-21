@@ -1,22 +1,24 @@
-var createError = require('http-errors')
-var express = require('express')
-var path = require('path')
-var cookieParser = require('cookie-parser')
-var logger = require('morgan')
+'use strict'
 
-var indexRouter = require('./controllers/routes')
+import createError from 'http-errors'
+import express, { json, urlencoded } from 'express'
+import { join } from 'path'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
+
+import indexRouter from './controllers/routes'
 
 var app = express()
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(json())
+app.use(urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 
@@ -36,4 +38,4 @@ app.use(function (err, req, res, next) {
   res.render('error')
 })
 
-module.exports = app
+export default app
