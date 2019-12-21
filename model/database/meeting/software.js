@@ -1,6 +1,6 @@
 'use strict'
 
-export const software = {
+const software = {
   RENAVISIO: {
     french: 'Renavisio',
     // in Mo
@@ -39,3 +39,5 @@ export const software = {
     downloadSpeed: 'unknown'
   }
 }
+
+module.exports = software

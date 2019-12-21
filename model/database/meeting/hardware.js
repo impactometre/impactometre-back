@@ -1,6 +1,6 @@
 'use strict'
 
-export const hardware = {
+const hardware = {
   /**
    * DESKTOP AND LAPTOP
    * */
@@ -323,3 +323,5 @@ export const hardware = {
     lifetime: 'unknown'
   }
 }
+
+module.exports = hardware
