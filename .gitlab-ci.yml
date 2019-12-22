@@ -2,6 +2,7 @@ image: node:latest
 
 stages:
   - lint
+  - test
 
 eslint:
   stage: lint
@@ -10,4 +11,13 @@ eslint:
   script:
   - npx eslint .
   tags:
-  - docker 
+  - docker
+
+unit-tests:
+  stage: test
+  before_script:
+  - npm install mocha
+  script: 
+  - ./node_modules/mocha/bin/mocha --recursive \"test/\"
+  tags:
+  - docker
