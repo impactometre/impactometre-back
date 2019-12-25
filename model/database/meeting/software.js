@@ -35,8 +35,26 @@ const software = {
   },
   JITSI: {
     french: 'Jitsi',
-    fileSize: 36.21,
     downloadSpeed: 'unknown'
+  HANGOUTS: {
+    french: 'Google Hangouts',
+    // Source : https://support.google.com/hangouts/answer/2944865?co=GENIE.Platform%3DDesktop&hl=en
+    bandwith: {
+      inbound: {
+        2: {
+          minimum: 300,
+          ideal: 2600
+        },
+        5: {
+          minimum: 300,
+          ideal: 3200
+        },
+        10: {
+          minimum: 300,
+          ideal: 4000
+        }
+      }
+    }
   }
 }
 

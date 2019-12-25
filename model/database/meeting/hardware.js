@@ -81,7 +81,7 @@ const hardware = {
     lifetime: 8050
   },
   LAPTOP: {
-    french: 'ordinateur fixe',
+    french: 'ordinateur portable',
     embodied: {
       humanHealth: 0.000274,
       ecosystemQuality: 82.7,
@@ -190,7 +190,7 @@ const hardware = {
     lifetime: 690
   },
   LOGITECH_CABLE: {
-    french: 'câble Loitech',
+    french: 'câble Logitech',
     embodied: {
       humanHealth: Math.pow(3.53, -6),
       ecosystemQuality: 3.37,
