@@ -11,51 +11,53 @@ describe('Software data access', () => {
         {
           french: 'Renavisio',
           fileSize: 18.8,
-          downloadSpeed: 1080
+          bandwith: {
+            inbound: 1080
+          }
         }
       )
     })
   })
 
-  describe('#getDownloadSpeedOf()', () => {
+  describe('#getInboundBandwith()', () => {
     it('should return the unique available value', () => {
       assert.strictEqual(
-        Software.getDownloadSpeedOf('RENAVISIO'),
+        Software.getInboundBandwith('RENAVISIO'),
         1080
       )
     })
 
     it('should return the unique available value even if number of participants specified', () => {
       assert.strictEqual(
-        Software.getDownloadSpeedOf('RENAVISIO', 3),
+        Software.getInboundBandwith('RENAVISIO', 3),
         1080
       )
     })
 
-    it('should return the matching available (lower bound) value', () => {
+    it('should return the matching available (minimum bound) value', () => {
       assert.strictEqual(
-        Software.getDownloadSpeedOf('SKYPE', 2, 'lower'),
+        Software.getInboundBandwith('SKYPE', 2, 'minimum'),
         30
       )
     })
 
-    it('should return the matching available upper bound value when no bound specified', () => {
+    it('should return the matching available ideal bound value when no bound specified', () => {
       assert.strictEqual(
-        Software.getDownloadSpeedOf('SKYPE', 2),
+        Software.getInboundBandwith('SKYPE', 2),
         1050
       )
     })
 
-    it('should return the closest greater available (upper bound) value', () => {
+    it('should return the closest greater available (ideal bound) value', () => {
       assert.strictEqual(
-        Software.getDownloadSpeedOf('SKYPE', 4, 'upper'),
+        Software.getInboundBandwith('SKYPE', 4, 'ideal'),
         4000
       )
     })
 
     it('should return the last available value if participants number is greater than available values', () => {
       assert.strictEqual(
-        Software.getDownloadSpeedOf('SKYPE', 8, 'upper'),
+        Software.getInboundBandwith('SKYPE', 8, 'ideal'),
         8000
       )
     })
