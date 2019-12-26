@@ -1,17 +1,19 @@
 'use strict'
 
-export default class Meeting {
+class Meeting {
   /**
    * Create a meeting.
    * @param {String} user - The user who creates the meeting.
-   * @param {Map} transport - The distances travelled for the meeting aggregated by mode of transport.
-   * @param {Map} hardware  - The hardware used for the meeting indexed by equipment type.
-   * @param {Set} software - The software equipment used for the meeting.
+   * @param {Array<Journey>} journeys - All the journeys entered by the user.
+   * @param {Array<HardwareUsage>} hardware  - The different kinds of hardware device used for the meeting and their number.
+   * @param {SoftwareUsage} software - The software used for the meeting and its number of instances.
    */
-  constructor (user, transport, hardware, software) {
+  constructor (user, journeys, hardware, software) {
     this.user = user
-    this.transport = transport
+    this.journeys = journeys
     this.hardware = hardware
     this.software = software
   }
 }
+
+module.exports = Meeting
