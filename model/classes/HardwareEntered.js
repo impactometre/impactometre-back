@@ -15,3 +15,5 @@ export default class HardwareEntered {
     this.numberOfInstances = numberOfInstances
   }
 }
+
+module.exports = HardwareEntered
