@@ -47,3 +47,7 @@ const transportationMeans = {
   TRAIN_URBAN: 'urban train',
   TRAMWAY: 'tramway'
 }
+
+exports.software = software
+exports.hardware = hardware
+exports.transportationMeans = transportationMeans
