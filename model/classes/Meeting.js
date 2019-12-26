@@ -1,6 +1,6 @@
 'use strict'
 
-export default class Meeting {
+class Meeting {
   /**
    * Create a meeting.
    * @param {String} user - The user who creates the meeting.
@@ -15,3 +15,5 @@ export default class Meeting {
     this.software = software
   }
 }
+
+module.exports = Meeting

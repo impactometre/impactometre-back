@@ -17,3 +17,5 @@ export default class Journey {
     this.numberOfPeople = numberOfPeople
   }
 }
+
+module.exports = Journey

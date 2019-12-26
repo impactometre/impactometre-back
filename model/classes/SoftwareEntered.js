@@ -4,7 +4,7 @@
  * This class discribed a kind of software device
  * entered by the user, with its number of instances used for the meetings.
  */
-export default class SoftwareEntered {
+class SoftwareEntered {
   /**
    * The SoftwareEntered class constructor.
    * @param {software} software The kind of software used.
@@ -15,3 +15,5 @@ export default class SoftwareEntered {
     this.numberOfInstances = numberOfInstances
   }
 }
+
+module.exports = SoftwareEntered
