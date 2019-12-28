@@ -48,6 +48,60 @@ const transportationMeans = {
   TRAMWAY: 'tramway'
 }
 
+/**
+ * Used hardwares lifetime. The values below are also the
+ * ones used for the other hardwares.
+ */
+const hardwareLifetime = {
+  DESKTOP: 5,
+  POWER_CABLE_ONE_METER: 20
+}
+
+/* Five days worked by week */
+const workedDaysByWeek = 5
+
+/**
+ * Used hardwares operating time per day.
+ */
+const hardwareOperatingTimePerDay = {
+  DESKTOP: 7,
+  // Considering it is used 3 hours per week
+  LOGITECH_KIT: 3 / workedDaysByWeek
+}
+
+/**
+ * Hardwares operating time already known, so that
+ * don't need to be computed.
+ */
+const knownHardwareOperatingTime = {
+  TV_SCREEN_BASE: 50000,
+  TV_SCREEN: 50000
+}
+
+/**
+ * Hardwares standby time already known, so that
+ * don't need to be computed.
+ */
+const knownHardwareStandbyTime = {}
+
+/**
+ * Number of days worked by year.
+ * Source : https://www.dougs.fr/blog/quel-est-le-nombre-de-jours-travailles-en-2020/
+ */
+const daysWorkedByYear = 230
+
+/**
+ * Number of hours in a day
+ */
+const hoursByDay = 24
+
 exports.software = software
 exports.hardware = hardware
+exports.hardwareLifetime = hardwareLifetime
+exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 exports.transportationMeans = transportationMeans
+exports.workedDaysByWeek = workedDaysByWeek
+exports.knownHardwareOperatingTime = knownHardwareOperatingTime
+exports.knownHardwareStandbyTime = knownHardwareStandbyTime
+exports.daysWorkedByYear = daysWorkedByYear
+exports.hoursByDay = hoursByDay
