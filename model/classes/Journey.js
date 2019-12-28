@@ -1,6 +1,6 @@
 'use strict'
 
-var uniqid = require('uniqid');
+var uniqid = require('uniqid')
 
 /**
  * A journey has a mean of transportation,
