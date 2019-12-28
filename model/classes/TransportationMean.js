@@ -20,7 +20,7 @@ class TransportationMean {
   /**
    * Getter of the transportation mean french name.
    */
-  get french() {
+  get french () {
     return this.french
   }
 
