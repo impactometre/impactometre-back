@@ -1,21 +1,34 @@
 'use strict'
 
+const {
+  daysWorkedByYear,
+  hoursByDay,
+  knownHardwareOperatingTime,
+  knownHardwareStandbyTime
+} = require('../../constants/meeting')
+
 class Hardware {
   /**
    * Create a hardware.
    * @param {Object} hardwareObject - The hardware JSON object coming from database.
    */
   constructor (hardwareObject) {
-    this.french = hardwareObject.french
-    this.damageComputingMethod = hardwareObject.damageComputingMethod
-    this.operatingOneMin = hardwareObject.operatingOneMin
-    this.standbyOneMin = hardwareObject.standbyOneMin
-    this.operatingTime = hardwareObject.operatingTime
-    this.standbyTime = hardwareObject.standbyTime
+    this._name = hardwareObject.name
+    this._french = hardwareObject.french
+    this._damageComputingMethod = hardwareObject.damageComputingMethod
+    this._embodied = hardwareObject.embodied
+    this._operatingOneMin = hardwareObject.operatingOneMin
+    this._standbyOneMin = hardwareObject.standbyOneMin
+    this._lifetime = hardwareObject.lifetime
+    this._operatingTimePerDay = hardwareObject.operatingTimePerDay
+  }
+
+  get name () {
+    return this._name
   }
 
   get french () {
-    return this.french
+    return this._french
   }
 
   /**
@@ -26,7 +39,15 @@ class Hardware {
    * @return {String} The damage computing method.
    */
   get damageComputingMethod () {
-    return this.damageComputingMethod
+    return this._damageComputingMethod
+  }
+
+  /**
+   * Get the embodied damage value.
+   * @return {ComponentDamage} The damage value for each damage category.
+   */
+  get embodied () {
+    return this._embodied
   }
 
   /**
@@ -35,7 +56,7 @@ class Hardware {
    * @return {ComponentDamage} The damage value for each damage category.
    */
   get operatingOneMin () {
-    return this.operatingOneMin
+    return this._operatingOneMin
   }
 
   /**
@@ -44,27 +65,52 @@ class Hardware {
    * @return {ComponentDamage} The damage value for each damage category.
    */
   get standbyOneMin () {
-    return this.standbyOneMin
+    return this._standbyOneMin
   }
 
   /**
-   * Get the hardware operating time over its lifetime.
-   * Computed considering 230 days worked by year.
-   * Source : https://www.dougs.fr/blog/quel-est-le-nombre-de-jours-travailles-en-2020/
+   * Get the number of years during which the
+   * device is used.
+   * @return {Number} The lifetime.
+   */
+  get lifetime () {
+    return this._lifetime
+  }
+
+  /**
+   * Get the number of hours the device is used
+   * per worked day.
+   * @return {Number} The operating time per day.
+   */
+  get operatingTimePerDay () {
+    return this._operatingTimePerDay
+  }
+
+  /**
+   * Compute the hardware operating time over its lifetime.
    * @return {Number} The operating time (in hours).
    */
-  get operatingTime () {
-    return this.operatingTime
+  computeOperatingTime () {
+    if (knownHardwareOperatingTime[this.name]) {
+      return knownHardwareOperatingTime[this.name]
+    }
+
+    const operatingTime = this.lifetime * daysWorkedByYear * this.operatingTimePerDay
+    return operatingTime
   }
 
   /**
-   * Get the hardware standby time over its lifetime.
-   * Computed considering 230 days worked by year.
-   * Source : https://www.dougs.fr/blog/quel-est-le-nombre-de-jours-travailles-en-2020/
+   * Compute the hardware standby time over its lifetime.
    * @return {Number} The standby time (in hours).
    */
-  get standbyTime () {
-    return this.standbyTime
+  computeStandbyTime () {
+    if (knownHardwareStandbyTime[this.french]) {
+      return knownHardwareStandbyTime[this.french]
+    }
+
+    const standbyTimePerDay = hoursByDay - this.operatingTimePerDay
+    const standbyTime = this.lifetime * daysWorkedByYear * standbyTimePerDay
+    return standbyTime
   }
 }
 
