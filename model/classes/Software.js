@@ -32,7 +32,7 @@ class Software {
    * Get the software file size in bits (it' originaly in Mo)
    */
   fileSizeInBits () {
-    return fileSize() * 8 * 1000000
+    return this.fileSize() * 8 * 1000000
   }
 
   /**
@@ -88,8 +88,8 @@ class Software {
   static getNetworkEnergeticIntensity (networkBound) {
     let networkEnergeticIntensity
 
-    if (networkBound == meetingEnums.networkEnergeticIntensityBound.LOWER) {
-      networkEnergeticIntensity =  hardwareDatabase.NETWORK_ENERGETIC_INTENSITY_LOWER.operatingOneBit
+    if (networkBound === meetingEnums.networkEnergeticIntensityBound.LOWER) {
+      networkEnergeticIntensity = hardwareDatabase.NETWORK_ENERGETIC_INTENSITY_LOWER.operatingOneBit
     } else {
       networkEnergeticIntensity = hardwareDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
     }
@@ -111,16 +111,15 @@ class Software {
     // We get the inboundBandwidth (in Kbit/s)
     const inboundBandwidth = this.getInboundBandwith(instancesNumber, bandwidthBound)
     // We get the network energetic intensity (in damageUnit/bit)
-    const networkEnergeticIntensity = getNetworkEnergeticIntensity(networkBound)
+    const networkEnergeticIntensity = Software.getNetworkEnergeticIntensity(networkBound)
 
-    // We compute the total damage for each damage shere (damageUnit/minute)
+    // We compute the total damage for each damage sphere (damageUnit/minute)
     const humanHealthDamage = networkEnergeticIntensity.humanHealth * inboundBandwidth * 60 * 1000 * instancesNumber
     const ecosystemQualityDamage = networkEnergeticIntensity.ecosystemQuality * inboundBandwidth * 60 * 1000 * instancesNumber
     const climateChangeDamage = networkEnergeticIntensity.climateChange * inboundBandwidth * 60 * 1000 * instancesNumber
     const resourcesDamage = networkEnergeticIntensity.resources * inboundBandwidth * 60 * 1000 * instancesNumber
 
-    const operatingDamage = new ComponentDamage(humanHealthDamage, 
-      ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
+    const operatingDamage = new ComponentDamage(humanHealthDamage, ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
 
     return operatingDamage
   }
@@ -136,7 +135,7 @@ class Software {
     if (!this.fileSize) return new ComponentDamage(0, 0, 0, 0)
 
     // We get the network energetic intensity (in damageUnit/bit)
-    const networkEnergeticIntensity = getNetworkEnergeticIntensity(networkBound)
+    const networkEnergeticIntensity = Software.getNetworkEnergeticIntensity(networkBound)
 
     // We get the file size in bits
     const fileSize = this.fileSizeInBits()
@@ -151,7 +150,6 @@ class Software {
       ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
 
     return embodiedDamage
-
   }
 }
 
