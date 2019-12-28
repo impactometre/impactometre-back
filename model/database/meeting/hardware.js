@@ -15,7 +15,7 @@ const hardware = {
     /* 5 years converted in hours, considering
     230 days of seven hours worked by year.
     Source : https://www.dougs.fr/blog/quel-est-le-nombre-de-jours-travailles-en-2020/ */
-    lifetime: 8050
+    operatingTime: 8050
   },
   DESKTOP_WITHOUT_SCREEN: {
     french: 'ordinateur sans écran',
@@ -38,7 +38,7 @@ const hardware = {
       resources: 0.00703
     },
     // Same as desktop
-    lifetime: 8050
+    operatingTime: 8050
   },
   DESKTOP_SCREEN_LCD: {
     french: 'écran d\'ordinateur LCD',
@@ -48,7 +48,7 @@ const hardware = {
       climateChange: 360,
       resources: Math.pow(4.79, 3)
     },
-    lifetime: 8050
+    operatingTime: 8050
   },
   COMPUTER_TOWER: {
     french: 'tour',
@@ -58,7 +58,7 @@ const hardware = {
       climateChange: 228,
       resources: Math.pow(3.19, 3)
     },
-    lifetime: 8050
+    operatingTime: 8050
   },
   KEYBOARD: {
     french: 'clavier',
@@ -68,7 +68,7 @@ const hardware = {
       climateChange: 31.5,
       resources: 453
     },
-    lifetime: 8050
+    operatingTime: 8050
   },
   COMPUTER_MOUSE: {
     french: 'souris',
@@ -78,7 +78,7 @@ const hardware = {
       climateChange: 6.56,
       resources: 93.5
     },
-    lifetime: 8050
+    operatingTime: 8050
   },
   LAPTOP: {
     french: 'ordinateur portable',
@@ -95,7 +95,7 @@ const hardware = {
       resources: 0.00852
     },
     // Same as desktop
-    lifetime: 8050
+    operatingTime: 8050
   },
   /**
    * PERIPHERALS
@@ -109,7 +109,7 @@ const hardware = {
       resources: 0.000533
     },
     // Same as Logitech Kit
-    lifetime: 690
+    operatingTime: 690
   },
   CAMERA: {
     french: 'caméra',
@@ -119,7 +119,7 @@ const hardware = {
       climateChange: Math.pow(7.84, -6),
       resources: 0.00202
     },
-    lifetime: 690
+    operatingTime: 690
   },
   PROJECTOR: {
     embodied: {
@@ -136,7 +136,7 @@ const hardware = {
     },
     // Same as Logitech Kit
     // TODO: check in specific article
-    lifetime: 690
+    operatingTime: 690
   },
   TV_SCREEN_BASE: {
     french: 'télévision sauf écran',
@@ -146,7 +146,7 @@ const hardware = {
       climateChange: Math.pow(1.65, -5),
       resources: 0.00426
     },
-    lifetime: 50000
+    operatingTime: 50000
   },
   TV_SCREEN: {
     french: 'écran de télévision',
@@ -156,14 +156,14 @@ const hardware = {
       climateChange: 0.000142,
       resources: 0.0367
     },
-    lifetime: 50000
+    operatingTime: 50000
   },
   /**
    * VISIO-CONFERENCE KIT
    */
   LOGITECH_KIT: {
     french: 'kit Logitech',
-    sleep: {
+    standbyOneMin: {
       humanHealth: Math.pow(5.9, -12),
       ecosystemQuality: Math.pow(2.72, -6),
       climateChange: Math.pow(4.7, -6),
@@ -177,7 +177,9 @@ const hardware = {
     },
     /* Same calculation as for desktop considering
     the kit is used 3 hours per week */
-    lifetime: 690
+    operatingTime: 690,
+    /* Same calculation */
+    standbyTime: 26910
   },
   LOGITECH_KIT_CAMERA: {
     french: 'caméra du kit Logitech',
@@ -187,7 +189,7 @@ const hardware = {
       climateChange: Math.pow(3.22, -6),
       resources: 0.000831
     },
-    lifetime: 690
+    operatingTime: 690
   },
   LOGITECH_CABLE: {
     french: 'câble Logitech',
@@ -197,7 +199,7 @@ const hardware = {
       climateChange: 1.16,
       resources: 18.5
     },
-    lifetime: 690
+    operatingTime: 690
   },
   METAL_STRUCTURE: {
     french: 'structure métallique de support des écrans',
@@ -208,7 +210,7 @@ const hardware = {
       resources: Math.pow(1.18, 3)
     },
     // Same value as Logitech Kit
-    lifetime: 690
+    operatingTime: 690
   },
   /** CABLES ***/
   // Reference value for HDMI and VGA
@@ -222,7 +224,7 @@ const hardware = {
     },
     /* 20 years converted in hours with the
     same method as for desktop */
-    lifetime: 32200
+    operatingTime: 32200
   },
   ETHERNET_CABLE_ONE_METER: {
     french: 'câble Ethernet 1 m',
@@ -232,7 +234,7 @@ const hardware = {
       climateChange: 0.0534,
       resources: 1.06
     },
-    lifetime: 32200
+    operatingTime: 32200
   },
   HDMI_CABLE_ONE_METER: {
     french: 'câble HDMI 1 m',
@@ -242,7 +244,7 @@ const hardware = {
       climateChange: 0.34,
       resources: 6.83
     },
-    lifetime: 32200
+    operatingTime: 32200
   },
   JACK_CABLE_ONE_METER: {
     french: 'câble jack 1 m',
@@ -252,7 +254,7 @@ const hardware = {
       climateChange: 0.551,
       resources: 8.73
     },
-    lifetime: 32200
+    operatingTime: 32200
   },
   VGA_CABLE_ONE_METER: {
     french: 'câble VGA 1 m',
@@ -262,7 +264,7 @@ const hardware = {
       climateChange: 0.34,
       resources: 6.83
     },
-    lifetime: 32200
+    operatingTime: 32200
   },
   /** CODEC **/
   CODEC_LOWER: {
@@ -274,7 +276,7 @@ const hardware = {
       resources: 0.00554
     },
     // Same as Logitech kit
-    lifetime: 690
+    operatingTime: 690
   },
   CODEC_UPPER: {
     french: 'CODEC haut de gamme',
@@ -284,7 +286,7 @@ const hardware = {
       climateChange: Math.pow(6.6, -5),
       resources: 0.017
     },
-    lifetime: 690
+    operatingTime: 690
   },
   /**
    * NETWORK ACCESS
@@ -299,7 +301,8 @@ const hardware = {
     },
     // Same as laptop, considering a 5-year
     // student curriculum.
-    lifetime: 8050
+    lifetime: 8050,
+    operatingTime: 8050
   }
 }
 
