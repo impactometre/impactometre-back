@@ -9,6 +9,22 @@ class Software {
     this.bandwith = software.bandwith
   }
 
+  // Getter
+
+  /**
+   * Getter for software french name.
+   */
+  get french () {
+    return this.french
+  }
+
+  /**
+   * Getter for software file size.
+   */
+  get fileSize () {
+    return this.fileSize
+  }
+
   /**
  * Return the given software download speed.
  * @param {String} softwareName - The software name.
