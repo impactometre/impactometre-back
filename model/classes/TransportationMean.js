@@ -14,6 +14,22 @@ class TransportationMean {
     this.french = transportationMean.french
     this.embodied = transportationMean.embodied
   }
+
+  // Getters
+
+  /**
+   * Getter of the transportation mean french name.
+   */
+  get french() {
+    return this.french
+  }
+
+  /**
+   * Getter of the transportation mean embodied impact.
+   */
+  get embodied () {
+    return this.embodied
+  }
 }
 
 module.exports = TransportationMean
