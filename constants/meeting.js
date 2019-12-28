@@ -1,5 +1,15 @@
 'use strict'
 
+const networkEnergeticIntensityBound = {
+  UPPER: 'upper',
+  LOWER: 'lower'
+}
+
+const bandwidthBound = {
+  MINIMUM: 'minimum',
+  IDEAL: 'ideal'
+}
+
 /**
  * All software that users can use for meetings
  */
@@ -51,3 +61,5 @@ const transportationMeans = {
 exports.software = software
 exports.hardware = hardware
 exports.transportationMeans = transportationMeans
+exports.networkEnergeticIntensityBound = networkEnergeticIntensityBound
+exports.bandwidthBound = bandwidthBound
