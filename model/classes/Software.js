@@ -63,7 +63,7 @@ class Software {
    * Get the software file size in bits (it' originaly in Mo)
    */
   fileSizeInBits () {
-    return this.fileSize() * 8 * 1000000
+    return this.fileSize * 8 * 1000000
   }
 
   /**
