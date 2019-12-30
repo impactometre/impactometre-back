@@ -4,6 +4,7 @@ const getClosest = require('../../utils/get-closest')
 const ComponentDamage = require('./ComponentDamage')
 const meetingEnums = require('../../constants/meeting')
 const hardwareDatabase = require('../database/meeting/hardware')
+const networkDatabase = require('../database/meeting/network')
 
 class Software {
   constructor (software) {
@@ -119,9 +120,9 @@ class Software {
     let networkEnergeticIntensity
 
     if (networkBound === meetingEnums.networkEnergeticIntensityBound.LOWER) {
-      networkEnergeticIntensity = hardwareDatabase.NETWORK_ENERGETIC_INTENSITY_LOWER.operatingOneBit
+      networkEnergeticIntensity = networkDatabase.NETWORK_ENERGETIC_INTENSITY_LOWER.operatingOneBit
     } else {
-      networkEnergeticIntensity = hardwareDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
+      networkEnergeticIntensity = networkDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
     }
 
     return networkEnergeticIntensity
