@@ -2,12 +2,10 @@
 
 const assert = require('assert')
 const constants = require('../../../../constants/meeting')
-// const Software = require('../../../../model/services/meeting/software')
 const softwareDatabase = require('../../../../model/database/meeting/software')
 const Software = require('../../../../model/classes/Software')
 const ComponentDamage = require('../../../../model/classes/ComponentDamage')
 const networkDatabase = require('../../../../model/database/meeting/network')
-const getClosest = require('../../../../utils/get-closest')
 
 describe('Software services', () => {
   describe('#getInboundBandwith()', () => {
@@ -66,7 +64,7 @@ describe('Software services', () => {
       networkEnergeticIntensityUpper.resources * fileSizeInBits * 5
     )
     it('should return the solftware download damage for 5 people with Renaviso', () => {
-      assert.deepEqual(
+      assert.deepStrictEqual(
         renavisio.computesEmbodiedDamage(5, constants.networkEnergeticIntensityBound.UPPER),
         embodiedDamage
       )
@@ -74,20 +72,20 @@ describe('Software services', () => {
     const jitsi = new Software(softwareDatabase.JITSI)
     const emptyDamage = new ComponentDamage(0, 0, 0, 0)
     it('should return an empty damage because Jitsi has any file to download', () => {
-      assert.deepEqual(
+      assert.deepStrictEqual(
         jitsi.computesEmbodiedDamage(5, networkEnergeticIntensityUpper),
         emptyDamage
-      )    
+      )
     })
     it('should return 0 because the number of people doesn\'t matter when there no file to download', () => {
-      assert.deepEqual(
+      assert.deepStrictEqual(
         jitsi.computesEmbodiedDamage(5, networkEnergeticIntensityUpper),
         jitsi.computesEmbodiedDamage(10, networkEnergeticIntensityUpper)
       )
     })
     const networkEnergeticIntensityLower = constants.networkEnergeticIntensityBound.LOWER
     it('should return 0 because the network energetic intensity value doesn\'t matter when there no file to download', () => {
-      assert.deepEqual(
+      assert.deepStrictEqual(
         jitsi.computesEmbodiedDamage(5, networkEnergeticIntensityLower),
         jitsi.computesEmbodiedDamage(10, networkEnergeticIntensityLower)
       )
@@ -98,16 +96,14 @@ describe('Software services', () => {
     const inboundBandwith = skype.getInboundBandwith(5)
     const networkUpperkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
     const instancesNumber = 5
-    const closestAvailableInstancesNumber = getClosest(5, Object.keys(skype.bandwith.inbound))
-    // networkEnergeticIntensity.humanHealth * inboundBandwith * 60 * 1000 * instancesNumber
     const operatingDamage = new ComponentDamage(
       networkUpperkBound.humanHealth * inboundBandwith * 60 * 1000 * instancesNumber,
       networkUpperkBound.ecosystemQuality * inboundBandwith * 60 * 1000 * instancesNumber,
       networkUpperkBound.climateChange * inboundBandwith * 60 * 1000 * instancesNumber,
-      networkUpperkBound.resources * inboundBandwith * 60 * 1000 * instancesNumber,
+      networkUpperkBound.resources * inboundBandwith * 60 * 1000 * instancesNumber
     )
     it('should return skype operating damage for network upper bound and ideal bandwith', () => {
-      assert.deepEqual(
+      assert.deepStrictEqual(
         skype.computesOperatingDamage(instancesNumber, constants.bandwidthBound.IDEAL, constants.networkEnergeticIntensityBound.UPPER),
         operatingDamage
       )
@@ -118,10 +114,10 @@ describe('Software services', () => {
       networkLowerBound.humanHealth * inboundBandwithMinimun * 60 * 1000 * instancesNumber,
       networkLowerBound.ecosystemQuality * inboundBandwithMinimun * 60 * 1000 * instancesNumber,
       networkLowerBound.climateChange * inboundBandwithMinimun * 60 * 1000 * instancesNumber,
-      networkLowerBound.resources * inboundBandwithMinimun * 60 * 1000 * instancesNumber,
+      networkLowerBound.resources * inboundBandwithMinimun * 60 * 1000 * instancesNumber
     )
     it('should return skype operating damage for network lower bound and minimun bandwith', () => {
-      assert.deepEqual(
+      assert.deepStrictEqual(
         skype.computesOperatingDamage(instancesNumber, constants.bandwidthBound.MINIMUM, constants.networkEnergeticIntensityBound.LOWER),
         operatingDamageMinimumBandwith
       )
