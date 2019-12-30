@@ -1,6 +1,7 @@
 'use strict'
 
-var uniqid = require('uniqid')
+const uniqid = require('uniqid')
+const ComponentDamage = require('./ComponentDamage')
 
 /**
  * A journey has a mean of transportation,
@@ -9,9 +10,9 @@ var uniqid = require('uniqid')
 export default class Journey {
   /**
    * The Journey class constructor.
-   * @param {TransportationMean} mean The mean of transportation.
-   * @param {Float} distance The distance of the journey.
-   * @param {Integer} numberOfPeople The number of people of the journey.
+   * @param {TransportationMean} mean - The mean of transportation.
+   * @param {Float} distance - The distance of the journey.
+   * @param {Integer} numberOfPeople - The number of people of the journey.
    */
   constructor (mean, distance, numberOfPeople) {
     this._id = uniqid()
@@ -74,6 +75,44 @@ export default class Journey {
    */
   set numberOfPeople (numberOfPeople) {
     this._numberOfPeople = numberOfPeople
+  }
+
+  // Other methods
+
+  /**
+   * Computes the damage caused by a journey.
+   * @returns {ComponentDamage} The damage caused by journey, for each damage sphere.
+   */
+  computesEmbodiedDamage () {
+    // Get the transportation mean damage for one personKm or one kilometer
+    const transportationMeanDamage = this.mean.embodied
+
+    // Initialize each damage sphere value
+    let humanHealthDamage = transportationMeanDamage.humanHealth
+    let ecosystemQualityDamage = transportationMeanDamage.ecosystemQuality
+    let climateChangeDamage = transportationMeanDamage.climateChange
+    let resourcesDamage = transportationMeanDamage.resources
+
+    // Compute damage for each sphere (if calculation mode is by personKm or by kilometer)
+    if (this.mean.isPersonKm) {
+      // Compute the personKilometers amount
+      const personKm = this.distance * this.numberOfPeople
+
+      humanHealthDamage = humanHealthDamage * personKm
+      ecosystemQualityDamage = ecosystemQualityDamage * personKm
+      climateChangeDamage = climateChangeDamage * personKm
+      resourcesDamage = resourcesDamage * personKm
+    } else {
+      humanHealthDamage = humanHealthDamage * this.distance
+      ecosystemQualityDamage = ecosystemQualityDamage * this.distance
+      climateChangeDamage = climateChangeDamage * this.distance
+      resourcesDamage = resourcesDamage * this.distance
+    }
+
+    // Create and return the journey embodied damage
+    const embodiedDamage = new ComponentDamage(humanHealthDamage, 
+      ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
+    return embodiedDamage
   }
 }
 
