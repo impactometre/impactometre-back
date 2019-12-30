@@ -11,8 +11,8 @@ class TransportationMean {
    * @see transport.js The JSON file.
    */
   constructor (transportationMean) {
-    this.french = transportationMean.french
-    this.embodied = transportationMean.embodied
+    this._french = transportationMean.french
+    this._embodied = transportationMean.embodied
   }
 
   // Getters
@@ -21,14 +21,14 @@ class TransportationMean {
    * Getter of the transportation mean french name.
    */
   get french () {
-    return this.french
+    return this._french
   }
 
   /**
    * Getter of the transportation mean embodied impact.
    */
   get embodied () {
-    return this.embodied
+    return this._embodied
   }
 }
 
