@@ -8,7 +8,6 @@ const hardwareDatabase = require('../database/meeting/hardware')
 class Software {
   constructor (software) {
     this._french = software.french
-    console.log('On initialise le french\n')
     this._fileSize = software.fileSize
     this._bandwith = software.bandwith
   }
