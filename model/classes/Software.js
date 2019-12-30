@@ -3,7 +3,6 @@
 const getClosest = require('../../utils/get-closest')
 const ComponentDamage = require('./ComponentDamage')
 const meetingEnums = require('../../constants/meeting')
-const hardwareDatabase = require('../database/meeting/hardware')
 const networkDatabase = require('../database/meeting/network')
 
 class Software {
