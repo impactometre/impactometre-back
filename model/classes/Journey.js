@@ -7,7 +7,7 @@ const ComponentDamage = require('./ComponentDamage')
  * A journey has a mean of transportation,
  * a distance and a number of people.
  */
-export default class Journey {
+class Journey {
   /**
    * The Journey class constructor.
    * @param {TransportationMean} mean - The mean of transportation.
