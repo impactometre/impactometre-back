@@ -110,7 +110,7 @@ export default class Journey {
     }
 
     // Create and return the journey embodied damage
-    const embodiedDamage = new ComponentDamage(humanHealthDamage, 
+    const embodiedDamage = new ComponentDamage(humanHealthDamage,
       ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
     return embodiedDamage
   }
