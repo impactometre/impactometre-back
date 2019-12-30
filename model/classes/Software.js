@@ -1,15 +1,16 @@
 'use strict'
 
 const getClosest = require('../../utils/get-closest')
-const ComponentDamage = require('ComponentDamage.js')
-const meetingEnums = require('../enums/meeting/enums')
+const ComponentDamage = require('./ComponentDamage')
+const meetingEnums = require('../../constants/meeting')
 const hardwareDatabase = require('../database/meeting/hardware')
 
 class Software {
   constructor (software) {
-    this.french = software.french
-    this.fileSize = software.fileSize
-    this.bandwith = software.bandwith
+    this._french = software.french
+    console.log('On initialise le french\n')
+    this._fileSize = software.fileSize
+    this._bandwith = software.bandwith
   }
 
   // Getter
@@ -18,15 +19,45 @@ class Software {
    * Getter for software french name.
    */
   get french () {
-    return this.french
+    return this._french
   }
 
   /**
    * Getter for software file size.
    */
   get fileSize () {
-    return this.fileSize
+    return this._fileSize
   }
+
+  get bandwith () {
+    return this._bandwith
+  }
+
+  // Setters
+
+  /**
+   * Setter of software french name.
+   * @param french - The new software french name.
+   */
+  set french (newFrench) {
+    this._french = newFrench
+  }
+
+  /**
+   * Setter for software file size.
+   */
+  set fileSize (fileSize) {
+    this._fileSize = fileSize
+  }
+
+  /**
+   * Setter for software bandwith.
+   */
+  set bandwith (bandwith) {
+    this._bandwith = bandwith
+  }
+
+  // Others methods
 
   /**
    * Get the software file size in bits (it' originaly in Mo)
@@ -100,24 +131,24 @@ class Software {
   /**
    * Computes the software usage damage.
    * @param {Integer} instancesNumber - The number of software instances used for the meeting.
-   * @param {String} bandwidthBound - The bandwidth bound ('minimum' or 'ideal').
+   * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @returns {ComponentDamage} The dammage cauded by one minute's use of the software.
    */
-  computesOperatingDamage (instancesNumber, bandwidthBound, networkBound) {
-    // If the software has no inboud bandwidth in the database, we return an empty damage
+  computesOperatingDamage (instancesNumber, bandwithBound, networkBound) {
+    // If the software has no inboud bandwith in the database, we return an empty damage
     if (!this.bandwith) return new ComponentDamage(0, 0, 0, 0)
 
-    // We get the inboundBandwidth (in Kbit/s)
-    const inboundBandwidth = this.getInboundBandwith(instancesNumber, bandwidthBound)
+    // We get the inboundBandwith (in Kbit/s)
+    const inboundBandwith = this.getInboundBandwith(instancesNumber, bandwithBound)
     // We get the network energetic intensity (in damageUnit/bit)
     const networkEnergeticIntensity = Software.getNetworkEnergeticIntensity(networkBound)
 
     // We compute the total damage for each damage sphere (damageUnit/minute)
-    const humanHealthDamage = networkEnergeticIntensity.humanHealth * inboundBandwidth * 60 * 1000 * instancesNumber
-    const ecosystemQualityDamage = networkEnergeticIntensity.ecosystemQuality * inboundBandwidth * 60 * 1000 * instancesNumber
-    const climateChangeDamage = networkEnergeticIntensity.climateChange * inboundBandwidth * 60 * 1000 * instancesNumber
-    const resourcesDamage = networkEnergeticIntensity.resources * inboundBandwidth * 60 * 1000 * instancesNumber
+    const humanHealthDamage = networkEnergeticIntensity.humanHealth * inboundBandwith * 60 * 1000 * instancesNumber
+    const ecosystemQualityDamage = networkEnergeticIntensity.ecosystemQuality * inboundBandwith * 60 * 1000 * instancesNumber
+    const climateChangeDamage = networkEnergeticIntensity.climateChange * inboundBandwith * 60 * 1000 * instancesNumber
+    const resourcesDamage = networkEnergeticIntensity.resources * inboundBandwith * 60 * 1000 * instancesNumber
 
     const operatingDamage = new ComponentDamage(humanHealthDamage, ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
 
