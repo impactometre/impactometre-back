@@ -14,10 +14,10 @@ export default class Journey {
    * @param {Integer} numberOfPeople The number of people of the journey.
    */
   constructor (mean, distance, numberOfPeople) {
-    this.id = uniqid()
-    this.mean = mean
-    this.distance = distance
-    this.numberOfPeople = numberOfPeople
+    this._id = uniqid()
+    this._mean = mean
+    this._distance = distance
+    this._numberOfPeople = numberOfPeople
   }
 
   // Getters
@@ -26,28 +26,28 @@ export default class Journey {
    * Getter of the journey id.
    */
   get id () {
-    return this.id
+    return this._id
   }
 
   /**
    * Getter of the journey transportation mean.
    */
   get mean () {
-    return this.mean
+    return this._mean
   }
 
   /**
    * Getter of the journey distance.
    */
   get distance () {
-    return this.distance
+    return this._distance
   }
 
   /**
    * Getter of the journey number of people.
    */
   get numberOfPeople () {
-    return this.numberOfPeople
+    return this._numberOfPeople
   }
 
   // Setters
@@ -57,7 +57,7 @@ export default class Journey {
    * @param {TransportationMean} transportationMean - The new journey transportation mean.
    */
   set mean (transportationMean) {
-    this.mean = transportationMean
+    this._mean = transportationMean
   }
 
   /**
@@ -65,7 +65,7 @@ export default class Journey {
    * @param {Float} distance - The new journey distance.
    */
   set distance (distance) {
-    this.distance = distance
+    this._distance = distance
   }
 
   /**
@@ -73,7 +73,7 @@ export default class Journey {
    * @param {Integer} numberOfPeople - The new journey number of people.
    */
   set numberOfPeople (numberOfPeople) {
-    this.numberOfPeople = numberOfPeople
+    this._numberOfPeople = numberOfPeople
   }
 }
 
