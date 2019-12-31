@@ -1,13 +1,14 @@
 image: node:latest
 
+before_script:
+  - npm install --save-dev eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
+  - npm i
 stages:
   - lint
   - test
 
 eslint:
   stage: lint
-  before_script:
-  - npm install --save-dev eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
   script:
   - npx eslint .
   tags:
@@ -15,8 +16,6 @@ eslint:
 
 unit-tests:
   stage: test
-  before_script:
-  - npm install mocha
   script: 
   - ./node_modules/mocha/bin/mocha --recursive \"test/\"
   tags:
