@@ -200,8 +200,9 @@ const hardware = {
   TV_SCREEN: {
     name: 'TV_SCREEN',
     french: 'écran de télévision',
+    // Damage is given for one meter square
     isSizeDependent: true,
-    operatingOneMinOneMeterSquare: {
+    operatingOneMin: {
       humanHealth: Math.pow(1.78, -10),
       ecosystemQuality: Math.pow(8.21, -5),
       climateChange: 0.000142,
