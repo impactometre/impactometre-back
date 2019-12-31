@@ -12,12 +12,14 @@ class Hardware {
    * Create a hardware.
    * @param {Object} hardwareObject - The hardware JSON object coming from database.
    * @param {Number} size - The optional size attached to the hardware.
+   * @param {Float} shareForVisio - The share of the hardware dedicated to visio.
    */
-  constructor (hardwareObject, size = 1) {
+  constructor (hardwareObject, size = 1, shareForVisio = 1) {
     this._name = hardwareObject.name
     this._french = hardwareObject.french
-    this._isSizeDependent = hardwareObject.isSizeDependent
     this._size = size
+    this._shareForVisio = shareForVisio
+    this._isSizeDependent = hardwareObject.isSizeDependent
     this._embodied = hardwareObject.embodied
     this._operatingOneMin = hardwareObject.operatingOneMin
     this._standbyOneMin = hardwareObject.standbyOneMin
@@ -35,16 +37,6 @@ class Hardware {
   }
 
   /**
-   * Get the size dependance property of the hardware.
-   * E.g. tv screen damage computing depends on the
-   * screen size.
-   * @return {Boolean} The size dependance boolean.
-   */
-  get isSizeDependent () {
-    return this._isSizeDependent
-  }
-
-  /**
    * Get the optional size attached to the hardware.
    * E.g. if the hardware is a TV, the size would be
    * the area of the screen in meter square.
@@ -52,6 +44,27 @@ class Hardware {
    */
   get size () {
     return this._size
+  }
+
+  /**
+   * Get the hardware share dedicated to visio.
+   * E.g. if the hardware is a laptop, the user
+   * may be multi-tasking during the visio,
+   * with other software application running.
+   * @return {Float} The share for visio (between O and 1).
+   */
+  get shareForVisio () {
+    return this._shareForVisio
+  }
+
+  /**
+   * Get the size dependance property of the hardware.
+   * E.g. tv screen damage computing depends on the
+   * screen size.
+   * @return {Boolean} The size dependance boolean.
+   */
+  get isSizeDependent () {
+    return this._isSizeDependent
   }
 
   /**
