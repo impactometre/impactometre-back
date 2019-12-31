@@ -94,7 +94,7 @@ class Journey {
     let resourcesDamage = transportationMeanDamage.resources
 
     // Compute damage for each sphere (if calculation mode is by personKm or by kilometer)
-    if (this.mean.isPersonKm) {
+    if (this.mean.isComputedByPersonKm) {
       // Compute the personKilometers amount
       const personKm = this.distance * this.numberOfPeople
 

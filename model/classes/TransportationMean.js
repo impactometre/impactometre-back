@@ -13,7 +13,7 @@ class TransportationMean {
   constructor (transportationMean) {
     this._french = transportationMean.french
     this._embodied = transportationMean.embodied
-    this._isPersonKm = transportationMean.isPersonKm
+    this._isComputedByPersonKm = transportationMean.isComputedByPersonKm
   }
 
   // Getters
@@ -36,8 +36,8 @@ class TransportationMean {
    * Getter to know if the damageof the transportation mean is
    * calculate by personKm (true) or by kilometer (false).
    */
-  get isPersonKm () {
-    return this._isPersonKm
+  get isComputedByPersonKm () {
+    return this._isComputedByPersonKm
   }
 
   // Setters
@@ -60,8 +60,8 @@ class TransportationMean {
    * Setter of the transportation mean damage calculaion mode,
    * in personKm (true) or in kilometer (false).
    */
-  set isPersonKm (isPersonKm) {
-    this._isPersonKm = isPersonKm
+  set isComputedByPersonKm (isComputedByPersonKm) {
+    this._isComputedByPersonKm = isComputedByPersonKm
   }
 }
 
