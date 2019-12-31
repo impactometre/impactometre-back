@@ -33,7 +33,7 @@ describe('Journey services', () => {
     const journeyHeatCar3People = new Journey(heatCar, 100, 3)
     it('a jounrey by car should be calcuted by kilometer (not by personKilometer)', () => {
       assert.strictEqual(
-        journeyElectricCar3People.mean.isPersonKm && journeyHeatCar3People.mean.isPersonKm,
+        journeyElectricCar3People.mean.isComputedByPersonKm && journeyHeatCar3People.mean.isComputedByPersonKm,
         false
       )
     })
