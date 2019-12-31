@@ -2,7 +2,7 @@
 
 const {
   daysWorkedByYear,
-  hoursByDay,
+  dayInHours,
   knownHardwareOperatingTime,
   knownHardwareStandbyTime
 } = require('../../constants/meeting')
@@ -200,7 +200,7 @@ class Hardware {
       return knownHardwareStandbyTime[this.french]
     }
 
-    const standbyTimePerDay = hoursByDay - this.operatingTimePerDay
+    const standbyTimePerDay = dayInHours - this.operatingTimePerDay
     const standbyTime = this.lifetime * daysWorkedByYear * standbyTimePerDay
     return standbyTime
   }
