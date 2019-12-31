@@ -11,11 +11,13 @@ class Hardware {
   /**
    * Create a hardware.
    * @param {Object} hardwareObject - The hardware JSON object coming from database.
+   * @param {Number} size - The optional size attached to the hardware.
    */
-  constructor (hardwareObject) {
+  constructor (hardwareObject, size = 1) {
     this._name = hardwareObject.name
     this._french = hardwareObject.french
     this._isSizeDependent = hardwareObject.isSizeDependent
+    this._size = size
     this._embodied = hardwareObject.embodied
     this._operatingOneMin = hardwareObject.operatingOneMin
     this._standbyOneMin = hardwareObject.standbyOneMin
@@ -40,6 +42,16 @@ class Hardware {
    */
   get isSizeDependent () {
     return this._isSizeDependent
+  }
+
+  /**
+   * Get the optional size attached to the hardware.
+   * E.g. if the hardware is a TV, the size would be
+   * the area of the screen in meter square.
+   * @return {NUmber} The optional size.
+   */
+  get size () {
+    return this._size
   }
 
   /**
