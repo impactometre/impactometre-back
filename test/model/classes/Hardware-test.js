@@ -21,9 +21,10 @@ describe('Hardware class', () => {
     })
   })
   describe('#computeOperatingTime()', () => {
+    const hardwaresWithKnownOperatingTime = Object.keys(knownHardwareOperatingTime)
     it('should return the known value if exists in constants', () => {
       Object.values(hardwareDatabase).filter(json => {
-        return json.lifetime == null || json.operatingTimePerDay == null
+        return hardwaresWithKnownOperatingTime.includes(json.name)
       }).forEach(json => {
         const instance = new Hardware(json)
         assert.strictEqual(
@@ -36,6 +37,7 @@ describe('Hardware class', () => {
       it('when lifetime and operatingTimePerDay are based on DESKTOP values', () => {
         Object.values(hardwareDatabase).filter(json => {
           return (
+            !(hardwaresWithKnownOperatingTime.includes(json.name)) &&
             json.lifetime === hardwareLifetime.DESKTOP &&
             json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
           )
@@ -50,6 +52,7 @@ describe('Hardware class', () => {
       it('when lifetime is based on DESKTOP value and operatingTimePerDay on LOGITECH_KIT', () => {
         Object.values(hardwareDatabase).filter(json => {
           return (
+            !(hardwaresWithKnownOperatingTime.includes(json.name)) &&
             json.lifetime === hardwareLifetime.DESKTOP &&
             json.operatingTimePerDay === hardwareOperatingTimePerDay.LOGITECH_KIT
           )
@@ -64,6 +67,7 @@ describe('Hardware class', () => {
       it('when lifetime is based on POWER_CABLE_ONE_METER value and operatingTimePerDay on DESKTOP', () => {
         Object.values(hardwareDatabase).filter(json => {
           return (
+            !(hardwaresWithKnownOperatingTime.includes(json.name)) &&
             json.lifetime === hardwareLifetime.POWER_CABLE_ONE_METER &&
             json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
           )
