@@ -59,7 +59,7 @@ class Software {
   // Others methods
 
   /**
-   * Get the software file size in bits (it' originaly in Mo)
+   * Get the software file size in bits (it is originaly in Mo)
    */
   fileSizeInBits () {
     return this.fileSize * 8 * 1000000
@@ -140,6 +140,7 @@ class Software {
 
     // We get the inboundBandwith (in Kbit/s)
     const inboundBandwith = this.getInboundBandwith(instancesNumber, bandwithBound)
+
     // We get the network energetic intensity (in damageUnit/bit)
     const networkEnergeticIntensity = Software.getNetworkEnergeticIntensity(networkBound)
 
@@ -158,9 +159,10 @@ class Software {
    * Compute the download software damage.
    * @param {Integer} instancesNumber - The number of software instances used for the meeting.
    * @param {string} networkBound - The network bound ('upper' or 'lower').
+   * @returns {ComponentDamage} The damage caused by all the software dowloads of the meeting.
    */
   computeEmbodiedDamage (instancesNumber, networkBound) {
-    // If there no file to download or if there is no file size,
+    // If there is no file to download or if there is no file size,
     // we return an empty damage.
     if (!this.fileSize) return new ComponentDamage(0, 0, 0, 0)
 
