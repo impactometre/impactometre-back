@@ -7,7 +7,7 @@ const Journey = require('../../../../model/classes/Journey')
 const ComponentDamage = require('../../../../model/classes/ComponentDamage')
 
 describe('Journey services', () => {
-  describe('#computesEmbodiedDamage ()', () => {
+  describe('#computeEmbodiedDamage ()', () => {
     const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
     const journeyElectricCar3People = new Journey(electricCar, 100, 3)
     const embodiedDamage = new ComponentDamage(
@@ -18,15 +18,15 @@ describe('Journey services', () => {
     )
     it('should return the damage caused by 3 people in a eletric car for one kilomter ', () => {
       assert.deepStrictEqual(
-        journeyElectricCar3People.computesEmbodiedDamage(),
+        journeyElectricCar3People.computeEmbodiedDamage(),
         embodiedDamage
       )
     })
     const journeyElectricCar5People = new Journey(electricCar, 100, 5)
     it('two journeys with the same kind of car and the same distance should cause the same damage (i.e. the number of people desn\'t matter)', () => {
       assert.deepStrictEqual(
-        journeyElectricCar3People.computesEmbodiedDamage(),
-        journeyElectricCar5People.computesEmbodiedDamage()
+        journeyElectricCar3People.computeEmbodiedDamage(),
+        journeyElectricCar5People.computeEmbodiedDamage()
       )
     })
     const heatCar = new TransportationMean(transportDatabase.CAR_HEAT_ENGINE_ONE_KM)
@@ -40,7 +40,7 @@ describe('Journey services', () => {
     const intercontinentalPlane = new TransportationMean(transportDatabase.PLANE_INTERCONTINENTAL_ONE_PERSON_KM)
     const intercontinentalPlaneJourney2People = new Journey(intercontinentalPlane, 1000, 2)
     const intercontinentalPlaneJourney4People = new Journey(intercontinentalPlane, 1000, 4)
-    const embodiedDamageIntercontinentalPlane = intercontinentalPlaneJourney2People.computesEmbodiedDamage()
+    const embodiedDamageIntercontinentalPlane = intercontinentalPlaneJourney2People.computeEmbodiedDamage()
     const humanHealthDamage = embodiedDamageIntercontinentalPlane.humanHealth
     const ecosystemQualityDamage = embodiedDamageIntercontinentalPlane.ecosystemQuality
     const climateChangeDamage = embodiedDamageIntercontinentalPlane.climateChange
@@ -53,7 +53,7 @@ describe('Journey services', () => {
     )
     it('a 4 people journey by plane should cause twice the damage of a 2 people journey by plane', () => {
       assert.deepStrictEqual(
-        intercontinentalPlaneJourney4People.computesEmbodiedDamage(),
+        intercontinentalPlaneJourney4People.computeEmbodiedDamage(),
         embodiedDamageTwice
       )
     })

@@ -83,7 +83,7 @@ class Journey {
    * Computes the damage caused by a journey.
    * @returns {ComponentDamage} The damage caused by journey, for each damage sphere.
    */
-  computesEmbodiedDamage () {
+  computeEmbodiedDamage () {
     // Get the transportation mean damage for one personKm or one kilometer
     const transportationMeanDamage = this.mean.embodied
 

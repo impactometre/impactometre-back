@@ -134,7 +134,7 @@ class Software {
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @returns {ComponentDamage} The dammage cauded by one minute's use of the software.
    */
-  computesOperatingDamage (instancesNumber, bandwithBound, networkBound) {
+  computeOperatingDamage (instancesNumber, bandwithBound, networkBound) {
     // If the software has no inboud bandwith in the database, we return an empty damage
     if (!this.bandwith) return new ComponentDamage(0, 0, 0, 0)
 
@@ -159,7 +159,7 @@ class Software {
    * @param {Integer} instancesNumber - The number of software instances used for the meeting.
    * @param {string} networkBound - The network bound ('upper' or 'lower').
    */
-  computesEmbodiedDamage (instancesNumber, networkBound) {
+  computeEmbodiedDamage (instancesNumber, networkBound) {
     // If there no file to download or if there is no file size,
     // we return an empty damage.
     if (!this.fileSize) return new ComponentDamage(0, 0, 0, 0)
