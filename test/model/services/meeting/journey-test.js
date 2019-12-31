@@ -16,12 +16,13 @@ describe('Journey services', () => {
       electricCar.embodied.climateChange * 100,
       electricCar.embodied.resources * 100
     )
-    it('should return the damage caused by 3 people in a eletric car for one kilomter ', () => {
+    it('should return the damage caused by 3 people in a eletric car for one kilometer ', () => {
       assert.deepStrictEqual(
         journeyElectricCar3People.computeEmbodiedDamage(),
         embodiedDamage
       )
     })
+
     const journeyElectricCar5People = new Journey(electricCar, 100, 5)
     it('two journeys with the same kind of car and the same distance should cause the same damage (i.e. the number of people desn\'t matter)', () => {
       assert.deepStrictEqual(
@@ -29,14 +30,16 @@ describe('Journey services', () => {
         journeyElectricCar5People.computeEmbodiedDamage()
       )
     })
+
     const heatCar = new TransportationMean(transportDatabase.CAR_HEAT_ENGINE_ONE_KM)
     const journeyHeatCar3People = new Journey(heatCar, 100, 3)
-    it('a jounrey by car should be calcuted by kilometer (not by personKilometer)', () => {
+    it('a journey by car should be computed by kilometer (not by personKilometer)', () => {
       assert.strictEqual(
         journeyElectricCar3People.mean.isComputedByPersonKm && journeyHeatCar3People.mean.isComputedByPersonKm,
         false
       )
     })
+
     const intercontinentalPlane = new TransportationMean(transportDatabase.PLANE_INTERCONTINENTAL_ONE_PERSON_KM)
     const intercontinentalPlaneJourney2People = new Journey(intercontinentalPlane, 1000, 2)
     const intercontinentalPlaneJourney4People = new Journey(intercontinentalPlane, 1000, 4)
