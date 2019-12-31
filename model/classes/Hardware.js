@@ -21,6 +21,7 @@ class Hardware {
     this._standbyOneMin = hardwareObject.standbyOneMin
     this._lifetime = hardwareObject.lifetime
     this._operatingTimePerDay = hardwareObject.operatingTimePerDay
+    this._components = hardwareObject._components
   }
 
   get name () {
@@ -83,6 +84,16 @@ class Hardware {
    */
   get operatingTimePerDay () {
     return this._operatingTimePerDay
+  }
+
+  /**
+   * Get the hardware components.
+   * E.g. a TV is composed of TV_SCREEN_BASE and
+   * TV_SCREEN components.
+   * @return {Array} Components names.
+   */
+  get components () {
+    return this._components
   }
 
   /**

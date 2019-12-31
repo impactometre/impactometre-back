@@ -210,6 +210,15 @@ const hardware = {
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
   },
+  TV: {
+    name: 'TV',
+    french: 'télévision',
+    isSizeDependent: false,
+    components: [
+      'TV_SCREEN_BASE',
+      'TV_SCREEN'
+    ]
+  },
   /**
    * VISIO-CONFERENCE KIT
    */
