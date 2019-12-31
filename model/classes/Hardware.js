@@ -15,7 +15,7 @@ class Hardware {
   constructor (hardwareObject) {
     this._name = hardwareObject.name
     this._french = hardwareObject.french
-    this._damageComputingMethod = hardwareObject.damageComputingMethod
+    this._isSizeDependent = hardwareObject.isSizeDependent
     this._embodied = hardwareObject.embodied
     this._operatingOneMin = hardwareObject.operatingOneMin
     this._standbyOneMin = hardwareObject.standbyOneMin
@@ -32,14 +32,13 @@ class Hardware {
   }
 
   /**
-   * Get the damage computing method value, which
-   * is 'size dependent' or 'size independent'.
+   * Get the size dependance property of the hardware.
    * E.g. tv screen damage computing depends on the
    * screen size.
-   * @return {String} The damage computing method.
+   * @return {Boolean} The size dependance boolean.
    */
-  get damageComputingMethod () {
-    return this._damageComputingMethod
+  get isSizeDependent () {
+    return this._isSizeDependent
   }
 
   /**
