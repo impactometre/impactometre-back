@@ -55,28 +55,85 @@ class Hardware {
   }
 
   /**
-   * Get the embodied damage value.
+   * Get the embodied damage value, corresponding to the
+   * optional bound ('upper' or 'lower').
+   * @param {String} - The optional bound.
    * @return {ComponentDamage} The damage value for each damage category.
    */
-  get embodied () {
+  getEmbodied (bound = null) {
+    if (!this._embodied) {
+      return 'unknown'
+    }
+
+    // If bound specific values are available
+    if (this._embodied.upper && this._embodied.lower) {
+      /* If desired bound value was given, we return
+      the corresponding value. Else we return the
+      upper value. */
+      const boundSpecificValue = (bound != null)
+        ? this._embodied[bound]
+        : this._embodied.upper
+
+      return boundSpecificValue
+    }
+
+    // Else we return the unique value available
     return this._embodied
   }
 
   /**
    * Get the hardware damage values when operating
-   * during one minute.
+   * during one minute, corresponding to the
+   * optional bound ('upper' or 'lower').
+   * @param {String} - The optional bound.
    * @return {ComponentDamage} The damage value for each damage category.
    */
-  get operatingOneMin () {
+  getOperatingOneMin (bound = null) {
+    if (!this._operatingOneMin) {
+      return 'unknown'
+    }
+
+    // If bound specific values are available
+    if (this._operatingOneMin.upper && this._operatingOneMin.lower) {
+      /* If desired bound value was given, we return
+      the corresponding value. Else we return the
+      upper value. */
+      const boundSpecificValue = (bound != null)
+        ? this._operatingOneMin[bound]
+        : this._operatingOneMin.upper
+
+      return boundSpecificValue
+    }
+
+    // Else we return the unique value available
     return this._operatingOneMin
   }
 
   /**
    * Get the hardware damage values when being on
-   * standby during one minute.
+   * standby during one minute, corresponding to the
+   * optional bound ('upper' or 'lower').
+   * @param {String} - The optional bound.
    * @return {ComponentDamage} The damage value for each damage category.
    */
-  get standbyOneMin () {
+  getStandbyOneMin (bound = null) {
+    if (!this._standbyOneMin) {
+      return 'unknown'
+    }
+
+    // If bound specific values are available
+    if (this._standbyOneMin.upper && this._standbyOneMin.lower) {
+      /* If desired bound value was given, we return
+      the corresponding value. Else we return the
+      upper value. */
+      const boundSpecificValue = (bound != null)
+        ? this._standbyOneMin[bound]
+        : this._standbyOneMin.upper
+
+      return boundSpecificValue
+    }
+
+    // Else we return the unique value available
     return this._standbyOneMin
   }
 

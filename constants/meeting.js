@@ -1,5 +1,10 @@
 'use strict'
 
+const hardwareBound = {
+  UPPER: 'upper',
+  LOWER: 'lower'
+}
+
 /**
  * All software that users can use for meetings
  */
@@ -95,6 +100,7 @@ const daysWorkedByYear = 230
  */
 const hoursByDay = 24
 
+exports.hardwareBound = hardwareBound
 exports.software = software
 exports.hardware = hardware
 exports.hardwareLifetime = hardwareLifetime
