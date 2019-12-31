@@ -117,7 +117,7 @@ const hardware = {
    */
   INTERNET_ACCESS_EQUIPMENT: {
     name: 'INTERNET_ACCESS_EQUIPMENT',
-    french: "équipement d'accès Internet",
+    french: 'équipement d\'accès Internet',
     embodied: {
       humanHealth: Math.pow(1.26, -5),
       ecosystemQuality: 5.6,
@@ -156,6 +156,7 @@ const hardware = {
   },
   PROJECTOR: {
     name: 'PROJECTOR',
+    french: 'projecteur',
     embodied: {
       humanHealth: Math.pow(8.04, -5),
       ecosystemQuality: 23.9,
@@ -254,26 +255,22 @@ const hardware = {
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
   },
   /** CODEC **/
-  CODEC_LOWER: {
-    name: 'CODEC_LOWER',
-    french: 'CODEC bas de gamme',
+  CODEC: {
+    name: 'CODEC',
+    french: 'CODEC',
     operatingOneMin: {
-      humanHealth: Math.pow(2.69, -11),
-      ecosystemQuality: Math.pow(1.24, -5),
-      climateChange: Math.pow(2.15, -5),
-      resources: 0.00554
-    },
-    lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
-  },
-  CODEC_UPPER: {
-    name: 'CODEC_UPPER',
-    french: 'CODEC haut de gamme',
-    operatingOneMin: {
-      humanHealth: Math.pow(8.28, -11),
-      ecosystemQuality: Math.pow(3.82, -5),
-      climateChange: Math.pow(6.6, -5),
-      resources: 0.017
+      upper: {
+        humanHealth: Math.pow(8.28, -11),
+        ecosystemQuality: Math.pow(3.82, -5),
+        climateChange: Math.pow(6.6, -5),
+        resources: 0.017
+      },
+      lower: {
+        humanHealth: Math.pow(2.69, -11),
+        ecosystemQuality: Math.pow(1.24, -5),
+        climateChange: Math.pow(2.15, -5),
+        resources: 0.00554
+      }
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
