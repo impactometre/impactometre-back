@@ -3,7 +3,7 @@
 const assert = require('assert')
 const hardwareDatabase = require('../../../model/database/meeting/hardware')
 const Hardware = require('../../../model/classes/Hardware')
-const { knownHardwareOperatingTime, hardwareLifetime, hardwareOperatingTimePerDay } = require('../../../constants/meeting')
+const { knownHardwareOperatingTime, knownHardwareStandbyTime, hardwareLifetime, hardwareOperatingTimePerDay } = require('../../../constants/meeting')
 
 describe('Hardware class', () => {
   describe('#constructor()', () => {
@@ -72,6 +72,67 @@ describe('Hardware class', () => {
           assert.strictEqual(
             32200,
             instance.computeOperatingTime()
+          )
+        })
+      })
+    })
+  })
+  describe('#computeStandbyTime()', () => {
+    const hardwaresWithKnownStandbyTime = Object.keys(knownHardwareStandbyTime)
+    it('should return the known value if exists in constants', () => {
+      Object.values(hardwareDatabase).filter(json => {
+        return hardwaresWithKnownStandbyTime.includes(json.name)
+      }).forEach(json => {
+        const instance = new Hardware(json)
+        assert.strictEqual(
+          knownHardwareStandbyTime[instance._name],
+          instance.computeOperatingTime()
+        )
+      })
+    })
+    describe('should compute the value if not known', () => {
+      it('when lifetime and operatingTimePerDay are based on DESKTOP values', () => {
+        Object.values(hardwareDatabase).filter(json => {
+          return (
+            !(hardwaresWithKnownStandbyTime.includes(json.name)) &&
+            json.lifetime === hardwareLifetime.DESKTOP &&
+            json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
+          )
+        }).forEach(json => {
+          const instance = new Hardware(json)
+          assert.strictEqual(
+            19550,
+            instance.computeStandbyTime()
+          )
+        })
+      })
+      it('when lifetime is based on DESKTOP value and operatingTimePerDay on LOGITECH_KIT', () => {
+        Object.values(hardwareDatabase).filter(json => {
+          return (
+            !(hardwaresWithKnownStandbyTime.includes(json.name)) &&
+            json.lifetime === hardwareLifetime.DESKTOP &&
+            json.operatingTimePerDay === hardwareOperatingTimePerDay.LOGITECH_KIT
+          )
+        }).forEach(json => {
+          const instance = new Hardware(json)
+          assert.strictEqual(
+            26910,
+            instance.computeStandbyTime()
+          )
+        })
+      })
+      it('when lifetime is based on POWER_CABLE_ONE_METER value and operatingTimePerDay on DESKTOP', () => {
+        Object.values(hardwareDatabase).filter(json => {
+          return (
+            !(hardwaresWithKnownStandbyTime.includes(json.name)) &&
+            json.lifetime === hardwareLifetime.POWER_CABLE_ONE_METER &&
+            json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
+          )
+        }).forEach(json => {
+          const instance = new Hardware(json)
+          assert.strictEqual(
+            78200,
+            instance.computeStandbyTime()
           )
         })
       })

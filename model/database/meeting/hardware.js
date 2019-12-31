@@ -180,7 +180,9 @@ const hardware = {
       ecosystemQuality: Math.pow(9.54, -6),
       climateChange: Math.pow(1.65, -5),
       resources: 0.00426
-    }
+    },
+    lifetime: hardwareLifetime.DESKTOP,
+    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
   },
   TV_SCREEN: {
     name: 'TV_SCREEN',
@@ -190,7 +192,9 @@ const hardware = {
       ecosystemQuality: Math.pow(8.21, -5),
       climateChange: 0.000142,
       resources: 0.0367
-    }
+    },
+    lifetime: hardwareLifetime.DESKTOP,
+    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
   },
   /**
    * VISIO-CONFERENCE KIT
