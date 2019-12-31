@@ -13,7 +13,7 @@ class TransportationMean {
   constructor (transportationMean) {
     this._french = transportationMean.french
     this._embodied = transportationMean.embodied
-    this._isPersonKm = TransportationMean.isPersonKm
+    this._isPersonKm = transportationMean.isPersonKm
   }
 
   // Getters
