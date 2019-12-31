@@ -87,31 +87,25 @@ class Journey {
     // Get the transportation mean damage for one personKm or one kilometer
     const transportationMeanDamage = this.mean.embodied
 
-    // Initialize each damage sphere value
-    let humanHealthDamage = transportationMeanDamage.humanHealth
-    let ecosystemQualityDamage = transportationMeanDamage.ecosystemQuality
-    let climateChangeDamage = transportationMeanDamage.climateChange
-    let resourcesDamage = transportationMeanDamage.resources
+    // Initialize the retured damage
+    const embodiedDamage = new ComponentDamage(0, 0, 0, 0)
 
     // Compute damage for each sphere (calculation mode is by personKm or by kilometer)
-    if (this.mean.isComputedByPersonKm) {
+    if(this.mean.isComputedByPersonKm) {
       // Compute the personKilometers amount
-      const personKm = this.distance * this.numberOfPeople
+      const personKmAmont = this.distance * this.numberOfPeople
 
-      humanHealthDamage = humanHealthDamage * personKm
-      ecosystemQualityDamage = ecosystemQualityDamage * personKm
-      climateChangeDamage = climateChangeDamage * personKm
-      resourcesDamage = resourcesDamage * personKm
+      Object.keys(embodiedDamage).map(function(key) {
+        embodiedDamage[key] = transportationMeanDamage[key] * personKmAmont
+      })
     } else {
-      humanHealthDamage = humanHealthDamage * this.distance
-      ecosystemQualityDamage = ecosystemQualityDamage * this.distance
-      climateChangeDamage = climateChangeDamage * this.distance
-      resourcesDamage = resourcesDamage * this.distance
+      const distance = this.distance
+      Object.keys(embodiedDamage).map(function(key) {
+        embodiedDamage[key] = transportationMeanDamage[key] * distance
+      })
     }
 
-    // Create and return the journey embodied damage
-    const embodiedDamage = new ComponentDamage(humanHealthDamage,
-      ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
+    // Return the journey embodied damage
     return embodiedDamage
   }
 }
