@@ -12,6 +12,7 @@ const hardware = {
   DESKTOP: {
     name: 'DESKTOP',
     french: 'ordinateur fixe',
+    isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(1.55, -10),
       ecosystemQuality: Math.pow(7.16, -5),
@@ -24,6 +25,7 @@ const hardware = {
   DESKTOP_WITHOUT_SCREEN: {
     name: 'DESKTOP_WITHOUT_SCREEN',
     french: 'ordinateur sans écran',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 0.00041,
       ecosystemQuality: 155,
@@ -49,6 +51,7 @@ const hardware = {
   DESKTOP_SCREEN_LCD: {
     name: 'DESKTOP_SCREEN_LCD',
     french: 'écran d\'ordinateur LCD',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 0.000475,
       ecosystemQuality: 140,
@@ -61,6 +64,7 @@ const hardware = {
   COMPUTER_TOWER: {
     name: 'COMPUTER_TOWER',
     french: 'tour',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 0.000349,
       ecosystemQuality: 131,
@@ -73,6 +77,7 @@ const hardware = {
   KEYBOARD: {
     name: 'KEYBOARD',
     french: 'clavier',
+    isSizeDependent: false,
     embodied: {
       humanHealth: Math.pow(5.01, -5),
       ecosystemQuality: 19.6,
@@ -85,6 +90,7 @@ const hardware = {
   COMPUTER_MOUSE: {
     name: 'COMPUTER_MOUSE',
     french: 'souris',
+    isSizeDependent: false,
     embodied: {
       humanHealth: Math.pow(1.06, -5),
       ecosystemQuality: 4.73,
@@ -97,6 +103,7 @@ const hardware = {
   LAPTOP: {
     name: 'LAPTOP',
     french: 'ordinateur portable',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 0.000274,
       ecosystemQuality: 82.7,
@@ -118,6 +125,7 @@ const hardware = {
   INTERNET_ACCESS_EQUIPMENT: {
     name: 'INTERNET_ACCESS_EQUIPMENT',
     french: 'équipement d\'accès Internet',
+    isSizeDependent: false,
     embodied: {
       humanHealth: Math.pow(1.26, -5),
       ecosystemQuality: 5.6,
@@ -133,6 +141,7 @@ const hardware = {
   MICROPHONE: {
     name: 'MICROPHONE',
     french: 'micro',
+    isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(2.59, -12),
       ecosystemQuality: Math.pow(1.19, -6),
@@ -145,6 +154,7 @@ const hardware = {
   CAMERA: {
     name: 'CAMERA',
     french: 'caméra',
+    isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(9.84, -12),
       ecosystemQuality: Math.pow(4.53, -6),
@@ -157,6 +167,7 @@ const hardware = {
   PROJECTOR: {
     name: 'PROJECTOR',
     french: 'projecteur',
+    isSizeDependent: false,
     embodied: {
       humanHealth: Math.pow(8.04, -5),
       ecosystemQuality: 23.9,
@@ -176,6 +187,7 @@ const hardware = {
   TV_SCREEN_BASE: {
     name: 'TV_SCREEN_BASE',
     french: 'télévision sauf écran',
+    isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(2.07, -11),
       ecosystemQuality: Math.pow(9.54, -6),
@@ -188,6 +200,7 @@ const hardware = {
   TV_SCREEN: {
     name: 'TV_SCREEN',
     french: 'écran de télévision',
+    isSizeDependent: true,
     operatingOneMinOneMeterSquare: {
       humanHealth: Math.pow(1.78, -10),
       ecosystemQuality: Math.pow(8.21, -5),
@@ -203,6 +216,7 @@ const hardware = {
   LOGITECH_KIT: {
     name: 'LOGITECH_KIT',
     french: 'kit Logitech',
+    isSizeDependent: false,
     standbyOneMin: {
       humanHealth: Math.pow(5.9, -12),
       ecosystemQuality: Math.pow(2.72, -6),
@@ -221,6 +235,7 @@ const hardware = {
   LOGITECH_KIT_CAMERA: {
     name: 'LOGITECH_KIT_CAMERA',
     french: 'caméra du kit Logitech',
+    isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(4.04, -12),
       ecosystemQuality: Math.pow(1.86, -6),
@@ -233,6 +248,7 @@ const hardware = {
   LOGITECH_CABLE: {
     name: 'LOGITECH_CABLE',
     french: 'câble Logitech',
+    isSizeDependent: false,
     embodied: {
       humanHealth: Math.pow(3.53, -6),
       ecosystemQuality: 3.37,
@@ -245,6 +261,7 @@ const hardware = {
   METAL_STRUCTURE: {
     name: 'METAL_STRUCTURE',
     french: 'structure métallique de support des écrans',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 0.000141,
       ecosystemQuality: 20.5,
@@ -258,6 +275,7 @@ const hardware = {
   CODEC: {
     name: 'CODEC',
     french: 'CODEC',
+    isSizeDependent: false,
     operatingOneMin: {
       upper: {
         humanHealth: Math.pow(8.28, -11),
@@ -280,6 +298,7 @@ const hardware = {
   POWER_CABLE_ONE_METER: {
     name: 'POWER_CABLE_ONE_METER',
     french: 'câble d\'alimentation 1 m',
+    isSizeDependent: true,
     embodied: {
       humanHealth: Math.pow(8.8, -7),
       ecosystemQuality: 0.59,
@@ -292,6 +311,7 @@ const hardware = {
   ETHERNET_CABLE_ONE_METER: {
     name: 'ETHERNET_CABLE_ONE_METER',
     french: 'câble Ethernet 1 m',
+    isSizeDependent: true,
     embodied: {
       humanHealth: Math.pow(1.42, -7),
       ecosystemQuality: 0.0999,
@@ -304,6 +324,7 @@ const hardware = {
   HDMI_CABLE_ONE_METER: {
     name: 'HDMI_CABLE_ONE_METER',
     french: 'câble HDMI 1 m',
+    isSizeDependent: true,
     embodied: {
       humanHealth: Math.pow(8.8, -7),
       ecosystemQuality: 0.59,
@@ -316,6 +337,7 @@ const hardware = {
   JACK_CABLE_ONE_METER: {
     name: 'JACK_CABLE_ONE_METER',
     french: 'câble jack 1 m',
+    isSizeDependent: true,
     embodied: {
       humanHealth: Math.pow(1.7, -6),
       ecosystemQuality: 1.63,
@@ -328,6 +350,7 @@ const hardware = {
   VGA_CABLE_ONE_METER: {
     name: 'VGA_CABLE_ONE_METER',
     french: 'câble VGA 1 m',
+    isSizeDependent: true,
     embodied: {
       humanHealth: Math.pow(8.8, -7),
       ecosystemQuality: 0.59,
