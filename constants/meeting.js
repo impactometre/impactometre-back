@@ -98,7 +98,7 @@ const daysWorkedByYear = 230
 /**
  * Number of hours in a day
  */
-const hoursByDay = 24
+const dayInHours = 24
 
 exports.hardwareBound = hardwareBound
 exports.software = software
@@ -110,4 +110,4 @@ exports.workedDaysByWeek = workedDaysByWeek
 exports.knownHardwareOperatingTime = knownHardwareOperatingTime
 exports.knownHardwareStandbyTime = knownHardwareStandbyTime
 exports.daysWorkedByYear = daysWorkedByYear
-exports.hoursByDay = hoursByDay
+exports.dayInHours = dayInHours
