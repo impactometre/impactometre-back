@@ -14,7 +14,7 @@ const hardware = {
     french: 'ordinateur fixe',
     isSizeDependent: false,
     operatingOneMin: {
-      humanHealth: Math.pow(1.55, -10),
+      humanHealth: 1.55 * Math.pow(10, -10),
       ecosystemQuality: 7.16 * Math.pow(10, -5),
       climateChange: 0.000124,
       resources: 0.032
@@ -30,16 +30,16 @@ const hardware = {
       humanHealth: 0.00041,
       ecosystemQuality: 155,
       climateChange: 266,
-      resources: Math.pow(3.74, 3)
+      resources: 3.74 * Math.pow(10, 3)
     },
     operatingWithoutVisioOneMin: {
-      humanHealth: Math.pow(1.66, -11),
+      humanHealth: 1.66 * Math.pow(10, -11),
       ecosystemQuality: 7.63 * Math.pow(10, -6),
       climateChange: 1.32 * Math.pow(10, -5),
       resources: 0.00341
     },
     operatingOneMin: {
-      humanHealth: Math.pow(3.42, -11),
+      humanHealth: (3.42 * Math.pow10, -11),
       ecosystemQuality: 1.57 * Math.pow(10, -5),
       climateChange: 2.72 * Math.pow(10, -5),
       resources: 0.00703
@@ -56,7 +56,7 @@ const hardware = {
       humanHealth: 0.000475,
       ecosystemQuality: 140,
       climateChange: 360,
-      resources: Math.pow(4.79, 3)
+      resources: 4.79 * Math.pow(10, 3)
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
@@ -69,7 +69,7 @@ const hardware = {
       humanHealth: 0.000349,
       ecosystemQuality: 131,
       climateChange: 228,
-      resources: Math.pow(3.19, 3)
+      resources: 3.19 * Math.pow(10, 3)
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
@@ -108,10 +108,10 @@ const hardware = {
       humanHealth: 0.000274,
       ecosystemQuality: 82.7,
       climateChange: 166,
-      resources: Math.pow(2.18, 3)
+      resources: 2.18 * Math.pow(10, 3)
     },
     operatingOneMin: {
-      humanHealth: Math.pow(4.14, -11),
+      humanHealth: 4.14 * Math.pow(10, -11),
       ecosystemQuality: 1.91 * Math.pow(10, -5),
       climateChange: 3.3 * Math.pow(10, -5),
       resources: 0.00852
@@ -143,7 +143,7 @@ const hardware = {
     french: 'micro',
     isSizeDependent: false,
     operatingOneMin: {
-      humanHealth: Math.pow(2.59, -12),
+      humanHealth: 2.59 * Math.pow(10, -12),
       ecosystemQuality: 1.19 * Math.pow(10, -6),
       climateChange: 2.06 * Math.pow(10, -6),
       resources: 0.000533
@@ -156,7 +156,7 @@ const hardware = {
     french: 'caméra',
     isSizeDependent: false,
     operatingOneMin: {
-      humanHealth: Math.pow(9.84, -12),
+      humanHealth: 9.84 * Math.pow(10, -12),
       ecosystemQuality: 4.53 * Math.pow(10, -6),
       climateChange: 7.84 * Math.pow(10, -6),
       resources: 0.00202
@@ -175,7 +175,7 @@ const hardware = {
       resources: 821
     },
     operatingOneMin: {
-      humanHealth: Math.pow(1.4, -10),
+      humanHealth: 1.4 * Math.pow(10, -10),
       ecosystemQuality: 6.44 * Math.pow(10, -5),
       climateChange: 0.000111,
       resources: 0.0288
@@ -228,13 +228,13 @@ const hardware = {
     french: 'kit Logitech',
     isSizeDependent: false,
     standbyOneMin: {
-      humanHealth: Math.pow(5.9, -12),
+      humanHealth: 5.9 * Math.pow(10, -12),
       ecosystemQuality: 2.72 * Math.pow(10, -6),
       climateChange: 4.7 * Math.pow(10, -6),
       resources: 0.00121
     },
     operatingOneMin: {
-      humanHealth: Math.pow(8.8, -12),
+      humanHealth: 8.8 * Math.pow(10, -12),
       ecosystemQuality: 4.06 * Math.pow(10, -6),
       climateChange: 7.02 * Math.pow(10, -6),
       resources: 0.00181
@@ -247,7 +247,7 @@ const hardware = {
     french: 'caméra du kit Logitech',
     isSizeDependent: false,
     operatingOneMin: {
-      humanHealth: Math.pow(4.04, -12),
+      humanHealth: 4.04 * Math.pow(10, -12),
       ecosystemQuality: 1.86 * Math.pow(10, -6),
       climateChange: 3.22 * Math.pow(10, -6),
       resources: 0.000831
@@ -276,7 +276,7 @@ const hardware = {
       humanHealth: 0.000141,
       ecosystemQuality: 20.5,
       climateChange: 107,
-      resources: Math.pow(1.18, 3)
+      resources: 1.18 * Math.pow(10, 3)
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
@@ -288,13 +288,13 @@ const hardware = {
     isSizeDependent: false,
     operatingOneMin: {
       upper: {
-        humanHealth: Math.pow(8.28, -11),
+        humanHealth: 8.28 * Math.pow(10, -11),
         ecosystemQuality: 3.82 * Math.pow(10, -5),
         climateChange: 6.6 * Math.pow(10, -5),
         resources: 0.017
       },
       lower: {
-        humanHealth: Math.pow(2.69, -11),
+        humanHealth: 2.69 * Math.pow(10, -11),
         ecosystemQuality: 1.24 * Math.pow(10, -5),
         climateChange: 2.15 * Math.pow(10, -5),
         resources: 0.00554
