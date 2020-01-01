@@ -3,6 +3,7 @@
 const assert = require('assert')
 const hardwareDatabase = require('../../../model/database/meeting/hardware')
 const Hardware = require('../../../model/classes/Hardware')
+const ComponentDamage = require('../../../model/classes/ComponentDamage')
 const {
   knownHardwareOperatingTime,
   knownHardwareStandbyTime,
@@ -407,6 +408,47 @@ describe('Hardware class', () => {
           instance.getStandbyOneMin()
         )
       })
+    })
+  })
+  describe('#computeOperatingDamage()', () => {
+    it('should return damage object with null values if no damage value available', () => {
+      Object.values(hardwareDatabase)
+        .filter(json => !json.operatingOneMin)
+        .forEach(json => {
+          // Compute expected damage
+          const expected = new ComponentDamage()
+
+          const instance = new Hardware({ name: json.name })
+          assert.deepStrictEqual(expected, instance.computeOperatingDamage())
+        })
+    })
+    it('should compute the operating damage of a non size-dependent hardware', () => {
+      Object.values(hardwareDatabase)
+        .filter(json => json.operatingOneMin && !json.isSizeDependent)
+        .forEach(json => {
+          const instance = new Hardware({ name: json.name })
+
+          // Compute expected damage
+          const expected = new ComponentDamage(json.operatingOneMin).mutate(categoryDamage => {
+            categoryDamage *= instance._shareForVisio
+          })
+
+          assert.deepStrictEqual(expected, instance.computeOperatingDamage())
+        })
+    })
+    it('should compute the operating damage of a size-dependent hardware', () => {
+      Object.values(hardwareDatabase)
+        .filter(json => json.operatingOneMin && json.isSizeDependent)
+        .forEach(json => {
+          const instance = new Hardware({ name: json.name })
+
+          // Compute expected damage
+          const expected = new ComponentDamage(json.operatingOneMin).mutate(categoryDamage => {
+            categoryDamage *= instance._shareForVisio * instance._size
+          })
+
+          assert.deepStrictEqual(expected, instance.computeOperatingDamage())
+        })
     })
   })
 })
