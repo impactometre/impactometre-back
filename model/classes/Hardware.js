@@ -261,6 +261,39 @@ class Hardware {
 
     return operatingDamage
   }
+
+  computeStandbyDamage (bound = null) {
+    // Handle composite hardware
+    if (Object.keys(this._components).length > 0) {
+      /* For each component, compute its operating damage
+      and add it to composite hardware damage */
+      const standByDamage = new ComponentDamage()
+      Object.values(this._components).forEach(component => {
+        const componentStandByDamage = component.computeStandbyDamage(bound)
+        Object.keys(standByDamage).map((category) => {
+          standByDamage[category] += componentStandByDamage[category]
+        })
+      })
+
+      return standByDamage
+    }
+
+    // Handle no available value
+    if (!this.getStandbyOneMin()) {
+      return new ComponentDamage()
+    }
+
+    // Handle size-dependence
+    const standByDamage = (this._isSizeDependent)
+      ? new ComponentDamage(this.getStandbyOneMin(bound)).mutate(categoryDamage => {
+        categoryDamage *= this._shareForVisio * this._size
+      })
+      : new ComponentDamage(this.getStandbyOneMin(bound)).mutate(categoryDamage => {
+        categoryDamage *= this._shareForVisio
+      })
+
+    return standByDamage
+  }
 }
 
 module.exports = Hardware
