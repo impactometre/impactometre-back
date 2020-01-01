@@ -236,7 +236,7 @@ class Hardware {
       and add it to composite hardware damage */
       const operatingDamage = new ComponentDamage()
       Object.values(this._components).forEach(component => {
-        const componentOperatingDamage = component.computeOperatingDamage()
+        const componentOperatingDamage = component.computeOperatingDamage(bound)
         Object.keys(operatingDamage).map((category) => {
           operatingDamage[category] += componentOperatingDamage[category]
         })
