@@ -25,9 +25,9 @@ class Hardware {
     this._size = size
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
-    this._embodied = json.embodied
-    this._operatingOneMin = json.operatingOneMin
-    this._standbyOneMin = json.standbyOneMin
+    this._rawEmbodied = json.embodied
+    this._rawOperatingOneMin = json.operatingOneMin
+    this._rawStandbyOneMin = json.standbyOneMin
     this._lifetime = json.lifetime
     this._operatingTimePerDay = json.operatingTimePerDay
     this._components = {}
@@ -93,24 +93,24 @@ class Hardware {
    * @return {ComponentDamage} The damage value for each damage category.
    */
   getEmbodied (bound = null) {
-    if (!this._embodied) {
+    if (!this._rawEmbodied) {
       return null
     }
 
     // If bound specific values are available
-    if (this._embodied.upper && this._embodied.lower) {
+    if (this._rawEmbodied.upper && this._rawEmbodied.lower) {
       /* If desired bound value was given, we return
       the corresponding value. Else we return the
       upper value. */
       const boundSpecificValue = (bound != null)
-        ? this._embodied[bound]
-        : this._embodied.upper
+        ? this._rawEmbodied[bound]
+        : this._rawEmbodied.upper
 
       return boundSpecificValue
     }
 
     // Else we return the unique value available
-    return this._embodied
+    return this._rawEmbodied
   }
 
   /**
@@ -121,24 +121,24 @@ class Hardware {
    * @return {ComponentDamage} The damage value for each damage category.
    */
   getOperatingOneMin (bound = null) {
-    if (!this._operatingOneMin) {
+    if (!this._rawOperatingOneMin) {
       return null
     }
 
     // If bound specific values are available
-    if (this._operatingOneMin.upper && this._operatingOneMin.lower) {
+    if (this._rawOperatingOneMin.upper && this._rawOperatingOneMin.lower) {
       /* If desired bound value was given, we return
       the corresponding value. Else we return the
       upper value. */
       const boundSpecificValue = (bound != null)
-        ? this._operatingOneMin[bound]
-        : this._operatingOneMin.upper
+        ? this._rawOperatingOneMin[bound]
+        : this._rawOperatingOneMin.upper
 
       return boundSpecificValue
     }
 
     // Else we return the unique value available
-    return this._operatingOneMin
+    return this._rawOperatingOneMin
   }
 
   /**
@@ -149,24 +149,24 @@ class Hardware {
    * @return {ComponentDamage} The damage value for each damage category.
    */
   getStandbyOneMin (bound = null) {
-    if (!this._standbyOneMin) {
+    if (!this._rawStandbyOneMin) {
       return null
     }
 
     // If bound specific values are available
-    if (this._standbyOneMin.upper && this._standbyOneMin.lower) {
+    if (this._rawStandbyOneMin.upper && this._rawStandbyOneMin.lower) {
       /* If desired bound value was given, we return
       the corresponding value. Else we return the
       upper value. */
       const boundSpecificValue = (bound != null)
-        ? this._standbyOneMin[bound]
-        : this._standbyOneMin.upper
+        ? this._rawStandbyOneMin[bound]
+        : this._rawStandbyOneMin.upper
 
       return boundSpecificValue
     }
 
     // Else we return the unique value available
-    return this._standbyOneMin
+    return this._rawStandbyOneMin
   }
 
   /**
