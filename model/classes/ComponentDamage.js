@@ -8,11 +8,40 @@ class ComponentDamage {
    * @param {Number} climateChange - The damage value on Climate Change.
    * @param {Number} resources - The damage value on Resources.
    */
-  constructor (humanHealth, ecosystemQuality, climateChange, resources) {
-    this.humanHealth = humanHealth
-    this.ecosystemQuality = ecosystemQuality
-    this.climateChange = climateChange
-    this.resources = resources
+  constructor ({ humanHealth = 0, ecosystemQuality = 0, climateChange = 0, resources = 0 } = {}) {
+    this._humanHealth = humanHealth
+    this._ecosystemQuality = ecosystemQuality
+    this._climateChange = climateChange
+    this._resources = resources
+  }
+
+  get humanHealth () {
+    return this._humanHealth
+  }
+
+  get ecosystemQuality () {
+    return this._ecosystemQuality
+  }
+
+  get climateChange () {
+    return this._climateChange
+  }
+
+  get resources () {
+    return this._resources
+  }
+
+  /**
+   * Apply the given function on the four
+   * damage values.
+   * @param {Function} mutation - The function to apply.
+   */
+  mutate (mutation) {
+    Object.values(this).map(categoryDamage => {
+      categoryDamage = mutation(categoryDamage)
+    })
+
+    return this
   }
 }
 
