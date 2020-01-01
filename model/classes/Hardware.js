@@ -7,25 +7,43 @@ const {
   knownHardwareStandbyTime
 } = require('../../constants/meeting')
 
+const hardwareDatabase = require('../database/meeting/hardware')
+
 class Hardware {
   /**
    * Create a hardware.
-   * @param {Object} hardwareObject - The hardware JSON object coming from database.
+   * @param {Object} name - The key of an entry from the hardware database.
    * @param {Number} size - The optional size attached to the hardware.
    * @param {Float} shareForVisio - The share of the hardware dedicated to visio.
+   * @param {Array} componentsPayload - Components constructor parameters indexed by component name.
    */
-  constructor (hardwareObject, size = 1, shareForVisio = 1) {
-    this._name = hardwareObject.name
-    this._french = hardwareObject.french
+  constructor ({ name, size = 1, shareForVisio = 1, componentsPayload = {} }) {
+    const json = hardwareDatabase[name]
+    this._name = json.name
+    this._french = json.french
     this._size = size
     this._shareForVisio = shareForVisio
-    this._isSizeDependent = hardwareObject.isSizeDependent
-    this._embodied = hardwareObject.embodied
-    this._operatingOneMin = hardwareObject.operatingOneMin
-    this._standbyOneMin = hardwareObject.standbyOneMin
-    this._lifetime = hardwareObject.lifetime
-    this._operatingTimePerDay = hardwareObject.operatingTimePerDay
-    this._components = hardwareObject._components
+    this._isSizeDependent = json.isSizeDependent
+    this._embodied = json.embodied
+    this._operatingOneMin = json.operatingOneMin
+    this._standbyOneMin = json.standbyOneMin
+    this._lifetime = json.lifetime
+    this._operatingTimePerDay = json.operatingTimePerDay
+    this._components = {}
+
+    // Populate components if necessary
+    /* Check if components array is not undefined or null,
+    and is actually an array */
+    if (
+      Array.isArray(json.components) &&
+      json.components.length
+    ) {
+      json.components.forEach(name => {
+        this._components[name] = (!componentsPayload[name])
+          ? new Hardware({ name })
+          : new Hardware(componentsPayload[name])
+      })
+    }
   }
 
   get name () {
@@ -172,7 +190,7 @@ class Hardware {
    * Get the hardware components.
    * E.g. a TV is composed of TV_SCREEN_BASE and
    * TV_SCREEN components.
-   * @return {Array} Components names.
+   * @return {Object} Components indexed by name.
    */
   get components () {
     return this._components
