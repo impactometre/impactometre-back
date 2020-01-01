@@ -44,7 +44,6 @@ const hardware = {
       climateChange: 2.72 * Math.pow(10, -5),
       resources: 0.00703
     },
-    standbyOneMin: 'unknown',
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
   },
