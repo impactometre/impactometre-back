@@ -229,15 +229,32 @@ class Hardware {
    * @return {ComponentDamage} The hardware operating damage.
    */
   computeOperatingDamage () {
-    if (!this._operatingOneMin) {
+    // Handle composite hardware
+    if (Object.keys(this._components).length > 0) {
+      /* For each component, compute its operating damage
+      and add it to composite hardware damage */
+      const operatingDamage = new ComponentDamage()
+      Object.values(this._components).forEach(component => {
+        const componentOperatingDamage = component.computeOperatingDamage()
+        Object.keys(operatingDamage).map((category) => {
+          operatingDamage[category] += componentOperatingDamage[category]
+        })
+      })
+
+      return operatingDamage
+    }
+
+    // Handle no available value
+    if (!this.getOperatingOneMin()) {
       return new ComponentDamage()
     }
+
     // Handle size-dependence
     const operatingDamage = (this._isSizeDependent)
-      ? new ComponentDamage(this._operatingOneMin).mutate(categoryDamage => {
+      ? new ComponentDamage(this.getOperatingOneMin()).mutate(categoryDamage => {
         categoryDamage *= this._shareForVisio * this._size
       })
-      : new ComponentDamage(this._operatingOneMin).mutate(categoryDamage => {
+      : new ComponentDamage(this.getOperatingOneMin()).mutate(categoryDamage => {
         categoryDamage *= this._shareForVisio
       })
 
