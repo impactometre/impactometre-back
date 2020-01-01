@@ -21,3 +21,8 @@ Ce projet respecte les [règles syntaxiques standard](https://standardjs.com/rul
 ```bash
 $ npm run lint
 ```
+
+### Lancer les tests unitaires
+```bash
+$ npm test
+```
