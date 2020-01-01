@@ -8,6 +8,7 @@ const {
 } = require('../../constants/meeting')
 
 const hardwareDatabase = require('../database/meeting/hardware')
+const ComponentDamage = require('./ComponentDamage')
 
 class Hardware {
   /**
@@ -221,6 +222,26 @@ class Hardware {
     const standbyTimePerDay = dayInHours - this.operatingTimePerDay
     const standbyTime = this.lifetime * daysWorkedByYear * standbyTimePerDay
     return standbyTime
+  }
+
+  /**
+   * Compute the hardware operating damage.
+   * @return {ComponentDamage} The hardware operating damage.
+   */
+  computeOperatingDamage () {
+    if (!this._operatingOneMin) {
+      return new ComponentDamage()
+    }
+    // Handle size-dependence
+    const operatingDamage = (this._isSizeDependent)
+      ? new ComponentDamage(this._operatingOneMin).mutate(categoryDamage => {
+        categoryDamage *= this._shareForVisio * this._size
+      })
+      : new ComponentDamage(this._operatingOneMin).mutate(categoryDamage => {
+        categoryDamage *= this._shareForVisio
+      })
+
+    return operatingDamage
   }
 }
 
