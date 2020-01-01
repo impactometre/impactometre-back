@@ -15,7 +15,7 @@ const hardware = {
     isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(1.55, -10),
-      ecosystemQuality: Math.pow(7.16, -5),
+      ecosystemQuality: 7.16 * Math.pow(10, -5),
       climateChange: 0.000124,
       resources: 0.032
     },
@@ -34,14 +34,14 @@ const hardware = {
     },
     operatingWithoutVisioOneMin: {
       humanHealth: Math.pow(1.66, -11),
-      ecosystemQuality: Math.pow(7.63, -6),
-      climateChange: Math.pow(1.32, -5),
+      ecosystemQuality: 7.63 * Math.pow(10, -6),
+      climateChange: 1.32 * Math.pow(10, -5),
       resources: 0.00341
     },
     operatingOneMin: {
       humanHealth: Math.pow(3.42, -11),
-      ecosystemQuality: Math.pow(1.57, -5),
-      climateChange: Math.pow(2.72, -5),
+      ecosystemQuality: 1.57 * Math.pow(10, -5),
+      climateChange: 2.72 * Math.pow(10, -5),
       resources: 0.00703
     },
     standbyOneMin: 'unknown',
@@ -79,7 +79,7 @@ const hardware = {
     french: 'clavier',
     isSizeDependent: false,
     embodied: {
-      humanHealth: Math.pow(5.01, -5),
+      humanHealth: 5.01 * Math.pow(10, -5),
       ecosystemQuality: 19.6,
       climateChange: 31.5,
       resources: 453
@@ -92,7 +92,7 @@ const hardware = {
     french: 'souris',
     isSizeDependent: false,
     embodied: {
-      humanHealth: Math.pow(1.06, -5),
+      humanHealth: 1.06 * Math.pow(10, -5),
       ecosystemQuality: 4.73,
       climateChange: 6.56,
       resources: 93.5
@@ -112,8 +112,8 @@ const hardware = {
     },
     operatingOneMin: {
       humanHealth: Math.pow(4.14, -11),
-      ecosystemQuality: Math.pow(1.91, -5),
-      climateChange: Math.pow(3.3, -5),
+      ecosystemQuality: 1.91 * Math.pow(10, -5),
+      climateChange: 3.3 * Math.pow(10, -5),
       resources: 0.00852
     },
     lifetime: hardwareLifetime.DESKTOP,
@@ -127,7 +127,7 @@ const hardware = {
     french: 'équipement d\'accès Internet',
     isSizeDependent: false,
     embodied: {
-      humanHealth: Math.pow(1.26, -5),
+      humanHealth: 1.26 * Math.pow(10, -5),
       ecosystemQuality: 5.6,
       climateChange: 7.21,
       resources: 103
@@ -144,8 +144,8 @@ const hardware = {
     isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(2.59, -12),
-      ecosystemQuality: Math.pow(1.19, -6),
-      climateChange: Math.pow(2.06, -6),
+      ecosystemQuality: 1.19 * Math.pow(10, -6),
+      climateChange: 2.06 * Math.pow(10, -6),
       resources: 0.000533
     },
     lifetime: hardwareLifetime.DESKTOP,
@@ -157,8 +157,8 @@ const hardware = {
     isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(9.84, -12),
-      ecosystemQuality: Math.pow(4.53, -6),
-      climateChange: Math.pow(7.84, -6),
+      ecosystemQuality: 4.53 * Math.pow(10, -6),
+      climateChange: 7.84 * Math.pow(10, -6),
       resources: 0.00202
     },
     lifetime: hardwareLifetime.DESKTOP,
@@ -169,14 +169,14 @@ const hardware = {
     french: 'projecteur',
     isSizeDependent: false,
     embodied: {
-      humanHealth: Math.pow(8.04, -5),
+      humanHealth: 8.04 * Math.pow(10, -5),
       ecosystemQuality: 23.9,
       climateChange: 52.5,
       resources: 821
     },
     operatingOneMin: {
       humanHealth: Math.pow(1.4, -10),
-      ecosystemQuality: Math.pow(6.44, -5),
+      ecosystemQuality: 6.44 * Math.pow(10, -5),
       climateChange: 0.000111,
       resources: 0.0288
     },
@@ -189,9 +189,9 @@ const hardware = {
     french: 'télévision sauf écran',
     isSizeDependent: false,
     operatingOneMin: {
-      humanHealth: Math.pow(2.07, -11),
-      ecosystemQuality: Math.pow(9.54, -6),
-      climateChange: Math.pow(1.65, -5),
+      humanHealth: 2.07 * Math.pow(10, -11),
+      ecosystemQuality: 9.54 * Math.pow(10, -6),
+      climateChange: 1.65 * Math.pow(10, -5),
       resources: 0.00426
     },
     lifetime: hardwareLifetime.DESKTOP,
@@ -203,8 +203,8 @@ const hardware = {
     // Damage is given for one meter square
     isSizeDependent: true,
     operatingOneMin: {
-      humanHealth: Math.pow(1.78, -10),
-      ecosystemQuality: Math.pow(8.21, -5),
+      humanHealth: 1.78 * Math.pow(10, -10),
+      ecosystemQuality: 8.21 * Math.pow(10, -5),
       climateChange: 0.000142,
       resources: 0.0367
     },
@@ -229,14 +229,14 @@ const hardware = {
     isSizeDependent: false,
     standbyOneMin: {
       humanHealth: Math.pow(5.9, -12),
-      ecosystemQuality: Math.pow(2.72, -6),
-      climateChange: Math.pow(4.7, -6),
+      ecosystemQuality: 2.72 * Math.pow(10, -6),
+      climateChange: 4.7 * Math.pow(10, -6),
       resources: 0.00121
     },
     operatingOneMin: {
       humanHealth: Math.pow(8.8, -12),
-      ecosystemQuality: Math.pow(4.06, -6),
-      climateChange: Math.pow(7.02, -6),
+      ecosystemQuality: 4.06 * Math.pow(10, -6),
+      climateChange: 7.02 * Math.pow(10, -6),
       resources: 0.00181
     },
     lifetime: hardwareLifetime.DESKTOP,
@@ -248,8 +248,8 @@ const hardware = {
     isSizeDependent: false,
     operatingOneMin: {
       humanHealth: Math.pow(4.04, -12),
-      ecosystemQuality: Math.pow(1.86, -6),
-      climateChange: Math.pow(3.22, -6),
+      ecosystemQuality: 1.86 * Math.pow(10, -6),
+      climateChange: 3.22 * Math.pow(10, -6),
       resources: 0.000831
     },
     lifetime: hardwareLifetime.DESKTOP,
@@ -260,7 +260,7 @@ const hardware = {
     french: 'câble Logitech',
     isSizeDependent: false,
     embodied: {
-      humanHealth: Math.pow(3.53, -6),
+      humanHealth: 3.53 * Math.pow(10, -6),
       ecosystemQuality: 3.37,
       climateChange: 1.16,
       resources: 18.5
@@ -289,14 +289,14 @@ const hardware = {
     operatingOneMin: {
       upper: {
         humanHealth: Math.pow(8.28, -11),
-        ecosystemQuality: Math.pow(3.82, -5),
-        climateChange: Math.pow(6.6, -5),
+        ecosystemQuality: 3.82 * Math.pow(10, -5),
+        climateChange: 6.6 * Math.pow(10, -5),
         resources: 0.017
       },
       lower: {
         humanHealth: Math.pow(2.69, -11),
-        ecosystemQuality: Math.pow(1.24, -5),
-        climateChange: Math.pow(2.15, -5),
+        ecosystemQuality: 1.24 * Math.pow(10, -5),
+        climateChange: 2.15 * Math.pow(10, -5),
         resources: 0.00554
       }
     },
@@ -310,7 +310,7 @@ const hardware = {
     french: 'câble d\'alimentation 1 m',
     isSizeDependent: true,
     embodied: {
-      humanHealth: Math.pow(8.8, -7),
+      humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
       climateChange: 0.34,
       resources: 6.83
@@ -323,7 +323,7 @@ const hardware = {
     french: 'câble Ethernet 1 m',
     isSizeDependent: true,
     embodied: {
-      humanHealth: Math.pow(1.42, -7),
+      humanHealth: 1.42 * Math.pow(10, -7),
       ecosystemQuality: 0.0999,
       climateChange: 0.0534,
       resources: 1.06
@@ -336,7 +336,7 @@ const hardware = {
     french: 'câble HDMI 1 m',
     isSizeDependent: true,
     embodied: {
-      humanHealth: Math.pow(8.8, -7),
+      humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
       climateChange: 0.34,
       resources: 6.83
@@ -349,7 +349,7 @@ const hardware = {
     french: 'câble jack 1 m',
     isSizeDependent: true,
     embodied: {
-      humanHealth: Math.pow(1.7, -6),
+      humanHealth: 1.7 * Math.pow(10, -6),
       ecosystemQuality: 1.63,
       climateChange: 0.551,
       resources: 8.73
@@ -362,7 +362,7 @@ const hardware = {
     french: 'câble VGA 1 m',
     isSizeDependent: true,
     embodied: {
-      humanHealth: Math.pow(8.8, -7),
+      humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
       climateChange: 0.34,
       resources: 6.83
