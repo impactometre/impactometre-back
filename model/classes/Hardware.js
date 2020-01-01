@@ -94,7 +94,7 @@ class Hardware {
    */
   getEmbodied (bound = null) {
     if (!this._embodied) {
-      return 'unknown'
+      return null
     }
 
     // If bound specific values are available
@@ -122,7 +122,7 @@ class Hardware {
    */
   getOperatingOneMin (bound = null) {
     if (!this._operatingOneMin) {
-      return 'unknown'
+      return null
     }
 
     // If bound specific values are available
@@ -150,7 +150,7 @@ class Hardware {
    */
   getStandbyOneMin (bound = null) {
     if (!this._standbyOneMin) {
-      return 'unknown'
+      return null
     }
 
     // If bound specific values are available
