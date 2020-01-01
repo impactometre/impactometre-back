@@ -13,17 +13,59 @@ const {
 
 describe('Hardware class', () => {
   describe('#constructor()', () => {
-    it('should create an Hardware instance for each hardware json', () => {
-      Object.values(hardwareDatabase).forEach(json => {
-        const instance = new Hardware(json)
-        assert.strictEqual(instance._name, json.name)
-        assert.strictEqual(instance._french, json.french)
-        assert.strictEqual(instance._embodied, json.embodied)
-        assert.strictEqual(instance._operatingOneMin, json.operatingOneMin)
-        assert.strictEqual(instance._standbyOneMin, json.standbyOneMin)
-        assert.strictEqual(instance._lifetime, json.lifetime)
-        assert.strictEqual(instance._operatingTimePerDay, json.operatingTimePerDay)
+    it('should create an Hardware instance for each non-composite hardware', () => {
+      Object.values(hardwareDatabase).filter(json => {
+        return !(
+          Array.isArray(json.components) &&
+          json.components.length
+        )
+      }).forEach(json => {
+        const instance = new Hardware({ name: json.name })
+        assert.notStrictEqual({}, instance._components)
       })
+    })
+    it('should create an Hardware instance for each composite hardware', () => {
+      Object.values(hardwareDatabase).filter(json => {
+        return (
+          Array.isArray(json.components) &&
+          json.components.length
+        )
+      }).forEach(json => {
+        const instance = new Hardware({ name: json.name })
+
+        // Compute expected components
+        const expected = {}
+        json.components.forEach(name => {
+          expected[name] = new Hardware({ name })
+        })
+
+        assert.notStrictEqual(expected, instance._components)
+      })
+    })
+    it('should create a composite hardware instance using components payload', () => {
+      const componentsPayload = {}
+      componentsPayload[hardwareDatabase.TV_SCREEN.name] = {
+        name: hardwareDatabase.TV_SCREEN.name,
+        size: 2
+      }
+
+      const instance = new Hardware({
+        name: hardwareDatabase.TV.name,
+        componentsPayload
+      })
+
+      // Compute expected components
+      const expected = {}
+      expected[hardwareDatabase.TV_SCREEN_BASE.name] = new Hardware({
+        name: hardwareDatabase.TV_SCREEN_BASE.name
+      })
+
+      expected[hardwareDatabase.TV_SCREEN.name] = new Hardware({
+        name: hardwareDatabase.TV_SCREEN.name,
+        size: 2
+      })
+
+      assert.notStrictEqual(expected, instance._components)
     })
   })
   describe('#computeOperatingTime()', () => {
@@ -32,7 +74,7 @@ describe('Hardware class', () => {
       Object.values(hardwareDatabase).filter(json => {
         return hardwaresWithKnownOperatingTime.includes(json.name)
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           knownHardwareOperatingTime[instance._name],
           instance.computeOperatingTime()
@@ -48,7 +90,7 @@ describe('Hardware class', () => {
             json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
           )
         }).forEach(json => {
-          const instance = new Hardware(json)
+          const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             8050,
             instance.computeOperatingTime()
@@ -63,7 +105,7 @@ describe('Hardware class', () => {
             json.operatingTimePerDay === hardwareOperatingTimePerDay.LOGITECH_KIT
           )
         }).forEach(json => {
-          const instance = new Hardware(json)
+          const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             690,
             instance.computeOperatingTime()
@@ -78,7 +120,7 @@ describe('Hardware class', () => {
             json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
           )
         }).forEach(json => {
-          const instance = new Hardware(json)
+          const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             32200,
             instance.computeOperatingTime()
@@ -93,7 +135,7 @@ describe('Hardware class', () => {
       Object.values(hardwareDatabase).filter(json => {
         return hardwaresWithKnownStandbyTime.includes(json.name)
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           knownHardwareStandbyTime[instance._name],
           instance.computeOperatingTime()
@@ -109,7 +151,7 @@ describe('Hardware class', () => {
             json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
           )
         }).forEach(json => {
-          const instance = new Hardware(json)
+          const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             19550,
             instance.computeStandbyTime()
@@ -124,7 +166,7 @@ describe('Hardware class', () => {
             json.operatingTimePerDay === hardwareOperatingTimePerDay.LOGITECH_KIT
           )
         }).forEach(json => {
-          const instance = new Hardware(json)
+          const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             26910,
             instance.computeStandbyTime()
@@ -139,7 +181,7 @@ describe('Hardware class', () => {
             json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
           )
         }).forEach(json => {
-          const instance = new Hardware(json)
+          const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             78200,
             instance.computeStandbyTime()
@@ -153,7 +195,7 @@ describe('Hardware class', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (!json.embodied)
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           'unknown',
           instance.getEmbodied()
@@ -168,7 +210,7 @@ describe('Hardware class', () => {
           !(json.embodied.upper)
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.embodied,
           instance.getEmbodied()
@@ -183,7 +225,7 @@ describe('Hardware class', () => {
           json.embodied.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.embodied.lower,
           instance.getEmbodied(hardwareBound.LOWER)
@@ -198,7 +240,7 @@ describe('Hardware class', () => {
           json.embodied.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.embodied.upper,
           instance.getEmbodied(hardwareBound.UPPER)
@@ -213,7 +255,7 @@ describe('Hardware class', () => {
           json.embodied.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.embodied.upper,
           instance.getEmbodied()
@@ -226,7 +268,7 @@ describe('Hardware class', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (!json.operatingOneMin)
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           'unknown',
           instance.getOperatingOneMin()
@@ -241,7 +283,7 @@ describe('Hardware class', () => {
           !(json.operatingOneMin.upper)
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.operatingOneMin,
           instance.getOperatingOneMin()
@@ -256,7 +298,7 @@ describe('Hardware class', () => {
           json.operatingOneMin.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.operatingOneMin.lower,
           instance.getOperatingOneMin(hardwareBound.LOWER)
@@ -271,7 +313,7 @@ describe('Hardware class', () => {
           json.operatingOneMin.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.operatingOneMin.upper,
           instance.getOperatingOneMin(hardwareBound.UPPER)
@@ -286,7 +328,7 @@ describe('Hardware class', () => {
           json.operatingOneMin.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.operatingOneMin.upper,
           instance.getOperatingOneMin()
@@ -299,7 +341,7 @@ describe('Hardware class', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (!json.standbyOneMin)
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           'unknown',
           instance.getStandbyOneMin()
@@ -314,7 +356,7 @@ describe('Hardware class', () => {
           !(json.standbyOneMin.upper)
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.standbyOneMin,
           instance.getStandbyOneMin()
@@ -329,7 +371,7 @@ describe('Hardware class', () => {
           json.standbyOneMin.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.standbyOneMin.lower,
           instance.getStandbyOneMin(hardwareBound.LOWER)
@@ -344,7 +386,7 @@ describe('Hardware class', () => {
           json.standbyOneMin.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.standbyOneMin.upper,
           instance.getStandbyOneMin(hardwareBound.UPPER)
