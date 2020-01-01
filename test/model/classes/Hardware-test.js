@@ -192,13 +192,13 @@ describe('Hardware class', () => {
     })
   })
   describe('#getEmbodied()', () => {
-    it('should return \'unknown\' if no available value', () => {
+    it('should return null if no available value', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (!json.embodied)
       }).forEach(json => {
         const instance = new Hardware({ name: json.name })
         assert.strictEqual(
-          'unknown',
+          null,
           instance.getEmbodied()
         )
       })
@@ -265,13 +265,13 @@ describe('Hardware class', () => {
     })
   })
   describe('#getOperatingOneMin()', () => {
-    it('should return \'unknown\' if no available value', () => {
+    it('should return null if no available value', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (!json.operatingOneMin)
       }).forEach(json => {
         const instance = new Hardware({ name: json.name })
         assert.strictEqual(
-          'unknown',
+          null,
           instance.getOperatingOneMin()
         )
       })
@@ -338,13 +338,13 @@ describe('Hardware class', () => {
     })
   })
   describe('#getStandbyOneMin()', () => {
-    it('should return \'unknown\' if no available value', () => {
+    it('should return null if no available value', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (!json.standbyOneMin)
       }).forEach(json => {
         const instance = new Hardware({ name: json.name })
         assert.strictEqual(
-          'unknown',
+          null,
           instance.getStandbyOneMin()
         )
       })
@@ -413,8 +413,15 @@ describe('Hardware class', () => {
   describe('#computeOperatingDamage()', () => {
     it('should return damage object with null values if no damage value available', () => {
       Object.values(hardwareDatabase)
-        .filter(json => !json.operatingOneMin)
-        .forEach(json => {
+        .filter(json => {
+          return (
+            !json.operatingOneMin &&
+            !(
+              Array.isArray(json.components) &&
+              json.components.length
+            )
+          )
+        }).forEach(json => {
           // Compute expected damage
           const expected = new ComponentDamage()
 
