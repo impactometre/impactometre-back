@@ -21,7 +21,7 @@ describe('Hardware class', () => {
         )
       }).forEach(json => {
         const instance = new Hardware({ name: json.name })
-        assert.notStrictEqual({}, instance._components)
+        assert.deepStrictEqual({}, instance._components)
       })
     })
     it('should create an Hardware instance for each composite hardware', () => {
@@ -39,7 +39,7 @@ describe('Hardware class', () => {
           expected[name] = new Hardware({ name })
         })
 
-        assert.notStrictEqual(expected, instance._components)
+        assert.deepStrictEqual(expected, instance._components)
       })
     })
     it('should create a composite hardware instance using components payload', () => {
@@ -65,7 +65,7 @@ describe('Hardware class', () => {
         size: 2
       })
 
-      assert.notStrictEqual(expected, instance._components)
+      assert.deepStrictEqual(expected, instance._components)
     })
   })
   describe('#computeOperatingTime()', () => {
@@ -401,7 +401,7 @@ describe('Hardware class', () => {
           json.standbyOneMin.upper
         )
       }).forEach(json => {
-        const instance = new Hardware(json)
+        const instance = new Hardware({ name: json.name })
         assert.strictEqual(
           json.standbyOneMin.upper,
           instance.getStandbyOneMin()
