@@ -226,9 +226,10 @@ class Hardware {
 
   /**
    * Compute the hardware operating damage.
+   * @param {String} - The optional bound.
    * @return {ComponentDamage} The hardware operating damage.
    */
-  computeOperatingDamage () {
+  computeOperatingDamage (bound = null) {
     // Handle composite hardware
     if (Object.keys(this._components).length > 0) {
       /* For each component, compute its operating damage
@@ -251,10 +252,10 @@ class Hardware {
 
     // Handle size-dependence
     const operatingDamage = (this._isSizeDependent)
-      ? new ComponentDamage(this.getOperatingOneMin()).mutate(categoryDamage => {
+      ? new ComponentDamage(this.getOperatingOneMin(bound)).mutate(categoryDamage => {
         categoryDamage *= this._shareForVisio * this._size
       })
-      : new ComponentDamage(this.getOperatingOneMin()).mutate(categoryDamage => {
+      : new ComponentDamage(this.getOperatingOneMin(bound)).mutate(categoryDamage => {
         categoryDamage *= this._shareForVisio
       })
 
