@@ -240,20 +240,20 @@ class Hardware {
   }
 
   /**
-   * Compute the damage.
+   * Compute a damage of a given type.
    * @param {String} - The damage type.
    * @param {Number} - The meeting duration (in minutes).
    * @param {String} - The optional bound.
    * @return {ComponentDamage} The hardware operating damage.
    */
-  computeDamage (damageType, meetingDuration, bound = null) {
+  computeTypedDamage (damageType, meetingDuration, bound = null) {
     // Hardware may be composed of other hardwares
     if (Object.keys(this._components).length > 0) {
       /* For each component, compute its operating damage
       and add it to composite hardware damage */
       const damage = new ComponentDamage()
       Object.values(this._components).forEach(component => {
-        const componentDamage = component.computeDamage(damageType, meetingDuration, bound)
+        const componentDamage = component.computeTypedDamage(damageType, meetingDuration, bound)
         Object.keys(damage).map((category) => {
           damage[category] += componentDamage[category]
         })

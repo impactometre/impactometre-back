@@ -369,7 +369,7 @@ describe('Hardware class', () => {
       })
     })
   })
-  describe('#computeDamage()', () => {
+  describe('#computeTypedDamage()', () => {
     const meetingDuration = 60
     it('should return damage object with null values if no damage value available', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -394,7 +394,7 @@ describe('Hardware class', () => {
             const expected = new ComponentDamage()
 
             const instance = new Hardware({ name: json.name })
-            assert.deepStrictEqual(expected, instance.computeDamage(damageType, meetingDuration))
+            assert.deepStrictEqual(expected, instance.computeTypedDamage(damageType, meetingDuration))
           })
       })
     })
@@ -432,7 +432,7 @@ describe('Hardware class', () => {
               })
             }
 
-            assert.deepStrictEqual(expected, instance.computeDamage(damageType, meetingDuration))
+            assert.deepStrictEqual(expected, instance.computeTypedDamage(damageType, meetingDuration))
           })
       })
     })
@@ -470,7 +470,7 @@ describe('Hardware class', () => {
               })
             }
 
-            assert.deepStrictEqual(expected, instance.computeDamage(damageType, meetingDuration))
+            assert.deepStrictEqual(expected, instance.computeTypedDamage(damageType, meetingDuration))
           })
       })
     })
@@ -487,14 +487,14 @@ describe('Hardware class', () => {
             const expected = new ComponentDamage()
             json.components.forEach(name => {
               const component = new Hardware({ name })
-              const componentDamage = component.computeDamage(damageType, meetingDuration)
+              const componentDamage = component.computeTypedDamage(damageType, meetingDuration)
               Object.keys(expected).map(category => {
                 expected[category] += componentDamage[category]
               })
             })
 
             const instance = new Hardware({ name: json.name })
-            assert.deepStrictEqual(expected, instance.computeDamage(damageType, meetingDuration))
+            assert.deepStrictEqual(expected, instance.computeTypedDamage(damageType, meetingDuration))
           })
       })
     })
