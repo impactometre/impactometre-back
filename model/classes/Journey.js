@@ -91,7 +91,7 @@ class Journey {
     const embodiedDamage = new ComponentDamage()
 
     // Compute damage for each sphere (calculation mode is by personKm or by kilometer)
-    if(this.mean.isComputedByPersonKm) {
+    if (this.mean.isComputedByPersonKm) {
       // Compute the personKilometers amount
       const personKmAmont = this.distance * this.numberOfPeople
 
@@ -103,7 +103,7 @@ class Journey {
         embodiedDamage[category] += transportationMeanDamage[category] * this.distance
       })
     }
-    
+
     // Return the journey embodied damage
     return embodiedDamage
   }
