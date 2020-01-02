@@ -310,144 +310,103 @@ describe('Hardware class', () => {
       })
     })
   })
-  describe('#computeOperatingDamage()', () => {
+  describe('#computeDamage()', () => {
     it('should return damage object with null values if no damage value available', () => {
-      Object.values(hardwareDatabase)
-        .filter(json => {
-          return (
-            !json.operatingOneMin &&
-            !(
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        if (
+          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_STANDBY
+        ) {
+          damageType = 'embodied'
+        }
+
+        Object.values(hardwareDatabase)
+          .filter(json => {
+            return (
+              !json[damageType] &&
+              !(
+                Array.isArray(json.components) &&
+                json.components.length
+              )
+            )
+          }).forEach(json => {
+            // Compute expected damage
+            const expected = new ComponentDamage()
+
+            const instance = new Hardware({ name: json.name })
+            assert.deepStrictEqual(expected, instance.computeDamage(damageType, 60))
+          })
+      })
+    })
+    it('should compute the damage of a non size-dependent hardware', () => {
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        if (
+          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_STANDBY
+        ) {
+          damageType = 'embodied'
+        }
+
+        Object.values(hardwareDatabase)
+          .filter(json => json[damageType] && !json.isSizeDependent)
+          .forEach(json => {
+            const instance = new Hardware({ name: json.name })
+
+            // Compute expected damage
+            const expected = new ComponentDamage(instance.getDamage(damageType)).mutate(categoryDamage => {
+              return categoryDamage * instance._shareForVisio * 60
+            })
+
+            assert.deepStrictEqual(expected, instance.computeDamage(damageType, 60))
+          })
+      })
+    })
+    it('should compute the damage of a size-dependent hardware', () => {
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        if (
+          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_STANDBY
+        ) {
+          damageType = 'embodied'
+        }
+
+        Object.values(hardwareDatabase)
+          .filter(json => json[damageType] && json.isSizeDependent)
+          .forEach(json => {
+            const instance = new Hardware({ name: json.name })
+
+            // Compute expected damage
+            const expected = new ComponentDamage(instance.getDamage(damageType)).mutate(categoryDamage => {
+              return categoryDamage * instance._shareForVisio * instance._size * 60
+            })
+
+            assert.deepStrictEqual(expected, instance.computeDamage(damageType, 60))
+          })
+      })
+    })
+    it('should compute the damage of a composite hardware', () => {
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        Object.values(hardwareDatabase)
+          .filter(json => {
+            return (
               Array.isArray(json.components) &&
               json.components.length
             )
-          )
-        }).forEach(json => {
-          // Compute expected damage
-          const expected = new ComponentDamage()
-
-          const instance = new Hardware({ name: json.name })
-          assert.deepStrictEqual(expected, instance.computeOperatingDamage(60))
-        })
-    })
-    it('should compute the damage of a non size-dependent hardware', () => {
-      Object.values(hardwareDatabase)
-        .filter(json => json.operatingOneMin && !json.isSizeDependent)
-        .forEach(json => {
-          const instance = new Hardware({ name: json.name })
-
-          // Compute expected damage
-          const expected = new ComponentDamage(instance.getOperatingOneMin()).mutate(categoryDamage => {
-            return categoryDamage * instance._shareForVisio * 60
-          })
-
-          assert.deepStrictEqual(expected, instance.computeOperatingDamage(60))
-        })
-    })
-    it('should compute the damage of a size-dependent hardware', () => {
-      Object.values(hardwareDatabase)
-        .filter(json => json.operatingOneMin && json.isSizeDependent)
-        .forEach(json => {
-          const instance = new Hardware({ name: json.name })
-
-          // Compute expected damage
-          const expected = new ComponentDamage(instance.getOperatingOneMin()).mutate(categoryDamage => {
-            return categoryDamage * instance._shareForVisio * instance._size * 60
-          })
-
-          assert.deepStrictEqual(expected, instance.computeOperatingDamage(60))
-        })
-    })
-    it('should compute the damage of a composite hardware', () => {
-      Object.values(hardwareDatabase)
-        .filter(json => {
-          return (
-            Array.isArray(json.components) &&
-            json.components.length
-          )
-        }).forEach(json => {
-          // Compute expected damage
-          const expected = new ComponentDamage()
-          json.components.forEach(name => {
-            const component = new Hardware({ name })
-            const componentOperatingDamage = component.computeOperatingDamage(60)
-            Object.keys(expected).map(category => {
-              expected[category] += componentOperatingDamage[category]
+          }).forEach(json => {
+            // Compute expected damage
+            const expected = new ComponentDamage()
+            json.components.forEach(name => {
+              const component = new Hardware({ name })
+              const componentDamage = component.computeDamage(damageType, 60)
+              Object.keys(expected).map(category => {
+                expected[category] += componentDamage[category]
+              })
             })
+
+            const instance = new Hardware({ name: json.name })
+            assert.deepStrictEqual(expected, instance.computeDamage(damageType, 60))
           })
-
-          const instance = new Hardware({ name: json.name })
-          assert.deepStrictEqual(expected, instance.computeOperatingDamage(60))
-        })
-    })
-  })
-  describe('#computeStandbyDamage()', () => {
-    it('should return damage object with null values if no damage value available', () => {
-      Object.values(hardwareDatabase)
-        .filter(json => {
-          return (
-            !json.standbyOneMin &&
-            !(
-              Array.isArray(json.components) &&
-              json.components.length
-            )
-          )
-        }).forEach(json => {
-          // Compute expected damage
-          const expected = new ComponentDamage()
-
-          const instance = new Hardware({ name: json.name })
-          assert.deepStrictEqual(expected, instance.computeStandbyDamage(60))
-        })
-    })
-    it('should compute the damage of a non size-dependent hardware', () => {
-      Object.values(hardwareDatabase)
-        .filter(json => json.standbyOneMin && !json.isSizeDependent)
-        .forEach(json => {
-          const instance = new Hardware({ name: json.name })
-
-          // Compute expected damage
-          const expected = new ComponentDamage(instance.getStandbyOneMin()).mutate(categoryDamage => {
-            return categoryDamage * instance._shareForVisio * 60
-          })
-
-          assert.deepStrictEqual(expected, instance.computeStandbyDamage(60))
-        })
-    })
-    it('should compute the damage of a size-dependent hardware', () => {
-      Object.values(hardwareDatabase)
-        .filter(json => json.standbyOneMin && json.isSizeDependent)
-        .forEach(json => {
-          const instance = new Hardware({ name: json.name })
-
-          // Compute expected damage
-          const expected = new ComponentDamage(instance.getStandbyOneMin()).mutate(categoryDamage => {
-            return categoryDamage * instance._shareForVisio * instance._size * 60
-          })
-
-          assert.deepStrictEqual(expected, instance.computeStandbyDamage(60))
-        })
-    })
-    it('should compute the damage of a composite hardware', () => {
-      Object.values(hardwareDatabase)
-        .filter(json => {
-          return (
-            Array.isArray(json.components) &&
-            json.components.length
-          )
-        }).forEach(json => {
-          // Compute expected damage
-          const expected = new ComponentDamage()
-          json.components.forEach(name => {
-            const component = new Hardware({ name })
-            const componentStandbyDamage = component.computeStandbyDamage(60)
-            Object.keys(expected).map(category => {
-              expected[category] += componentStandbyDamage[category]
-            })
-          })
-
-          const instance = new Hardware({ name: json.name })
-          assert.deepStrictEqual(expected, instance.computeStandbyDamage(60))
-        })
+      })
     })
   })
 })
