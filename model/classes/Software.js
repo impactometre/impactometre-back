@@ -61,8 +61,8 @@ class Software {
   /**
    * Get the software file size in bits (it is originaly in Mo)
    */
-  fileSizeInBits () {
-    return this.fileSize * 8 * 1000000
+  fileSizeMoToBits () {
+    return this.fileSize * meetingEnums.bitsInOctet * meetingEnums.octetsInMo
   }
 
   /**
@@ -170,7 +170,7 @@ class Software {
     const networkEnergeticIntensity = Software.getNetworkEnergeticIntensity(networkBound)
 
     // We get the file size in bits
-    const fileSize = this.fileSizeInBits()
+    const fileSize = this.fileSizeMoToBits()
 
     // We compute the total damage for each damage shere (in damageUnit)
     const humanHealthDamage = networkEnergeticIntensity.humanHealth * fileSize * instancesNumber

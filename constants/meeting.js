@@ -1,5 +1,8 @@
 'use strict'
 
+const bitsInOctet = 8
+const octetsInMo = 1000000
+
 const networkEnergeticIntensityBound = {
   UPPER: 'upper',
   LOWER: 'lower'
@@ -63,3 +66,5 @@ exports.hardware = hardware
 exports.transportationMeans = transportationMeans
 exports.networkEnergeticIntensityBound = networkEnergeticIntensityBound
 exports.bandwidthBound = bandwidthBound
+exports.bitsInOctet = bitsInOctet
+exports.octetsInMo = octetsInMo

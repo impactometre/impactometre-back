@@ -56,12 +56,12 @@ describe('Software services', () => {
   describe('#computeEmbodiedDamage (instancesNumber, networkBound)', () => {
     const renavisio = new Software(softwareDatabase.RENAVISIO)
     const networkEnergeticIntensityUpper = networkDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
-    const fileSizeInBits = renavisio.fileSizeInBits()
+    const fileSizeMoToBits = renavisio.fileSizeMoToBits()
     const embodiedDamage = new ComponentDamage(
-      networkEnergeticIntensityUpper.humanHealth * fileSizeInBits * 5,
-      networkEnergeticIntensityUpper.ecosystemQuality * fileSizeInBits * 5,
-      networkEnergeticIntensityUpper.climateChange * fileSizeInBits * 5,
-      networkEnergeticIntensityUpper.resources * fileSizeInBits * 5
+      networkEnergeticIntensityUpper.humanHealth * fileSizeMoToBits * 5,
+      networkEnergeticIntensityUpper.ecosystemQuality * fileSizeMoToBits * 5,
+      networkEnergeticIntensityUpper.climateChange * fileSizeMoToBits * 5,
+      networkEnergeticIntensityUpper.resources * fileSizeMoToBits * 5
     )
     it('should return the solftware download damage for 5 people with Renaviso', () => {
       assert.deepStrictEqual(
