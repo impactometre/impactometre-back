@@ -86,14 +86,14 @@ class Meeting {
    * Setter The software used for the meeting.
    * @see {Sofware}
    */
-  get software (software) {
+  set software (software) {
     this._software = software
   }
 
   /**
    * Setter of the meeting duration in minutes.
    */
-  get meetingDuration (meetingDuration) {
+  set meetingDuration (meetingDuration) {
     this._meetingDuration = meetingDuration
   }
 
