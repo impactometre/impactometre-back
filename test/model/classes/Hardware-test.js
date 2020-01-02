@@ -76,7 +76,7 @@ describe('Hardware class', () => {
       it('should return the known value if exists in constants', () => {
         Object.values(hardwareDamageTypes).filter(damageType => {
           return (
-            damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+            damageType === hardwareDamageTypes.EMBODIED_VISIO ||
             damageType === hardwareDamageTypes.OPERATING_VISIO
           )
         }).forEach(damageType => {
@@ -95,7 +95,7 @@ describe('Hardware class', () => {
         it('when lifetime and operatingTimePerDay are based on DESKTOP values', () => {
           Object.values(hardwareDamageTypes).filter(damageType => {
             return (
-              damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+              damageType === hardwareDamageTypes.EMBODIED_VISIO ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
             )
           }).forEach(damageType => {
@@ -117,7 +117,7 @@ describe('Hardware class', () => {
         it('when lifetime is based on DESKTOP value and operatingTimePerDay on LOGITECH_KIT', () => {
           Object.values(hardwareDamageTypes).filter(damageType => {
             return (
-              damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+              damageType === hardwareDamageTypes.EMBODIED_VISIO ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
             )
           }).forEach(damageType => {
@@ -139,7 +139,7 @@ describe('Hardware class', () => {
         it('when lifetime is based on POWER_CABLE_ONE_METER value and operatingTimePerDay on DESKTOP', () => {
           Object.values(hardwareDamageTypes).filter(damageType => {
             return (
-              damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+              damageType === hardwareDamageTypes.EMBODIED_VISIO ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
             )
           }).forEach(damageType => {
@@ -254,7 +254,7 @@ describe('Hardware class', () => {
     it('should return null if no available value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
-          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
           damageType = 'embodied'
@@ -274,7 +274,7 @@ describe('Hardware class', () => {
     it('should return the unique available value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
-          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
           damageType = 'embodied'
@@ -298,7 +298,7 @@ describe('Hardware class', () => {
     it('should return the matching lower value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
-          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
           damageType = 'embodied'
@@ -322,7 +322,7 @@ describe('Hardware class', () => {
     it('should return the matching upper value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
-          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
           damageType = 'embodied'
@@ -346,7 +346,7 @@ describe('Hardware class', () => {
     it('should return the upper value by default', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
-          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
           damageType = 'embodied'
@@ -372,7 +372,7 @@ describe('Hardware class', () => {
     it('should return damage object with null values if no damage value available', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
-          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
           damageType = 'embodied'
@@ -399,7 +399,7 @@ describe('Hardware class', () => {
     it('should compute the damage of a non size-dependent hardware', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
-          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
           damageType = 'embodied'
@@ -422,7 +422,7 @@ describe('Hardware class', () => {
     it('should compute the damage of a size-dependent hardware', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
-          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
           damageType = 'embodied'

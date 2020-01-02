@@ -6,7 +6,7 @@ const hardwareBound = {
 }
 
 const hardwareDamageTypes = {
-  EMBODIED_OPERATING: 'embodiedOperating',
+  EMBODIED_VISIO: 'embodiedOperating',
   EMBODIED_STANDBY: 'embodiedStandby',
   OPERATING_VISIO: 'operatingOneMinVisio',
   OPERATING_STANDBY: 'operatingOneMinStandby'
