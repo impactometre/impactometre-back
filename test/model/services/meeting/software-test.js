@@ -57,12 +57,12 @@ describe('Software services', () => {
     const renavisio = new Software(softwareDatabase.RENAVISIO)
     const networkEnergeticIntensityUpper = networkDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
     const fileSizeMoToBits = renavisio.fileSizeMoToBits()
-    const embodiedDamage = new ComponentDamage(
-      networkEnergeticIntensityUpper.humanHealth * fileSizeMoToBits * 5,
-      networkEnergeticIntensityUpper.ecosystemQuality * fileSizeMoToBits * 5,
-      networkEnergeticIntensityUpper.climateChange * fileSizeMoToBits * 5,
-      networkEnergeticIntensityUpper.resources * fileSizeMoToBits * 5
-    )
+    const embodiedDamage = new ComponentDamage({
+      humanHealth: networkEnergeticIntensityUpper.humanHealth * fileSizeMoToBits * 5,
+      ecosystemQuality: networkEnergeticIntensityUpper.ecosystemQuality * fileSizeMoToBits * 5,
+      climateChange: networkEnergeticIntensityUpper.climateChange * fileSizeMoToBits * 5,
+      resources: networkEnergeticIntensityUpper.resources * fileSizeMoToBits * 5
+    })
     it('should return the solftware download damage for 5 people with Renaviso', () => {
       assert.deepStrictEqual(
         renavisio.computeEmbodiedDamage(5, constants.networkEnergeticIntensityBound.UPPER),
@@ -91,34 +91,37 @@ describe('Software services', () => {
       )
     })
   })
-  describe('#computeOperatingDamage (instancesNumber, bandwithBound, networkBound)', () => {
+  describe('#computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration)', () => {
     const skype = new Software(softwareDatabase.SKYPE)
     const inboundBandwith = skype.getInboundBandwith(5)
     const networkUpperkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
     const instancesNumber = 5
-    const operatingDamage = new ComponentDamage(
-      networkUpperkBound.humanHealth * inboundBandwith * 60 * 1000 * instancesNumber,
-      networkUpperkBound.ecosystemQuality * inboundBandwith * 60 * 1000 * instancesNumber,
-      networkUpperkBound.climateChange * inboundBandwith * 60 * 1000 * instancesNumber,
-      networkUpperkBound.resources * inboundBandwith * 60 * 1000 * instancesNumber
-    )
+    const secondsInMinutes = constants.secoundsInMinute
+    const bitsInKbits = constants.bitsInKbits
+    const meetingDuration = 120
+    const operatingDamage = new ComponentDamage({
+      humanHealth: networkUpperkBound.humanHealth * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      ecosystemQuality: networkUpperkBound.ecosystemQuality * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      climateChange: networkUpperkBound.climateChange * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      resources: networkUpperkBound.resources * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration
+    })
     it('should return skype operating damage for network upper bound and ideal bandwith', () => {
       assert.deepStrictEqual(
-        skype.computeOperatingDamage(instancesNumber, constants.bandwidthBound.IDEAL, constants.networkEnergeticIntensityBound.UPPER),
+        skype.computeOperatingDamage(instancesNumber, constants.bandwidthBound.IDEAL, constants.networkEnergeticIntensityBound.UPPER, meetingDuration),
         operatingDamage
       )
     })
     const inboundBandwithMinimun = skype.getInboundBandwith(5, constants.bandwidthBound.MINIMUM)
     const networkLowerBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY_LOWER.operatingOneBit
-    const operatingDamageMinimumBandwith = new ComponentDamage(
-      networkLowerBound.humanHealth * inboundBandwithMinimun * 60 * 1000 * instancesNumber,
-      networkLowerBound.ecosystemQuality * inboundBandwithMinimun * 60 * 1000 * instancesNumber,
-      networkLowerBound.climateChange * inboundBandwithMinimun * 60 * 1000 * instancesNumber,
-      networkLowerBound.resources * inboundBandwithMinimun * 60 * 1000 * instancesNumber
-    )
+    const operatingDamageMinimumBandwith = new ComponentDamage({
+      humanHealth: networkLowerBound.humanHealth * inboundBandwithMinimun / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      ecosystemQuality: networkLowerBound.ecosystemQuality * inboundBandwithMinimun / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      climateChange: networkLowerBound.climateChange * inboundBandwithMinimun / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      resources: networkLowerBound.resources * inboundBandwithMinimun / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration
+    })
     it('should return skype operating damage for network lower bound and minimun bandwith', () => {
       assert.deepStrictEqual(
-        skype.computeOperatingDamage(instancesNumber, constants.bandwidthBound.MINIMUM, constants.networkEnergeticIntensityBound.LOWER),
+        skype.computeOperatingDamage(instancesNumber, constants.bandwidthBound.MINIMUM, constants.networkEnergeticIntensityBound.LOWER, meetingDuration),
         operatingDamageMinimumBandwith
       )
     })
