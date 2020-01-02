@@ -1,5 +1,7 @@
 'use strict'
 
+const minutesInHour = 60
+
 const hardwareBound = {
   UPPER: 'upper',
   LOWER: 'lower'
@@ -107,6 +109,7 @@ const daysWorkedByYear = 230
  */
 const dayInHours = 24
 
+exports.minutesInHour = minutesInHour
 exports.hardwareBound = hardwareBound
 exports.hardwareDamageTypes = hardwareDamageTypes
 exports.software = software

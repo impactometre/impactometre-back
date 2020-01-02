@@ -10,7 +10,8 @@ const {
   hardwareLifetime,
   hardwareOperatingTimePerDay,
   hardwareBound,
-  hardwareDamageTypes
+  hardwareDamageTypes,
+  minutesInHour
 } = require('../../../constants/meeting')
 
 describe('Hardware class', () => {
@@ -369,6 +370,7 @@ describe('Hardware class', () => {
     })
   })
   describe('#computeDamage()', () => {
+    const meetingDuration = 60
     it('should return damage object with null values if no damage value available', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
@@ -392,7 +394,7 @@ describe('Hardware class', () => {
             const expected = new ComponentDamage()
 
             const instance = new Hardware({ name: json.name })
-            assert.deepStrictEqual(expected, instance.computeDamage(damageType, 60))
+            assert.deepStrictEqual(expected, instance.computeDamage(damageType, meetingDuration))
           })
       })
     })
@@ -411,11 +413,26 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
 
             // Compute expected damage
-            const expected = new ComponentDamage(instance.getDamage(damageType)).mutate(categoryDamage => {
-              return categoryDamage * instance._shareForVisio * 60
-            })
+            let expected = new ComponentDamage(instance.getDamage(damageType))
+            if (
+              damageType === hardwareDamageTypes.OPERATING_STANDBY ||
+              damageType === hardwareDamageTypes.OPERATING_VISIO
+            ) {
+              expected = expected.mutate(categoryDamage => {
+                return categoryDamage * instance.shareForVisio * instance.getDuration(damageType, meetingDuration)
+              })
+            } else {
+              expected = expected.mutate(categoryDamage => {
+                categoryDamage *= instance._shareForVisio
+                categoryDamage /= instance.computeTime(damageType)
+                categoryDamage /= minutesInHour
+                categoryDamage *= instance.getDuration(damageType, meetingDuration)
 
-            assert.deepStrictEqual(expected, instance.computeDamage(damageType, 60))
+                return categoryDamage
+              })
+            }
+
+            assert.deepStrictEqual(expected, instance.computeDamage(damageType, meetingDuration))
           })
       })
     })
@@ -434,11 +451,26 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
 
             // Compute expected damage
-            const expected = new ComponentDamage(instance.getDamage(damageType)).mutate(categoryDamage => {
-              return categoryDamage * instance._shareForVisio * instance._size * 60
-            })
+            let expected = new ComponentDamage(instance.getDamage(damageType))
+            if (
+              damageType === hardwareDamageTypes.OPERATING_STANDBY ||
+              damageType === hardwareDamageTypes.OPERATING_VISIO
+            ) {
+              expected = expected.mutate(categoryDamage => {
+                return categoryDamage * instance.shareForVisio * instance.size * instance.getDuration(damageType, meetingDuration)
+              })
+            } else {
+              expected = expected.mutate(categoryDamage => {
+                categoryDamage *= instance._shareForVisio * instance.size
+                categoryDamage /= instance.computeTime(damageType)
+                categoryDamage /= minutesInHour
+                categoryDamage *= instance.getDuration(damageType, meetingDuration)
 
-            assert.deepStrictEqual(expected, instance.computeDamage(damageType, 60))
+                return categoryDamage
+              })
+            }
+
+            assert.deepStrictEqual(expected, instance.computeDamage(damageType, meetingDuration))
           })
       })
     })
@@ -455,14 +487,14 @@ describe('Hardware class', () => {
             const expected = new ComponentDamage()
             json.components.forEach(name => {
               const component = new Hardware({ name })
-              const componentDamage = component.computeDamage(damageType, 60)
+              const componentDamage = component.computeDamage(damageType, meetingDuration)
               Object.keys(expected).map(category => {
                 expected[category] += componentDamage[category]
               })
             })
 
             const instance = new Hardware({ name: json.name })
-            assert.deepStrictEqual(expected, instance.computeDamage(damageType, 60))
+            assert.deepStrictEqual(expected, instance.computeDamage(damageType, meetingDuration))
           })
       })
     })
