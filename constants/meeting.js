@@ -60,7 +60,7 @@ const transportationMeans = {
   TRAIN_HIGH_SPEED: 'high speed train',
   TRAIN_REGIONAL: 'regional train',
   TRAIN_URBAN: 'urban train',
-  TRAMWAY: 'tramway'  
+  TRAMWAY: 'tramway'
 }
 
 exports.software = software
