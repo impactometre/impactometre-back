@@ -5,7 +5,7 @@ class Meeting {
    * Create a meeting.
    * @param {String} user - The user who creates the meeting.
    * @param {Map<string, Journey>} journeys - All the journeys entered by the user indexed by their ids.
-   * @param {Harware} hardware  - The different kinds of hardware device used for the meeting.
+   * @param {Hardware} hardware  - The different kinds of hardware device used for the meeting.
    * @param {Software} software - The software used for the meetings.
    * @param {Number} meetingDuration - The meeting duration in minutes.
    */
