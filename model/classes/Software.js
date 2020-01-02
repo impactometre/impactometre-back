@@ -115,13 +115,14 @@ class Software {
    * @param {string} networkBound - The network bound ('upper' or 'lower').
    * @returns the damage values (in damageUnit/bit) corresponding to network energetic intensity upper or lower bound.
    */
-  static getNetworkEnergeticIntensity (networkBound) {
-    const networkEnergeticIntensity = (networkBound === meetingEnums.networkEnergeticIntensityBound.LOWER)
-      ? networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBitLower
-      : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBitUpper
+  static getNetworkEnergeticIntensity (networkBound = null) {
+    const networkEnergeticIntensity = (networkBound != null)
+    ? networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[networkBound]
+    : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[meetingEnums.networkEnergeticIntensityBound.UPPER]
 
-    return networkEnergeticIntensity
-  }
+  return networkEnergeticIntensity
+}
+
 
   /**
    * Computes the software usage damage.
