@@ -2,6 +2,8 @@
 
 const bitsInOctet = 8
 const octetsInMo = 1000000
+const secoundsInMinute = 60
+const bitsInKbits = 1000
 
 const networkEnergeticIntensityBound = {
   UPPER: 'upper',
@@ -58,7 +60,7 @@ const transportationMeans = {
   TRAIN_HIGH_SPEED: 'high speed train',
   TRAIN_REGIONAL: 'regional train',
   TRAIN_URBAN: 'urban train',
-  TRAMWAY: 'tramway'
+  TRAMWAY: 'tramway'  
 }
 
 exports.software = software
@@ -68,3 +70,5 @@ exports.networkEnergeticIntensityBound = networkEnergeticIntensityBound
 exports.bandwidthBound = bandwidthBound
 exports.bitsInOctet = bitsInOctet
 exports.octetsInMo = octetsInMo
+exports.secoundsInMinute = secoundsInMinute
+exports.bitsInKbits = bitsInKbits
