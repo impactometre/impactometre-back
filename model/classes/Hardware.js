@@ -226,19 +226,20 @@ class Hardware {
 
   /**
    * Compute the hardware operating damage.
+   * @param {Number} - The meeting duration (in minutes).
    * @param {String} - The optional bound.
    * @return {ComponentDamage} The hardware operating damage.
    */
-  computeOperatingDamage (bound = null) {
+  computeOperatingDamage (meetingDuration, bound = null) {
     // Handle composite hardware
     if (Object.keys(this._components).length > 0) {
       /* For each component, compute its operating damage
       and add it to composite hardware damage */
       const operatingDamage = new ComponentDamage()
       Object.values(this._components).forEach(component => {
-        const componentOperatingDamage = component.computeOperatingDamage(bound)
+        const componentDamage = component.computeOperatingDamage(meetingDuration, bound)
         Object.keys(operatingDamage).map((category) => {
-          operatingDamage[category] += componentOperatingDamage[category]
+          operatingDamage[category] += componentDamage[category]
         })
       })
 
@@ -253,16 +254,22 @@ class Hardware {
     // Handle size-dependence
     const operatingDamage = (this._isSizeDependent)
       ? new ComponentDamage(this.getOperatingOneMin(bound)).mutate(categoryDamage => {
-        categoryDamage *= this._shareForVisio * this._size
+        return categoryDamage * this._shareForVisio * this._size * meetingDuration
       })
       : new ComponentDamage(this.getOperatingOneMin(bound)).mutate(categoryDamage => {
-        categoryDamage *= this._shareForVisio
+        return categoryDamage * this._shareForVisio * meetingDuration
       })
 
     return operatingDamage
   }
 
-  computeStandbyDamage (bound = null) {
+  /**
+   * Compute the hardware standby damage.
+   * @param {Number} - The meeting duration (in minutes).
+   * @param {String} - The optional bound.
+   * @return {ComponentDamage} The hardware standby damage.
+   */
+  computeStandbyDamage (meetingDuration, bound = null) {
     // Handle composite hardware
     if (Object.keys(this._components).length > 0) {
       /* For each component, compute its operating damage
@@ -286,10 +293,10 @@ class Hardware {
     // Handle size-dependence
     const standByDamage = (this._isSizeDependent)
       ? new ComponentDamage(this.getStandbyOneMin(bound)).mutate(categoryDamage => {
-        categoryDamage *= this._shareForVisio * this._size
+        return categoryDamage * this._shareForVisio * this._size * meetingDuration
       })
       : new ComponentDamage(this.getStandbyOneMin(bound)).mutate(categoryDamage => {
-        categoryDamage *= this._shareForVisio
+        return categoryDamage * this._shareForVisio * meetingDuration
       })
 
     return standByDamage
