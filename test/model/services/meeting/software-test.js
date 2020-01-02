@@ -55,7 +55,7 @@ describe('Software services', () => {
   })
   describe('#computeEmbodiedDamage (instancesNumber, networkBound)', () => {
     const renavisio = new Software(softwareDatabase.RENAVISIO)
-    const networkEnergeticIntensityUpper = networkDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
+    const networkEnergeticIntensityUpper = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBitUpper
     const fileSizeMoToBits = renavisio.fileSizeMoToBits()
     const embodiedDamage = new ComponentDamage({
       humanHealth: networkEnergeticIntensityUpper.humanHealth * fileSizeMoToBits * 5,
@@ -94,7 +94,7 @@ describe('Software services', () => {
   describe('#computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration)', () => {
     const skype = new Software(softwareDatabase.SKYPE)
     const inboundBandwith = skype.getInboundBandwith(5)
-    const networkUpperkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY_UPPER.operatingOneBit
+    const networkUpperkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBitUpper
     const instancesNumber = 5
     const secondsInMinutes = constants.secoundsInMinute
     const bitsInKbits = constants.bitsInKbits
@@ -112,7 +112,7 @@ describe('Software services', () => {
       )
     })
     const inboundBandwithMinimun = skype.getInboundBandwith(5, constants.bandwidthBound.MINIMUM)
-    const networkLowerBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY_LOWER.operatingOneBit
+    const networkLowerBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBitLower
     const operatingDamageMinimumBandwith = new ComponentDamage({
       humanHealth: networkLowerBound.humanHealth * inboundBandwithMinimun / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
       ecosystemQuality: networkLowerBound.ecosystemQuality * inboundBandwithMinimun / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
