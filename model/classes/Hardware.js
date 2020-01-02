@@ -156,30 +156,29 @@ class Hardware {
   }
 
   /**
-   * Compute the hardware operating time over its lifetime.
+   * Compute the hardware operating or standby time
+   * over its lifetime.
+   * @param {String} - The damage type for which we want to compute the hardware time.
    * @return {Number} The operating time (in hours).
    */
-  computeOperatingTime () {
-    if (knownHardwareOperatingTime[this.name]) {
-      return knownHardwareOperatingTime[this.name]
+  computeTime (damageType) {
+    if (
+      damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+      damageType === hardwareDamageTypes.OPERATING_VISIO
+    ) {
+      if (knownHardwareOperatingTime[this.name]) {
+        return knownHardwareOperatingTime[this.name]
+      }
+
+      return this.lifetime * daysWorkedByYear * this.operatingTimePerDay
+    } else {
+      if (knownHardwareStandbyTime[this.name]) {
+        return knownHardwareStandbyTime[this.name]
+      }
+
+      const standbyTimePerDay = dayInHours - this.operatingTimePerDay
+      return this.lifetime * daysWorkedByYear * standbyTimePerDay
     }
-
-    const operatingTime = this.lifetime * daysWorkedByYear * this.operatingTimePerDay
-    return operatingTime
-  }
-
-  /**
-   * Compute the hardware standby time over its lifetime.
-   * @return {Number} The standby time (in hours).
-   */
-  computeStandbyTime () {
-    if (knownHardwareStandbyTime[this.french]) {
-      return knownHardwareStandbyTime[this.french]
-    }
-
-    const standbyTimePerDay = dayInHours - this.operatingTimePerDay
-    const standbyTime = this.lifetime * daysWorkedByYear * standbyTimePerDay
-    return standbyTime
   }
 
   /**
