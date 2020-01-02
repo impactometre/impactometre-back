@@ -4,7 +4,8 @@ const {
   daysWorkedByYear,
   dayInHours,
   knownHardwareOperatingTime,
-  knownHardwareStandbyTime
+  knownHardwareStandbyTime,
+  hardwareDamageTypes
 } = require('../../constants/meeting')
 
 const hardwareDatabase = require('../database/meeting/hardware')
@@ -25,9 +26,9 @@ class Hardware {
     this._size = size
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
-    this._rawEmbodied = json.embodied
-    this._rawOperatingOneMin = json.operatingOneMin
-    this._rawStandbyOneMin = json.standbyOneMin
+    this._embodied = json.embodied
+    this._operatingOneMinVisio = json.operatingOneMinVisio
+    this._operatingOneMinStandby = json.operatingOneMinStandby
     this._lifetime = json.lifetime
     this._operatingTimePerDay = json.operatingTimePerDay
     this._components = {}
@@ -86,87 +87,16 @@ class Hardware {
     return this._isSizeDependent
   }
 
-  /**
-   * Get the embodied damage value, corresponding to the
-   * optional bound ('upper' or 'lower').
-   * @param {String} - The optional bound.
-   * @return {ComponentDamage} The damage value for each damage category.
-   */
-  getEmbodied (bound = null) {
-    if (!this._rawEmbodied) {
-      return null
-    }
-
-    // If bound specific values are available
-    if (this._rawEmbodied.upper && this._rawEmbodied.lower) {
-      /* If desired bound value was given, we return
-      the corresponding value. Else we return the
-      upper value. */
-      const boundSpecificValue = (bound != null)
-        ? this._rawEmbodied[bound]
-        : this._rawEmbodied.upper
-
-      return boundSpecificValue
-    }
-
-    // Else we return the unique value available
-    return this._rawEmbodied
+  get embodied () {
+    return this._embodied
   }
 
-  /**
-   * Get the hardware damage values when operating
-   * during one minute, corresponding to the
-   * optional bound ('upper' or 'lower').
-   * @param {String} - The optional bound.
-   * @return {ComponentDamage} The damage value for each damage category.
-   */
-  getOperatingOneMin (bound = null) {
-    if (!this._rawOperatingOneMin) {
-      return null
-    }
-
-    // If bound specific values are available
-    if (this._rawOperatingOneMin.upper && this._rawOperatingOneMin.lower) {
-      /* If desired bound value was given, we return
-      the corresponding value. Else we return the
-      upper value. */
-      const boundSpecificValue = (bound != null)
-        ? this._rawOperatingOneMin[bound]
-        : this._rawOperatingOneMin.upper
-
-      return boundSpecificValue
-    }
-
-    // Else we return the unique value available
-    return this._rawOperatingOneMin
+  get operatingOneMinVisio () {
+    return this._operatingOneMinVisio
   }
 
-  /**
-   * Get the hardware damage values when being on
-   * standby during one minute, corresponding to the
-   * optional bound ('upper' or 'lower').
-   * @param {String} - The optional bound.
-   * @return {ComponentDamage} The damage value for each damage category.
-   */
-  getStandbyOneMin (bound = null) {
-    if (!this._rawStandbyOneMin) {
-      return null
-    }
-
-    // If bound specific values are available
-    if (this._rawStandbyOneMin.upper && this._rawStandbyOneMin.lower) {
-      /* If desired bound value was given, we return
-      the corresponding value. Else we return the
-      upper value. */
-      const boundSpecificValue = (bound != null)
-        ? this._rawStandbyOneMin[bound]
-        : this._rawStandbyOneMin.upper
-
-      return boundSpecificValue
-    }
-
-    // Else we return the unique value available
-    return this._rawStandbyOneMin
+  get operatingOneMinStandby () {
+    return this._operatingOneMinStandby
   }
 
   /**
@@ -195,6 +125,34 @@ class Hardware {
    */
   get components () {
     return this._components
+  }
+
+  getDamage (damageType, bound = null) {
+    if (
+      damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+      damageType === hardwareDamageTypes.EMBODIED_STANDBY
+    ) {
+      damageType = 'embodied'
+    }
+
+    if (!this[damageType]) {
+      return null
+    }
+
+    // If bound specific values are available
+    if (this[damageType].upper && this[damageType].lower) {
+      /* If desired bound value was given, we return
+      the corresponding value. Else we return the
+      upper value. */
+      const boundSpecificValue = (bound != null)
+        ? this[damageType][bound]
+        : this[damageType].upper
+
+      return boundSpecificValue
+    }
+
+    // Else we return the unique value available
+    return this[damageType]
   }
 
   /**

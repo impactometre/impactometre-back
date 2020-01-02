@@ -9,7 +9,8 @@ const {
   knownHardwareStandbyTime,
   hardwareLifetime,
   hardwareOperatingTimePerDay,
-  hardwareBound
+  hardwareBound,
+  hardwareDamageTypes
 } = require('../../../constants/meeting')
 
 describe('Hardware class', () => {
@@ -191,222 +192,121 @@ describe('Hardware class', () => {
       })
     })
   })
-  describe('#getEmbodied()', () => {
+  describe('#getDamage()', () => {
     it('should return null if no available value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (!json.embodied)
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          null,
-          instance.getEmbodied()
-        )
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        if (
+          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_STANDBY
+        ) {
+          damageType = 'embodied'
+        }
+
+        Object.values(hardwareDatabase).filter(json => {
+          return (!json[damageType])
+        }).forEach(json => {
+          const instance = new Hardware({ name: json.name })
+          assert.strictEqual(
+            null,
+            instance.getDamage(damageType)
+          )
+        })
       })
     })
     it('should return the unique available value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.embodied != null &&
-          !(json.embodied.lower) &&
-          !(json.embodied.upper)
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.embodied,
-          instance.getEmbodied()
-        )
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        if (
+          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_STANDBY
+        ) {
+          damageType = 'embodied'
+        }
+
+        Object.values(hardwareDatabase).filter(json => {
+          return (
+            json[damageType] != null &&
+            !(json[damageType].lower) &&
+            !(json[damageType].upper)
+          )
+        }).forEach(json => {
+          const instance = new Hardware({ name: json.name })
+          assert.strictEqual(
+            json[damageType],
+            instance.getDamage(damageType)
+          )
+        })
       })
     })
     it('should return the matching lower value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.embodied != null &&
-          json.embodied.lower &&
-          json.embodied.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.embodied.lower,
-          instance.getEmbodied(hardwareBound.LOWER)
-        )
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        if (
+          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_STANDBY
+        ) {
+          damageType = 'embodied'
+        }
+
+        Object.values(hardwareDatabase).filter(json => {
+          return (
+            json[damageType] != null &&
+            json[damageType].lower &&
+            json[damageType].upper
+          )
+        }).forEach(json => {
+          const instance = new Hardware({ name: json.name })
+          assert.strictEqual(
+            json[damageType].lower,
+            instance.getDamage(damageType, hardwareBound.LOWER)
+          )
+        })
       })
     })
     it('should return the matching upper value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.embodied != null &&
-          json.embodied.lower &&
-          json.embodied.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.embodied.upper,
-          instance.getEmbodied(hardwareBound.UPPER)
-        )
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        if (
+          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_STANDBY
+        ) {
+          damageType = 'embodied'
+        }
+
+        Object.values(hardwareDatabase).filter(json => {
+          return (
+            json[damageType] != null &&
+            json[damageType].lower &&
+            json[damageType].upper
+          )
+        }).forEach(json => {
+          const instance = new Hardware({ name: json.name })
+          assert.strictEqual(
+            json[damageType].upper,
+            instance.getDamage(damageType, hardwareBound.UPPER)
+          )
+        })
       })
     })
     it('should return the upper value by default', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.embodied != null &&
-          json.embodied.lower &&
-          json.embodied.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.embodied.upper,
-          instance.getEmbodied()
-        )
-      })
-    })
-  })
-  describe('#getOperatingOneMin()', () => {
-    it('should return null if no available value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (!json.operatingOneMin)
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          null,
-          instance.getOperatingOneMin()
-        )
-      })
-    })
-    it('should return the unique available value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.operatingOneMin != null &&
-          !(json.operatingOneMin.lower) &&
-          !(json.operatingOneMin.upper)
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.operatingOneMin,
-          instance.getOperatingOneMin()
-        )
-      })
-    })
-    it('should return the matching lower value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.operatingOneMin != null &&
-          json.operatingOneMin.lower &&
-          json.operatingOneMin.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.operatingOneMin.lower,
-          instance.getOperatingOneMin(hardwareBound.LOWER)
-        )
-      })
-    })
-    it('should return the matching upper value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.operatingOneMin != null &&
-          json.operatingOneMin.lower &&
-          json.operatingOneMin.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.operatingOneMin.upper,
-          instance.getOperatingOneMin(hardwareBound.UPPER)
-        )
-      })
-    })
-    it('should return the upper value by default', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.operatingOneMin != null &&
-          json.operatingOneMin.lower &&
-          json.operatingOneMin.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.operatingOneMin.upper,
-          instance.getOperatingOneMin()
-        )
-      })
-    })
-  })
-  describe('#getStandbyOneMin()', () => {
-    it('should return null if no available value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (!json.standbyOneMin)
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          null,
-          instance.getStandbyOneMin()
-        )
-      })
-    })
-    it('should return the unique available value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.standbyOneMin != null &&
-          !(json.standbyOneMin.lower) &&
-          !(json.standbyOneMin.upper)
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.standbyOneMin,
-          instance.getStandbyOneMin()
-        )
-      })
-    })
-    it('should return the matching lower value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.standbyOneMin != null &&
-          json.standbyOneMin.lower &&
-          json.standbyOneMin.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.standbyOneMin.lower,
-          instance.getStandbyOneMin(hardwareBound.LOWER)
-        )
-      })
-    })
-    it('should return the matching upper value', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.standbyOneMin != null &&
-          json.standbyOneMin.lower &&
-          json.standbyOneMin.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.standbyOneMin.upper,
-          instance.getStandbyOneMin(hardwareBound.UPPER)
-        )
-      })
-    })
-    it('should return the upper value by default', () => {
-      Object.values(hardwareDatabase).filter(json => {
-        return (
-          json.standbyOneMin != null &&
-          json.standbyOneMin.lower &&
-          json.standbyOneMin.upper
-        )
-      }).forEach(json => {
-        const instance = new Hardware({ name: json.name })
-        assert.strictEqual(
-          json.standbyOneMin.upper,
-          instance.getStandbyOneMin()
-        )
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        if (
+          damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+          damageType === hardwareDamageTypes.EMBODIED_STANDBY
+        ) {
+          damageType = 'embodied'
+        }
+
+        Object.values(hardwareDatabase).filter(json => {
+          return (
+            json[damageType] != null &&
+            json[damageType].lower &&
+            json[damageType].upper
+          )
+        }).forEach(json => {
+          const instance = new Hardware({ name: json.name })
+          assert.strictEqual(
+            json[damageType].upper,
+            instance.getDamage(damageType)
+          )
+        })
       })
     })
   })
