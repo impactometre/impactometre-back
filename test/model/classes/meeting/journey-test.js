@@ -6,7 +6,7 @@ const TransportationMean = require('../../../../model/classes/TransportationMean
 const Journey = require('../../../../model/classes/Journey')
 const ComponentDamage = require('../../../../model/classes/ComponentDamage')
 
-describe('Journey services', () => {
+describe('Journey classes', () => {
   describe('#computeEmbodiedDamage ()', () => {
     const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
     const journeyElectricCar3People = new Journey(electricCar, 100, 3)

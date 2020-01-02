@@ -7,7 +7,7 @@ const Software = require('../../../../model/classes/Software')
 const ComponentDamage = require('../../../../model/classes/ComponentDamage')
 const networkDatabase = require('../../../../model/database/meeting/network')
 
-describe('Software services', () => {
+describe('Software classes', () => {
   describe('#getInboundBandwith()', () => {
     const renavisio = new Software(softwareDatabase.RENAVISIO)
     it('should return the unique available value', () => {
