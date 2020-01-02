@@ -10,12 +10,12 @@ describe('Journey services', () => {
   describe('#computeEmbodiedDamage ()', () => {
     const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
     const journeyElectricCar3People = new Journey(electricCar, 100, 3)
-    const embodiedDamage = new ComponentDamage(
-      electricCar.embodied.humanHealth * 100,
-      electricCar.embodied.ecosystemQuality * 100,
-      electricCar.embodied.climateChange * 100,
-      electricCar.embodied.resources * 100
-    )
+    const embodiedDamage = new ComponentDamage({
+      humanHealth: electricCar.embodied.humanHealth * 100,
+      ecosystemQuality: electricCar.embodied.ecosystemQuality * 100,
+      climateChange: electricCar.embodied.climateChange * 100,
+      resources: electricCar.embodied.resources * 100
+    })
     it('should return the damage caused by 3 people in a eletric car for one kilometer ', () => {
       assert.deepStrictEqual(
         journeyElectricCar3People.computeEmbodiedDamage(),
@@ -44,16 +44,16 @@ describe('Journey services', () => {
     const intercontinentalPlaneJourney2People = new Journey(intercontinentalPlane, 1000, 2)
     const intercontinentalPlaneJourney4People = new Journey(intercontinentalPlane, 1000, 4)
     const embodiedDamageIntercontinentalPlane = intercontinentalPlaneJourney2People.computeEmbodiedDamage()
-    const humanHealthDamage = embodiedDamageIntercontinentalPlane.humanHealth
-    const ecosystemQualityDamage = embodiedDamageIntercontinentalPlane.ecosystemQuality
-    const climateChangeDamage = embodiedDamageIntercontinentalPlane.climateChange
-    const resourcesDamage = embodiedDamageIntercontinentalPlane.resources
-    const embodiedDamageTwice = new ComponentDamage(
-      humanHealthDamage * 2,
-      ecosystemQualityDamage * 2,
-      climateChangeDamage * 2,
-      resourcesDamage * 2
-    )
+    const humanHealth = embodiedDamageIntercontinentalPlane.humanHealth
+    const ecosystemQuality = embodiedDamageIntercontinentalPlane.ecosystemQuality
+    const climateChange = embodiedDamageIntercontinentalPlane.climateChange
+    const resources = embodiedDamageIntercontinentalPlane.resources
+    const embodiedDamageTwice = new ComponentDamage({
+      humanHealth,
+      ecosystemQuality,
+      climateChange,
+      resources
+    }).mutate(categoryDamage => { return categoryDamage * 2 })
     it('a 4 people journey by plane should cause twice the damage of a 2 people journey by plane', () => {
       assert.deepStrictEqual(
         intercontinentalPlaneJourney4People.computeEmbodiedDamage(),
