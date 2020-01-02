@@ -117,12 +117,11 @@ class Software {
    */
   static getNetworkEnergeticIntensity (networkBound = null) {
     const networkEnergeticIntensity = (networkBound != null)
-    ? networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[networkBound]
-    : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[meetingEnums.networkEnergeticIntensityBound.UPPER]
+      ? networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[networkBound]
+      : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[meetingEnums.networkEnergeticIntensityBound.UPPER]
 
-  return networkEnergeticIntensity
-}
-
+    return networkEnergeticIntensity
+  }
 
   /**
    * Computes the software usage damage.
