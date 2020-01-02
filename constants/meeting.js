@@ -8,9 +8,13 @@ const hardwareBound = {
 }
 
 const hardwareDamageTypes = {
+  // Embodied damage attributed to visio time
   EMBODIED_VISIO: 'embodiedOperating',
+  // Embodied damage attributed to standby time
   EMBODIED_STANDBY: 'embodiedStandby',
+  // Operating damage attributed to visio time
   OPERATING_VISIO: 'operatingOneMinVisio',
+  // Operating damage attributed to standby time
   OPERATING_STANDBY: 'operatingOneMinStandby'
 }
 
