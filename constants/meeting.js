@@ -5,6 +5,13 @@ const hardwareBound = {
   LOWER: 'lower'
 }
 
+const hardwareDamageTypes = {
+  EMBODIED_OPERATING: 'embodiedOperating',
+  EMBODIED_STANDBY: 'embodiedStandby',
+  OPERATING_VISIO: 'operatingOneMinVisio',
+  OPERATING_STANDBY: 'operatingOneMinStandby'
+}
+
 /**
  * All software that users can use for meetings
  */
@@ -101,6 +108,7 @@ const daysWorkedByYear = 230
 const dayInHours = 24
 
 exports.hardwareBound = hardwareBound
+exports.hardwareDamageTypes = hardwareDamageTypes
 exports.software = software
 exports.hardware = hardware
 exports.hardwareLifetime = hardwareLifetime

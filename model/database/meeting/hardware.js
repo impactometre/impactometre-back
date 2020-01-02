@@ -13,7 +13,7 @@ const hardware = {
     name: 'DESKTOP',
     french: 'ordinateur fixe',
     isSizeDependent: false,
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 1.55 * Math.pow(10, -10),
       ecosystemQuality: 7.16 * Math.pow(10, -5),
       climateChange: 0.000124,
@@ -38,7 +38,7 @@ const hardware = {
       climateChange: 1.32 * Math.pow(10, -5),
       resources: 0.00341
     },
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: (3.42 * Math.pow10, -11),
       ecosystemQuality: 1.57 * Math.pow(10, -5),
       climateChange: 2.72 * Math.pow(10, -5),
@@ -109,7 +109,7 @@ const hardware = {
       climateChange: 166,
       resources: 2.18 * Math.pow(10, 3)
     },
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 4.14 * Math.pow(10, -11),
       ecosystemQuality: 1.91 * Math.pow(10, -5),
       climateChange: 3.3 * Math.pow(10, -5),
@@ -141,7 +141,7 @@ const hardware = {
     name: 'MICROPHONE',
     french: 'micro',
     isSizeDependent: false,
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 2.59 * Math.pow(10, -12),
       ecosystemQuality: 1.19 * Math.pow(10, -6),
       climateChange: 2.06 * Math.pow(10, -6),
@@ -154,7 +154,7 @@ const hardware = {
     name: 'CAMERA',
     french: 'caméra',
     isSizeDependent: false,
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 9.84 * Math.pow(10, -12),
       ecosystemQuality: 4.53 * Math.pow(10, -6),
       climateChange: 7.84 * Math.pow(10, -6),
@@ -173,7 +173,7 @@ const hardware = {
       climateChange: 52.5,
       resources: 821
     },
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 1.4 * Math.pow(10, -10),
       ecosystemQuality: 6.44 * Math.pow(10, -5),
       climateChange: 0.000111,
@@ -187,7 +187,7 @@ const hardware = {
     name: 'TV_SCREEN_BASE',
     french: 'télévision sauf écran',
     isSizeDependent: false,
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 2.07 * Math.pow(10, -11),
       ecosystemQuality: 9.54 * Math.pow(10, -6),
       climateChange: 1.65 * Math.pow(10, -5),
@@ -201,7 +201,7 @@ const hardware = {
     french: 'écran de télévision',
     // Damage is given for one meter square
     isSizeDependent: true,
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 1.78 * Math.pow(10, -10),
       ecosystemQuality: 8.21 * Math.pow(10, -5),
       climateChange: 0.000142,
@@ -226,13 +226,13 @@ const hardware = {
     name: 'LOGITECH_KIT',
     french: 'kit Logitech',
     isSizeDependent: false,
-    standbyOneMin: {
+    operatingOneMinStandby: {
       humanHealth: 5.9 * Math.pow(10, -12),
       ecosystemQuality: 2.72 * Math.pow(10, -6),
       climateChange: 4.7 * Math.pow(10, -6),
       resources: 0.00121
     },
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 8.8 * Math.pow(10, -12),
       ecosystemQuality: 4.06 * Math.pow(10, -6),
       climateChange: 7.02 * Math.pow(10, -6),
@@ -245,7 +245,7 @@ const hardware = {
     name: 'LOGITECH_KIT_CAMERA',
     french: 'caméra du kit Logitech',
     isSizeDependent: false,
-    operatingOneMin: {
+    operatingOneMinVisio: {
       humanHealth: 4.04 * Math.pow(10, -12),
       ecosystemQuality: 1.86 * Math.pow(10, -6),
       climateChange: 3.22 * Math.pow(10, -6),
@@ -285,7 +285,7 @@ const hardware = {
     name: 'CODEC',
     french: 'CODEC',
     isSizeDependent: false,
-    operatingOneMin: {
+    operatingOneMinVisio: {
       upper: {
         humanHealth: 8.28 * Math.pow(10, -11),
         ecosystemQuality: 3.82 * Math.pow(10, -5),
