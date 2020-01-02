@@ -119,7 +119,7 @@ class Software {
     const networkEnergeticIntensity = (networkBound === meetingEnums.networkEnergeticIntensityBound.LOWER)
       ? networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBitLower
       : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBitUpper
-      
+
     return networkEnergeticIntensity
   }
 
@@ -145,9 +145,9 @@ class Software {
     const networkEnergeticIntensity = new ComponentDamage(Software.getNetworkEnergeticIntensity(networkBound))
 
     // We compute the total damage for each damage shere (in damageUnit)
-    Object.keys(operatingDamage).map((categoryDamage) =>{
+    Object.keys(operatingDamage).map((categoryDamage) => {
       // (damageUnit/bit) * (Kbit/s) = 1000 * (damageUnit/s)
-      operatingDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * inboundBandwith 
+      operatingDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * inboundBandwith
       // (1000 * (damageUnit/s)) / 1000 = damageUnit/s
       operatingDamage[categoryDamage] /= meetingEnums.bitsInKbits
       // (damageUnit/s) * 60 = damageUnit/minute
@@ -170,7 +170,7 @@ class Software {
    */
   computeEmbodiedDamage (instancesNumber, networkBound) {
     // Initialize the embodied damage
-   const embodiedDamage = new ComponentDamage()
+    const embodiedDamage = new ComponentDamage()
 
     // If there is no file to download or if there is no file size,
     // we return an empty damage.
@@ -183,7 +183,7 @@ class Software {
     const fileSize = this.fileSizeMoToBits()
 
     // We compute the total damage for each damage shere (in damageUnit)
-    Object.keys(embodiedDamage).map((categoryDamage) =>{
+    Object.keys(embodiedDamage).map((categoryDamage) => {
       embodiedDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber
     })
 
