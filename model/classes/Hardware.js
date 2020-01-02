@@ -5,7 +5,8 @@ const {
   dayInHours,
   knownHardwareOperatingTime,
   knownHardwareStandbyTime,
-  hardwareDamageTypes
+  hardwareDamageTypes,
+  minutesInHour
 } = require('../../constants/meeting')
 
 const hardwareDatabase = require('../database/meeting/hardware')
@@ -129,7 +130,7 @@ class Hardware {
 
   getDamage (damageType, bound = null) {
     if (
-      damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+      damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.EMBODIED_STANDBY
     ) {
       damageType = 'embodied'
@@ -155,6 +156,17 @@ class Hardware {
     return this[damageType]
   }
 
+  getDuration (damageType, meetingDuration) {
+    if (
+      damageType === hardwareDamageTypes.EMBODIED_VISIO ||
+      damageType === hardwareDamageTypes.OPERATING_VISIO
+    ) {
+      return meetingDuration
+    }
+
+    return this.computeTime(damageType) / this.computeTime(hardwareDamageTypes.OPERATING_VISIO)
+  }
+
   /**
    * Compute the hardware operating or standby time
    * over its lifetime.
@@ -163,7 +175,7 @@ class Hardware {
    */
   computeTime (damageType) {
     if (
-      damageType === hardwareDamageTypes.EMBODIED_OPERATING ||
+      damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
     ) {
       if (knownHardwareOperatingTime[this.name]) {
@@ -209,16 +221,48 @@ class Hardware {
       return new ComponentDamage()
     }
 
-    // Handle size-dependence
-    const damage = (this._isSizeDependent)
-      ? new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
-        return categoryDamage * this._shareForVisio * this._size * meetingDuration
-      })
-      : new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
-        return categoryDamage * this._shareForVisio * meetingDuration
-      })
+    if (
+      damageType === hardwareDamageTypes.OPERATING_STANDBY ||
+      damageType === hardwareDamageTypes.OPERATING_VISIO
+    ) {
+      // Handle operating damage
+      // Handle size-dependence
+      const damage = (this._isSizeDependent)
+        ? new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
+          return categoryDamage * this._shareForVisio * this._size * this.getDuration(damageType, meetingDuration)
+        })
+        : new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
+          return categoryDamage * this._shareForVisio * this.getDuration(damageType, meetingDuration)
+        })
 
-    return damage
+      return damage
+    } else {
+      // Handle embodied damage
+      // Handle size-dependence
+      const damage = (this._isSizeDependent)
+        ? new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
+          // Embodied damage on the whole lifetime
+          categoryDamage *= this._shareForVisio * this._size
+          // Embodied damage for an hour
+          categoryDamage /= this.computeTime(damageType)
+          // Embodied damage for a minute
+          categoryDamage /= minutesInHour
+          // Embodied damage for the meeting
+          categoryDamage *= this.getDuration(damageType, meetingDuration)
+
+          return categoryDamage
+        })
+        : new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
+          categoryDamage *= this._shareForVisio
+          categoryDamage /= this.computeTime(damageType)
+          categoryDamage /= minutesInHour
+          categoryDamage *= this.getDuration(damageType, meetingDuration)
+
+          return categoryDamage
+        })
+
+      return damage
+    }
   }
 }
 
