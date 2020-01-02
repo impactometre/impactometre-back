@@ -88,14 +88,32 @@ class Hardware {
     return this._isSizeDependent
   }
 
+  /**
+   * Get the embodied damage info for the hardware.
+   * It's a raw JSON that may contain upper and lower
+   * values.
+   * @return {Object} - Raw embodied damage.
+   */
   get embodied () {
     return this._embodied
   }
 
+  /**
+   * Get the damage attributed to one minute usage of
+   * the hardware during a visio. It's a raw JSON that
+   * may contain upper and lower values.
+   * @return {Object} - Raw visio operating damage.
+   */
   get operatingOneMinVisio () {
     return this._operatingOneMinVisio
   }
 
+  /**
+   * Get the damage attributed to one standby minute of
+   * the hardware. It's a raw JSON that may contain upper
+   * and lower values.
+   * @return {Object} - Raw standby operating damage.
+   */
   get operatingOneMinStandby () {
     return this._operatingOneMinStandby
   }
@@ -112,7 +130,7 @@ class Hardware {
   /**
    * Get the number of hours the device is used
    * per worked day.
-   * @return {Number} The operating time per day.
+   * @return {Number} The operating time per day (in hours)
    */
   get operatingTimePerDay () {
     return this._operatingTimePerDay
@@ -128,6 +146,15 @@ class Hardware {
     return this._components
   }
 
+  /**
+   * Get the damage values for the given damage type. A damage can
+   * be for visio or standby time, and for embodied or operating
+   * lifecycle phase.
+   * @param {String} damageType - The type of the required damage.
+   * @param {*} bound - The optional bound.
+   * @return {Object} JSON containing the four damage values.
+   * @see hardwareDamageTypes
+   */
   getDamage (damageType, bound = null) {
     if (
       damageType === hardwareDamageTypes.EMBODIED_VISIO ||
@@ -156,38 +183,57 @@ class Hardware {
     return this[damageType]
   }
 
+  /**
+   * Get the duration by which we have to multiply the damage
+   * we computed. This duration depends on whether the damage
+   * is for visio or standby time.
+   * @param {String} damageType - The type of the required damage.
+   * @param {Number} meetingDuration - The meeting duration (in minutes).
+   * @return {Number} The required duration (in minutes).
+   */
   getDuration (damageType, meetingDuration) {
     if (
       damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
     ) {
+      // If damage is for visio time we return the meeting duration
       return meetingDuration
     }
 
-    return this.computeTime(damageType) / this.computeTime(hardwareDamageTypes.OPERATING_VISIO)
+    /* If damage is for standby time we compute how many hours of
+    standby we have for one hour of visio. */
+    let duration = this.computeTime(damageType) / this.computeTime(hardwareDamageTypes.OPERATING_VISIO)
+    // Convert to minutes
+    duration *= minutesInHour
+
+    return duration
   }
 
   /**
-   * Compute the hardware operating or standby time
-   * over its lifetime.
+   * Compute how long the hardware is used for visio
+   * or on standby over its lifetime.
    * @param {String} - The damage type for which we want to compute the hardware time.
-   * @return {Number} The operating time (in hours).
+   * @return {Number} The required time (in hours).
    */
   computeTime (damageType) {
     if (
       damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
     ) {
+      // Damage is for visio time
+      // We may not need to compute the value
       if (knownHardwareOperatingTime[this.name]) {
         return knownHardwareOperatingTime[this.name]
       }
 
       return this.lifetime * daysWorkedByYear * this.operatingTimePerDay
     } else {
+      // Damage is for standby time
       if (knownHardwareStandbyTime[this.name]) {
         return knownHardwareStandbyTime[this.name]
       }
 
+      // We infer the standby time per day from the operating time
       const standbyTimePerDay = dayInHours - this.operatingTimePerDay
       return this.lifetime * daysWorkedByYear * standbyTimePerDay
     }
@@ -201,7 +247,7 @@ class Hardware {
    * @return {ComponentDamage} The hardware operating damage.
    */
   computeDamage (damageType, meetingDuration, bound = null) {
-    // Handle composite hardware
+    // Hardware may be composed of other hardwares
     if (Object.keys(this._components).length > 0) {
       /* For each component, compute its operating damage
       and add it to composite hardware damage */
@@ -216,7 +262,7 @@ class Hardware {
       return damage
     }
 
-    // Handle no available value
+    // Hardware may not have any value for the required damage
     if (!this.getDamage(damageType, bound)) {
       return new ComponentDamage()
     }
@@ -225,8 +271,8 @@ class Hardware {
       damageType === hardwareDamageTypes.OPERATING_STANDBY ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
     ) {
-      // Handle operating damage
-      // Handle size-dependence
+      // Required damage is for operating lifecycle phase
+      // Hardware damage may depends on its size
       const damage = (this._isSizeDependent)
         ? new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
           return categoryDamage * this._shareForVisio * this._size * this.getDuration(damageType, meetingDuration)
@@ -237,8 +283,7 @@ class Hardware {
 
       return damage
     } else {
-      // Handle embodied damage
-      // Handle size-dependence
+      // Required damage is for embodied lifecycle phase
       const damage = (this._isSizeDependent)
         ? new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
           // Embodied damage on the whole lifetime
