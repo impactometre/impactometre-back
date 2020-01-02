@@ -37,8 +37,8 @@ class ComponentDamage {
    * @param {Function} mutation - The function to apply.
    */
   mutate (mutation) {
-    Object.values(this).map(categoryDamage => {
-      categoryDamage = mutation(categoryDamage)
+    Object.keys(this).map(category => {
+      this[category] = mutation(this[category])
     })
 
     return this
