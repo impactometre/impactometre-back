@@ -132,26 +132,37 @@ class Software {
    * @param {Integer} instancesNumber - The number of software instances used for the meeting.
    * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
    * @param {String} networkBound - The network bound ('upper' or 'lower').
+   * @param {Number} meetingDuration - The meeting duration in minutes.
    * @returns {ComponentDamage} The dammage cauded by one minute's use of the software.
    */
-  computeOperatingDamage (instancesNumber, bandwithBound, networkBound) {
+  computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
+    // Initialize the new operating damage
+    const operatingDamage = new ComponentDamage()
+
     // If the software has no inboud bandwith in the database, we return an empty damage
-    if (!this.bandwith) return new ComponentDamage(0, 0, 0, 0)
+    if (!this.bandwith) return operatingDamage
 
     // We get the inboundBandwith (in Kbit/s)
     const inboundBandwith = this.getInboundBandwith(instancesNumber, bandwithBound)
 
     // We get the network energetic intensity (in damageUnit/bit)
-    const networkEnergeticIntensity = Software.getNetworkEnergeticIntensity(networkBound)
+    const networkEnergeticIntensity = new ComponentDamage(Software.getNetworkEnergeticIntensity(networkBound))
 
-    // We compute the total damage for each damage sphere (damageUnit/minute)
-    const humanHealthDamage = networkEnergeticIntensity.humanHealth * inboundBandwith * 60 * 1000 * instancesNumber
-    const ecosystemQualityDamage = networkEnergeticIntensity.ecosystemQuality * inboundBandwith * 60 * 1000 * instancesNumber
-    const climateChangeDamage = networkEnergeticIntensity.climateChange * inboundBandwith * 60 * 1000 * instancesNumber
-    const resourcesDamage = networkEnergeticIntensity.resources * inboundBandwith * 60 * 1000 * instancesNumber
+    // We compute the total damage for each damage shere (in damageUnit)
+    Object.keys(operatingDamage).map((categoryDamage) =>{
+      // (damageUnit/bit) * (Kbit/s) = 1000 * (damageUnit/s)
+      operatingDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * inboundBandwith 
+      // (1000 * (damageUnit/s)) / 1000 = damageUnit/s
+      operatingDamage[categoryDamage] /= meetingEnums.bitsInKbits
+      // (damageUnit/s) * 60 = damageUnit/minute
+      operatingDamage[categoryDamage] *= meetingEnums.secoundsInMinute
+      // Damage for one minute use for all the instances
+      operatingDamage[categoryDamage] *= instancesNumber
+      // Damage for all the meeting
+      operatingDamage[categoryDamage] *= meetingDuration
+    })
 
-    const operatingDamage = new ComponentDamage(humanHealthDamage, ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
-
+    // Return the computed operating damage
     return operatingDamage
   }
 
@@ -162,25 +173,25 @@ class Software {
    * @returns {ComponentDamage} The damage caused by all the software dowloads of the meeting.
    */
   computeEmbodiedDamage (instancesNumber, networkBound) {
+    // Initialize the embodied damage
+   const embodiedDamage = new ComponentDamage()
+
     // If there is no file to download or if there is no file size,
     // we return an empty damage.
-    if (!this.fileSize) return new ComponentDamage(0, 0, 0, 0)
+    if (!this.fileSize) return embodiedDamage
 
     // We get the network energetic intensity (in damageUnit/bit)
-    const networkEnergeticIntensity = Software.getNetworkEnergeticIntensity(networkBound)
+    const networkEnergeticIntensity = new ComponentDamage(Software.getNetworkEnergeticIntensity(networkBound))
 
     // We get the file size in bits
     const fileSize = this.fileSizeMoToBits()
 
     // We compute the total damage for each damage shere (in damageUnit)
-    const humanHealthDamage = networkEnergeticIntensity.humanHealth * fileSize * instancesNumber
-    const ecosystemQualityDamage = networkEnergeticIntensity.ecosystemQuality * fileSize * instancesNumber
-    const climateChangeDamage = networkEnergeticIntensity.climateChange * fileSize * instancesNumber
-    const resourcesDamage = networkEnergeticIntensity.resources * fileSize * instancesNumber
+    Object.keys(embodiedDamage).map((categoryDamage) =>{
+      embodiedDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber
+    })
 
-    const embodiedDamage = new ComponentDamage(humanHealthDamage,
-      ecosystemQualityDamage, climateChangeDamage, resourcesDamage)
-
+    // Return the computed embodied damage
     return embodiedDamage
   }
 }
