@@ -96,7 +96,7 @@ class Journey {
       const personKmAmount = this.distance * this.numberOfPeople
 
       Object.keys(embodiedDamage).map((category) => {
-        embodiedDamage[category] += transportationMeanDamage[category] * personKmAmont
+        embodiedDamage[category] += transportationMeanDamage[category] * personKmAmount
       })
     } else {
       Object.keys(embodiedDamage).map((category) => {
