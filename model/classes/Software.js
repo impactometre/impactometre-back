@@ -129,7 +129,7 @@ class Software {
    * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @param {Number} meetingDuration - The meeting duration in minutes.
-   * @returns {ComponentDamage} The dammage cauded by one minute's use of the software.
+   * @returns {ComponentDamage} The dammage caused by one minute's use of the software.
    */
   computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
     // Initialize the new operating damage
@@ -189,6 +189,33 @@ class Software {
 
     // Return the computed embodied damage
     return embodiedDamage
+  }
+
+  /**
+   * Compute the total damage caused by the software.
+   * @param {Number} instancesNumber - The number of software instances used for the meeting.
+   * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
+   * @param {String} networkBound - The network bound ('upper' or 'lower').
+   * @param {Number} meetingDuration - The meeting duration in minutes.
+   * @returns {ComponentDamage} The total dammage caused the software.
+   */
+  computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
+    // Initalize the total damage
+    const totalDamage = new ComponentDamage()
+
+    // Compute the embodied damage (damage cause by downloads)
+    const embodiedDamage = new ComponentDamage(this.computeEmbodiedDamage(instancesNumber, networkBound))
+
+    // Compute the operating damage (cause by all the software instances usage during all the meeting)
+    const operatingDamage = new ComponentDamage(this.computeOperatingDamage(instancesNumber, bandwithBound, networkBound, meetingDuration))
+
+    // Add embodied damage and operating damage
+    Object.keys(totalDamage).map((categoryDamage) => {
+      totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
+    })
+
+    // Return the computed total damage
+    return totalDamage
   }
 }
 

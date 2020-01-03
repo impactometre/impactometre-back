@@ -61,4 +61,17 @@ describe('Journey classes', () => {
       )
     })
   })
+  describe('#computeDamage ()', () => {
+    const highSpeedTrain = new TransportationMean(transportDatabase.TRAIN_HIGH_SPEED_ONE_PERSON_KM)
+    const distance = 300
+    const numberOfPeople = 4
+    const highSpeedTrainJourney = new Journey(highSpeedTrain, distance, numberOfPeople)
+    it('the total damage caused by a journey should by equal to its embodied damage', () => {
+      assert.deepStrictEqual(
+        highSpeedTrainJourney.computeDamage(),
+        highSpeedTrainJourney.computeEmbodiedDamage()
+
+      )
+    })
+  })
 })

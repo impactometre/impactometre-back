@@ -107,6 +107,15 @@ class Journey {
     // Return the journey embodied damage
     return embodiedDamage
   }
+
+  /**
+   * Compute the total damage of the journey.
+   * There is a method with the same name for Software class and Hardware class.
+   * @returns {CompenentDamage} The total damage caused by the journey.
+   */
+  computeDamage () {
+    return this.computeEmbodiedDamage()
+  }
 }
 
 module.exports = Journey

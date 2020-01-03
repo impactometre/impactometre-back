@@ -126,4 +126,36 @@ describe('Software classes', () => {
       )
     })
   })
+  describe('#computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration)', () => {
+    const meetingDuration = 120
+    const secondsInMinutes = constants.secoundsInMinute
+    const bitsInKbits = constants.bitsInKbits
+    const instancesNumber = 5
+    const skype = new Software(softwareDatabase.SKYPE)
+    const inboundBandwith = skype.getInboundBandwith(instancesNumber, constants.bandwidthBound.IDEAL)
+    const networkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
+    const operatingDamage = new ComponentDamage({
+      humanHealth: networkBound.humanHealth * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      ecosystemQuality: networkBound.ecosystemQuality * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      climateChange: networkBound.climateChange * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
+      resources: networkBound.resources * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration
+    })
+    const fileSizeMoToBits = skype.fileSizeMoToBits()
+    const embodiedDamage = new ComponentDamage({
+      humanHealth: networkBound.humanHealth * fileSizeMoToBits * instancesNumber,
+      ecosystemQuality: networkBound.ecosystemQuality * fileSizeMoToBits * instancesNumber,
+      climateChange: networkBound.climateChange * fileSizeMoToBits * instancesNumber,
+      resources: networkBound.resources * fileSizeMoToBits * instancesNumber
+    })
+    const totalDamage = new ComponentDamage()
+    Object.keys(totalDamage).map((categoryDamage) => {
+      totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
+    })
+    it('should return the total damage caused by a software during all the meeting (embodied damage + operating damage)', () => {
+      assert.deepStrictEqual(
+        skype.computeDamage(instancesNumber, constants.bandwidthBound.IDEAL, constants.networkEnergeticIntensityBound.UPPER, meetingDuration),
+        totalDamage
+      )
+    })
+  })
 })
