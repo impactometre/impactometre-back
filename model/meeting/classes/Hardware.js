@@ -7,9 +7,9 @@ const {
   hardwareDamageTypes,
   minutesInHour,
   bounds
-} = require('../../constants/meeting')
+} = require('../../../constants/meeting')
 
-const hardwareDatabase = require('../database/meeting/hardware')
+const hardwareDatabase = require('../database/hardware')
 const ComponentDamage = require('./ComponentDamage')
 
 class Hardware {

@@ -2,12 +2,12 @@
 
 const assert = require('assert')
 const constants = require('../../../../constants/meeting')
-const softwareDatabase = require('../../../../model/database/meeting/software')
-const Software = require('../../../../model/classes/Software')
-const ComponentDamage = require('../../../../model/classes/ComponentDamage')
-const networkDatabase = require('../../../../model/database/meeting/network')
+const softwareDatabase = require('../../../../model/meeting/database/software')
+const Software = require('../../../../model/meeting/classes/Software')
+const ComponentDamage = require('../../../../model/meeting/classes/ComponentDamage')
+const networkDatabase = require('../../../../model/meeting/database/network')
 
-describe('Software classes', () => {
+describe('Software class', () => {
   describe('#getInboundBandwith()', () => {
     const renavisio = new Software(softwareDatabase.RENAVISIO)
     it('should return the unique available value', () => {
