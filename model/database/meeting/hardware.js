@@ -183,8 +183,8 @@ const hardware = {
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
   },
-  TV_SCREEN_BASE: {
-    name: 'TV_SCREEN_BASE',
+  TV_BASE: {
+    name: 'TV_BASE',
     french: 'télévision sauf écran',
     isSizeDependent: false,
     operatingOneMinVisio: {
@@ -213,9 +213,11 @@ const hardware = {
   TV: {
     name: 'TV',
     french: 'télévision',
+    /* Even if a component (here TV_SCREEN) is size-dependent, we don't
+    say that the composite element is itself size dependent */
     isSizeDependent: false,
     components: [
-      'TV_SCREEN_BASE',
+      'TV_BASE',
       'TV_SCREEN'
     ]
   },
