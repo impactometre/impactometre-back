@@ -2,10 +2,10 @@
 
 const {
   daysWorkedByYear,
-  hoursInDay,
+  dayToHours,
   knownOperatingTimeOverLife,
   hardwareDamageTypes,
-  minutesInHour,
+  hourToMinutes,
   bounds
 } = require('../../../constants/meeting')
 
@@ -242,7 +242,7 @@ class Hardware {
         damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType)
 
         // Embodied damage for a minute
-        damage[category] /= minutesInHour
+        damage[category] /= hourToMinutes
 
         // Embodied damage for the meeting
         damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
@@ -253,7 +253,7 @@ class Hardware {
       damage.mutate(category => {
         damage[category] *= this.shareForVisio
         damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType)
-        damage[category] /= minutesInHour
+        damage[category] /= hourToMinutes
         damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
 
         return damage[category]
@@ -329,10 +329,10 @@ class Hardware {
     let standbyDurationForOneHourVisio = this.computeVisioOrStandbyTimeOverLife(damageType) / this.computeVisioOrStandbyTimeOverLife(hardwareDamageTypes.OPERATING_VISIO)
 
     // Convert to minutes
-    standbyDurationForOneHourVisio *= minutesInHour
+    standbyDurationForOneHourVisio *= hourToMinutes
 
     // Get the corresponding value for the meeting duration (cross product)
-    const standbyDurationForMeeting = meetingDuration * standbyDurationForOneHourVisio / minutesInHour
+    const standbyDurationForMeeting = meetingDuration * standbyDurationForOneHourVisio / hourToMinutes
 
     return standbyDurationForMeeting
   }
@@ -365,7 +365,7 @@ class Hardware {
 
     // Damage is for standby time
     // We infer the standby time per day from the operating time
-    const standbyTimePerDay = hoursInDay - this.operatingTimePerDay
+    const standbyTimePerDay = dayToHours - this.operatingTimePerDay
     return this.lifetime * daysWorkedByYear * standbyTimePerDay
   }
 }
