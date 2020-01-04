@@ -1,12 +1,68 @@
 'use strict'
 
 const getClosest = require('../../utils/get-closest')
+const ComponentDamage = require('./ComponentDamage')
+const meetingEnums = require('../../constants/meeting')
+const networkDatabase = require('../database/meeting/network')
 
 class Software {
   constructor (software) {
-    this.french = software.french
-    this.fileSize = software.fileSize
-    this.bandwith = software.bandwith
+    this._french = software.french
+    this._fileSize = software.fileSize
+    this._bandwith = software.bandwith
+  }
+
+  // Getter
+
+  /**
+   * Getter for software french name.
+   */
+  get french () {
+    return this._french
+  }
+
+  /**
+   * Getter for software file size.
+   */
+  get fileSize () {
+    return this._fileSize
+  }
+
+  get bandwith () {
+    return this._bandwith
+  }
+
+  // Setters
+
+  /**
+   * Setter of software french name.
+   * @param french - The new software french name.
+   */
+  set french (newFrench) {
+    this._french = newFrench
+  }
+
+  /**
+   * Setter for software file size.
+   */
+  set fileSize (fileSize) {
+    this._fileSize = fileSize
+  }
+
+  /**
+   * Setter for software bandwith.
+   */
+  set bandwith (bandwith) {
+    this._bandwith = bandwith
+  }
+
+  // Others methods
+
+  /**
+   * Get the software file size in bits (it is originaly in Mo)
+   */
+  fileSizeMoToBits () {
+    return this.fileSize * meetingEnums.bitsInOctet * meetingEnums.octetsInMo
   }
 
   /**
@@ -51,6 +107,115 @@ class Software {
       : closestValue.ideal
 
     return boundSpecificValue
+  }
+
+  /**
+   * Returns the damage values (in damageUnit/bit) corresponding to network energetic intensity upper or lower bound.
+   * It returns the upper bound value by default.
+   * @param {string} networkBound - The network bound ('upper' or 'lower').
+   * @returns the damage values (in damageUnit/bit) corresponding to network energetic intensity upper or lower bound.
+   */
+  static getNetworkEnergeticIntensity (networkBound = null) {
+    const networkEnergeticIntensity = (networkBound != null)
+      ? networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[networkBound]
+      : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[meetingEnums.networkEnergeticIntensityBound.UPPER]
+
+    return networkEnergeticIntensity
+  }
+
+  /**
+   * Computes the software usage damage.
+   * @param {Integer} instancesNumber - The number of software instances used for the meeting.
+   * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
+   * @param {String} networkBound - The network bound ('upper' or 'lower').
+   * @param {Number} meetingDuration - The meeting duration in minutes.
+   * @returns {ComponentDamage} The dammage caused by one minute's use of the software.
+   */
+  computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
+    // Initialize the new operating damage
+    const operatingDamage = new ComponentDamage()
+
+    // If the software has no inboud bandwith in the database, we return an empty damage
+    if (!this.bandwith) return operatingDamage
+
+    // We get the inboundBandwith (in Kbit/s)
+    const inboundBandwith = this.getInboundBandwith(instancesNumber, bandwithBound)
+
+    // We get the network energetic intensity (in damageUnit/bit)
+    const networkEnergeticIntensity = new ComponentDamage(Software.getNetworkEnergeticIntensity(networkBound))
+
+    // We compute the total damage for each damage shere (in damageUnit)
+    Object.keys(operatingDamage).map((categoryDamage) => {
+      // (damageUnit/bit) * (Kbit/s) = 1000 * (damageUnit/s)
+      operatingDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * inboundBandwith
+      // (1000 * (damageUnit/s)) / 1000 = damageUnit/s
+      operatingDamage[categoryDamage] /= meetingEnums.bitsInKbits
+      // (damageUnit/s) * 60 = damageUnit/minute
+      operatingDamage[categoryDamage] *= meetingEnums.secoundsInMinute
+      // Damage for one minute use for all the instances
+      operatingDamage[categoryDamage] *= instancesNumber
+      // Damage for all the meeting
+      operatingDamage[categoryDamage] *= meetingDuration
+    })
+
+    // Return the computed operating damage
+    return operatingDamage
+  }
+
+  /**
+   * Compute the download software damage.
+   * @param {Integer} instancesNumber - The number of software instances used for the meeting.
+   * @param {string} networkBound - The network bound ('upper' or 'lower').
+   * @returns {ComponentDamage} The damage caused by all the software dowloads of the meeting.
+   */
+  computeEmbodiedDamage (instancesNumber, networkBound) {
+    // Initialize the embodied damage
+    const embodiedDamage = new ComponentDamage()
+
+    // If there is no file to download or if there is no file size,
+    // we return an empty damage.
+    if (!this.fileSize) return embodiedDamage
+
+    // We get the network energetic intensity (in damageUnit/bit)
+    const networkEnergeticIntensity = new ComponentDamage(Software.getNetworkEnergeticIntensity(networkBound))
+
+    // We get the file size in bits
+    const fileSize = this.fileSizeMoToBits()
+
+    // We compute the total damage for each damage shere (in damageUnit)
+    Object.keys(embodiedDamage).map((categoryDamage) => {
+      embodiedDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber
+    })
+
+    // Return the computed embodied damage
+    return embodiedDamage
+  }
+
+  /**
+   * Compute the total damage caused by the software.
+   * @param {Number} instancesNumber - The number of software instances used for the meeting.
+   * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
+   * @param {String} networkBound - The network bound ('upper' or 'lower').
+   * @param {Number} meetingDuration - The meeting duration in minutes.
+   * @returns {ComponentDamage} The total dammage caused the software.
+   */
+  computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
+    // Initalize the total damage
+    const totalDamage = new ComponentDamage()
+
+    // Compute the embodied damage (damage cause by downloads)
+    const embodiedDamage = new ComponentDamage(this.computeEmbodiedDamage(instancesNumber, networkBound))
+
+    // Compute the operating damage (cause by all the software instances usage during all the meeting)
+    const operatingDamage = new ComponentDamage(this.computeOperatingDamage(instancesNumber, bandwithBound, networkBound, meetingDuration))
+
+    // Add embodied damage and operating damage
+    Object.keys(totalDamage).map((categoryDamage) => {
+      totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
+    })
+
+    // Return the computed total damage
+    return totalDamage
   }
 }
 

@@ -8,7 +8,8 @@ const transport = {
       ecosystemQuality: 0.0108,
       climateChange: 0.109,
       resources: 1.69
-    }
+    },
+    isComputedByPersonKm: true
   },
   PLANE_INTRACONTINENTAL_ONE_PERSON_KM: {
     french: 'avion intracontinental',
@@ -17,7 +18,8 @@ const transport = {
       ecosystemQuality: 0.0163,
       climateChange: 0.167,
       resources: 2.59
-    }
+    },
+    isComputedByPersonKm: true
   },
   BUS_LARGE_DISTANCE_ONE_PERSON_KM: {
     french: 'bus longue distance',
@@ -26,7 +28,8 @@ const transport = {
       ecosystemQuality: 0.0354,
       climateChange: 0.099,
       resources: 1.49
-    }
+    },
+    isComputedByPersonKm: true
   },
   BUS_CITY_ONE_PERSON_KM: {
     french: 'bus en ville',
@@ -35,7 +38,8 @@ const transport = {
       ecosystemQuality: 0.0214,
       climateChange: 0.0497,
       resources: 0.764
-    }
+    },
+    isComputedByPersonKm: true
   },
   CAR_ELECTRIC_ONE_KM: {
     french: 'voiture électrique',
@@ -44,7 +48,8 @@ const transport = {
       ecosystemQuality: 0.0354,
       climateChange: 0.099,
       resources: 1.49
-    }
+    },
+    isComputedByPersonKm: false
   },
   CAR_HEAT_ENGINE_ONE_KM: {
     french: 'voiture moteur thermique',
@@ -53,7 +58,8 @@ const transport = {
       ecosystemQuality: 0.086,
       climateChange: 0.325,
       resources: 5.04
-    }
+    },
+    isComputedByPersonKm: false
   },
   TRAIN_HIGH_SPEED_ONE_PERSON_KM: {
     french: 'train à grande vitesse',
@@ -62,7 +68,8 @@ const transport = {
       ecosystemQuality: 0.00844,
       climateChange: 0.0122,
       resources: 1.15
-    }
+    },
+    isComputedByPersonKm: true
   },
   TRAIN_REGIONAL_ONE_PERSON_KM: {
     french: 'train régional',
@@ -71,7 +78,8 @@ const transport = {
       ecosystemQuality: 0.00736,
       climateChange: 0.0106,
       resources: 0.8
-    }
+    },
+    isComputedByPersonKm: true
   },
   TRAIN_URBAN_ONE_PERSON_KM: {
     french: 'train urbain',
@@ -80,7 +88,8 @@ const transport = {
       ecosystemQuality: 0.00505,
       climateChange: 0.0106,
       resources: 0.477
-    }
+    },
+    isComputedByPersonKm: true
   },
   TRAMWAY_ONE_PERSON_KM: {
     french: 'tramway',
@@ -89,7 +98,8 @@ const transport = {
       ecosystemQuality: 0.00887,
       climateChange: 0.0341,
       resources: 0.921
-    }
+    },
+    isComputedByPersonKm: true
   },
   BIKE_ONE_PERSON_ONE_KM: {
     french: 'vélo',
@@ -98,7 +108,8 @@ const transport = {
       ecosystemQuality: 0.00251,
       climateChange: 0.0131,
       resources: 0.169
-    }
+    },
+    isComputedByPersonKm: true
   }
 }
 
