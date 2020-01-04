@@ -6,7 +6,6 @@ const Hardware = require('../../../model/classes/Hardware')
 const ComponentDamage = require('../../../model/classes/ComponentDamage')
 const {
   knownOperatingTimeOverLife,
-  knownHardwareStandbyTime,
   hardwareLifetime,
   hardwareOperatingTimePerDay,
   hardwareBound,
@@ -164,26 +163,7 @@ describe('Hardware class', () => {
       })
     })
     describe('standby', () => {
-      const hardwaresWithKnownStandbyTime = Object.keys(knownHardwareStandbyTime)
-      it('should return the known value if exists in constants', () => {
-        Object.values(hardwareDamageTypes).filter(damageType => {
-          return (
-            damageType === hardwareDamageTypes.EMBODIED_STANDBY ||
-            damageType === hardwareDamageTypes.OPERATING_STANDBY
-          )
-        }).forEach(damageType => {
-          Object.values(hardwareDatabase).filter(json => {
-            return hardwaresWithKnownStandbyTime.includes(json.name)
-          }).forEach(json => {
-            const instance = new Hardware({ name: json.name })
-            assert.strictEqual(
-              knownHardwareStandbyTime[instance._name],
-              instance.computeTime(damageType)
-            )
-          })
-        })
-      })
-      describe('should compute the value if not known', () => {
+      describe('should compute the value', () => {
         it('when lifetime and operatingTimePerDay are based on DESKTOP values', () => {
           Object.values(hardwareDamageTypes).filter(damageType => {
             return (
@@ -193,7 +173,6 @@ describe('Hardware class', () => {
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
-                !(hardwaresWithKnownStandbyTime.includes(json.name)) &&
                 json.lifetime === hardwareLifetime.DESKTOP &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
               )
@@ -215,7 +194,6 @@ describe('Hardware class', () => {
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
-                !(hardwaresWithKnownStandbyTime.includes(json.name)) &&
                 json.lifetime === hardwareLifetime.DESKTOP &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.LOGITECH_KIT
               )
@@ -237,7 +215,6 @@ describe('Hardware class', () => {
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
-                !(hardwaresWithKnownStandbyTime.includes(json.name)) &&
                 json.lifetime === hardwareLifetime.POWER_CABLE_ONE_METER &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
               )

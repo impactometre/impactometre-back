@@ -4,7 +4,6 @@ const {
   daysWorkedByYear,
   dayInHours,
   knownOperatingTimeOverLife,
-  knownHardwareStandbyTime,
   hardwareDamageTypes,
   minutesInHour
 } = require('../../constants/meeting')
@@ -235,10 +234,6 @@ class Hardware {
     }
 
     // Damage is for standby time
-    if (knownHardwareStandbyTime[this.name]) {
-      return knownHardwareStandbyTime[this.name]
-    }
-
     // We infer the standby time per day from the operating time
     const standbyTimePerDay = dayInHours - this.operatingTimePerDay
     return this.lifetime * daysWorkedByYear * standbyTimePerDay
