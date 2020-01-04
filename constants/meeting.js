@@ -1,10 +1,24 @@
 'use strict'
 
 const minutesInHour = 60
+const bitsInOctet = 8
+const octetsInMo = 1000000
+const secoundsInMinute = 60
+const bitsInKbits = 1000
 
 const hardwareBound = {
   UPPER: 'upper',
   LOWER: 'lower'
+}
+
+const networkEnergeticIntensityBound = {
+  UPPER: 'upper',
+  LOWER: 'lower'
+}
+
+const bandwidthBound = {
+  MINIMUM: 'minimum',
+  IDEAL: 'ideal'
 }
 
 const hardwareDamageTypes = {
@@ -126,3 +140,9 @@ exports.knownHardwareOperatingTime = knownHardwareOperatingTime
 exports.knownHardwareStandbyTime = knownHardwareStandbyTime
 exports.daysWorkedByYear = daysWorkedByYear
 exports.dayInHours = dayInHours
+exports.networkEnergeticIntensityBound = networkEnergeticIntensityBound
+exports.bandwidthBound = bandwidthBound
+exports.bitsInOctet = bitsInOctet
+exports.octetsInMo = octetsInMo
+exports.secoundsInMinute = secoundsInMinute
+exports.bitsInKbits = bitsInKbits
