@@ -1,9 +1,9 @@
 'use strict'
 
 const chai = require('chai')
-const hardwareDatabase = require('../../../model/database/meeting/hardware')
-const Hardware = require('../../../model/classes/Hardware')
-const ComponentDamage = require('../../../model/classes/ComponentDamage')
+const hardwareDatabase = require('../../../../model/meeting/database/hardware')
+const Hardware = require('../../../../model/meeting/classes/Hardware')
+const ComponentDamage = require('../../../../model/meeting/classes/ComponentDamage')
 const {
   knownOperatingTimeOverLife,
   hardwareLifetime,
@@ -11,7 +11,7 @@ const {
   bounds,
   hardwareDamageTypes,
   minutesInHour
-} = require('../../../constants/meeting')
+} = require('../../../../constants/meeting')
 
 const assert = chai.assert
 
