@@ -200,19 +200,14 @@ class Software {
    * @returns {ComponentDamage} The total dammage caused the software.
    */
   computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
-    // Initalize the total damage
-    const totalDamage = new ComponentDamage()
-
-    // Compute the embodied damage (damage cause by downloads)
+    // Compute the embodied damage (damage caused by downloads)
     const embodiedDamage = new ComponentDamage(this.computeEmbodiedDamage(instancesNumber, networkBound))
 
-    // Compute the operating damage (cause by all the software instances usage during all the meeting)
+    // Compute the operating damage (caused by all the software instances usage during all the meeting)
     const operatingDamage = new ComponentDamage(this.computeOperatingDamage(instancesNumber, bandwithBound, networkBound, meetingDuration))
 
     // Add embodied damage and operating damage
-    Object.keys(totalDamage).map((categoryDamage) => {
-      totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
-    })
+    const totalDamage = new ComponentDamage().add(embodiedDamage).add(operatingDamage)
 
     // Return the computed total damage
     return totalDamage
