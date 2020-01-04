@@ -35,7 +35,7 @@ class ComponentDamage {
    * Apply the given function on the four
    * damage values.
    * @param {Function} mutation - The function to apply.
-   * @return {ComponentDamage} This mutated damage.
+   * @returns {ComponentDamage} This mutated damage.
    */
   mutate (mutation) {
     Object.keys(this).map(category => {
@@ -49,7 +49,7 @@ class ComponentDamage {
    * Add the given damage values to the one
    * of this damage.
    * @param {ComponentDamage} - The damage we want to add.
-   * @return {ComponentDamage} This bigger damage.
+   * @returns {ComponentDamage} This bigger damage.
    */
   add (damage) {
     Object.keys(this).map(category => {

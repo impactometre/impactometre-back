@@ -113,7 +113,7 @@ class Software {
    * Returns the damage values (in damageUnit/bit) corresponding to network energetic intensity upper or lower bound.
    * It returns the upper bound value by default.
    * @param {string} networkBound - The network bound ('upper' or 'lower').
-   * @returns the damage values (in damageUnit/bit) corresponding to network energetic intensity upper or lower bound.
+   * @returnss the damage values (in damageUnit/bit) corresponding to network energetic intensity upper or lower bound.
    */
   static getNetworkEnergeticIntensity (networkBound = null) {
     const networkEnergeticIntensity = (networkBound != null)
@@ -129,7 +129,7 @@ class Software {
    * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @param {Number} meetingDuration - The meeting duration in minutes.
-   * @returns {ComponentDamage} The dammage caused by one minute's use of the software.
+   * @returnss {ComponentDamage} The dammage caused by one minute's use of the software.
    */
   computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
     // Initialize the new operating damage
@@ -166,7 +166,7 @@ class Software {
    * Compute the download software damage.
    * @param {Integer} instancesNumber - The number of software instances used for the meeting.
    * @param {string} networkBound - The network bound ('upper' or 'lower').
-   * @returns {ComponentDamage} The damage caused by all the software dowloads of the meeting.
+   * @returnss {ComponentDamage} The damage caused by all the software dowloads of the meeting.
    */
   computeEmbodiedDamage (instancesNumber, networkBound) {
     // Initialize the embodied damage
@@ -197,7 +197,7 @@ class Software {
    * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @param {Number} meetingDuration - The meeting duration in minutes.
-   * @returns {ComponentDamage} The total dammage caused the software.
+   * @returnss {ComponentDamage} The total dammage caused the software.
    */
   computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
     // Compute the embodied damage (damage caused by downloads)
