@@ -5,7 +5,7 @@ const hardwareDatabase = require('../../../model/database/meeting/hardware')
 const Hardware = require('../../../model/classes/Hardware')
 const ComponentDamage = require('../../../model/classes/ComponentDamage')
 const {
-  knownHardwareOperatingTime,
+  knownOperatingTimeOverLife,
   knownHardwareStandbyTime,
   hardwareLifetime,
   hardwareOperatingTimePerDay,
@@ -75,7 +75,7 @@ describe('Hardware class', () => {
   })
   describe('#computeTime()', () => {
     describe('operating', () => {
-      const hardwaresWithKnownOperatingTime = Object.keys(knownHardwareOperatingTime)
+      const hardwaresWithKnownOperatingTime = Object.keys(knownOperatingTimeOverLife)
       it('should return the known value if exists in constants', () => {
         Object.values(hardwareDamageTypes).filter(damageType => {
           return (
@@ -88,7 +88,7 @@ describe('Hardware class', () => {
           }).forEach(json => {
             const instance = new Hardware({ name: json.name })
             assert.strictEqual(
-              knownHardwareOperatingTime[instance._name],
+              knownOperatingTimeOverLife[instance._name],
               instance.computeTime(damageType)
             )
           })

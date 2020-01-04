@@ -106,7 +106,7 @@ const hardwareOperatingTimePerDay = {
  * Hardwares operating time already known, so that
  * don't need to be computed.
  */
-const knownHardwareOperatingTime = {
+const knownOperatingTimeOverLife = {
   TV_SCREEN_BASE: 50000,
   TV_SCREEN: 50000
 }
@@ -137,7 +137,7 @@ exports.hardwareLifetime = hardwareLifetime
 exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 exports.transportationMeans = transportationMeans
 exports.workedDaysByWeek = workedDaysByWeek
-exports.knownHardwareOperatingTime = knownHardwareOperatingTime
+exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
 exports.knownHardwareStandbyTime = knownHardwareStandbyTime
 exports.daysWorkedByYear = daysWorkedByYear
 exports.dayInHours = dayInHours

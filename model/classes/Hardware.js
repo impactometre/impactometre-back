@@ -3,7 +3,7 @@
 const {
   daysWorkedByYear,
   dayInHours,
-  knownHardwareOperatingTime,
+  knownOperatingTimeOverLife,
   knownHardwareStandbyTime,
   hardwareDamageTypes,
   minutesInHour
@@ -227,8 +227,8 @@ class Hardware {
     ) {
       // Damage is for visio time
       // We may not need to compute the value
-      if (knownHardwareOperatingTime[this.name]) {
-        return knownHardwareOperatingTime[this.name]
+      if (knownOperatingTimeOverLife[this.name]) {
+        return knownOperatingTimeOverLife[this.name]
       }
 
       return this.lifetime * daysWorkedByYear * this.operatingTimePerDay
