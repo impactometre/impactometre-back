@@ -14,19 +14,13 @@ const workedDaysByWeek = 5
  */
 const daysWorkedByYear = 230
 
-const hardwareBound = {
+/**
+ * Bounds used for getting upper or lower equipment
+ * damage values depending on what the user wants.
+ */
+const bounds = {
   UPPER: 'upper',
   LOWER: 'lower'
-}
-
-const networkEnergeticIntensityBound = {
-  UPPER: 'upper',
-  LOWER: 'lower'
-}
-
-const bandwidthBound = {
-  MINIMUM: 'minimum',
-  IDEAL: 'ideal'
 }
 
 // See https://gitlab.utc.fr/tx-techno-num/impactometre/wikis/R%C3%A9union/Pr%C3%A9cisions-sur-le-sens-des-diff%C3%A9rents-impacts
@@ -119,7 +113,7 @@ const knownOperatingTimeOverLife = {
 }
 
 exports.minutesInHour = minutesInHour
-exports.hardwareBound = hardwareBound
+exports.bounds = bounds
 exports.hardwareDamageTypes = hardwareDamageTypes
 exports.software = software
 exports.hardware = hardware
@@ -130,8 +124,6 @@ exports.workedDaysByWeek = workedDaysByWeek
 exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
 exports.daysWorkedByYear = daysWorkedByYear
 exports.hoursInDay = hoursInDay
-exports.networkEnergeticIntensityBound = networkEnergeticIntensityBound
-exports.bandwidthBound = bandwidthBound
 exports.bitsInOctet = bitsInOctet
 exports.octetsInMo = octetsInMo
 exports.secoundsInMinute = secoundsInMinute
