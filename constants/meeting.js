@@ -1,10 +1,18 @@
 'use strict'
 
 const minutesInHour = 60
+const dayInHours = 24
 const bitsInOctet = 8
 const octetsInMo = 1000000
 const secoundsInMinute = 60
 const bitsInKbits = 1000
+
+const workedDaysByWeek = 5
+/**
+ * Number of days worked by year.
+ * Source : https://www.dougs.fr/blog/quel-est-le-nombre-de-jours-travailles-en-2020/
+ */
+const daysWorkedByYear = 230
 
 const hardwareBound = {
   UPPER: 'upper',
@@ -90,9 +98,6 @@ const hardwareLifetime = {
   POWER_CABLE_ONE_METER: 20
 }
 
-/* Five days worked by week */
-const workedDaysByWeek = 5
-
 /**
  * Used hardwares operating time per day.
  */
@@ -110,17 +115,6 @@ const knownOperatingTimeOverLife = {
   TV_SCREEN_BASE: 50000,
   TV_SCREEN: 50000
 }
-
-/**
- * Number of days worked by year.
- * Source : https://www.dougs.fr/blog/quel-est-le-nombre-de-jours-travailles-en-2020/
- */
-const daysWorkedByYear = 230
-
-/**
- * Number of hours in a day
- */
-const dayInHours = 24
 
 exports.minutesInHour = minutesInHour
 exports.hardwareBound = hardwareBound
