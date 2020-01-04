@@ -1,6 +1,6 @@
 'use strict'
 
-const assert = require('assert')
+const chai = require('chai')
 const hardwareDatabase = require('../../../model/database/meeting/hardware')
 const Hardware = require('../../../model/classes/Hardware')
 const ComponentDamage = require('../../../model/classes/ComponentDamage')
@@ -13,6 +13,8 @@ const {
   hardwareDamageTypes,
   minutesInHour
 } = require('../../../constants/meeting')
+
+const assert = chai.assert
 
 describe('Hardware class', () => {
   describe('#constructor()', () => {
@@ -516,5 +518,27 @@ describe('Hardware class', () => {
       })
     })
   })
+  describe('#computeDamage()', () => {
+    const meetingDuration = 60
+    const instance = new Hardware(hardwareDatabase.LAPTOP)
+    it('if the meeting is twice longer the damage should be twice bigger', () => {
+      const simple = instance.computeDamage(meetingDuration)
+
+      // Compute expected
+      const double = instance.computeDamage(meetingDuration * 2)
+
+      Object.keys(double).forEach(category => {
+        assert.strictEqual(double[category], simple[category] * 2)
+      })
+    })
+    it('the lower bound damage should be lower than the default (upper) damage', () => {
+      const instance = new Hardware(hardwareDatabase.CODEC)
+      const lowerBound = instance.computeDamage(meetingDuration, hardwareBound.LOWER)
+      const defaultBound = instance.computeDamage(meetingDuration)
+
+      Object.keys(defaultBound).forEach(category => {
+        assert.isAbove(defaultBound[category], lowerBound[category])
+      })
+    })
   })
 })

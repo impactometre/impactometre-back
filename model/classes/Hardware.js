@@ -318,6 +318,18 @@ class Hardware {
     return damage
   }
 
+  /**
+   * Compute the total damage of the object.
+   * @param {String} bound - The optional bound.
+   * @return {ComponentDamage} The total damage.
+   */
+  computeDamage (meetingDuration, bound = null) {
+    const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
+    const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound)
+    const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound)
+    const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound)
+
+    return operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
   }
 }
 
