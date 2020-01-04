@@ -5,7 +5,8 @@ const {
   hoursInDay,
   knownOperatingTimeOverLife,
   hardwareDamageTypes,
-  minutesInHour
+  minutesInHour,
+  bounds
 } = require('../../constants/meeting')
 
 const hardwareDatabase = require('../database/meeting/hardware')
@@ -296,7 +297,7 @@ class Hardware {
       upper value. */
       const boundSpecificValue = (bound != null)
         ? this[damageType][bound]
-        : this[damageType].upper
+        : this[damageType][bounds.UPPER]
 
       return boundSpecificValue
     }

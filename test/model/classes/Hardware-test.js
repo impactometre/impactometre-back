@@ -8,7 +8,7 @@ const {
   knownOperatingTimeOverLife,
   hardwareLifetime,
   hardwareOperatingTimePerDay,
-  hardwareBound,
+  bounds,
   hardwareDamageTypes,
   minutesInHour
 } = require('../../../constants/meeting')
@@ -294,7 +294,7 @@ describe('Hardware class', () => {
           const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             json[damageType].lower,
-            instance.getTypedDamage(damageType, hardwareBound.LOWER)
+            instance.getTypedDamage(damageType, bounds.LOWER)
           )
         })
       })
@@ -318,7 +318,7 @@ describe('Hardware class', () => {
           const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             json[damageType].upper,
-            instance.getTypedDamage(damageType, hardwareBound.UPPER)
+            instance.getTypedDamage(damageType, bounds.UPPER)
           )
         })
       })
@@ -510,7 +510,7 @@ describe('Hardware class', () => {
     })
     it('the lower bound damage should be lower than the default (upper) damage', () => {
       const instance = new Hardware(hardwareDatabase.CODEC)
-      const lowerBound = instance.computeDamage(meetingDuration, hardwareBound.LOWER)
+      const lowerBound = instance.computeDamage(meetingDuration, bounds.LOWER)
       const defaultBound = instance.computeDamage(meetingDuration)
 
       Object.keys(defaultBound).forEach(category => {

@@ -18,21 +18,21 @@ const software = {
     bandwith: {
       inbound: {
         2: {
-          minimum: 30,
-          ideal: 1050
+          lower: 30,
+          upper: 1050
         },
         3: {
-          minimum: 512,
-          ideal: 2000
+          lower: 512,
+          upper: 2000
         },
         5: {
-          minimum: 2000,
-          ideal: 4000
+          lower: 2000,
+          upper: 4000
         },
         // 7 or more
         7: {
-          minimum: 4000,
-          ideal: 8000
+          lower: 4000,
+          upper: 8000
         }
       }
     }
@@ -49,16 +49,16 @@ const software = {
     bandwith: {
       inbound: {
         2: {
-          minimum: 300,
-          ideal: 2600
+          lower: 300,
+          upper: 2600
         },
         5: {
-          minimum: 300,
-          ideal: 3200
+          lower: 300,
+          upper: 3200
         },
         10: {
-          minimum: 300,
-          ideal: 4000
+          lower: 300,
+          upper: 4000
         }
       }
     }
