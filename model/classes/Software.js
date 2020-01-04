@@ -2,7 +2,13 @@
 
 const getClosest = require('../../utils/get-closest')
 const ComponentDamage = require('./ComponentDamage')
-const meetingEnums = require('../../constants/meeting')
+const {
+  bitsInOctet,
+  octetsInMo,
+  bitsInKbits,
+  secoundsInMinute,
+  bounds
+} = require('../../constants/meeting')
 const networkDatabase = require('../database/meeting/network')
 
 class Software {
@@ -62,14 +68,14 @@ class Software {
    * Get the software file size in bits (it is originaly in Mo)
    */
   fileSizeMoToBits () {
-    return this.fileSize * meetingEnums.bitsInOctet * meetingEnums.octetsInMo
+    return this.fileSize * bitsInOctet * octetsInMo
   }
 
   /**
  * Return the given software download speed.
  * @param {String} softwareName - The software name.
  * @param {Number} participantsNumber - The participants number.
- * @param {String} bound - The bound ('minimum' or 'ideal').
+ * @param {String} bound - The bound ('lower' or 'upper').
  */
   getInboundBandwith (participantsNumber, bound) {
     const rawInbound = this.bandwith.inbound
@@ -100,11 +106,11 @@ class Software {
 
     /* If desired bound value was given, we return
     the corresponding value. Else we return the
-    ideal value.
+    upper value.
     */
     const boundSpecificValue = (bound != null)
       ? closestValue[bound]
-      : closestValue.ideal
+      : closestValue[bounds.UPPER]
 
     return boundSpecificValue
   }
@@ -118,7 +124,7 @@ class Software {
   static getNetworkEnergeticIntensity (networkBound = null) {
     const networkEnergeticIntensity = (networkBound != null)
       ? networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[networkBound]
-      : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[meetingEnums.networkEnergeticIntensityBound.UPPER]
+      : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[bounds.UPPER]
 
     return networkEnergeticIntensity
   }
@@ -126,7 +132,7 @@ class Software {
   /**
    * Computes the software usage damage.
    * @param {Integer} instancesNumber - The number of software instances used for the meeting.
-   * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
+   * @param {String} bandwithBound - The bandwith bound ('upper' or 'lower').
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @param {Number} meetingDuration - The meeting duration in minutes.
    * @returnss {ComponentDamage} The dammage caused by one minute's use of the software.
@@ -149,9 +155,9 @@ class Software {
       // (damageUnit/bit) * (Kbit/s) = 1000 * (damageUnit/s)
       operatingDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * inboundBandwith
       // (1000 * (damageUnit/s)) / 1000 = damageUnit/s
-      operatingDamage[categoryDamage] /= meetingEnums.bitsInKbits
+      operatingDamage[categoryDamage] /= bitsInKbits
       // (damageUnit/s) * 60 = damageUnit/minute
-      operatingDamage[categoryDamage] *= meetingEnums.secoundsInMinute
+      operatingDamage[categoryDamage] *= secoundsInMinute
       // Damage for one minute use for all the instances
       operatingDamage[categoryDamage] *= instancesNumber
       // Damage for all the meeting
@@ -194,7 +200,7 @@ class Software {
   /**
    * Compute the total damage caused by the software.
    * @param {Number} instancesNumber - The number of software instances used for the meeting.
-   * @param {String} bandwithBound - The bandwith bound ('minimum' or 'ideal').
+   * @param {String} bandwithBound - The bandwith bound ('upper' or 'lower').
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @param {Number} meetingDuration - The meeting duration in minutes.
    * @returnss {ComponentDamage} The total dammage caused the software.
