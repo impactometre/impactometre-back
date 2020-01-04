@@ -251,7 +251,7 @@ describe('Hardware class', () => {
       })
     })
   })
-  describe('#getDamage()', () => {
+  describe('#getTypedDamage()', () => {
     it('should return null if no available value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
         if (
@@ -267,7 +267,7 @@ describe('Hardware class', () => {
           const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             null,
-            instance.getDamage(damageType)
+            instance.getTypedDamage(damageType)
           )
         })
       })
@@ -291,7 +291,7 @@ describe('Hardware class', () => {
           const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             json[damageType],
-            instance.getDamage(damageType)
+            instance.getTypedDamage(damageType)
           )
         })
       })
@@ -315,7 +315,7 @@ describe('Hardware class', () => {
           const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             json[damageType].lower,
-            instance.getDamage(damageType, hardwareBound.LOWER)
+            instance.getTypedDamage(damageType, hardwareBound.LOWER)
           )
         })
       })
@@ -339,7 +339,7 @@ describe('Hardware class', () => {
           const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             json[damageType].upper,
-            instance.getDamage(damageType, hardwareBound.UPPER)
+            instance.getTypedDamage(damageType, hardwareBound.UPPER)
           )
         })
       })
@@ -363,7 +363,7 @@ describe('Hardware class', () => {
           const instance = new Hardware({ name: json.name })
           assert.strictEqual(
             json[damageType].upper,
-            instance.getDamage(damageType)
+            instance.getTypedDamage(damageType)
           )
         })
       })
@@ -413,7 +413,7 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
 
             // Compute expected damage
-            let expected = new ComponentDamage(instance.getDamage(damageType))
+            let expected = new ComponentDamage(instance.getTypedDamage(damageType))
             if (
               damageType === hardwareDamageTypes.OPERATING_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -451,7 +451,7 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
 
             // Compute expected damage
-            let expected = new ComponentDamage(instance.getDamage(damageType))
+            let expected = new ComponentDamage(instance.getTypedDamage(damageType))
             if (
               damageType === hardwareDamageTypes.OPERATING_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -498,5 +498,23 @@ describe('Hardware class', () => {
           })
       })
     })
+    it('if the meeting is twice longer the damage should be twice bigger', () => {
+      Object.values(hardwareDamageTypes).forEach(damageType => {
+        Object.values(hardwareDatabase)
+          .filter(json => new Hardware(json)[damageType])
+          .forEach(json => {
+            const instance = new Hardware(json)
+            const simple = instance.computeTypedDamage(damageType, meetingDuration)
+
+            // Compute expected
+            const double = instance.computeTypedDamage(damageType, meetingDuration * 2)
+
+            Object.keys(double).forEach(category => {
+              assert.strictEqual(simple[category] * 2, double[category])
+            })
+          })
+      })
+    })
+  })
   })
 })
