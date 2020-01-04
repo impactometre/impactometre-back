@@ -25,30 +25,30 @@ describe('Software classes', () => {
     })
 
     const skype = new Software(softwareDatabase.SKYPE)
-    it('should return the matching available (minimum bound) value', () => {
+    it('should return the matching available (lower bound) value', () => {
       assert.strictEqual(
-        skype.getInboundBandwith(2, 'minimum'),
+        skype.getInboundBandwith(2, constants.bounds.LOWER),
         30
       )
     })
 
-    it('should return the matching available ideal bound value when no bound specified', () => {
+    it('should return the matching available upper bound value when no bound specified', () => {
       assert.strictEqual(
         skype.getInboundBandwith(2),
         1050
       )
     })
 
-    it('should return the closest greater available (ideal bound) value', () => {
+    it('should return the closest greater available (upper bound) value', () => {
       assert.strictEqual(
-        skype.getInboundBandwith(4, 'ideal'),
+        skype.getInboundBandwith(4, constants.bounds.UPPER),
         4000
       )
     })
 
     it('should return the last available value if participants number is greater than available values', () => {
       assert.strictEqual(
-        skype.getInboundBandwith(8, 'ideal'),
+        skype.getInboundBandwith(8, constants.bounds.UPPER),
         8000
       )
     })
@@ -65,7 +65,7 @@ describe('Software classes', () => {
     })
     it('should return the solftware download damage for 5 people with Renaviso', () => {
       assert.deepStrictEqual(
-        renavisio.computeEmbodiedDamage(5, constants.networkEnergeticIntensityBound.UPPER),
+        renavisio.computeEmbodiedDamage(5, constants.bounds.UPPER),
         embodiedDamage
       )
     })
@@ -83,7 +83,7 @@ describe('Software classes', () => {
         jitsi.computeEmbodiedDamage(10, networkEnergeticIntensityUpper)
       )
     })
-    const networkEnergeticIntensityLower = constants.networkEnergeticIntensityBound.LOWER
+    const networkEnergeticIntensityLower = constants.bounds.LOWER
     it('should return 0 because the network energetic intensity value doesn\'t matter when there no file to download', () => {
       assert.deepStrictEqual(
         jitsi.computeEmbodiedDamage(5, networkEnergeticIntensityLower),
@@ -105,13 +105,13 @@ describe('Software classes', () => {
       climateChange: networkUpperkBound.climateChange * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
       resources: networkUpperkBound.resources * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration
     })
-    it('should return skype operating damage for network upper bound and ideal bandwith', () => {
+    it('should return skype operating damage for network upper bound and upper bandwith', () => {
       assert.deepStrictEqual(
-        skype.computeOperatingDamage(instancesNumber, constants.bandwidthBound.IDEAL, constants.networkEnergeticIntensityBound.UPPER, meetingDuration),
+        skype.computeOperatingDamage(instancesNumber, constants.bounds.UPPER, constants.bounds.UPPER, meetingDuration),
         operatingDamage
       )
     })
-    const inboundBandwithMinimun = skype.getInboundBandwith(5, constants.bandwidthBound.MINIMUM)
+    const inboundBandwithMinimun = skype.getInboundBandwith(5, constants.bounds.LOWER)
     const networkLowerBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.lower
     const operatingDamageMinimumBandwith = new ComponentDamage({
       humanHealth: networkLowerBound.humanHealth * inboundBandwithMinimun / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
@@ -121,7 +121,7 @@ describe('Software classes', () => {
     })
     it('should return skype operating damage for network lower bound and minimun bandwith', () => {
       assert.deepStrictEqual(
-        skype.computeOperatingDamage(instancesNumber, constants.bandwidthBound.MINIMUM, constants.networkEnergeticIntensityBound.LOWER, meetingDuration),
+        skype.computeOperatingDamage(instancesNumber, constants.bounds.LOWER, constants.bounds.LOWER, meetingDuration),
         operatingDamageMinimumBandwith
       )
     })
@@ -132,7 +132,7 @@ describe('Software classes', () => {
     const bitsInKbits = constants.bitsInKbits
     const instancesNumber = 5
     const skype = new Software(softwareDatabase.SKYPE)
-    const inboundBandwith = skype.getInboundBandwith(instancesNumber, constants.bandwidthBound.IDEAL)
+    const inboundBandwith = skype.getInboundBandwith(instancesNumber, constants.bounds.UPPER)
     const networkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
     const operatingDamage = new ComponentDamage({
       humanHealth: networkBound.humanHealth * inboundBandwith / bitsInKbits * secondsInMinutes * instancesNumber * meetingDuration,
@@ -153,7 +153,7 @@ describe('Software classes', () => {
     })
     it('should return the total damage caused by a software during all the meeting (embodied damage + operating damage)', () => {
       assert.deepStrictEqual(
-        skype.computeDamage(instancesNumber, constants.bandwidthBound.IDEAL, constants.networkEnergeticIntensityBound.UPPER, meetingDuration),
+        skype.computeDamage(instancesNumber, constants.bounds.UPPER, constants.bounds.UPPER, meetingDuration),
         totalDamage
       )
     })
