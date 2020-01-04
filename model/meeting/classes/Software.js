@@ -1,6 +1,6 @@
 'use strict'
 
-const getClosest = require('../../utils/get-closest')
+const getClosest = require('../../../utils/get-closest')
 const ComponentDamage = require('./ComponentDamage')
 const {
   bitsInOctet,
@@ -8,8 +8,8 @@ const {
   bitsInKbits,
   secoundsInMinute,
   bounds
-} = require('../../constants/meeting')
-const networkDatabase = require('../database/meeting/network')
+} = require('../../../constants/meeting')
+const networkDatabase = require('../database/network')
 
 class Software {
   constructor (software) {
