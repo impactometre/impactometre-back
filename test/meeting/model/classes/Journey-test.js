@@ -1,12 +1,12 @@
 'use strict'
 
 const assert = require('assert')
-const transportDatabase = require('../../../../model/database/meeting/transport')
-const TransportationMean = require('../../../../model/classes/TransportationMean')
-const Journey = require('../../../../model/classes/Journey')
-const ComponentDamage = require('../../../../model/classes/ComponentDamage')
+const transportDatabase = require('../../../../model/meeting/database/transport')
+const TransportationMean = require('../../../../model/meeting/classes/TransportationMean')
+const Journey = require('../../../../model/meeting/classes/Journey')
+const ComponentDamage = require('../../../../model/meeting/classes/ComponentDamage')
 
-describe('Journey classes', () => {
+describe('Journey class', () => {
   describe('#computeEmbodiedDamage ()', () => {
     const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
     const journeyElectricCar3People = new Journey(electricCar, 100, 3)
