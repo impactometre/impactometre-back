@@ -155,7 +155,7 @@ class Hardware {
    * @return {Object} JSON containing the four damage values.
    * @see hardwareDamageTypes
    */
-  getDamage (damageType, bound = null) {
+  getTypedDamage (damageType, bound = null) {
     if (
       damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.EMBODIED_STANDBY
@@ -201,12 +201,17 @@ class Hardware {
     }
 
     /* If damage is for standby time we compute how many hours of
-    standby we have for one hour of visio. */
-    let duration = this.computeTime(damageType) / this.computeTime(hardwareDamageTypes.OPERATING_VISIO)
-    // Convert to minutes
-    duration *= minutesInHour
+    standby we have for the meeting duration. First we compute how many hours of
+    standby we have for one hour of meeting. */
+    let standbyDurationForOneHourVisio = this.computeTime(damageType) / this.computeTime(hardwareDamageTypes.OPERATING_VISIO)
 
-    return duration
+    // Convert to minutes
+    standbyDurationForOneHourVisio *= minutesInHour
+
+    // Get the corresponding value for the meeting duration (cross product)
+    const standbyDurationForMeeting = meetingDuration * standbyDurationForOneHourVisio / minutesInHour
+
+    return standbyDurationForMeeting
   }
 
   /**
@@ -227,16 +232,16 @@ class Hardware {
       }
 
       return this.lifetime * daysWorkedByYear * this.operatingTimePerDay
-    } else {
-      // Damage is for standby time
-      if (knownHardwareStandbyTime[this.name]) {
-        return knownHardwareStandbyTime[this.name]
-      }
-
-      // We infer the standby time per day from the operating time
-      const standbyTimePerDay = dayInHours - this.operatingTimePerDay
-      return this.lifetime * daysWorkedByYear * standbyTimePerDay
     }
+
+    // Damage is for standby time
+    if (knownHardwareStandbyTime[this.name]) {
+      return knownHardwareStandbyTime[this.name]
+    }
+
+    // We infer the standby time per day from the operating time
+    const standbyTimePerDay = dayInHours - this.operatingTimePerDay
+    return this.lifetime * daysWorkedByYear * standbyTimePerDay
   }
 
   /**
@@ -263,7 +268,7 @@ class Hardware {
     }
 
     // Hardware may not have any value for the required damage
-    if (!this.getDamage(damageType, bound)) {
+    if (!this.getTypedDamage(damageType, bound)) {
       return new ComponentDamage()
     }
 
@@ -274,40 +279,45 @@ class Hardware {
       // Required damage is for operating lifecycle phase
       // Hardware damage may depends on its size
       const damage = (this._isSizeDependent)
-        ? new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
+        ? new ComponentDamage(this.getTypedDamage(damageType, bound)).mutate(categoryDamage => {
           return categoryDamage * this._shareForVisio * this._size * this.getDuration(damageType, meetingDuration)
         })
-        : new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
+        : new ComponentDamage(this.getTypedDamage(damageType, bound)).mutate(categoryDamage => {
           return categoryDamage * this._shareForVisio * this.getDuration(damageType, meetingDuration)
         })
 
       return damage
-    } else {
-      // Required damage is for embodied lifecycle phase
-      const damage = (this._isSizeDependent)
-        ? new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
-          // Embodied damage on the whole lifetime
-          categoryDamage *= this._shareForVisio * this._size
-          // Embodied damage for an hour
-          categoryDamage /= this.computeTime(damageType)
-          // Embodied damage for a minute
-          categoryDamage /= minutesInHour
-          // Embodied damage for the meeting
-          categoryDamage *= this.getDuration(damageType, meetingDuration)
-
-          return categoryDamage
-        })
-        : new ComponentDamage(this.getDamage(damageType, bound)).mutate(categoryDamage => {
-          categoryDamage *= this._shareForVisio
-          categoryDamage /= this.computeTime(damageType)
-          categoryDamage /= minutesInHour
-          categoryDamage *= this.getDuration(damageType, meetingDuration)
-
-          return categoryDamage
-        })
-
-      return damage
     }
+
+    // Required damage is for embodied lifecycle phase
+    const damage = (this._isSizeDependent)
+      ? new ComponentDamage(this.getTypedDamage(damageType, bound)).mutate(categoryDamage => {
+        // Embodied damage on the whole lifetime
+        categoryDamage *= this._shareForVisio * this._size
+
+        // Embodied damage for an hour
+        categoryDamage /= this.computeTime(damageType)
+
+        // Embodied damage for a minute
+        categoryDamage /= minutesInHour
+
+        // Embodied damage for the meeting
+        categoryDamage *= this.getDuration(damageType, meetingDuration)
+
+        return categoryDamage
+      })
+      : new ComponentDamage(this.getTypedDamage(damageType, bound)).mutate(categoryDamage => {
+        categoryDamage *= this._shareForVisio
+        categoryDamage /= this.computeTime(damageType)
+        categoryDamage /= minutesInHour
+        categoryDamage *= this.getDuration(damageType, meetingDuration)
+
+        return categoryDamage
+      })
+
+    return damage
+  }
+
   }
 }
 
