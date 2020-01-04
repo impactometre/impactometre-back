@@ -1,18 +1,19 @@
 'use strict'
 
-const minutesInHour = 60
-const hoursInDay = 24
-const bitsInOctet = 8
-const octetsInMo = 1000000
-const secoundsInMinute = 60
-const bitsInKbits = 1000
+const hourToMinutes = 60
+const dayToHours = 24
+const minuteToSeconds = 60
 
-const workedDaysByWeek = 5
+const octetToBits = 8
+const moToOctets = 1000000
+const kbitToBits = 1000
+
 /**
  * Number of days worked by year.
  * Source : https://www.dougs.fr/blog/quel-est-le-nombre-de-jours-travailles-en-2020/
  */
 const daysWorkedByYear = 230
+const workedDaysByWeek = 5
 
 /**
  * Bounds used for getting upper or lower equipment
@@ -95,15 +96,6 @@ const hardwareLifetime = {
 }
 
 /**
- * Used hardwares operating time per day.
- */
-const hardwareOperatingTimePerDay = {
-  DESKTOP: 7,
-  // Considering it is used 3 hours per week
-  LOGITECH_KIT: 3 / workedDaysByWeek
-}
-
-/**
  * Hardwares operating time already known, so that
  * don't need to be computed.
  */
@@ -112,19 +104,28 @@ const knownOperatingTimeOverLife = {
   TV_SCREEN: 50000
 }
 
-exports.minutesInHour = minutesInHour
+/**
+ * Used hardwares operating time per day.
+ */
+const hardwareOperatingTimePerDay = {
+  DESKTOP: 7,
+  // Considering it is used 3 hours per week
+  LOGITECH_KIT: 3 / workedDaysByWeek
+}
+
+exports.hourToMinutes = hourToMinutes
+exports.dayToHours = dayToHours
+exports.minuteToSeconds = minuteToSeconds
+
+exports.octetToBits = octetToBits
+exports.moToOctets = moToOctets
+exports.kbitToBits = kbitToBits
+
+exports.daysWorkedByYear = daysWorkedByYear
+exports.workedDaysByWeek = workedDaysByWeek
+
 exports.bounds = bounds
 exports.hardwareDamageTypes = hardwareDamageTypes
-exports.software = software
-exports.hardware = hardware
 exports.hardwareLifetime = hardwareLifetime
-exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
-exports.transportationMeans = transportationMeans
-exports.workedDaysByWeek = workedDaysByWeek
 exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
-exports.daysWorkedByYear = daysWorkedByYear
-exports.hoursInDay = hoursInDay
-exports.bitsInOctet = bitsInOctet
-exports.octetsInMo = octetsInMo
-exports.secoundsInMinute = secoundsInMinute
-exports.bitsInKbits = bitsInKbits
+exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
