@@ -53,7 +53,9 @@ describe('Journey classes', () => {
       ecosystemQuality,
       climateChange,
       resources
-    }).mutate(categoryDamage => { return categoryDamage * 2 })
+    })
+
+    embodiedDamageTwice.mutate(category => { return embodiedDamageTwice[category] * 2 })
     it('a 4 people journey by plane should cause twice the damage of a 2 people journey by plane', () => {
       assert.deepStrictEqual(
         intercontinentalPlaneJourney4People.computeEmbodiedDamage(),
