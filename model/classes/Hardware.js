@@ -252,11 +252,14 @@ class Hardware {
    * @return {ComponentDamage} The hardware operating damage.
    */
   computeTypedDamage (damageType, meetingDuration, bound = null) {
+    // Variable we will return
+    let damage
+
     // Hardware may be composed of other hardwares
     if (Object.keys(this._components).length > 0) {
+      damage = new ComponentDamage()
       /* For each component, compute its operating damage
       and add it to composite hardware damage */
-      const damage = new ComponentDamage()
       Object.values(this._components).forEach(component => {
         const componentDamage = component.computeTypedDamage(damageType, meetingDuration, bound)
         Object.keys(damage).map((category) => {
@@ -269,51 +272,59 @@ class Hardware {
 
     // Hardware may not have any value for the required damage
     if (!this.getTypedDamage(damageType, bound)) {
-      return new ComponentDamage()
+      damage = new ComponentDamage()
+
+      return damage
     }
 
+    damage = new ComponentDamage(this.getTypedDamage(damageType, bound))
     if (
       damageType === hardwareDamageTypes.OPERATING_STANDBY ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
     ) {
       // Required damage is for operating lifecycle phase
       // Hardware damage may depends on its size
-      const damage = (this._isSizeDependent)
-        ? new ComponentDamage(this.getTypedDamage(damageType, bound)).mutate(categoryDamage => {
-          return categoryDamage * this._shareForVisio * this._size * this.getDuration(damageType, meetingDuration)
+      if (this._isSizeDependent) {
+        damage.mutate(category => {
+          return damage[category] * this._shareForVisio * this._size * this.getDuration(damageType, meetingDuration)
         })
-        : new ComponentDamage(this.getTypedDamage(damageType, bound)).mutate(categoryDamage => {
-          return categoryDamage * this._shareForVisio * this.getDuration(damageType, meetingDuration)
+      } else {
+        damage = new ComponentDamage(this.getTypedDamage(damageType, bound))
+        damage.mutate(category => {
+          return damage[category] * this._shareForVisio * this.getDuration(damageType, meetingDuration)
         })
+      }
 
       return damage
     }
 
     // Required damage is for embodied lifecycle phase
-    const damage = (this._isSizeDependent)
-      ? new ComponentDamage(this.getTypedDamage(damageType, bound)).mutate(categoryDamage => {
+    if (this._isSizeDependent) {
+      damage.mutate(category => {
         // Embodied damage on the whole lifetime
-        categoryDamage *= this._shareForVisio * this._size
+        damage[category] *= this._shareForVisio * this._size
 
         // Embodied damage for an hour
-        categoryDamage /= this.computeTime(damageType)
+        damage[category] /= this.computeTime(damageType)
 
         // Embodied damage for a minute
-        categoryDamage /= minutesInHour
+        damage[category] /= minutesInHour
 
         // Embodied damage for the meeting
-        categoryDamage *= this.getDuration(damageType, meetingDuration)
+        damage[category] *= this.getDuration(damageType, meetingDuration)
 
-        return categoryDamage
+        return damage[category]
       })
-      : new ComponentDamage(this.getTypedDamage(damageType, bound)).mutate(categoryDamage => {
-        categoryDamage *= this._shareForVisio
-        categoryDamage /= this.computeTime(damageType)
-        categoryDamage /= minutesInHour
-        categoryDamage *= this.getDuration(damageType, meetingDuration)
+    } else {
+      damage.mutate(category => {
+        damage[category] *= this._shareForVisio
+        damage[category] /= this.computeTime(damageType)
+        damage[category] /= minutesInHour
+        damage[category] *= this.getDuration(damageType, meetingDuration)
 
-        return categoryDamage
+        return damage[category]
       })
+    }
 
     return damage
   }

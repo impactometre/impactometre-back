@@ -415,22 +415,22 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
 
             // Compute expected damage
-            let expected = new ComponentDamage(instance.getTypedDamage(damageType))
+            const expected = new ComponentDamage(instance.getTypedDamage(damageType))
             if (
               damageType === hardwareDamageTypes.OPERATING_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
             ) {
-              expected = expected.mutate(categoryDamage => {
-                return categoryDamage * instance.shareForVisio * instance.getDuration(damageType, meetingDuration)
+              expected.mutate(category => {
+                return expected[category] * instance.shareForVisio * instance.getDuration(damageType, meetingDuration)
               })
             } else {
-              expected = expected.mutate(categoryDamage => {
-                categoryDamage *= instance._shareForVisio
-                categoryDamage /= instance.computeTime(damageType)
-                categoryDamage /= minutesInHour
-                categoryDamage *= instance.getDuration(damageType, meetingDuration)
+              expected.mutate(category => {
+                expected[category] *= instance._shareForVisio
+                expected[category] /= instance.computeTime(damageType)
+                expected[category] /= minutesInHour
+                expected[category] *= instance.getDuration(damageType, meetingDuration)
 
-                return categoryDamage
+                return expected[category]
               })
             }
 
@@ -453,22 +453,22 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
 
             // Compute expected damage
-            let expected = new ComponentDamage(instance.getTypedDamage(damageType))
+            const expected = new ComponentDamage(instance.getTypedDamage(damageType))
             if (
               damageType === hardwareDamageTypes.OPERATING_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
             ) {
-              expected = expected.mutate(categoryDamage => {
-                return categoryDamage * instance.shareForVisio * instance.size * instance.getDuration(damageType, meetingDuration)
+              expected.mutate(category => {
+                return expected[category] * instance.shareForVisio * instance.size * instance.getDuration(damageType, meetingDuration)
               })
             } else {
-              expected = expected.mutate(categoryDamage => {
-                categoryDamage *= instance._shareForVisio * instance.size
-                categoryDamage /= instance.computeTime(damageType)
-                categoryDamage /= minutesInHour
-                categoryDamage *= instance.getDuration(damageType, meetingDuration)
+              expected.mutate(category => {
+                expected[category] *= instance._shareForVisio * instance.size
+                expected[category] /= instance.computeTime(damageType)
+                expected[category] /= minutesInHour
+                expected[category] *= instance.getDuration(damageType, meetingDuration)
 
-                return categoryDamage
+                return expected[category]
               })
             }
 
