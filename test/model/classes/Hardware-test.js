@@ -60,8 +60,8 @@ describe('Hardware class', () => {
 
       // Compute expected components
       const expected = {}
-      expected[hardwareDatabase.TV_SCREEN_BASE.name] = new Hardware({
-        name: hardwareDatabase.TV_SCREEN_BASE.name
+      expected[hardwareDatabase.TV_BASE.name] = new Hardware({
+        name: hardwareDatabase.TV_BASE.name
       })
 
       expected[hardwareDatabase.TV_SCREEN.name] = new Hardware({
@@ -72,7 +72,7 @@ describe('Hardware class', () => {
       assert.deepStrictEqual(expected, instance._components)
     })
   })
-  describe('#computeTime()', () => {
+  describe('#computeVisioOrStandbyTimeOverLife()', () => {
     describe('operating', () => {
       const hardwaresWithKnownOperatingTime = Object.keys(knownOperatingTimeOverLife)
       it('should return the known value if exists in constants', () => {
@@ -88,7 +88,7 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
             assert.strictEqual(
               knownOperatingTimeOverLife[instance._name],
-              instance.computeTime(damageType)
+              instance.computeVisioOrStandbyTimeOverLife(damageType)
             )
           })
         })
@@ -111,7 +111,7 @@ describe('Hardware class', () => {
               const instance = new Hardware({ name: json.name })
               assert.strictEqual(
                 8050,
-                instance.computeTime(damageType)
+                instance.computeVisioOrStandbyTimeOverLife(damageType)
               )
             })
           })
@@ -133,7 +133,7 @@ describe('Hardware class', () => {
               const instance = new Hardware({ name: json.name })
               assert.strictEqual(
                 690,
-                instance.computeTime(damageType)
+                instance.computeVisioOrStandbyTimeOverLife(damageType)
               )
             })
           })
@@ -155,7 +155,7 @@ describe('Hardware class', () => {
               const instance = new Hardware({ name: json.name })
               assert.strictEqual(
                 32200,
-                instance.computeTime(damageType)
+                instance.computeVisioOrStandbyTimeOverLife(damageType)
               )
             })
           })
@@ -180,7 +180,7 @@ describe('Hardware class', () => {
               const instance = new Hardware({ name: json.name })
               assert.strictEqual(
                 19550,
-                instance.computeTime(damageType)
+                instance.computeVisioOrStandbyTimeOverLife(damageType)
               )
             })
           })
@@ -201,7 +201,7 @@ describe('Hardware class', () => {
               const instance = new Hardware({ name: json.name })
               assert.strictEqual(
                 26910,
-                instance.computeTime(damageType)
+                instance.computeVisioOrStandbyTimeOverLife(damageType)
               )
             })
           })
@@ -222,7 +222,7 @@ describe('Hardware class', () => {
               const instance = new Hardware({ name: json.name })
               assert.strictEqual(
                 78200,
-                instance.computeTime(damageType)
+                instance.computeVisioOrStandbyTimeOverLife(damageType)
               )
             })
           })
@@ -398,14 +398,14 @@ describe('Hardware class', () => {
               damageType === hardwareDamageTypes.OPERATING_VISIO
             ) {
               expected.mutate(category => {
-                return expected[category] * instance.shareForVisio * instance.getDuration(damageType, meetingDuration)
+                return expected[category] * instance.shareForVisio * instance.getVisioOrStandbyDuration(damageType, meetingDuration)
               })
             } else {
               expected.mutate(category => {
                 expected[category] *= instance._shareForVisio
-                expected[category] /= instance.computeTime(damageType)
+                expected[category] /= instance.computeVisioOrStandbyTimeOverLife(damageType)
                 expected[category] /= minutesInHour
-                expected[category] *= instance.getDuration(damageType, meetingDuration)
+                expected[category] *= instance.getVisioOrStandbyDuration(damageType, meetingDuration)
 
                 return expected[category]
               })
@@ -436,14 +436,14 @@ describe('Hardware class', () => {
               damageType === hardwareDamageTypes.OPERATING_VISIO
             ) {
               expected.mutate(category => {
-                return expected[category] * instance.shareForVisio * instance.size * instance.getDuration(damageType, meetingDuration)
+                return expected[category] * instance.shareForVisio * instance.size * instance.getVisioOrStandbyDuration(damageType, meetingDuration)
               })
             } else {
               expected.mutate(category => {
                 expected[category] *= instance._shareForVisio * instance.size
-                expected[category] /= instance.computeTime(damageType)
+                expected[category] /= instance.computeVisioOrStandbyTimeOverLife(damageType)
                 expected[category] /= minutesInHour
-                expected[category] *= instance.getDuration(damageType, meetingDuration)
+                expected[category] *= instance.getVisioOrStandbyDuration(damageType, meetingDuration)
 
                 return expected[category]
               })

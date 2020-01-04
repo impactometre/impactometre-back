@@ -1,7 +1,7 @@
 'use strict'
 
 const minutesInHour = 60
-const dayInHours = 24
+const hoursInDay = 24
 const bitsInOctet = 8
 const octetsInMo = 1000000
 const secoundsInMinute = 60
@@ -35,6 +35,8 @@ const hardwareDamageTypes = {
   EMBODIED_VISIO: 'embodiedVisio',
   // Embodied damage attributed to standby time
   EMBODIED_STANDBY: 'embodiedStandby',
+  // Constant we use when we only need to get the embodied damage value
+  EMBODIED: 'embodied',
   // Operating damage attributed to visio time
   OPERATING_VISIO: 'operatingOneMinVisio',
   // Operating damage attributed to standby time
@@ -127,7 +129,7 @@ exports.transportationMeans = transportationMeans
 exports.workedDaysByWeek = workedDaysByWeek
 exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
 exports.daysWorkedByYear = daysWorkedByYear
-exports.dayInHours = dayInHours
+exports.hoursInDay = hoursInDay
 exports.networkEnergeticIntensityBound = networkEnergeticIntensityBound
 exports.bandwidthBound = bandwidthBound
 exports.bitsInOctet = bitsInOctet
