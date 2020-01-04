@@ -21,6 +21,7 @@ const bandwidthBound = {
   IDEAL: 'ideal'
 }
 
+// See https://gitlab.utc.fr/tx-techno-num/impactometre/wikis/R%C3%A9union/Pr%C3%A9cisions-sur-le-sens-des-diff%C3%A9rents-impacts
 const hardwareDamageTypes = {
   // Embodied damage attributed to visio time
   EMBODIED_VISIO: 'embodiedVisio',
