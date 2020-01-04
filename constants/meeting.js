@@ -112,12 +112,6 @@ const knownOperatingTimeOverLife = {
 }
 
 /**
- * Hardwares standby time already known, so that
- * don't need to be computed.
- */
-const knownHardwareStandbyTime = {}
-
-/**
  * Number of days worked by year.
  * Source : https://www.dougs.fr/blog/quel-est-le-nombre-de-jours-travailles-en-2020/
  */
@@ -138,7 +132,6 @@ exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 exports.transportationMeans = transportationMeans
 exports.workedDaysByWeek = workedDaysByWeek
 exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
-exports.knownHardwareStandbyTime = knownHardwareStandbyTime
 exports.daysWorkedByYear = daysWorkedByYear
 exports.dayInHours = dayInHours
 exports.networkEnergeticIntensityBound = networkEnergeticIntensityBound
