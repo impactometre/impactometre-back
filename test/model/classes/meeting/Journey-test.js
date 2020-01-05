@@ -1,10 +1,10 @@
 'use strict'
 
 const assert = require('assert')
-const transportDatabase = require('../../../../model/meeting/database/transport')
-const TransportationMean = require('../../../../model/meeting/classes/TransportationMean')
-const Journey = require('../../../../model/meeting/classes/Journey')
-const ComponentDamage = require('../../../../model/meeting/classes/ComponentDamage')
+const transportDatabase = require('../../../../model/database/meeting/transport')
+const TransportationMean = require('../../../../model/classes/meeting/TransportationMean')
+const Journey = require('../../../../model/classes/meeting/Journey')
+const ComponentDamage = require('../../../../model/classes/meeting/ComponentDamage')
 
 describe('Journey class', () => {
   describe('#computeEmbodiedDamage ()', () => {
