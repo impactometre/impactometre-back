@@ -11,7 +11,7 @@ const {
   bounds,
   hardwareDamageTypes,
   hourToMinutes
-} = require('../../../constants/meeting')
+} = require('../../../../constants/meeting')
 
 const assert = chai.assert
 
