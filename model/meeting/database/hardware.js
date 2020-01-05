@@ -39,7 +39,7 @@ const hardware = {
       resources: 0.00341
     },
     operatingOneMinVisio: {
-      humanHealth: (3.42 * Math.pow10, -11),
+      humanHealth: 3.42 * Math.pow(10, -11),
       ecosystemQuality: 1.57 * Math.pow(10, -5),
       climateChange: 2.72 * Math.pow(10, -5),
       resources: 0.00703
