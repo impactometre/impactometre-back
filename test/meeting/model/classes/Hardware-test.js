@@ -10,7 +10,7 @@ const {
   hardwareOperatingTimePerDay,
   bounds,
   hardwareDamageTypes,
-  minutesInHour
+  hourToMinutes
 } = require('../../../../constants/meeting')
 
 const assert = chai.assert
@@ -404,7 +404,7 @@ describe('Hardware class', () => {
               expected.mutate(category => {
                 expected[category] *= instance._shareForVisio
                 expected[category] /= instance.computeVisioOrStandbyTimeOverLife(damageType)
-                expected[category] /= minutesInHour
+                expected[category] /= hourToMinutes
                 expected[category] *= instance.getVisioOrStandbyDuration(damageType, meetingDuration)
 
                 return expected[category]
@@ -442,7 +442,7 @@ describe('Hardware class', () => {
               expected.mutate(category => {
                 expected[category] *= instance._shareForVisio * instance.size
                 expected[category] /= instance.computeVisioOrStandbyTimeOverLife(damageType)
-                expected[category] /= minutesInHour
+                expected[category] /= hourToMinutes
                 expected[category] *= instance.getVisioOrStandbyDuration(damageType, meetingDuration)
 
                 return expected[category]

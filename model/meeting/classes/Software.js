@@ -3,9 +3,9 @@
 const getClosest = require('../../../utils/get-closest')
 const ComponentDamage = require('./ComponentDamage')
 const {
-  bitsInOctet,
-  octetsInMo,
-  bitsInKbits,
+  octetToBits,
+  moToOctets,
+  kbitToBits,
   secoundsInMinute,
   bounds
 } = require('../../../constants/meeting')
@@ -68,7 +68,7 @@ class Software {
    * Get the software file size in bits (it is originaly in Mo)
    */
   fileSizeMoToBits () {
-    return this.fileSize * bitsInOctet * octetsInMo
+    return this.fileSize * octetToBits * moToOctets
   }
 
   /**
@@ -155,7 +155,7 @@ class Software {
       // (damageUnit/bit) * (Kbit/s) = 1000 * (damageUnit/s)
       operatingDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * inboundBandwith
       // (1000 * (damageUnit/s)) / 1000 = damageUnit/s
-      operatingDamage[categoryDamage] /= bitsInKbits
+      operatingDamage[categoryDamage] /= kbitToBits
       // (damageUnit/s) * 60 = damageUnit/minute
       operatingDamage[categoryDamage] *= secoundsInMinute
       // Damage for one minute use for all the instances
