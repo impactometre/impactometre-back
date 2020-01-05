@@ -9,7 +9,7 @@ const {
   secoundsInMinute,
   bounds
 } = require('../../../constants/meeting')
-const networkDatabase = require('../database/network')
+const networkDatabase = require('../../database/meeting/network')
 
 class Software {
   constructor (software) {
