@@ -2,10 +2,10 @@
 
 const assert = require('assert')
 const constants = require('../../../../constants/meeting')
-const softwareDatabase = require('../../../../model/meeting/database/software')
-const Software = require('../../../../model/meeting/classes/Software')
-const ComponentDamage = require('../../../../model/meeting/classes/ComponentDamage')
-const networkDatabase = require('../../../../model/meeting/database/network')
+const softwareDatabase = require('../../../../model/database/meeting/software')
+const Software = require('../../../../model/classes/meeting/Software')
+const ComponentDamage = require('../../../../model/classes/meeting/ComponentDamage')
+const networkDatabase = require('../../../../model/database/meeting/network')
 
 describe('Software class', () => {
   describe('#getInboundBandwith()', () => {
