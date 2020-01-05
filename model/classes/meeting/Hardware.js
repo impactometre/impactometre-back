@@ -9,7 +9,7 @@ const {
   bounds
 } = require('../../../constants/meeting')
 
-const hardwareDatabase = require('../database/hardware')
+const hardwareDatabase = require('../../database/meeting/hardware')
 const ComponentDamage = require('./ComponentDamage')
 
 class Hardware {
