@@ -10,7 +10,7 @@ const {
 } = require('../../../constants/meeting')
 
 const hardwareDatabase = require('../../database/meeting/hardware')
-const ComponentDamage = require('./ComponentDamage')
+const Damage = require('./Damage')
 
 class Hardware {
   /**
@@ -169,7 +169,7 @@ class Hardware {
    * If equals to 'UPPER', we will use the upper values
    * of the damages if available, and the contrary if
    * bound equals to 'LOWER'.
-   * @returns {ComponentDamage} The total damage.
+   * @returns {Damage} The total damage.
    */
   computeDamage (meetingDuration, bound = null) {
     const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
@@ -185,7 +185,7 @@ class Hardware {
    * @param {String} - The damage type.
    * @param {Number} - The meeting duration (in minutes).
    * @param {String} - The optional bound.
-   * @returns {ComponentDamage} The hardware operating damage.
+   * @returns {Damage} The hardware operating damage.
    */
   computeTypedDamage (damageType, meetingDuration, bound = null) {
     // Variable we will return
@@ -193,7 +193,7 @@ class Hardware {
 
     // Hardware may be composed of other hardwares
     if (Object.keys(this.components).length > 0) {
-      damage = new ComponentDamage()
+      damage = new Damage()
       /* For each component, compute its operating damage
       and add it to composite hardware damage */
       Object.values(this.components).forEach(component => {
@@ -206,12 +206,12 @@ class Hardware {
 
     // Hardware may not have any value for the required damage
     if (!this.getTypedDamage(damageType, bound)) {
-      damage = new ComponentDamage()
+      damage = new Damage()
 
       return damage
     }
 
-    damage = new ComponentDamage(this.getTypedDamage(damageType, bound))
+    damage = new Damage(this.getTypedDamage(damageType, bound))
     if (
       damageType === hardwareDamageTypes.OPERATING_STANDBY ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -223,7 +223,7 @@ class Hardware {
           return damage[category] * this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
       } else {
-        damage = new ComponentDamage(this.getTypedDamage(damageType, bound))
+        damage = new Damage(this.getTypedDamage(damageType, bound))
         damage.mutate(category => {
           return damage[category] * this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })

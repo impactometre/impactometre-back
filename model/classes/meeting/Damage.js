@@ -1,8 +1,9 @@
 'use strict'
 
-class ComponentDamage {
+class Damage {
   /**
-   * Create an object that represents the dammage of any component of the meeting.
+   * Create an object that represents the damage caused by a component of the meeting,
+   * a group of components or the meeting itself.
    * @param {Number} humanHealth - The damage value on Human Health.
    * @param {Number} ecosystemQuality - The damage value on Ecosystem Quality.
    * @param {Number} climateChange - The damage value on Climate Change.
@@ -35,7 +36,7 @@ class ComponentDamage {
    * Apply the given function on the four
    * damage values.
    * @param {Function} mutation - The function to apply.
-   * @returns {ComponentDamage} This mutated damage.
+   * @returns {Damage} This mutated damage.
    */
   mutate (mutation) {
     Object.keys(this).map(category => {
@@ -48,8 +49,8 @@ class ComponentDamage {
   /**
    * Add the given damage values to the one
    * of this damage.
-   * @param {ComponentDamage} - The damage we want to add.
-   * @returns {ComponentDamage} This bigger damage.
+   * @param {Damage} - The damage we want to add.
+   * @returns {Damage} This bigger damage.
    */
   add (damage) {
     Object.keys(this).map(category => {
@@ -60,4 +61,4 @@ class ComponentDamage {
   }
 }
 
-module.exports = ComponentDamage
+module.exports = Damage
