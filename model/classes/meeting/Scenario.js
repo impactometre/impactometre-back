@@ -1,13 +1,13 @@
 'use strict'
 
-class Meeting {
+class Scenario {
   /**
-   * Create a meeting.
-   * @param {String} user - The user who creates the meeting.
+   * Create a scenario corresponding to a meeting.
+   * @param {String} user - The user who creates the scenario.
    * @param {Map<string, Journey>} journeys - All the journeys entered by the user indexed by their ids.
    * @param {Hardware} hardware  - The different kinds of hardware device used for the meeting.
-   * @param {Software} software - The software used for the meetings.
-   * @param {Number} meetingDuration - The meeting duration in minutes.
+   * @param {Software} software - The software used for the meeting.
+   * @param {Number} meetingDuration - The scenario duration in minutes.
    */
   constructor (user, journeys, hardware, software, meetingDuration) {
     this._user = user
@@ -20,7 +20,7 @@ class Meeting {
   // Getters
 
   /**
-   * Getter of the user who creates the meeting.
+   * Getter of the user who creates the scenario.
    */
   get user () {
     return this._user
@@ -43,7 +43,7 @@ class Meeting {
   }
 
   /**
-   * Getter The software used for the meeting.
+   * Getter the software used for the scenario.
    * @see {Sofware}
    */
   get software () {
@@ -60,7 +60,7 @@ class Meeting {
   // Setters
 
   /**
-   * Setter of the user who creates the meeting.
+   * Setter of the user who creates the scenario.
    */
   set user (user) {
     this._user = user
@@ -83,7 +83,7 @@ class Meeting {
   }
 
   /**
-   * Setter The software used for the meeting.
+   * Setter the software used for the meeting.
    * @see {Sofware}
    */
   set software (software) {
@@ -100,4 +100,4 @@ class Meeting {
   // Other methods
 }
 
-module.exports = Meeting
+module.exports = Scenario
