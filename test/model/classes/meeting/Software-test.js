@@ -4,7 +4,7 @@ const assert = require('assert')
 const constants = require('../../../../constants/meeting')
 const softwareDatabase = require('../../../../model/database/meeting/software')
 const Software = require('../../../../model/classes/meeting/Software')
-const ComponentDamage = require('../../../../model/classes/meeting/ComponentDamage')
+const Damage = require('../../../../model/classes/meeting/Damage')
 const networkDatabase = require('../../../../model/database/meeting/network')
 
 describe('Software class', () => {
@@ -57,7 +57,7 @@ describe('Software class', () => {
     const renavisio = new Software(softwareDatabase.RENAVISIO)
     const networkEnergeticIntensityUpper = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
     const fileSizeMoToBits = renavisio.fileSizeMoToBits()
-    const embodiedDamage = new ComponentDamage({
+    const embodiedDamage = new Damage({
       humanHealth: networkEnergeticIntensityUpper.humanHealth * fileSizeMoToBits * 5,
       ecosystemQuality: networkEnergeticIntensityUpper.ecosystemQuality * fileSizeMoToBits * 5,
       climateChange: networkEnergeticIntensityUpper.climateChange * fileSizeMoToBits * 5,
@@ -70,7 +70,7 @@ describe('Software class', () => {
       )
     })
     const jitsi = new Software(softwareDatabase.JITSI)
-    const emptyDamage = new ComponentDamage(0, 0, 0, 0)
+    const emptyDamage = new Damage(0, 0, 0, 0)
     it('should return an empty damage because Jitsi has any file to download', () => {
       assert.deepStrictEqual(
         jitsi.computeEmbodiedDamage(5, networkEnergeticIntensityUpper),
@@ -99,7 +99,7 @@ describe('Software class', () => {
     const minuteToSecondss = constants.secoundsInMinute
     const kbitToBits = constants.kbitToBits
     const meetingDuration = 120
-    const operatingDamage = new ComponentDamage({
+    const operatingDamage = new Damage({
       humanHealth: networkUpperkBound.humanHealth * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
       ecosystemQuality: networkUpperkBound.ecosystemQuality * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
       climateChange: networkUpperkBound.climateChange * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
@@ -113,7 +113,7 @@ describe('Software class', () => {
     })
     const inboundBandwithMinimun = skype.getInboundBandwith(5, constants.bounds.LOWER)
     const networkLowerBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.lower
-    const operatingDamageMinimumBandwith = new ComponentDamage({
+    const operatingDamageMinimumBandwith = new Damage({
       humanHealth: networkLowerBound.humanHealth * inboundBandwithMinimun / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
       ecosystemQuality: networkLowerBound.ecosystemQuality * inboundBandwithMinimun / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
       climateChange: networkLowerBound.climateChange * inboundBandwithMinimun / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
@@ -134,20 +134,20 @@ describe('Software class', () => {
     const skype = new Software(softwareDatabase.SKYPE)
     const inboundBandwith = skype.getInboundBandwith(instancesNumber, constants.bounds.UPPER)
     const networkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
-    const operatingDamage = new ComponentDamage({
+    const operatingDamage = new Damage({
       humanHealth: networkBound.humanHealth * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
       ecosystemQuality: networkBound.ecosystemQuality * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
       climateChange: networkBound.climateChange * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
       resources: networkBound.resources * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration
     })
     const fileSizeMoToBits = skype.fileSizeMoToBits()
-    const embodiedDamage = new ComponentDamage({
+    const embodiedDamage = new Damage({
       humanHealth: networkBound.humanHealth * fileSizeMoToBits * instancesNumber,
       ecosystemQuality: networkBound.ecosystemQuality * fileSizeMoToBits * instancesNumber,
       climateChange: networkBound.climateChange * fileSizeMoToBits * instancesNumber,
       resources: networkBound.resources * fileSizeMoToBits * instancesNumber
     })
-    const totalDamage = new ComponentDamage()
+    const totalDamage = new Damage()
     Object.keys(totalDamage).map((categoryDamage) => {
       totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
     })
