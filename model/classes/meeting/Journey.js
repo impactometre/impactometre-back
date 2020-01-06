@@ -1,7 +1,7 @@
 'use strict'
 
 const uniqid = require('uniqid')
-const ComponentDamage = require('./ComponentDamage')
+const Damage = require('./Damage')
 
 /**
  * A journey has a mean of transportation,
@@ -81,14 +81,14 @@ class Journey {
 
   /**
    * Computes the damage caused by a journey.
-   * @returnss {ComponentDamage} The damage caused by journey, for each damage sphere.
+   * @returns {Damage} The damage caused by journey, for each damage sphere.
    */
   computeEmbodiedDamage () {
     // Get the transportation mean damage for one personKm or one kilometer
-    const transportationMeanDamage = new ComponentDamage(this.mean.embodied)
+    const transportationMeanDamage = new Damage(this.mean.embodied)
 
     // Initialize the returned damage
-    const embodiedDamage = new ComponentDamage()
+    const embodiedDamage = new Damage()
 
     // Compute damage for each sphere (calculation mode is by personKm or by kilometer)
     if (this.mean.isComputedByPersonKm) {
@@ -111,7 +111,7 @@ class Journey {
   /**
    * Compute the total damage of the journey.
    * There is a method with the same name for Software class and Hardware class.
-   * @returnss {CompenentDamage} The total damage caused by the journey.
+   * @returns {Damage} The total damage caused by the journey.
    */
   computeDamage () {
     return this.computeEmbodiedDamage()
