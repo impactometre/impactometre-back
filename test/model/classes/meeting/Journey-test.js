@@ -4,13 +4,13 @@ const assert = require('assert')
 const transportDatabase = require('../../../../model/database/meeting/transport')
 const TransportationMean = require('../../../../model/classes/meeting/TransportationMean')
 const Journey = require('../../../../model/classes/meeting/Journey')
-const ComponentDamage = require('../../../../model/classes/meeting/ComponentDamage')
+const Damage = require('../../../../model/classes/meeting/Damage')
 
 describe('Journey class', () => {
   describe('#computeEmbodiedDamage ()', () => {
     const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
     const journeyElectricCar3People = new Journey(electricCar, 100, 3)
-    const embodiedDamage = new ComponentDamage({
+    const embodiedDamage = new Damage({
       humanHealth: electricCar.embodied.humanHealth * 100,
       ecosystemQuality: electricCar.embodied.ecosystemQuality * 100,
       climateChange: electricCar.embodied.climateChange * 100,
@@ -48,7 +48,7 @@ describe('Journey class', () => {
     const ecosystemQuality = embodiedDamageIntercontinentalPlane.ecosystemQuality
     const climateChange = embodiedDamageIntercontinentalPlane.climateChange
     const resources = embodiedDamageIntercontinentalPlane.resources
-    const embodiedDamageTwice = new ComponentDamage({
+    const embodiedDamageTwice = new Damage({
       humanHealth,
       ecosystemQuality,
       climateChange,

@@ -3,7 +3,7 @@
 const chai = require('chai')
 const hardwareDatabase = require('../../../../model/database/meeting/hardware')
 const Hardware = require('../../../../model/classes/meeting/Hardware')
-const ComponentDamage = require('../../../../model/classes/meeting/ComponentDamage')
+const Damage = require('../../../../model/classes/meeting/Damage')
 const {
   knownOperatingTimeOverLife,
   hardwareLifetime,
@@ -370,7 +370,7 @@ describe('Hardware class', () => {
             )
           }).forEach(json => {
             // Compute expected damage
-            const expected = new ComponentDamage()
+            const expected = new Damage()
 
             const instance = new Hardware({ name: json.name })
             assert.deepStrictEqual(expected, instance.computeTypedDamage(damageType, meetingDuration))
@@ -392,7 +392,7 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
 
             // Compute expected damage
-            const expected = new ComponentDamage(instance.getTypedDamage(damageType))
+            const expected = new Damage(instance.getTypedDamage(damageType))
             if (
               damageType === hardwareDamageTypes.OPERATING_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -430,7 +430,7 @@ describe('Hardware class', () => {
             const instance = new Hardware({ name: json.name })
 
             // Compute expected damage
-            const expected = new ComponentDamage(instance.getTypedDamage(damageType))
+            const expected = new Damage(instance.getTypedDamage(damageType))
             if (
               damageType === hardwareDamageTypes.OPERATING_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -463,7 +463,7 @@ describe('Hardware class', () => {
             )
           }).forEach(json => {
             // Compute expected damage
-            const expected = new ComponentDamage()
+            const expected = new Damage()
             json.components.forEach(name => {
               const component = new Hardware({ name })
               const componentDamage = component.computeTypedDamage(damageType, meetingDuration)
