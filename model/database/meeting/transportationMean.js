@@ -1,6 +1,6 @@
 'use strict'
 
-const transport = {
+const transportationMean = {
   PLANE_INTERCONTINENTAL_ONE_PERSON_KM: {
     french: 'avion intercontinental',
     embodied: {
@@ -113,4 +113,4 @@ const transport = {
   }
 }
 
-module.exports = transport
+module.exports = transportationMean

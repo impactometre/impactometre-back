@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const transportDatabase = require('../../../../model/database/meeting/transport')
+const transportDatabase = require('../../../../model/database/meeting/transportationMean')
 const TransportationMean = require('../../../../model/classes/meeting/TransportationMean')
 const Journey = require('../../../../model/classes/meeting/Journey')
 const Damage = require('../../../../model/classes/meeting/Damage')
