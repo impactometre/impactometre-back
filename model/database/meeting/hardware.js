@@ -311,6 +311,19 @@ const hardware = {
     french: 'câble d\'alimentation 1 m',
     isSizeDependent: true,
     embodied: {
+      humanHealth: 1.42 * Math.pow(10, -6),
+      ecosystemQuality: 0.84,
+      climateChange: 0.443,
+      resources: 8.59
+    },
+    lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
+    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+  },
+  POWER_CABLE_PLUGS: {
+    name: 'POWER_CABLE_PLUGS',
+    french: 'fiches d\'un câble d\'alimentation',
+    isSizeDependent :false,
+    embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
       climateChange: 0.34,
@@ -319,10 +332,32 @@ const hardware = {
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
   },
+  POWER_CABLE: {
+    name: 'POWER_CABLE',
+    french: 'câble d\'alimentaion 1 m avec fiches',
+    isSizeDependent: false,
+    components: [
+      'POWER_CABLE_ONE_METER',
+      'POWER_CABLE_PLUGS'
+    ]
+  },
   ETHERNET_CABLE_ONE_METER: {
     name: 'ETHERNET_CABLE_ONE_METER',
     french: 'câble Ethernet 1 m',
     isSizeDependent: true,
+    embodied: {
+      humanHealth: 1.7 * Math.pow(10, -6),
+      ecosystemQuality: 1.63,
+      climateChange: 0.551,
+      resources: 8.73
+    },
+    lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
+    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+  },
+  ETHERNET_CABLE_PLUGS: {
+    name: 'ETHERNET_CABLE_PLUGS',
+    french: 'fiches d\'un câble Ethernet',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 1.42 * Math.pow(10, -7),
       ecosystemQuality: 0.0999,
@@ -331,6 +366,15 @@ const hardware = {
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+  },
+  ETHERNET_CABLE: {
+    name: 'ETHERNET_CABLE',
+    french: 'câble Ethernet 1 m avec fiches',
+    isSizeDependent: false,
+    components: [
+      'ETHERNET_CABLE_ONE_METER',
+      'ETHERNET_CABLE_PLUGS'
+    ]
   },
   HDMI_CABLE_ONE_METER: {
     name: 'HDMI_CABLE_ONE_METER',
@@ -344,6 +388,28 @@ const hardware = {
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+  },
+  HDMI_CABLE_PLUGS: {
+    name: 'HDMI_CABLE_PLUGS',
+    french: 'fiches de câble HDMI',
+    isSizeDependent: false,
+    embodied: {
+      humanHealth: 1.42 * Math.pow(10, -6),
+      ecosystemQuality: 0.84,
+      climateChange: 0.443,
+      resources: 8.59
+    },
+    lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
+    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+  },
+  HDMI_CABLE: {
+    name: 'HDMI_CABLE',
+    french: 'câble HDMI 1 m avec fiches',
+    isSizeDependent: false,
+    components: [
+      'HDMI_CABLE_ONE_METER',
+      'HDMI_CABLE_PLUGS'
+    ]
   },
   JACK_CABLE_ONE_METER: {
     name: 'JACK_CABLE_ONE_METER',
@@ -363,6 +429,19 @@ const hardware = {
     french: 'câble VGA 1 m',
     isSizeDependent: true,
     embodied: {
+      humanHealth: 1.42 * Math.pow(10, -6),
+      ecosystemQuality: 0.84,
+      climateChange: 0.443,
+      resources: 8.59
+    },
+    lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
+    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+  },
+  VGA_CABLE_PLUGS: {
+    name: 'VGA_CABLE_PLUGS',
+    french: 'fiches de câble VGA',
+    isSizeDependent: false,
+    embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
       climateChange: 0.34,
@@ -370,6 +449,15 @@ const hardware = {
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+  },
+  VGA_CABLE: {
+    name: 'VGA_CABLE',
+    french: 'câble VGA 1 m avec fiches',
+    isSizeDependent: false,
+    components: [
+      'VGA_CABLE_ONE_METER',
+      'VGA_CABLE_PLUGS'
+    ]
   }
 }
 
