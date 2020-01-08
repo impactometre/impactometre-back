@@ -322,7 +322,7 @@ const hardware = {
   POWER_CABLE_PLUGS: {
     name: 'POWER_CABLE_PLUGS',
     french: 'fiches d\'un câble d\'alimentation',
-    isSizeDependent :false,
+    isSizeDependent: false,
     embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
