@@ -239,10 +239,14 @@ const hardware = {
   /**
    * VISIO-CONFERENCE KIT
    */
-  LOGITECH_KIT: {
-    name: 'LOGITECH_KIT',
-    french: 'kit Logitech',
+  LOGITECH_KIT_WITHOUT_CABLE: {
+    // is composed of a camera, a hub, a speakerphone and a remote
+    name: 'LOGITECH_KIT_WITHOUT_CABLE',
+    french: 'kit Logitech sans les câbles',
     isSizeDependent: false,
+    // camera = 670 g, hub = 170 g, speakerphone = 920g, remote = 51 g, TOTAL = 1811 g
+    weight: 1811,
+    isEmbodeiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     operatingOneMinStandby: {
       humanHealth: 5.9 * Math.pow(10, -12),
       ecosystemQuality: 2.72 * Math.pow(10, -6),
@@ -254,19 +258,6 @@ const hardware = {
       ecosystemQuality: 4.06 * Math.pow(10, -6),
       climateChange: 7.02 * Math.pow(10, -6),
       resources: 0.00181
-    },
-    lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
-  },
-  LOGITECH_KIT_CAMERA: {
-    name: 'LOGITECH_KIT_CAMERA',
-    french: 'caméra du kit Logitech',
-    isSizeDependent: false,
-    operatingOneMinVisio: {
-      humanHealth: 4.04 * Math.pow(10, -12),
-      ecosystemQuality: 1.86 * Math.pow(10, -6),
-      climateChange: 3.22 * Math.pow(10, -6),
-      resources: 0.000831
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
@@ -283,6 +274,19 @@ const hardware = {
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+  },
+  LOGITECH_KIT: {
+    name: 'LOGITECH_KIT',
+    french: 'kit de visioconférence Logitech',
+    isSizeDependent: false,
+    components: [
+      'LOGITECH_KIT_WITHOUT_CABLE',
+      // contains 4 cables
+      'LOGITECH_CABLE',
+      'LOGITECH_CABLE',
+      'LOGITECH_CABLE',
+      'LOGITECH_CABLE'
+    ]
   },
   METAL_STRUCTURE: {
     name: 'METAL_STRUCTURE',
