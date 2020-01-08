@@ -7,30 +7,46 @@ const {
 
 const hardware = {
   /**
+   * ASSIMILATION CANDIDATES
+   * If we cannot have the damage values directly
+   * from Ecovinvent database, we assimile the damage
+   * caused by the object to the damage cause by a known
+   * object.
+   */
+  ASSIMILATION_COMPUTER_TOWER_1G: {
+    name: 'ASSIMILATION_COMPUTER_TOWER_1G',
+    french: '1 g d\'une tour d\'ordinateur',
+    isSizeDependent: false,
+    embodied: {
+      humanHealth: 0.004353982,
+      ecosystemQuality: 0.000843363,
+      climateChange: 0.002035398,
+      resources: 0.00185841
+    }
+  },
+  /**
    * DESKTOP AND LAPTOP
    * */
-  DESKTOP: {
+  DESKTOP:{
     name: 'DESKTOP',
     french: 'ordinateur fixe',
     isSizeDependent: false,
-    operatingOneMinVisio: {
-      humanHealth: 1.55 * Math.pow(10, -10),
-      ecosystemQuality: 7.16 * Math.pow(10, -5),
-      climateChange: 0.000124,
-      resources: 0.032
-    },
-    lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    components: [
+      'DESKTOP_TOWER',
+      'COMPUTER_MOUSE',
+      'COMPUTER_SCREEN_LCD',
+      'COMPUTER_KEYBOARD',
+    ]
   },
-  DESKTOP_WITHOUT_SCREEN: {
-    name: 'DESKTOP_WITHOUT_SCREEN',
-    french: 'ordinateur sans écran',
+  DESKTOP_TOWER: {
+    name: 'DESKTOP_TOWER',
+    french: 'tour d\'ordinateur',
     isSizeDependent: false,
     embodied: {
-      humanHealth: 0.00041,
-      ecosystemQuality: 155,
-      climateChange: 266,
-      resources: 3.74 * Math.pow(10, 3)
+      humanHealth: 0.000475,
+      ecosystemQuality: 140,
+      climateChange: 360,
+      resources: 4.79 * Math.pow(10, 3)
     },
     operatingWithoutVisioOneMin: {
       humanHealth: 1.66 * Math.pow(10, -11),
@@ -47,8 +63,8 @@ const hardware = {
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
   },
-  DESKTOP_SCREEN_LCD: {
-    name: 'DESKTOP_SCREEN_LCD',
+  COMPUTER_SCREEN_LCD: {
+    name: 'COMPUTER_SCREEN_LCD',
     french: 'écran d\'ordinateur LCD',
     isSizeDependent: false,
     embodied: {
@@ -57,24 +73,23 @@ const hardware = {
       climateChange: 360,
       resources: 4.79 * Math.pow(10, 3)
     },
-    lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
-  },
-  COMPUTER_TOWER: {
-    name: 'COMPUTER_TOWER',
-    french: 'tour',
-    isSizeDependent: false,
-    embodied: {
-      humanHealth: 0.000349,
-      ecosystemQuality: 131,
-      climateChange: 228,
-      resources: 3.19 * Math.pow(10, 3)
+    operatingOneMinVisio: {
+      humanHealth: 1.04 * Math.pow(10, -11),
+      ecosystemQuality: 4.77 * Math.pow(10, -6),
+      climateChange: 8.25 * Math.pow(10, -6),
+      resources: 0.00213
+    },
+    operatingOneMinStandby: {
+      humanHealth: 2.07 * Math.pow(10, -13),
+      ecosystemQuality: 9.54 * Math.pow(10, -8),
+      climateChange: 1.65 * Math.pow(10, -7),
+      resources: 4.26 * Math.pow(10, -5)
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
   },
-  KEYBOARD: {
-    name: 'KEYBOARD',
+  COMPUTER_KEYBOARD: {
+    name: 'COMPUTER_KEYBOARD',
     french: 'clavier',
     isSizeDependent: false,
     embodied: {
