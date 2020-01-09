@@ -9,7 +9,7 @@ const Damage = require('../../../../model/classes/meeting/Damage')
 describe('Journey class', () => {
   describe('#computeEmbodiedDamage ()', () => {
     const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
-    const journeyElectricCar3People = new Journey(electricCar, 100, 3)
+    const journeyElectricCar3People = new Journey('Passenger 1', electricCar, 100, 3)
     const embodiedDamage = new Damage({
       humanHealth: electricCar.embodied.humanHealth * 100,
       ecosystemQuality: electricCar.embodied.ecosystemQuality * 100,
@@ -23,7 +23,7 @@ describe('Journey class', () => {
       )
     })
 
-    const journeyElectricCar5People = new Journey(electricCar, 100, 5)
+    const journeyElectricCar5People = new Journey('Passenger 2', electricCar, 100, 5)
     it('two journeys with the same kind of car and the same distance should cause the same damage (i.e. the number of people desn\'t matter)', () => {
       assert.deepStrictEqual(
         journeyElectricCar3People.computeEmbodiedDamage(),

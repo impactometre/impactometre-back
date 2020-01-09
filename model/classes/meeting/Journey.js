@@ -10,12 +10,14 @@ const Damage = require('./Damage')
 class Journey {
   /**
    * The Journey class constructor.
+   * @param {String} passenger - The name of the passenger.
    * @param {TransportationMean} mean - The mean of transportation.
    * @param {Float} distance - The distance of the journey.
    * @param {Integer} numberOfPeople - The number of people of the journey.
    */
-  constructor (mean, distance, numberOfPeople) {
+  constructor (passenger, mean, distance, numberOfPeople) {
     this._id = uniqid()
+    this._passenger = passenger
     this._mean = mean
     this._distance = distance
     this._numberOfPeople = numberOfPeople
@@ -28,6 +30,13 @@ class Journey {
    */
   get id () {
     return this._id
+  }
+
+  /**
+   * Getter of the journey passenger name.
+   */
+  get passenger () {
+    return this._passenger
   }
 
   /**
@@ -52,6 +61,14 @@ class Journey {
   }
 
   // Setters
+
+  /**
+   * Setter of the journey distance.
+   * @param {Float} distance - The new journey distance.
+   */
+  set passenger (passenger) {
+    this._passenger = passenger
+  }
 
   /**
    * Setter of the journey transportation mean.
