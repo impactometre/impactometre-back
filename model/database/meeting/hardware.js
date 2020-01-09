@@ -27,7 +27,7 @@ const hardware = {
   /**
    * DESKTOP AND LAPTOP
    * */
-  DESKTOP:{
+  DESKTOP: {
     name: 'DESKTOP',
     french: 'ordinateur fixe',
     isSizeDependent: false,
@@ -35,7 +35,7 @@ const hardware = {
       'DESKTOP_TOWER',
       'COMPUTER_MOUSE',
       'COMPUTER_SCREEN_LCD',
-      'COMPUTER_KEYBOARD',
+      'COMPUTER_KEYBOARD'
     ]
   },
   DESKTOP_TOWER: {
@@ -246,7 +246,7 @@ const hardware = {
     isSizeDependent: false,
     // camera = 670 g, hub = 170 g, speakerphone = 920g, remote = 51 g, TOTAL = 1811 g
     weight: 1811,
-    isEmbodeiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
+    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     operatingOneMinStandby: {
       humanHealth: 5.9 * Math.pow(10, -12),
       ecosystemQuality: 2.72 * Math.pow(10, -6),
@@ -275,6 +275,7 @@ const hardware = {
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
   },
+  /*
   LOGITECH_KIT: {
     name: 'LOGITECH_KIT',
     french: 'kit de visioconférence Logitech',
@@ -287,7 +288,7 @@ const hardware = {
       'LOGITECH_CABLE',
       'LOGITECH_CABLE'
     ]
-  },
+  },*/
   METAL_STRUCTURE: {
     name: 'METAL_STRUCTURE',
     french: 'structure métallique de support des écrans',
