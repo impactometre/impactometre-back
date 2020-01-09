@@ -398,7 +398,7 @@ describe('Hardware class', () => {
               damageType === hardwareDamageTypes.OPERATING_VISIO
             ) {
               expected.mutate(category => {
-                return expected[category] * component.shareForVisio * component.getVisioOrStandbyDuration(damageType, meetingDuration)
+                expected[category] *= component.shareForVisio * component.getVisioOrStandbyDuration(damageType, meetingDuration)
               })
             } else {
               expected.mutate(category => {
@@ -406,8 +406,6 @@ describe('Hardware class', () => {
                 expected[category] /= component.computeVisioOrStandbyTimeOverLife(damageType)
                 expected[category] /= hourToMinutes
                 expected[category] *= component.getVisioOrStandbyDuration(damageType, meetingDuration)
-
-                return expected[category]
               })
             }
 
@@ -436,7 +434,7 @@ describe('Hardware class', () => {
               damageType === hardwareDamageTypes.OPERATING_VISIO
             ) {
               expected.mutate(category => {
-                return expected[category] * component.shareForVisio * component.size * component.getVisioOrStandbyDuration(damageType, meetingDuration)
+                expected[category] *= component.shareForVisio * component.size * component.getVisioOrStandbyDuration(damageType, meetingDuration)
               })
             } else {
               expected.mutate(category => {
@@ -444,8 +442,6 @@ describe('Hardware class', () => {
                 expected[category] /= component.computeVisioOrStandbyTimeOverLife(damageType)
                 expected[category] /= hourToMinutes
                 expected[category] *= component.getVisioOrStandbyDuration(damageType, meetingDuration)
-
-                return expected[category]
               })
             }
 
