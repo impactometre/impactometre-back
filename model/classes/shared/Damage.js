@@ -4,32 +4,60 @@ class Damage {
   /**
    * Create an object that represents the damage caused by a component of the meeting,
    * a group of components or the meeting itself.
+   * @param {Object} component - The meeting component we computed the damage. Can be
+   * an Hardware, Journay or Software object.
    * @param {Number} humanHealth - The damage value on Human Health.
    * @param {Number} ecosystemQuality - The damage value on Ecosystem Quality.
    * @param {Number} climateChange - The damage value on Climate Change.
    * @param {Number} resources - The damage value on Resources.
    */
-  constructor ({ humanHealth = 0, ecosystemQuality = 0, climateChange = 0, resources = 0 } = {}) {
-    this._humanHealth = humanHealth
-    this._ecosystemQuality = ecosystemQuality
-    this._climateChange = climateChange
-    this._resources = resources
+  constructor ({ component, humanHealth = 0, ecosystemQuality = 0, climateChange = 0, resources = 0 } = {}) {
+    this._component = component
+    this._damageValues = {}
+    this._damageValues.humanHealth = humanHealth
+    this._damageValues.ecosystemQuality = ecosystemQuality
+    this._damageValues.climateChange = climateChange
+    this._damageValues.resources = resources
+  }
+
+  get component () {
+    return this._component
+  }
+
+  get damageValues () {
+    return this._damageValues
   }
 
   get humanHealth () {
-    return this._humanHealth
+    return this._damageValues.humanHealth
   }
 
   get ecosystemQuality () {
-    return this._ecosystemQuality
+    return this._damageValues.ecosystemQuality
   }
 
   get climateChange () {
-    return this._climateChange
+    return this._damageValues.climateChange
   }
 
   get resources () {
-    return this._resources
+    return this._damageValues.resources
+  }
+
+  set humanHealth (humanHealth) {
+    this._damageValues.humanHealth = humanHealth
+  }
+
+  set ecosystemQuality (ecosystemQuality) {
+    this._damageValues.ecosystemQuality = ecosystemQuality
+  }
+
+  set climateChange (climateChange) {
+    this._damageValues.climateChange = climateChange
+  }
+
+  set resources (resources) {
+    this._damageValues.resources = resources
   }
 
   /**
@@ -39,8 +67,8 @@ class Damage {
    * @returns {Damage} This mutated damage.
    */
   mutate (mutation) {
-    Object.keys(this).map(category => {
-      this[category] = mutation(category)
+    Object.keys(this.damageValues).map(category => {
+      this.damageValues[category] = mutation(category)
     })
 
     return this
@@ -53,8 +81,8 @@ class Damage {
    * @returns {Damage} This bigger damage.
    */
   add (damage) {
-    Object.keys(this).map(category => {
-      this[category] += damage[category]
+    Object.keys(this.damageValues).map(category => {
+      this.damageValues[category] += damage.damageValues[category]
     })
 
     return this
