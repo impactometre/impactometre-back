@@ -464,15 +464,21 @@ describe('Hardware class', () => {
           }).forEach(json => {
             // Compute expected damage
             const expected = new Damage()
+            console.log("++++++" + json.name)
             json.components.forEach(name => {
               const component = new Hardware({ name })
+              console.log('++' + component.name)
               const componentDamage = component.computeTypedDamage(damageType, meetingDuration)
               Object.keys(expected).map(category => {
                 expected[category] += componentDamage[category]
               })
+              console.log()
             })
 
             const instance = new Hardware({ name: json.name })
+            console.log(expected)
+            console.log(instance.computeTypedDamage(damageType, meetingDuration))
+            console.log('--------------')
             assert.deepStrictEqual(expected, instance.computeTypedDamage(damageType, meetingDuration))
           })
       })
