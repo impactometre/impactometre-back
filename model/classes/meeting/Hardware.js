@@ -193,7 +193,7 @@ class Hardware {
 
     // Hardware may be composed of other hardwares
     if (Object.keys(this.components).length > 0) {
-      damage = new Damage()
+      damage = new Damage({ component: this })
       /* For each component, compute its operating damage
       and add it to composite hardware damage */
       Object.values(this.components).forEach(component => {
@@ -206,12 +206,12 @@ class Hardware {
 
     // Hardware may not have any value for the required damage
     if (!this.getTypedDamage(damageType, bound)) {
-      damage = new Damage()
+      damage = new Damage({ component: this })
 
       return damage
     }
 
-    damage = new Damage(this.getTypedDamage(damageType, bound))
+    damage = new Damage({ component: this, ...this.getTypedDamage(damageType, bound) })
     if (
       damageType === hardwareDamageTypes.OPERATING_STANDBY ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -223,7 +223,7 @@ class Hardware {
           return damage[category] * this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
       } else {
-        damage = new Damage(this.getTypedDamage(damageType, bound))
+        damage = new Damage({ component: this, ...this.getTypedDamage(damageType, bound) })
         damage.mutate(category => {
           return damage[category] * this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })

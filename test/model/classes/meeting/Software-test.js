@@ -58,11 +58,13 @@ describe('Software class', () => {
     const networkEnergeticIntensityUpper = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
     const fileSizeMoToBits = renavisio.fileSizeMoToBits()
     const embodiedDamage = new Damage({
+      component: renavisio,
       humanHealth: networkEnergeticIntensityUpper.humanHealth * fileSizeMoToBits * 5,
       ecosystemQuality: networkEnergeticIntensityUpper.ecosystemQuality * fileSizeMoToBits * 5,
       climateChange: networkEnergeticIntensityUpper.climateChange * fileSizeMoToBits * 5,
       resources: networkEnergeticIntensityUpper.resources * fileSizeMoToBits * 5
     })
+
     it('should return the solftware download damage for 5 people with Renaviso', () => {
       assert.deepStrictEqual(
         renavisio.computeEmbodiedDamage(5, constants.bounds.UPPER),
@@ -70,7 +72,7 @@ describe('Software class', () => {
       )
     })
     const jitsi = new Software(softwareDatabase.JITSI)
-    const emptyDamage = new Damage(0, 0, 0, 0)
+    const emptyDamage = new Damage({ component: jitsi })
     it('should return an empty damage because Jitsi has any file to download', () => {
       assert.deepStrictEqual(
         jitsi.computeEmbodiedDamage(5, networkEnergeticIntensityUpper),
@@ -128,29 +130,32 @@ describe('Software class', () => {
   })
   describe('#computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration)', () => {
     const meetingDuration = 120
-    const minuteToSecondss = constants.secoundsInMinute
+    const minuteToSeconds = constants.minuteToSeconds
     const kbitToBits = constants.kbitToBits
     const instancesNumber = 5
     const skype = new Software(softwareDatabase.SKYPE)
     const inboundBandwith = skype.getInboundBandwith(instancesNumber, constants.bounds.UPPER)
     const networkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
     const operatingDamage = new Damage({
-      humanHealth: networkBound.humanHealth * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      ecosystemQuality: networkBound.ecosystemQuality * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      climateChange: networkBound.climateChange * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      resources: networkBound.resources * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration
+      component: skype,
+      humanHealth: networkBound.humanHealth * inboundBandwith / kbitToBits * minuteToSeconds * instancesNumber * meetingDuration,
+      ecosystemQuality: networkBound.ecosystemQuality * inboundBandwith / kbitToBits * minuteToSeconds * instancesNumber * meetingDuration,
+      climateChange: networkBound.climateChange * inboundBandwith / kbitToBits * minuteToSeconds * instancesNumber * meetingDuration,
+      resources: networkBound.resources * inboundBandwith / kbitToBits * minuteToSeconds * instancesNumber * meetingDuration
     })
     const fileSizeMoToBits = skype.fileSizeMoToBits()
     const embodiedDamage = new Damage({
+      component: skype,
       humanHealth: networkBound.humanHealth * fileSizeMoToBits * instancesNumber,
       ecosystemQuality: networkBound.ecosystemQuality * fileSizeMoToBits * instancesNumber,
       climateChange: networkBound.climateChange * fileSizeMoToBits * instancesNumber,
       resources: networkBound.resources * fileSizeMoToBits * instancesNumber
     })
-    const totalDamage = new Damage()
-    Object.keys(totalDamage).map((categoryDamage) => {
-      totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
+    const totalDamage = new Damage({ component: skype })
+    Object.keys(totalDamage.damageValues).map((categoryDamage) => {
+      totalDamage.damageValues[categoryDamage] = operatingDamage.damageValues[categoryDamage] + embodiedDamage.damageValues[categoryDamage]
     })
+
     it('should return the total damage caused by a software during all the meeting (embodied damage + operating damage)', () => {
       assert.deepStrictEqual(
         skype.computeDamage(instancesNumber, constants.bounds.UPPER, constants.bounds.UPPER, meetingDuration),
