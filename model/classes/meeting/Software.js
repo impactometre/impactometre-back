@@ -6,7 +6,7 @@ const {
   octetToBits,
   moToOctets,
   kbitToBits,
-  secoundsInMinute,
+  minuteToSeconds,
   bounds
 } = require('../../../constants/meeting')
 const networkDatabase = require('../../database/meeting/network')
