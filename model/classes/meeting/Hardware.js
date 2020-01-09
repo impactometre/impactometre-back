@@ -220,12 +220,12 @@ class Hardware {
       // Hardware damage may depends on its size
       if (this.isSizeDependent) {
         damage.mutate(category => {
-          return damage[category] * this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration)
+          damage[category] *= this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
       } else {
         damage = new Damage({ component: this, ...this.getTypedDamage(damageType, bound) })
         damage.mutate(category => {
-          return damage[category] * this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration)
+          damage[category] *= this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
       }
 
@@ -246,8 +246,6 @@ class Hardware {
 
         // Embodied damage for the meeting
         damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
-
-        return damage[category]
       })
     } else {
       damage.mutate(category => {
@@ -255,8 +253,6 @@ class Hardware {
         damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType)
         damage[category] /= hourToMinutes
         damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
-
-        return damage[category]
       })
     }
 

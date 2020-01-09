@@ -68,7 +68,7 @@ class Damage {
    */
   mutate (mutation) {
     Object.keys(this.damageValues).map(category => {
-      this.damageValues[category] = mutation(category)
+      mutation(category)
     })
 
     return this

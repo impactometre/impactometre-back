@@ -11,23 +11,25 @@ describe('Journey class', () => {
     const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
     const journeyElectricCar3People = new Journey('Passenger 1', electricCar, 100, 3)
     const embodiedDamage = new Damage({
+      component: journeyElectricCar3People,
       humanHealth: electricCar.embodied.humanHealth * 100,
       ecosystemQuality: electricCar.embodied.ecosystemQuality * 100,
       climateChange: electricCar.embodied.climateChange * 100,
       resources: electricCar.embodied.resources * 100
     })
+
     it('should return the damage caused by 3 people in a eletric car for one kilometer ', () => {
       assert.deepStrictEqual(
-        journeyElectricCar3People.computeEmbodiedDamage(),
-        embodiedDamage
+        journeyElectricCar3People.computeEmbodiedDamage().damageValues,
+        embodiedDamage.damageValues
       )
     })
 
     const journeyElectricCar5People = new Journey('Passenger 2', electricCar, 100, 5)
     it('two journeys with the same kind of car and the same distance should cause the same damage (i.e. the number of people desn\'t matter)', () => {
       assert.deepStrictEqual(
-        journeyElectricCar3People.computeEmbodiedDamage(),
-        journeyElectricCar5People.computeEmbodiedDamage()
+        journeyElectricCar3People.computeEmbodiedDamage().damageValues,
+        journeyElectricCar5People.computeEmbodiedDamage().damageValues
       )
     })
 
@@ -49,17 +51,18 @@ describe('Journey class', () => {
     const climateChange = embodiedDamageIntercontinentalPlane.climateChange
     const resources = embodiedDamageIntercontinentalPlane.resources
     const embodiedDamageTwice = new Damage({
+      component: intercontinentalPlaneJourney2People,
       humanHealth,
       ecosystemQuality,
       climateChange,
       resources
     })
 
-    embodiedDamageTwice.mutate(category => { return embodiedDamageTwice[category] * 2 })
+    embodiedDamageTwice.mutate(category => { embodiedDamageTwice.damageValues[category] *= 2 })
     it('a 4 people journey by plane should cause twice the damage of a 2 people journey by plane', () => {
       assert.deepStrictEqual(
-        intercontinentalPlaneJourney4People.computeEmbodiedDamage(),
-        embodiedDamageTwice
+        intercontinentalPlaneJourney4People.computeEmbodiedDamage().damageValues,
+        embodiedDamageTwice.damageValues
       )
     })
   })
