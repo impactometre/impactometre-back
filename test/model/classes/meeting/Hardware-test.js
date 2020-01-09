@@ -3,7 +3,7 @@
 const chai = require('chai')
 const hardwareDatabase = require('../../../../model/database/meeting/hardware')
 const Hardware = require('../../../../model/classes/meeting/Hardware')
-const Damage = require('../../../../model/classes/meeting/Damage')
+const Damage = require('../../../../model/classes/shared/Damage')
 const {
   knownOperatingTimeOverLife,
   hardwareLifetime,

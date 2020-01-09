@@ -10,7 +10,7 @@ const {
 } = require('../../../constants/meeting')
 
 const hardwareDatabase = require('../../database/meeting/hardware')
-const Damage = require('./Damage')
+const Damage = require('../shared/Damage')
 
 class Hardware {
   /**
