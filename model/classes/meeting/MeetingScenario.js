@@ -1,6 +1,8 @@
 'use strict'
 
-class Scenario {
+const Scenario = require('../shared/Scenario')
+
+class MeetingScenario extends Scenario {
   /**
    * Create a scenario corresponding to a meeting.
    * @param {String} user - The user who creates the scenario.
@@ -10,7 +12,7 @@ class Scenario {
    * @param {Number} meetingDuration - The scenario duration in minutes.
    */
   constructor (user, journeys, hardware, software, meetingDuration) {
-    this._user = user
+    super(user)
     this._journeys = journeys
     this._hardware = hardware
     this._software = software
@@ -18,13 +20,6 @@ class Scenario {
   }
 
   // Getters
-
-  /**
-   * Getter of the user who creates the scenario.
-   */
-  get user () {
-    return this._user
-  }
 
   /**
    * Getter of all the journeys entered by the user indexed by their ids.
@@ -60,13 +55,6 @@ class Scenario {
   // Setters
 
   /**
-   * Setter of the user who creates the scenario.
-   */
-  set user (user) {
-    this._user = user
-  }
-
-  /**
    * Setter of all the journeys entered by the user indexed by their ids.
    * @see {Journey}
    */
@@ -100,4 +88,4 @@ class Scenario {
   // Other methods
 }
 
-module.exports = Scenario
+module.exports = MeetingScenario
