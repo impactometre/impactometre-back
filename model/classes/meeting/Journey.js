@@ -1,7 +1,7 @@
 'use strict'
 
 const uniqid = require('uniqid')
-const Damage = require('./Damage')
+const Damage = require('../shared/Damage')
 
 /**
  * A journey has a mean of transportation,
