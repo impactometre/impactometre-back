@@ -98,14 +98,14 @@ describe('Software class', () => {
     const inboundBandwith = skype.getInboundBandwith(5)
     const networkUpperkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
     const instancesNumber = 5
-    const minuteToSecondss = constants.secoundsInMinute
     const kbitToBits = constants.kbitToBits
     const meetingDuration = 120
     const operatingDamage = new Damage({
-      humanHealth: networkUpperkBound.humanHealth * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      ecosystemQuality: networkUpperkBound.ecosystemQuality * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      climateChange: networkUpperkBound.climateChange * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      resources: networkUpperkBound.resources * inboundBandwith / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration
+      component: skype,
+      humanHealth: networkUpperkBound.humanHealth * inboundBandwith / kbitToBits * constants.minuteToSeconds * instancesNumber * meetingDuration,
+      ecosystemQuality: networkUpperkBound.ecosystemQuality * inboundBandwith / kbitToBits * constants.minuteToSeconds * instancesNumber * meetingDuration,
+      climateChange: networkUpperkBound.climateChange * inboundBandwith / kbitToBits * constants.minuteToSeconds * instancesNumber * meetingDuration,
+      resources: networkUpperkBound.resources * inboundBandwith / kbitToBits * constants.minuteToSeconds * instancesNumber * meetingDuration
     })
     it('should return skype operating damage for network upper bound and upper bandwith', () => {
       assert.deepStrictEqual(
@@ -115,12 +115,15 @@ describe('Software class', () => {
     })
     const inboundBandwithMinimun = skype.getInboundBandwith(5, constants.bounds.LOWER)
     const networkLowerBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.lower
+
     const operatingDamageMinimumBandwith = new Damage({
-      humanHealth: networkLowerBound.humanHealth * inboundBandwithMinimun / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      ecosystemQuality: networkLowerBound.ecosystemQuality * inboundBandwithMinimun / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      climateChange: networkLowerBound.climateChange * inboundBandwithMinimun / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration,
-      resources: networkLowerBound.resources * inboundBandwithMinimun / kbitToBits * minuteToSecondss * instancesNumber * meetingDuration
+      component: skype,
+      humanHealth: networkLowerBound.humanHealth * inboundBandwithMinimun / kbitToBits * constants.minuteToSeconds * instancesNumber * meetingDuration,
+      ecosystemQuality: networkLowerBound.ecosystemQuality * inboundBandwithMinimun / kbitToBits * constants.minuteToSeconds * instancesNumber * meetingDuration,
+      climateChange: networkLowerBound.climateChange * inboundBandwithMinimun / kbitToBits * constants.minuteToSeconds * instancesNumber * meetingDuration,
+      resources: networkLowerBound.resources * inboundBandwithMinimun / kbitToBits * constants.minuteToSeconds * instancesNumber * meetingDuration
     })
+
     it('should return skype operating damage for network lower bound and minimun bandwith', () => {
       assert.deepStrictEqual(
         skype.computeOperatingDamage(instancesNumber, constants.bounds.LOWER, constants.bounds.LOWER, meetingDuration),
