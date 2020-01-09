@@ -1,7 +1,7 @@
 'use strict'
 
 const getClosest = require('../../../utils/get-closest')
-const Damage = require('./Damage')
+const Damage = require('../shared/Damage')
 const {
   octetToBits,
   moToOctets,
