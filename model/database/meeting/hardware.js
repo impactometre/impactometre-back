@@ -22,7 +22,9 @@ const hardware = {
       ecosystemQuality: 0.000843363,
       climateChange: 0.002035398,
       resources: 0.00185841
-    }
+    },
+    lifetime: hardwareLifetime.DESKTOP,
+    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
   },
   /**
    * DESKTOP AND LAPTOP
@@ -275,7 +277,6 @@ const hardware = {
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
   },
-  /*
   LOGITECH_KIT: {
     name: 'LOGITECH_KIT',
     french: 'kit de visioconférence Logitech',
@@ -283,12 +284,12 @@ const hardware = {
     components: [
       'LOGITECH_KIT_WITHOUT_CABLE',
       // contains 4 cables
-      'LOGITECH_CABLE',
-      'LOGITECH_CABLE',
-      'LOGITECH_CABLE',
       'LOGITECH_CABLE'
+      /*'LOGITECH_CABLE',
+      'LOGITECH_CABLE',
+      'LOGITECH_CABLE'*/
     ]
-  },*/
+  },
   METAL_STRUCTURE: {
     name: 'METAL_STRUCTURE',
     french: 'structure métallique de support des écrans',
