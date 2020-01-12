@@ -45,10 +45,10 @@ const hardware = {
     french: 'tour d\'ordinateur',
     isSizeDependent: false,
     embodied: {
-      humanHealth: 0.000475,
-      ecosystemQuality: 140,
-      climateChange: 360,
-      resources: 4.79 * Math.pow(10, 3)
+      humanHealth: 0.000349,
+      ecosystemQuality: 131,
+      climateChange: 228,
+      resources: 3.19 * Math.pow(10, 3)
     },
     operatingWithoutVisioOneMin: {
       humanHealth: 1.66 * Math.pow(10, -11),
@@ -191,10 +191,18 @@ const hardware = {
       resources: 821
     },
     operatingOneMinVisio: {
-      humanHealth: 1.4 * Math.pow(10, -10),
-      ecosystemQuality: 6.44 * Math.pow(10, -5),
-      climateChange: 0.000111,
-      resources: 0.0288
+      upper: {
+        humanHealth: 2.67 * Math.pow(10, -10),
+        ecosystemQuality: 0.000123,
+        climateChange: 0.000213,
+        resources: 0.055
+      },
+      lower: {
+        humanHealth: 8.12 * Math.pow(10, -11),
+        ecosystemQuality: 3.74 * Math.pow(10, -5),
+        climateChange: 6.47 * Math.pow(10, -5),
+        resources: 0.0167
+      }
     },
     // TODO: check in specific article
     lifetime: hardwareLifetime.DESKTOP,
@@ -329,7 +337,7 @@ const hardware = {
   // Reference value for HDMI and VGA
   POWER_CABLE_ONE_METER: {
     name: 'POWER_CABLE_ONE_METER',
-    french: 'câble d\'alimentation 1 m',
+    french: 'câble d\'alimentation 1 m sans fiches',
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.42 * Math.pow(10, -6),
@@ -364,7 +372,7 @@ const hardware = {
   },
   ETHERNET_CABLE_ONE_METER: {
     name: 'ETHERNET_CABLE_ONE_METER',
-    french: 'câble Ethernet 1 m',
+    french: 'câble Ethernet 1 m sans fiches',
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.7 * Math.pow(10, -6),
@@ -399,13 +407,13 @@ const hardware = {
   },
   HDMI_CABLE_ONE_METER: {
     name: 'HDMI_CABLE_ONE_METER',
-    french: 'câble HDMI 1 m',
+    french: 'câble HDMI 1 m sans fiches',
     isSizeDependent: true,
     embodied: {
-      humanHealth: 8.8 * Math.pow(10, -7),
-      ecosystemQuality: 0.59,
-      climateChange: 0.34,
-      resources: 6.83
+      humanHealth: 1.42 * Math.pow(10, -6),
+      ecosystemQuality: 0.84,
+      climateChange: 0.443,
+      resources: 8.59
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
@@ -415,10 +423,10 @@ const hardware = {
     french: 'fiches de câble HDMI',
     isSizeDependent: false,
     embodied: {
-      humanHealth: 1.42 * Math.pow(10, -6),
-      ecosystemQuality: 0.84,
-      climateChange: 0.443,
-      resources: 8.59
+      humanHealth: 8.8 * Math.pow(10, -7),
+      ecosystemQuality: 0.59,
+      climateChange: 0.34,
+      resources: 6.83
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
