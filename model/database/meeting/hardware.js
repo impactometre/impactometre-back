@@ -158,6 +158,9 @@ const hardware = {
     name: 'MICROPHONE',
     french: 'micro',
     isSizeDependent: false,
+    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1',
+    // source: Jabra Speak 410 - https://www.jabra.fr/business/speakerphones/jabra-speak-series/jabra-speak-410#/#7410-209
+    weight: 180.3,
     operatingOneMinVisio: {
       humanHealth: 2.59 * Math.pow(10, -12),
       ecosystemQuality: 1.19 * Math.pow(10, -6),
@@ -171,6 +174,15 @@ const hardware = {
     name: 'CAMERA',
     french: 'caméra',
     isSizeDependent: false,
+    // lower weight source: Logitech C920 HD Pro Webcam
+    // https://support.logi.com/hc/fr/articles/360023307294-C920-Caract%C3%A9ristiques-techniques
+    // upper weight source: Logitech PTZ PRO 2 (camera: 580g, remote: 68g)
+    // https://www.logitech.com/assets/65113/2/conferencecam-ptz-pro2-datasheet.FRA.pdf
+    wieght: {
+      lower: 162,
+      upper: 628
+    },
+    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     operatingOneMinVisio: {
       humanHealth: 9.84 * Math.pow(10, -12),
       ecosystemQuality: 4.53 * Math.pow(10, -6),
