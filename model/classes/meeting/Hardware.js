@@ -44,6 +44,7 @@ class Hardware {
       Array.isArray(json.components) &&
       json.components.length
     ) {
+      let i = 0
       json.components.forEach(name => {
         /* If the the payload contains an entry for the component found
         in database, we construct the compondent from the payload. Else
@@ -53,6 +54,7 @@ class Hardware {
         this._components[name] = (!componentsPayload[name])
           ? new Hardware({ name })
           : new Hardware(componentsPayload[name])
+        
       })
     }
   }
