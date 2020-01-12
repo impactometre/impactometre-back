@@ -293,9 +293,9 @@ const hardware = {
       'LOGITECH_KIT_WITHOUT_CABLE',
       // contains 4 cables
       'LOGITECH_CABLE'
-      /*'LOGITECH_CABLE',
+      /* 'LOGITECH_CABLE',
       'LOGITECH_CABLE',
-      'LOGITECH_CABLE'*/
+      'LOGITECH_CABLE' */
     ]
   },
   METAL_STRUCTURE: {
