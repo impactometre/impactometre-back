@@ -74,12 +74,23 @@ const meetingComponents = {
   JOURNEY: 'JOURNEY'
 }
 
+/**
+ * Transportation mean sub categories
+ */
 const transportationMeanSubCategories = {
   CAR: 'CAR',
   PLANE: 'PLANE',
   TRAIN: 'TRAIN',
   BUS: 'BUS',
   BIKE: 'BIKE'
+}
+ /**
+  * Damage categories for meetings
+  */
+const meetingCategoryDamage = {
+  HARDWARE: 'HARDWARE',
+  SOFTWARE: 'SOFTWARE',
+  TRANSPORT: 'TRANSPORT'
 }
 
 exports.hourToMinutes = hourToMinutes
@@ -99,5 +110,9 @@ exports.hardwareLifetime = hardwareLifetime
 exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
 exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 
+<<<<<<< HEAD
 exports.meetingComponents = meetingComponents
 exports.transportationMeanSubCategories = transportationMeanSubCategories
+=======
+exports.meetingCategoryDamage = meetingCategoryDamage
+>>>>>>> feat: create CategoryDamage class and its test
