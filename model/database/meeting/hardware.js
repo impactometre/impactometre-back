@@ -148,6 +148,12 @@ const hardware = {
       climateChange: 7.21,
       resources: 103
     },
+    operatingOneMinVisio: {
+      humanHealth: 1.097 * Math.pow(10, -8),
+      ecosystemQuality: 0.0051,
+      climateChange: 0.0087,
+      resources: 2.2613
+    },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
   },
