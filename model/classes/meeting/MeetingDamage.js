@@ -3,78 +3,83 @@
 class MeetingDamage {
   /**
    * Create a damage synthesis of a meeting.
-   * Each value is between 1 and 100 percent and is composed of a transport share,
-   * a hardware share and a software share.
-   * @param {DistributedDamage} humanHealth - The damage value on Human Health.
-   * @param {DistributedDamage} ecosystemQuality - The damage value on Ecosystem Quality.
-   * @param {DistributedDamage} climateChange - The damage value on Climate Change.
-   * @param {DistributedDamage} resources - The damage value on Resources.
+   * It's composed of a Damage component that represents the total damage caused by the meeting
+   * and of three CategoryDamage objects that repesent the damages caused by the all
+   * the meeting components gathered by category (hardware, software, transport).
+   * @param {CategoryDamage} hardwareDamage - The damage caused by hardware components.
+   * @param {CategoryDamage} softwareDamage - The damage caused by software components.
+   * @param {CategoryDamage} transportDamage - The damage caused by transport components.
+   * @see Damage.js
    */
-  constructor (humanHealth, ecosystemQuality, climateChange, resources) {
-    this._humanHealth = humanHealth
-    this._ecosystemQuality = ecosystemQuality
-    this._climateChange = climateChange
-    this._resources = resources
+  constructor ({ hardwareDamage, softwareDamage, transportDamage }) {
+    this._hardwareDamage = hardwareDamage
+    this._softwareDamage = softwareDamage
+    this._transportDamage = transportDamage
+
+    // The total damage of a meeting is the sum of the total damage for each category (it's a Damage object)
+    this._totalDamage = this._hardwareDamage.totalDamage
+      .add(this._softwareDamage.totalDamage)
+      .add(this._transportDamage.totalDamage)
   }
 
   // Getters
 
   /**
-   * Getter of the damage value on Human Health.
+   * Getter of the damage caused by hardware components.
    */
-  get humanHealth () {
-    return this._humanHealth
+  get hardwareDamage () {
+    return this._hardwareDamage
   }
 
   /**
-   * Getter of the damage value on Ecosystem Quality.
+   * Getter of the damage caused by software components.
    */
-  get ecosystemQuality () {
-    return this._ecosystemQuality
+  get softwareDamage () {
+    return this._softwareDamage
   }
 
   /**
-   * Getter of the damage value on Climate Change.
+   * Getter of the damage caused by transport components.
    */
-  get climateChange () {
-    return this._climateChange
+  get transportDamage () {
+    return this._transportDamage
   }
 
   /**
-   * Getter of the damage value on Resources.
+   * Getter of the total damage caused by the meeting.
    */
-  get resources () {
-    return this._resources
+  get totalDamage () {
+    return this._totalDamage
   }
 
   // Setters
 
   /**
-   * Setter of the damage value on Human Health.
+   * Setter of the damage caused by hardware components.
    */
-  set humanHealth (humanHealth) {
-    this._humanHealth = humanHealth
+  set hardwareDamage (hardwareDamage) {
+    this._hardwareDamage = hardwareDamage
   }
 
   /**
-   * Setter of the damage value on Ecosystem Quality.
+   * Setter of the damage caused by software components.
    */
-  set ecosystemQuality (ecosystemQuality) {
-    this._ecosystemQuality = ecosystemQuality
+  set softwareDamage (softwareDamage) {
+    this._softwareDamage = softwareDamage
   }
 
   /**
-   * Setter of the damage value on Climate Change.
+   * Setter of the damage caused by transport components.
    */
-  set climateChange (climateChange) {
-    this._climateChange = climateChange
+  set transportDamage (transportDamage) {
+    this._transportDamage = transportDamage
   }
 
   /**
-   * Setter of the damage value on Resources.
+   * Setter of the total damage caused by the meeting.
    */
-  set resources (resources) {
-    this._resources = resources
+  set totalDamage (totalDamage) {
+    this._totalDamage = totalDamage
   }
 
   // Other methods
