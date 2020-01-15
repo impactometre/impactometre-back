@@ -38,9 +38,15 @@ const software = {
     }
   },
   JITSI: {
-    french: 'Jitsi',
+    /* Measured for 3 people1 000 000 KB received by all
+    - 1 000 000 KBytes received by all people for 15 minutes
+    - 66 666 KBystes received each minute by all people
+    - 8 888 Kbits received each seconde by all people
+    - 2963 Kbits received each second by each people
+    */
+    french: 'JitsDi',
     bandwith: {
-      inbound: 'unknown'
+      inbound: 2963
     }
   },
   HANGOUTS: {
