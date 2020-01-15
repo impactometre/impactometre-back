@@ -44,7 +44,7 @@ const software = {
     - 8 888 kbits received each seconde by all people
     - 2963 kbits received each second by each people
     */
-    french: 'JitsDi',
+    french: 'Jitsi',
     bandwith: {
       inbound: 2963
     }
