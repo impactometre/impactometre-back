@@ -19,6 +19,7 @@ class TransportationMean {
     // Initialize TransportationMean object thanks to the JSON object
     this._name = json.name
     this._french = json.french
+    this._subCategory = json.subCategory
     this._embodied = json.embodied
     this._isComputedByPersonKm = json.isComputedByPersonKm
   }
@@ -37,6 +38,13 @@ class TransportationMean {
    */
   get french () {
     return this._french
+  }
+
+  /**
+   * Getter of the transporation mean sub-category (i.e. car, plane, train, bus or bike)
+   */
+  get subCategory () {
+    return this._subCategory
   }
 
   /**
@@ -68,6 +76,13 @@ class TransportationMean {
    */
   set french (french) {
     this._french = french
+  }
+
+  /**
+   * Setter of the transporation mean sub-category (i.e. car, plane, train, bus or bike)
+   */
+  set subCategory (subCategory) {
+    this._subCategory = subCategory
   }
 
   /**
