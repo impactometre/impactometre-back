@@ -9,7 +9,7 @@ const networkDatabase = require('../../../../model/database/meeting/network')
 
 describe('Software class', () => {
   describe('#getInboundBandwith()', () => {
-    const renavisio = new Software({name: softwareDatabase.RENAVISIO.name })
+    const renavisio = new Software({ name: softwareDatabase.RENAVISIO.name })
     it('should return the unique available value', () => {
       assert.strictEqual(
         renavisio.getInboundBandwith('RENAVISIO'),
