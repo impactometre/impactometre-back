@@ -26,7 +26,7 @@ class Software extends Component {
     // Get the corresponding JSON object from software database
     const json = softwareDatabase[name]
 
-    super({ name: json.name, french: json.french })
+    super({ name: json.name, french: json.french, category: json.category })
     this._fileSize = json.fileSize
     this._bandwith = json.bandwith
     this._damage = this.computeDamage()
