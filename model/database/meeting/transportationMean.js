@@ -1,8 +1,14 @@
 'use strict'
 
+const {
+  transportationMeanSubCategories
+} = require('../../../constants/meeting')
+
 const transportationMean = {
   PLANE_INTERCONTINENTAL_ONE_PERSON_KM: {
+    name: 'PLANE_INTERCONTINENTAL_ONE_PERSON_KM',
     french: 'avion intercontinental',
+    subCategory: transportationMeanSubCategories.PLANE,
     embodied: {
       humanHealth: 5.85 * Math.pow(10, -8),
       ecosystemQuality: 0.0108,
@@ -12,7 +18,9 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   PLANE_INTRACONTINENTAL_ONE_PERSON_KM: {
+    name: 'PLANE_INTRACONTINENTAL_ONE_PERSON_KM',
     french: 'avion intracontinental',
+    subCategory: transportationMeanSubCategories.PLANE,
     embodied: {
       humanHealth: 8.75 * Math.pow(10, -8),
       ecosystemQuality: 0.0163,
@@ -22,7 +30,9 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   BUS_LARGE_DISTANCE_ONE_PERSON_KM: {
+    name: 'BUS_LARGE_DISTANCE_ONE_PERSON_KM',
     french: 'bus longue distance',
+    subCategory: transportationMeanSubCategories.BUS,
     embodied: {
       humanHealth: 1.3 * Math.pow(10, -7),
       ecosystemQuality: 0.0354,
@@ -32,7 +42,9 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   BUS_CITY_ONE_PERSON_KM: {
+    name: 'BUS_CITY_ONE_PERSON_KM',
     french: 'bus en ville',
+    subCategory: transportationMeanSubCategories.BUS,
     embodied: {
       humanHealth: 6.13 * Math.pow(10, -8),
       ecosystemQuality: 0.0214,
@@ -42,7 +54,9 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   CAR_ELECTRIC_ONE_KM: {
+    name: 'CAR_ELECTRIC_ONE_KM',
     french: 'voiture électrique',
+    subCategory: transportationMeanSubCategories.CAR,
     embodied: {
       humanHealth: 3.73 * Math.pow(10, -7),
       ecosystemQuality: 0.0855,
@@ -52,7 +66,9 @@ const transportationMean = {
     isComputedByPersonKm: false
   },
   CAR_HEAT_ENGINE_ONE_KM: {
+    name: 'CAR_HEAT_ENGINE_ONE_KM',
     french: 'voiture moteur thermique',
+    subCategory: transportationMeanSubCategories.CAR,
     embodied: {
       humanHealth: 2.58 * Math.pow(10, -7),
       ecosystemQuality: 0.086,
@@ -62,7 +78,9 @@ const transportationMean = {
     isComputedByPersonKm: false
   },
   TRAIN_HIGH_SPEED_ONE_PERSON_KM: {
+    name: 'TRAIN_HIGH_SPEED_ONE_PERSON_KM',
     french: 'train à grande vitesse',
+    subCategory: transportationMeanSubCategories.TRAIN,
     embodied: {
       humanHealth: 1.76 * Math.pow(10, -8),
       ecosystemQuality: 0.00844,
@@ -72,7 +90,9 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   TRAIN_REGIONAL_ONE_PERSON_KM: {
+    name: 'TRAIN_REGIONAL_ONE_PERSON_KM',
     french: 'train régional',
+    subCategory: transportationMeanSubCategories.TRAIN,
     embodied: {
       humanHealth: 1.5 * Math.pow(10, -8),
       ecosystemQuality: 0.00736,
@@ -82,7 +102,9 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   TRAIN_URBAN_ONE_PERSON_KM: {
+    name: 'TRAIN_URBAN_ONE_PERSON_KM',
     french: 'train urbain',
+    subCategory: transportationMeanSubCategories.TRAIN,
     embodied: {
       humanHealth: 1.34 * Math.pow(10, -8),
       ecosystemQuality: 0.00505,
@@ -92,7 +114,9 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   TRAMWAY_ONE_PERSON_KM: {
+    name: 'TRAMWAY_ONE_PERSON_KM',
     french: 'tramway',
+    subCategory: transportationMeanSubCategories.TRAIN,
     embodied: {
       humanHealth: 3.93 * Math.pow(10, -8),
       ecosystemQuality: 0.00887,
@@ -102,7 +126,9 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   BIKE_ONE_PERSON_ONE_KM: {
+    name: 'BIKE_ONE_PERSON_ONE_KM',
     french: 'vélo',
+    subCategory: transportationMeanSubCategories.BIKE,
     embodied: {
       humanHealth: 1.6 * Math.pow(10, -8),
       ecosystemQuality: 0.00251,

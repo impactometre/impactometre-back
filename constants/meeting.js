@@ -65,6 +65,23 @@ const hardwareOperatingTimePerDay = {
   LOGITECH_KIT: 3 / workedDaysByWeek
 }
 
+/**
+ * Components that a meeting can be composed of.
+ */
+const meetingComponents = {
+  HARDWARE: 'HARDWARE',
+  SOFTWARE: 'SOFTWARE',
+  JOURNEY: 'JOURNEY'
+}
+
+const transportationMeanSubCategories = {
+  CAR: 'CAR',
+  PLANE: 'PLANE',
+  TRAIN: 'TRAIN',
+  BUS: 'BUS',
+  BIKE: 'BIKE'
+}
+
 exports.hourToMinutes = hourToMinutes
 exports.dayToHours = dayToHours
 exports.minuteToSeconds = minuteToSeconds
@@ -81,3 +98,6 @@ exports.hardwareDamageTypes = hardwareDamageTypes
 exports.hardwareLifetime = hardwareLifetime
 exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
 exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
+
+exports.meetingComponents = meetingComponents
+exports.transportationMeanSubCategories = transportationMeanSubCategories

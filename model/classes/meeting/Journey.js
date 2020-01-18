@@ -1,13 +1,16 @@
 'use strict'
 
-const uniqid = require('uniqid')
 const Damage = require('../shared/Damage')
+const Component = require('../shared/Component')
+const {
+  meetingComponents
+} = require('../../../constants/meeting')
 
 /**
  * A journey has a mean of transportation,
  * a distance and a number of people.
  */
-class Journey {
+class Journey extends Component {
   /**
    * The Journey class constructor.
    * @param {String} passenger - The name of the passenger.
@@ -15,22 +18,18 @@ class Journey {
    * @param {Float} distance - The distance of the journey.
    * @param {Integer} numberOfPeople - The number of people of the journey.
    */
-  constructor (passenger, mean, distance, numberOfPeople) {
-    this._id = uniqid()
+  constructor ({ passenger, mean, distance, numberOfPeople }) {
+    // A Journey object doesn't have a name attribute and a french attribute, because there is no Journey
+    // in database but only transportation means
+    super({ name: '', french: '', category: meetingComponents.JOURNEY })
     this._passenger = passenger
     this._mean = mean
     this._distance = distance
     this._numberOfPeople = numberOfPeople
+    this._damage = this.computeDamage()
   }
 
   // Getters
-
-  /**
-   * Getter of the journey id.
-   */
-  get id () {
-    return this._id
-  }
 
   /**
    * Getter of the journey passenger name.
@@ -113,11 +112,11 @@ class Journey {
       const personKmAmount = this.distance * this.numberOfPeople
 
       embodiedDamage.mutate(category => {
-        return transportationMeanDamage[category] * personKmAmount
+        transportationMeanDamage[category] *= personKmAmount
       })
     } else {
       embodiedDamage.mutate(category => {
-        return transportationMeanDamage[category] * this.distance
+        embodiedDamage[category] = transportationMeanDamage[category] * this.distance
       })
     }
 

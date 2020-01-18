@@ -2,7 +2,8 @@
 
 const {
   hardwareLifetime,
-  hardwareOperatingTimePerDay
+  hardwareOperatingTimePerDay,
+  meetingComponents
 } = require('../../../constants/meeting')
 
 const hardware = {
@@ -12,6 +13,7 @@ const hardware = {
   DESKTOP: {
     name: 'DESKTOP',
     french: 'ordinateur fixe',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinVisio: {
       humanHealth: 1.55 * Math.pow(10, -10),
@@ -25,6 +27,7 @@ const hardware = {
   DESKTOP_WITHOUT_SCREEN: {
     name: 'DESKTOP_WITHOUT_SCREEN',
     french: 'ordinateur sans écran',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.00041,
@@ -50,6 +53,7 @@ const hardware = {
   DESKTOP_SCREEN_LCD: {
     name: 'DESKTOP_SCREEN_LCD',
     french: 'écran d\'ordinateur LCD',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.000475,
@@ -63,6 +67,7 @@ const hardware = {
   COMPUTER_TOWER: {
     name: 'COMPUTER_TOWER',
     french: 'tour',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.000349,
@@ -76,6 +81,7 @@ const hardware = {
   KEYBOARD: {
     name: 'KEYBOARD',
     french: 'clavier',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 5.01 * Math.pow(10, -5),
@@ -89,6 +95,7 @@ const hardware = {
   COMPUTER_MOUSE: {
     name: 'COMPUTER_MOUSE',
     french: 'souris',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 1.06 * Math.pow(10, -5),
@@ -102,6 +109,7 @@ const hardware = {
   LAPTOP: {
     name: 'LAPTOP',
     french: 'ordinateur portable',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.000274,
@@ -124,6 +132,7 @@ const hardware = {
   INTERNET_ACCESS_EQUIPMENT: {
     name: 'INTERNET_ACCESS_EQUIPMENT',
     french: 'équipement d\'accès Internet',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 1.26 * Math.pow(10, -5),
@@ -140,6 +149,7 @@ const hardware = {
   MICROPHONE: {
     name: 'MICROPHONE',
     french: 'micro',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinVisio: {
       humanHealth: 2.59 * Math.pow(10, -12),
@@ -153,6 +163,7 @@ const hardware = {
   CAMERA: {
     name: 'CAMERA',
     french: 'caméra',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinVisio: {
       humanHealth: 9.84 * Math.pow(10, -12),
@@ -166,6 +177,7 @@ const hardware = {
   PROJECTOR: {
     name: 'PROJECTOR',
     french: 'projecteur',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 8.04 * Math.pow(10, -5),
@@ -186,6 +198,7 @@ const hardware = {
   TV_BASE: {
     name: 'TV_BASE',
     french: 'télévision sauf écran',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinVisio: {
       humanHealth: 2.07 * Math.pow(10, -11),
@@ -199,6 +212,7 @@ const hardware = {
   TV_SCREEN: {
     name: 'TV_SCREEN',
     french: 'écran de télévision',
+    category: meetingComponents.HARDWARE,
     // Damage is given for one meter square
     isSizeDependent: true,
     operatingOneMinVisio: {
@@ -213,6 +227,7 @@ const hardware = {
   TV: {
     name: 'TV',
     french: 'télévision',
+    category: meetingComponents.HARDWARE,
     /* Even if a component (here TV_SCREEN) is size-dependent, we don't
     say that the composite element is itself size dependent */
     isSizeDependent: false,
@@ -227,6 +242,7 @@ const hardware = {
   LOGITECH_KIT: {
     name: 'LOGITECH_KIT',
     french: 'kit Logitech',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinStandby: {
       humanHealth: 5.9 * Math.pow(10, -12),
@@ -246,6 +262,7 @@ const hardware = {
   LOGITECH_KIT_CAMERA: {
     name: 'LOGITECH_KIT_CAMERA',
     french: 'caméra du kit Logitech',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinVisio: {
       humanHealth: 4.04 * Math.pow(10, -12),
@@ -259,6 +276,7 @@ const hardware = {
   LOGITECH_CABLE: {
     name: 'LOGITECH_CABLE',
     french: 'câble Logitech',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 3.53 * Math.pow(10, -6),
@@ -272,6 +290,7 @@ const hardware = {
   METAL_STRUCTURE: {
     name: 'METAL_STRUCTURE',
     french: 'structure métallique de support des écrans',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.000141,
@@ -286,6 +305,7 @@ const hardware = {
   CODEC: {
     name: 'CODEC',
     french: 'CODEC',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinVisio: {
       upper: {
@@ -309,6 +329,7 @@ const hardware = {
   POWER_CABLE_ONE_METER: {
     name: 'POWER_CABLE_ONE_METER',
     french: 'câble d\'alimentation 1 m',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),
@@ -322,6 +343,7 @@ const hardware = {
   ETHERNET_CABLE_ONE_METER: {
     name: 'ETHERNET_CABLE_ONE_METER',
     french: 'câble Ethernet 1 m',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.42 * Math.pow(10, -7),
@@ -335,6 +357,7 @@ const hardware = {
   HDMI_CABLE_ONE_METER: {
     name: 'HDMI_CABLE_ONE_METER',
     french: 'câble HDMI 1 m',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),
@@ -348,6 +371,7 @@ const hardware = {
   JACK_CABLE_ONE_METER: {
     name: 'JACK_CABLE_ONE_METER',
     french: 'câble jack 1 m',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.7 * Math.pow(10, -6),
@@ -361,6 +385,7 @@ const hardware = {
   VGA_CABLE_ONE_METER: {
     name: 'VGA_CABLE_ONE_METER',
     french: 'câble VGA 1 m',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),

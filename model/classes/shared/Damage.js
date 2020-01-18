@@ -16,6 +16,8 @@ class Damage {
     this._resources = resources
   }
 
+  // Getters
+
   get humanHealth () {
     return this._humanHealth
   }
@@ -32,6 +34,26 @@ class Damage {
     return this._resources
   }
 
+  // Setters
+
+  set humanHealth (humanHealth) {
+    this._humanHealth = humanHealth
+  }
+
+  set ecosystemQuality (ecosystemQuality) {
+    this._ecosystemQuality = ecosystemQuality
+  }
+
+  set climateChange (climateChange) {
+    this._climateChange = climateChange
+  }
+
+  set resources (resources) {
+    this._resources = resources
+  }
+
+  // Other methods
+
   /**
    * Apply the given function on the four
    * damage values.
@@ -40,7 +62,7 @@ class Damage {
    */
   mutate (mutation) {
     Object.keys(this).map(category => {
-      this[category] = mutation(category)
+      mutation(category)
     })
 
     return this
