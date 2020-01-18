@@ -10,15 +10,30 @@ const {
   bounds
 } = require('../../../constants/meeting')
 const networkDatabase = require('../../database/meeting/network')
+const softwareDatabase = require('../../database/meeting/software')
 
 class Software {
-  constructor (software) {
-    this._french = software.french
-    this._fileSize = software.fileSize
-    this._bandwith = software.bandwith
+  /**
+   * Create a software thanks to the software database.
+   * @param {String} name - The key of a software database entry, also the software name.
+   */
+  constructor ({ name }) {
+    // Get the corresponding JSON object from software database
+    const json = softwareDatabase[name]
+    this._name = json.name
+    this._french = json.french
+    this._fileSize = json.fileSize
+    this._bandwith = json.bandwith
   }
 
   // Getter
+
+  /**
+   * Gette of the name of the software
+   */
+  get name () {
+    return this._name
+  }
 
   /**
    * Getter for software french name.
@@ -39,6 +54,13 @@ class Software {
   }
 
   // Setters
+
+  /**
+   * Seter of the software name.
+   */
+  set name (name) {
+    this._name = name
+  }
 
   /**
    * Setter of software french name.
@@ -148,23 +170,20 @@ class Software {
     const inboundBandwith = this.getInboundBandwith(instancesNumber, bandwithBound)
 
     // We get the network energetic intensity (in damageUnit/bit)
-    const networkEnergeticIntensity = new Damage({
-      component: this,
-      ...Software.getNetworkEnergeticIntensity(networkBound)
-    })
+    const networkEnergeticIntensity = new Damage(Software.getNetworkEnergeticIntensity(networkBound))
 
     // We compute the total damage for each damage shere (in damageUnit)
-    Object.keys(operatingDamage.damageValues).map((categoryDamage) => {
+    Object.keys(operatingDamage).map((categoryDamage) => {
       // (damageUnit/bit) * (Kbit/s) = 1000 * (damageUnit/s)
-      operatingDamage.damageValues[categoryDamage] = networkEnergeticIntensity.damageValues[categoryDamage] * inboundBandwith
+      operatingDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * inboundBandwith
       // (1000 * (damageUnit/s)) / 1000 = damageUnit/s
-      operatingDamage.damageValues[categoryDamage] /= kbitToBits
+      operatingDamage[categoryDamage] /= kbitToBits
       // (damageUnit/s) * 60 = damageUnit/minute
-      operatingDamage.damageValues[categoryDamage] *= minuteToSeconds
+      operatingDamage[categoryDamage] *= minuteToSeconds
       // Damage for one minute use for all the instances
-      operatingDamage.damageValues[categoryDamage] *= instancesNumber
+      operatingDamage[categoryDamage] *= instancesNumber
       // Damage for all the meeting
-      operatingDamage.damageValues[categoryDamage] *= meetingDuration
+      operatingDamage[categoryDamage] *= meetingDuration
     })
 
     // Return the computed operating damage
@@ -179,24 +198,21 @@ class Software {
    */
   computeEmbodiedDamage (instancesNumber, networkBound) {
     // Initialize the embodied damage
-    const embodiedDamage = new Damage({ component: this })
+    const embodiedDamage = new Damage()
 
     // If there is no file to download or if there is no file size,
     // we return an empty damage.
     if (!this.fileSize) return embodiedDamage
 
     // We get the network energetic intensity (in damageUnit/bit)
-    const networkEnergeticIntensity = new Damage({
-      component: this,
-      ...Software.getNetworkEnergeticIntensity(networkBound)
-    })
+    const networkEnergeticIntensity = new Damage(Software.getNetworkEnergeticIntensity(networkBound))
 
     // We get the file size in bits
     const fileSize = this.fileSizeMoToBits()
 
     // We compute the total damage for each damage shere (in damageUnit)
-    Object.keys(embodiedDamage.damageValues).map((categoryDamage) => {
-      embodiedDamage.damageValues[categoryDamage] = networkEnergeticIntensity.damageValues[categoryDamage] * fileSize * instancesNumber
+    Object.keys(embodiedDamage).map((categoryDamage) => {
+      embodiedDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber
     })
 
     // Return the computed embodied damage
@@ -213,19 +229,13 @@ class Software {
    */
   computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
     // Compute the embodied damage (damage caused by downloads)
-    const embodiedDamage = new Damage({
-      component: this,
-      ...this.computeEmbodiedDamage(instancesNumber, networkBound).damageValues
-    })
+    const embodiedDamage = new Damage(this.computeEmbodiedDamage(instancesNumber, networkBound))
 
     // Compute the operating damage (caused by all the software instances usage during all the meeting)
-    const operatingDamage = new Damage({
-      component: this,
-      ...this.computeOperatingDamage(instancesNumber, bandwithBound, networkBound, meetingDuration).damageValues
-    })
+    const operatingDamage = new Damage(this.computeOperatingDamage(instancesNumber, bandwithBound, networkBound, meetingDuration))
 
     // Add embodied damage and operating damage
-    const totalDamage = new Damage({ component: this }).add(embodiedDamage).add(operatingDamage)
+    const totalDamage = new Damage().add(embodiedDamage).add(operatingDamage)
 
     // Return the computed total damage
     return totalDamage

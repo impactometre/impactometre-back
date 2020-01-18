@@ -9,7 +9,7 @@ const networkDatabase = require('../../../../model/database/meeting/network')
 
 describe('Software class', () => {
   describe('#getInboundBandwith()', () => {
-    const renavisio = new Software(softwareDatabase.RENAVISIO)
+    const renavisio = new Software({name: softwareDatabase.RENAVISIO.name })
     it('should return the unique available value', () => {
       assert.strictEqual(
         renavisio.getInboundBandwith('RENAVISIO'),
@@ -24,7 +24,7 @@ describe('Software class', () => {
       )
     })
 
-    const skype = new Software(softwareDatabase.SKYPE)
+    const skype = new Software({ name: softwareDatabase.SKYPE.name })
     it('should return the matching available (lower bound) value', () => {
       assert.strictEqual(
         skype.getInboundBandwith(2, constants.bounds.LOWER),
@@ -54,7 +54,7 @@ describe('Software class', () => {
     })
   })
   describe('#computeEmbodiedDamage (instancesNumber, networkBound)', () => {
-    const renavisio = new Software(softwareDatabase.RENAVISIO)
+    const renavisio = new Software({ name: softwareDatabase.RENAVISIO.name })
     const networkEnergeticIntensityUpper = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
     const fileSizeMoToBits = renavisio.fileSizeMoToBits()
     const embodiedDamage = new Damage({
@@ -71,7 +71,7 @@ describe('Software class', () => {
         embodiedDamage
       )
     })
-    const jitsi = new Software(softwareDatabase.JITSI)
+    const jitsi = new Software({ name: softwareDatabase.JITSI.name })
     const emptyDamage = new Damage({ component: jitsi })
     it('should return an empty damage because Jitsi has any file to download', () => {
       assert.deepStrictEqual(
@@ -94,7 +94,7 @@ describe('Software class', () => {
     })
   })
   describe('#computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration)', () => {
-    const skype = new Software(softwareDatabase.SKYPE)
+    const skype = new Software({ name: softwareDatabase.SKYPE.name })
     const inboundBandwith = skype.getInboundBandwith(5)
     const networkUpperkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
     const instancesNumber = 5
@@ -136,7 +136,7 @@ describe('Software class', () => {
     const minuteToSeconds = constants.minuteToSeconds
     const kbitToBits = constants.kbitToBits
     const instancesNumber = 5
-    const skype = new Software(softwareDatabase.SKYPE)
+    const skype = new Software({ name: softwareDatabase.SKYPE.name })
     const inboundBandwith = skype.getInboundBandwith(instancesNumber, constants.bounds.UPPER)
     const networkBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.upper
     const operatingDamage = new Damage({
@@ -155,8 +155,8 @@ describe('Software class', () => {
       resources: networkBound.resources * fileSizeMoToBits * instancesNumber
     })
     const totalDamage = new Damage({ component: skype })
-    Object.keys(totalDamage.damageValues).map((categoryDamage) => {
-      totalDamage.damageValues[categoryDamage] = operatingDamage.damageValues[categoryDamage] + embodiedDamage.damageValues[categoryDamage]
+    Object.keys(totalDamage).map((categoryDamage) => {
+      totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
     })
 
     it('should return the total damage caused by a software during all the meeting (embodied damage + operating damage)', () => {

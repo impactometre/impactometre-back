@@ -2,6 +2,7 @@
 
 const transportationMean = {
   PLANE_INTERCONTINENTAL_ONE_PERSON_KM: {
+    name: 'PLANE_INTERCONTINENTAL_ONE_PERSON_KM',
     french: 'avion intercontinental',
     embodied: {
       humanHealth: 5.85 * Math.pow(10, -8),
@@ -12,6 +13,7 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   PLANE_INTRACONTINENTAL_ONE_PERSON_KM: {
+    name: 'PLANE_INTRACONTINENTAL_ONE_PERSON_KM',
     french: 'avion intracontinental',
     embodied: {
       humanHealth: 8.75 * Math.pow(10, -8),
@@ -22,6 +24,7 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   BUS_LARGE_DISTANCE_ONE_PERSON_KM: {
+    name: 'BUS_LARGE_DISTANCE_ONE_PERSON_KM',
     french: 'bus longue distance',
     embodied: {
       humanHealth: 1.3 * Math.pow(10, -7),
@@ -32,6 +35,7 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   BUS_CITY_ONE_PERSON_KM: {
+    name: 'BUS_CITY_ONE_PERSON_KM',
     french: 'bus en ville',
     embodied: {
       humanHealth: 6.13 * Math.pow(10, -8),
@@ -42,6 +46,7 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   CAR_ELECTRIC_ONE_KM: {
+    name: 'CAR_ELECTRIC_ONE_KM',
     french: 'voiture électrique',
     embodied: {
       humanHealth: 3.73 * Math.pow(10, -7),
@@ -52,6 +57,7 @@ const transportationMean = {
     isComputedByPersonKm: false
   },
   CAR_HEAT_ENGINE_ONE_KM: {
+    name: 'CAR_HEAT_ENGINE_ONE_KM',
     french: 'voiture moteur thermique',
     embodied: {
       humanHealth: 2.58 * Math.pow(10, -7),
@@ -62,6 +68,7 @@ const transportationMean = {
     isComputedByPersonKm: false
   },
   TRAIN_HIGH_SPEED_ONE_PERSON_KM: {
+    name: 'TRAIN_HIGH_SPEED_ONE_PERSON_KM',
     french: 'train à grande vitesse',
     embodied: {
       humanHealth: 1.76 * Math.pow(10, -8),
@@ -72,6 +79,7 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   TRAIN_REGIONAL_ONE_PERSON_KM: {
+    name: 'TRAIN_REGIONAL_ONE_PERSON_KM',
     french: 'train régional',
     embodied: {
       humanHealth: 1.5 * Math.pow(10, -8),
@@ -82,6 +90,7 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   TRAIN_URBAN_ONE_PERSON_KM: {
+    name: 'TRAIN_URBAN_ONE_PERSON_KM',
     french: 'train urbain',
     embodied: {
       humanHealth: 1.34 * Math.pow(10, -8),
@@ -92,6 +101,7 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   TRAMWAY_ONE_PERSON_KM: {
+    name: 'TRAMWAY_ONE_PERSON_KM',
     french: 'tramway',
     embodied: {
       humanHealth: 3.93 * Math.pow(10, -8),
@@ -102,6 +112,7 @@ const transportationMean = {
     isComputedByPersonKm: true
   },
   BIKE_ONE_PERSON_ONE_KM: {
+    name: 'BIKE_ONE_PERSON_ONE_KM',
     french: 'vélo',
     embodied: {
       humanHealth: 1.6 * Math.pow(10, -8),

@@ -2,6 +2,7 @@
 
 const software = {
   RENAVISIO: {
+    name: 'RENAVISIO',
     french: 'Renavisio',
     // in Mo
     fileSize: 18.8,
@@ -11,6 +12,7 @@ const software = {
     }
   },
   SKYPE: {
+    name: 'SKYPE',
     french: 'Skype',
     fileSize: 65.8,
     // Indexed by number of participants
@@ -38,12 +40,14 @@ const software = {
     }
   },
   JITSI: {
+    name: 'JITSI',
     french: 'Jitsi',
     bandwith: {
       inbound: 'unknown'
     }
   },
   HANGOUTS: {
+    name: 'HANGOUTS',
     french: 'Google Hangouts',
     // Source : https://support.google.com/hangouts/answer/2944865?co=GENIE.Platform%3DDesktop&hl=en
     bandwith: {

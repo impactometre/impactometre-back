@@ -1,4 +1,7 @@
 'use strict'
+ 
+const transportationMeanDatabase = require('../../database/meeting/transportationMean')
+
 /**
  * TransportationMan class.
  * An instance of this class represents a transportation mean,
@@ -6,17 +9,28 @@
  */
 class TransportationMean {
   /**
-   * Construct an TransportationMean object form the JSON database.
-   * @param transportationMean - A transportation mean from the JSON database.
-   * @see transport.js The JSON file.
+   * Construct an TransportationMean object thanks to the transportation mean database.
+   * @param name - The key of a transportation mean database entry, also the transportation mean name.
    */
-  constructor (transportationMean) {
-    this._french = transportationMean.french
-    this._embodied = transportationMean.embodied
-    this._isComputedByPersonKm = transportationMean.isComputedByPersonKm
+  constructor ({ name }) {
+    // Get the corresponding JSON object from the transportation means database
+    const json = transportationMeanDatabase[name]
+
+    // Initialize TransportationMean object thanks to the JSON object
+    this._name = json.name
+    this._french = json.french
+    this._embodied = json.embodied
+    this._isComputedByPersonKm = json.isComputedByPersonKm
   }
 
   // Getters
+
+  /**
+   * Getter of the transportation name.
+   */
+  get name () {
+    return this._name
+  }
 
   /**
    * Getter of the transportation mean french name.
@@ -41,6 +55,13 @@ class TransportationMean {
   }
 
   // Setters
+
+  /**
+   * Setter of the transportation mean name.
+   */
+  set name (name) {
+    this._name = name
+  }
 
   /**
    * Setter of the transportation mean french name.
