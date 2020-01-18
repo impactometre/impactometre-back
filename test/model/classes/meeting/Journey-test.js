@@ -8,10 +8,9 @@ const Damage = require('../../../../model/classes/shared/Damage')
 
 describe('Journey class', () => {
   describe('#computeEmbodiedDamage ()', () => {
-    const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
+    const electricCar = new TransportationMean({ name: transportDatabase.CAR_ELECTRIC_ONE_KM.name })
     const journeyElectricCar3People = new Journey('Passenger 1', electricCar, 100, 3)
     const embodiedDamage = new Damage({
-      component: journeyElectricCar3People,
       humanHealth: electricCar.embodied.humanHealth * 100,
       ecosystemQuality: electricCar.embodied.ecosystemQuality * 100,
       climateChange: electricCar.embodied.climateChange * 100,
@@ -33,7 +32,7 @@ describe('Journey class', () => {
       )
     })
 
-    const heatCar = new TransportationMean(transportDatabase.CAR_HEAT_ENGINE_ONE_KM)
+    const heatCar = new TransportationMean({ name: transportDatabase.CAR_HEAT_ENGINE_ONE_KM.name })
     const journeyHeatCar3People = new Journey(heatCar, 100, 3)
     it('a journey by car should be computed by kilometer (not by personKilometer)', () => {
       assert.strictEqual(
@@ -42,7 +41,7 @@ describe('Journey class', () => {
       )
     })
 
-    const intercontinentalPlane = new TransportationMean(transportDatabase.PLANE_INTERCONTINENTAL_ONE_PERSON_KM)
+    const intercontinentalPlane = new TransportationMean({ name: transportDatabase.PLANE_INTERCONTINENTAL_ONE_PERSON_KM.name })
     const intercontinentalPlaneJourney2People = new Journey(intercontinentalPlane, 1000, 2)
     const intercontinentalPlaneJourney4People = new Journey(intercontinentalPlane, 1000, 4)
     const embodiedDamageIntercontinentalPlane = intercontinentalPlaneJourney2People.computeEmbodiedDamage()
@@ -51,14 +50,13 @@ describe('Journey class', () => {
     const climateChange = embodiedDamageIntercontinentalPlane.climateChange
     const resources = embodiedDamageIntercontinentalPlane.resources
     const embodiedDamageTwice = new Damage({
-      component: intercontinentalPlaneJourney2People,
       humanHealth,
       ecosystemQuality,
       climateChange,
       resources
     })
 
-    embodiedDamageTwice.mutate(category => { embodiedDamageTwice.damageValues[category] *= 2 })
+    embodiedDamageTwice.mutate(category => { embodiedDamageTwice[category] *= 2 })
     it('a 4 people journey by plane should cause twice the damage of a 2 people journey by plane', () => {
       assert.deepStrictEqual(
         intercontinentalPlaneJourney4People.computeEmbodiedDamage().damageValues,
@@ -67,7 +65,7 @@ describe('Journey class', () => {
     })
   })
   describe('#computeDamage ()', () => {
-    const highSpeedTrain = new TransportationMean(transportDatabase.TRAIN_HIGH_SPEED_ONE_PERSON_KM)
+    const highSpeedTrain = new TransportationMean({ name: transportDatabase.TRAIN_HIGH_SPEED_ONE_PERSON_KM.name })
     const distance = 300
     const numberOfPeople = 4
     const highSpeedTrainJourney = new Journey(highSpeedTrain, distance, numberOfPeople)

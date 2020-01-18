@@ -466,8 +466,8 @@ describe('Hardware class', () => {
               const component = new Hardware({ name })
               const componentDamage = component.computeTypedDamage(damageType, meetingDuration)
 
-              Object.keys(expected.damageValues).map(category => {
-                expected.damageValues[category] += componentDamage[category]
+              Object.keys(expected).map(category => {
+                expected[category] += componentDamage[category]
               })
             })
 
@@ -486,8 +486,8 @@ describe('Hardware class', () => {
             // Compute expected
             const double = component.computeTypedDamage(damageType, meetingDuration * 2)
 
-            Object.keys(double.damageValues).forEach(category => {
-              assert.strictEqual(simple.damageValues[category] * 2, double.damageValues[category])
+            Object.keys(double).forEach(category => {
+              assert.strictEqual(simple[category] * 2, double[category])
             })
           })
       })
@@ -502,8 +502,8 @@ describe('Hardware class', () => {
       // Compute expected
       const double = component.computeDamage(meetingDuration * 2)
 
-      Object.keys(double.damageValues).forEach(category => {
-        assert.strictEqual(double.damageValues[category], simple.damageValues[category] * 2)
+      Object.keys(double).forEach(category => {
+        assert.strictEqual(double[category], simple[category] * 2)
       })
     })
     it('the lower bound damage should be lower than the default (upper) damage', () => {
@@ -511,8 +511,8 @@ describe('Hardware class', () => {
       const lowerBound = component.computeDamage(meetingDuration, bounds.LOWER)
       const defaultBound = component.computeDamage(meetingDuration)
 
-      Object.keys(defaultBound.damageValues).forEach(category => {
-        assert.isAbove(defaultBound.damageValues[category], lowerBound.damageValues[category])
+      Object.keys(defaultBound).forEach(category => {
+        assert.isAbove(defaultBound[category], lowerBound[category])
       })
     })
   })
