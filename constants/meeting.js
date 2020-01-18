@@ -74,6 +74,14 @@ const meetingComponents = {
   JOURNEY: 'JOURNEY'
 }
 
+const transportationMeanSubCategories = {
+  CAR: 'CAR',
+  PLANE: 'PLANE',
+  TRAIN: 'TRAIN',
+  BUS: 'BUS',
+  BIKE: 'BIKE'
+}
+
 exports.hourToMinutes = hourToMinutes
 exports.dayToHours = dayToHours
 exports.minuteToSeconds = minuteToSeconds
@@ -92,3 +100,4 @@ exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
 exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 
 exports.meetingComponents = meetingComponents
+exports.transportationMeanSubCategories = transportationMeanSubCategories
