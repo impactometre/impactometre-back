@@ -2,30 +2,37 @@
 
 const getClosest = require('../../../utils/get-closest')
 const Damage = require('../shared/Damage')
+const Component = require('../shared/Component')
 const {
   octetToBits,
   moToOctets,
   kbitToBits,
-  secoundsInMinute,
+  minuteToSeconds,
   bounds
 } = require('../../../constants/meeting')
 const networkDatabase = require('../../database/meeting/network')
+const softwareDatabase = require('../../database/meeting/software')
 
-class Software {
-  constructor (software) {
-    this._french = software.french
-    this._fileSize = software.fileSize
-    this._bandwith = software.bandwith
+/**
+ * Software class.
+ * A software is a component of a meeting scenario.
+ */
+class Software extends Component {
+  /**
+   * Create a software thanks to the software database.
+   * @param {String} name - The key of a software database entry, also the software name.
+   */
+  constructor ({ name }) {
+    // Get the corresponding JSON object from software database
+    const json = softwareDatabase[name]
+
+    super({ name: json.name, french: json.french, category: json.category })
+    this._fileSize = json.fileSize
+    this._bandwith = json.bandwith
+    this._damage = this.computeDamage()
   }
 
   // Getter
-
-  /**
-   * Getter for software french name.
-   */
-  get french () {
-    return this._french
-  }
 
   /**
    * Getter for software file size.
@@ -41,14 +48,6 @@ class Software {
   // Setters
 
   /**
-   * Setter of software french name.
-   * @param french - The new software french name.
-   */
-  set french (newFrench) {
-    this._french = newFrench
-  }
-
-  /**
    * Setter for software file size.
    */
   set fileSize (fileSize) {
@@ -62,7 +61,7 @@ class Software {
     this._bandwith = bandwith
   }
 
-  // Others methods
+  // Other methods
 
   /**
    * Get the software file size in bits (it is originaly in Mo)
@@ -139,7 +138,7 @@ class Software {
    */
   computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
     // Initialize the new operating damage
-    const operatingDamage = new Damage()
+    const operatingDamage = new Damage({ component: this })
 
     // If the software has no inboud bandwith in the database, we return an empty damage
     if (!this.bandwith) return operatingDamage
@@ -157,7 +156,7 @@ class Software {
       // (1000 * (damageUnit/s)) / 1000 = damageUnit/s
       operatingDamage[categoryDamage] /= kbitToBits
       // (damageUnit/s) * 60 = damageUnit/minute
-      operatingDamage[categoryDamage] *= secoundsInMinute
+      operatingDamage[categoryDamage] *= minuteToSeconds
       // Damage for one minute use for all the instances
       operatingDamage[categoryDamage] *= instancesNumber
       // Damage for all the meeting
