@@ -10,12 +10,14 @@ class Component {
    * Create a component of a scenario.
    * @param {String} name - The database key that enables to create the component.
    * @param {String} french - The component french name.
+   * @param {string} category - The component catogory (hardware, software or journey)
    */
-  constructor ({ name, french }) {
+  constructor ({ name, french, category }) {
     if (new.target === Component) throw TypeError('Cannot create instance of Component because abstract class')
     this._id = uniqid()
     this._name = name
     this._french = french
+    this._category = category
   }
 
   // Getters
@@ -39,6 +41,13 @@ class Component {
    */
   get french () {
     return this._french
+  }
+
+  /**
+   * Getter of the component category.
+   */
+  get category () {
+    return this._category
   }
 
   /**
@@ -69,6 +78,13 @@ class Component {
    */
   set french (french) {
     this._french = french
+  }
+
+  /**
+   * Setter of the component category.
+   */
+  set category (category) {
+    this._category = category
   }
 
   /**

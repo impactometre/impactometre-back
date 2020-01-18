@@ -28,7 +28,7 @@ class Hardware extends Component {
     // Get the correspondinf JSON object
     const json = hardwareDatabase[name]
 
-    super({ name: json.name, french: json.french })
+    super({ name: json.name, french: json.french, category: json.category })
     this._size = size
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent

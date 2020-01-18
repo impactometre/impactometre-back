@@ -2,6 +2,9 @@
 
 const Damage = require('../shared/Damage')
 const Component = require('../shared/Component')
+const {
+  meetingComponents
+} = require('../../../constants/meeting')
 
 /**
  * A journey has a mean of transportation,
@@ -18,7 +21,7 @@ class Journey extends Component {
   constructor ({ passenger, mean, distance, numberOfPeople }) {
     // A Journey object doesn't have a name attribute and a french attribute, because there is no Journey
     // in database but only transportation means
-    super({ name: '', french: '' })
+    super({ name: '', french: '', category: meetingComponents.JOURNEY })
     this._passenger = passenger
     this._mean = mean
     this._distance = distance
