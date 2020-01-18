@@ -14,16 +14,36 @@ const softwareDatabase = require('../../../../model/database/meeting/software')
 describe('MeetingDamage class', () => {
   describe('#constructor()', () => {
     // Transport damage object creation
-    const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
-    const journeyElectricCar3People = new Journey('Passenger 1', electricCar, 100, 3)
-    const journeyElectricCar3PeopleDamage = journeyElectricCar3People.computeDamage()
-    const journeyElectricCar5People = new Journey('Passenger 1', electricCar, 100, 5)
-    const journeyElectricCar5PeopleDamage = journeyElectricCar5People.computeDamage()
-    const journeyElectricCar2People = new Journey('Passenger 1', electricCar, 100, 2)
-    const journeyElectricCar2PeopleDamage = journeyElectricCar2People.computeDamage()
-    const heatCar = new TransportationMean(transportDatabase.CAR_HEAT_ENGINE_ONE_KM)
-    const journeyHeatCar2People = new Journey('Passenger 1', heatCar, 100, 2)
-    const journeyHeatCar2PeopleDamage = journeyHeatCar2People.computeDamage()
+    const electricCar = new TransportationMean({ name: transportDatabase.CAR_ELECTRIC_ONE_KM.name })
+    const journeyElectricCar3People = new Journey({
+      passenger: 'Passenger 1',
+      mean: electricCar,
+      distance: 100,
+      numberOfPeople: 3
+    })
+    const journeyElectricCar3PeopleDamage = journeyElectricCar3People.damage
+    const journeyElectricCar5People = new Journey({
+      passenger: 'Passenger 1',
+      mean: electricCar,
+      distance: 100,
+      numberOfPeople: 5
+    })
+    const journeyElectricCar5PeopleDamage = journeyElectricCar5People.damage
+    const journeyElectricCar2People = new Journey({
+      passenger: 'Passenger 1',
+      mean: electricCar,
+      distance: 100,
+      numberOfPeople: 2
+    })
+    const journeyElectricCar2PeopleDamage = journeyElectricCar2People.damage
+    const heatCar = new TransportationMean({ name: transportDatabase.CAR_HEAT_ENGINE_ONE_KM.name })
+    const journeyHeatCar2People = new Journey({
+      passenger: 'Passenger 1',
+      mean: heatCar,
+      distance: 100,
+      numberOfPeople: 2
+    })
+    const journeyHeatCar2PeopleDamage = journeyHeatCar2People.damage
     const transportDamageArray = [journeyElectricCar3PeopleDamage, journeyElectricCar2PeopleDamage, journeyElectricCar5PeopleDamage, journeyHeatCar2PeopleDamage]
     const transportCategory = constants.meetingCategoryDamage.TRANSPORT
     const transportDamage = new CategoryDamage({ damage: transportDamageArray, category: transportCategory })
@@ -38,7 +58,7 @@ describe('MeetingDamage class', () => {
     const hardwareDamageArray = [desktop1Damage, desktop2Damage, laptopDamage]
     const hardwareDamage = new CategoryDamage({ damage: hardwareDamageArray, category: hardwareCategory })
     // Software damage object creation
-    const skype = new Software(softwareDatabase.SKYPE)
+    const skype = new Software({ name: softwareDatabase.SKYPE.name })
     const skypeDamage = skype.computeDamage({
       instancesNumber: 5,
       bandwithBound: constants.bounds.UPPER,

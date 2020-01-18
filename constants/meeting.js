@@ -84,9 +84,9 @@ const transportationMeanSubCategories = {
   BUS: 'BUS',
   BIKE: 'BIKE'
 }
- /**
-  * Damage categories for meetings
-  */
+/**
+ * Damage categories for meetings
+ */
 const meetingCategoryDamage = {
   HARDWARE: 'HARDWARE',
   SOFTWARE: 'SOFTWARE',
@@ -110,9 +110,7 @@ exports.hardwareLifetime = hardwareLifetime
 exports.knownOperatingTimeOverLife = knownOperatingTimeOverLife
 exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 
-<<<<<<< HEAD
 exports.meetingComponents = meetingComponents
 exports.transportationMeanSubCategories = transportationMeanSubCategories
-=======
+
 exports.meetingCategoryDamage = meetingCategoryDamage
->>>>>>> feat: create CategoryDamage class and its test

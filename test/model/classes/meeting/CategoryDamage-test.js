@@ -10,15 +10,35 @@ const transportDatabase = require('../../../../model/database/meeting/transporta
 describe('CategoryDamage class', () => {
   describe('#constructor()', () => {
     const electricCar = new TransportationMean(transportDatabase.CAR_ELECTRIC_ONE_KM)
-    const journeyElectricCar3People = new Journey('Passenger 1', electricCar, 100, 3)
-    const journeyElectricCar3PeopleDamage = journeyElectricCar3People.computeDamage()
-    const journeyElectricCar5People = new Journey('Passenger 1', electricCar, 100, 5)
-    const journeyElectricCar5PeopleDamage = journeyElectricCar5People.computeDamage()
-    const journeyElectricCar2People = new Journey('Passenger 1', electricCar, 100, 2)
-    const journeyElectricCar2PeopleDamage = journeyElectricCar2People.computeDamage()
+    const journeyElectricCar3People = new Journey({
+      passenger: 'Passenger 1',
+      mean: electricCar,
+      distance: 100,
+      numberOfPeople: 3
+    })
+    const journeyElectricCar3PeopleDamage = journeyElectricCar3People.damage
+    const journeyElectricCar5People = new Journey({
+      passenger: 'Passenger 1',
+      mean: electricCar,
+      distance: 100,
+      numberOfPeople: 5
+    })
+    const journeyElectricCar5PeopleDamage = journeyElectricCar5People.damage
+    const journeyElectricCar2People = new Journey({
+      passenger: 'Passenger 1',
+      mean: electricCar,
+      distance: 100,
+      numberOfPeople: 2
+    })
+    const journeyElectricCar2PeopleDamage = journeyElectricCar2People.damage
     const heatCar = new TransportationMean(transportDatabase.CAR_HEAT_ENGINE_ONE_KM)
-    const journeyHeatCar2People = new Journey('Passenger 1', heatCar, 100, 2)
-    const journeyHeatCar2PeopleDamage = journeyHeatCar2People.computeDamage()
+    const journeyHeatCar2People = new Journey({
+      passenger: 'Passenger 1',
+      mean: heatCar,
+      distance: 100,
+      numberOfPeople: 2
+    })
+    const journeyHeatCar2PeopleDamage = journeyHeatCar2People.damage
     const damage = [journeyElectricCar3PeopleDamage, journeyElectricCar2PeopleDamage, journeyElectricCar5PeopleDamage, journeyHeatCar2PeopleDamage]
     const category = constants.meetingCategoryDamage.TRANSPORT
     const transportDamage = new CategoryDamage({ damage, category })
