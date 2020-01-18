@@ -10,7 +10,7 @@ describe('Journey class', () => {
   describe('#computeEmbodiedDamage ()', () => {
     const electricCar = new TransportationMean({ name: transportDatabase.CAR_ELECTRIC_ONE_KM.name })
     const journeyElectricCar3People = new Journey({
-      passenger: 'Passenger 1', 
+      passenger: 'Passenger 1',
       mean: electricCar,
       distance: 100,
       numberOfPeople: 3
