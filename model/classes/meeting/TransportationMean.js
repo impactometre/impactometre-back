@@ -1,5 +1,5 @@
 'use strict'
- 
+
 const transportationMeanDatabase = require('../../database/meeting/transportationMean')
 
 /**
