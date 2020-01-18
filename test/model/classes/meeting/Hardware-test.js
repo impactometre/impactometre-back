@@ -43,6 +43,15 @@ describe('Hardware class', () => {
           expected[name] = new Hardware({ name })
         })
 
+        // Delete components ids because they are always different (they are uniq)
+        Object.values(expected).forEach(component => {
+          delete component._id
+        })
+
+        Object.values(component._components).forEach(component => {
+          delete component._id
+        })
+
         assert.deepStrictEqual(expected, component._components)
       })
     })
@@ -67,6 +76,15 @@ describe('Hardware class', () => {
       expected[hardwareDatabase.TV_SCREEN.name] = new Hardware({
         name: hardwareDatabase.TV_SCREEN.name,
         size: 2
+      })
+
+      // Delete components ids because they are always different (they are uniq)
+      Object.values(expected).forEach(component => {
+        delete component._id
+      })
+
+      Object.values(component._components).forEach(component => {
+        delete component._id
       })
 
       assert.deepStrictEqual(expected, component._components)
