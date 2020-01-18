@@ -11,8 +11,9 @@ const {
 
 const hardwareDatabase = require('../../database/meeting/hardware')
 const Damage = require('../shared/Damage')
+const Component = require('../shared/Component')
 
-class Hardware {
+class Hardware extends Component {
   /**
    * Create a hardware.
    * @param {String} name - The key of an entry from the hardware database.
@@ -24,9 +25,10 @@ class Hardware {
    * @param {Array} componentsPayload - Optional components constructor parameters indexed by component name.
    */
   constructor ({ name, size = 1, shareForVisio = 1, componentsPayload = {} }) {
+    // Get the correspondinf JSON object
     const json = hardwareDatabase[name]
-    this._name = json.name
-    this._french = json.french
+
+    super({ name: json.name, french: json.french })
     this._size = size
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
@@ -55,7 +57,11 @@ class Hardware {
           : new Hardware(componentsPayload[name])
       })
     }
+
+    this._damage = this.computeDamage()
   }
+
+  // Getters
 
   get name () {
     return this._name
@@ -154,6 +160,8 @@ class Hardware {
     return this._components
   }
 
+  // Setters
+
   set size (size) {
     this._size = size
   }
@@ -161,6 +169,8 @@ class Hardware {
   set shareForVisio (shareForVisio) {
     this._shareForVisio = shareForVisio
   }
+
+  // Other methods
 
   /**
    * Compute the total damage of the object by adding together

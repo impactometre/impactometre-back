@@ -52,7 +52,7 @@ class Damage {
     this._resources = resources
   }
 
-  // Others methods
+  // Other methods
 
   /**
    * Apply the given function on the four

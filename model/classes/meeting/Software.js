@@ -2,6 +2,7 @@
 
 const getClosest = require('../../../utils/get-closest')
 const Damage = require('../shared/Damage')
+const Component = require('../shared/Component')
 const {
   octetToBits,
   moToOctets,
@@ -12,7 +13,11 @@ const {
 const networkDatabase = require('../../database/meeting/network')
 const softwareDatabase = require('../../database/meeting/software')
 
-class Software {
+/**
+ * Software class.
+ * A software is a component of a meeting scenario.
+ */
+class Software extends Component {
   /**
    * Create a software thanks to the software database.
    * @param {String} name - The key of a software database entry, also the software name.
@@ -20,27 +25,14 @@ class Software {
   constructor ({ name }) {
     // Get the corresponding JSON object from software database
     const json = softwareDatabase[name]
-    this._name = json.name
-    this._french = json.french
+
+    super({ name: json.name, french: json.french })
     this._fileSize = json.fileSize
     this._bandwith = json.bandwith
+    this._damage = this.computeDamage()
   }
 
   // Getter
-
-  /**
-   * Gette of the name of the software
-   */
-  get name () {
-    return this._name
-  }
-
-  /**
-   * Getter for software french name.
-   */
-  get french () {
-    return this._french
-  }
 
   /**
    * Getter for software file size.
@@ -56,21 +48,6 @@ class Software {
   // Setters
 
   /**
-   * Seter of the software name.
-   */
-  set name (name) {
-    this._name = name
-  }
-
-  /**
-   * Setter of software french name.
-   * @param french - The new software french name.
-   */
-  set french (newFrench) {
-    this._french = newFrench
-  }
-
-  /**
    * Setter for software file size.
    */
   set fileSize (fileSize) {
@@ -84,7 +61,7 @@ class Software {
     this._bandwith = bandwith
   }
 
-  // Others methods
+  // Other methods
 
   /**
    * Get the software file size in bits (it is originaly in Mo)
