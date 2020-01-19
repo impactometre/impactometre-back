@@ -3,6 +3,8 @@
 const createError = require('http-errors')
 const express = require('express')
 const sassMiddleware = require('node-sass-middleware')
+const postcssMiddleware = require('postcss-middleware')
+const autoprefixer = require('autoprefixer')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
@@ -19,14 +21,27 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-// adding the sass middleware
+// add the sass middleware
 app.use(
   sassMiddleware({
     src: path.join(__dirname, 'sass'),
     dest: path.join(__dirname, 'public/stylesheets'),
     prefix: '/stylesheets',
-    /* outputStyle: 'compressed', */ // for production
+    /* outputStyle: 'compressed', */ // will be used at production
     debug: true
+  })
+)
+// add the autoprefixer and the stylelinter via postcss middleware
+app.use(
+  '/stylesheets', postcssMiddleware({
+    src: function (req) {
+      return path.join(__dirname, 'public', 'stylesheets', req.path)
+    },
+    plugins: [
+      autoprefixer({
+        Browserslist: ['last 4 versions']
+      })
+    ]
   })
 )
 
