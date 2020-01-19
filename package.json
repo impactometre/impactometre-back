@@ -2,13 +2,16 @@
   "name": "impactometre",
   "version": "0.0.0",
   "private": true,
+  "browserslist": "last 4 versions",
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "DEBUG=impactometre:* nodemon ./bin/www",
     "lint": "npx eslint .",
-    "test": "mocha --recursive \"test/\""
+    "test": "mocha --recursive \"test/\"",
+    "prefix": "postcss ./public/stylesheets/style.css --use autoprefixer -d ./public/stylesheets/prefixed/"
   },
   "dependencies": {
+    "autoprefixer": "^9.7.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^2.6.2",
@@ -16,6 +19,7 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "node-sass-middleware": "^0.11.0",
+    "postcss-middleware": "^1.1.4",
     "uniqid": "^5.2.0"
   },
   "devDependencies": {
