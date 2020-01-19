@@ -2,6 +2,7 @@
 
 const createError = require('http-errors')
 const express = require('express')
+const sassMiddleware = require('node-sass-middleware')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
@@ -17,6 +18,18 @@ app.set('view engine', 'ejs')
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+// adding the sass middleware
+app.use(
+  sassMiddleware({
+    src: path.join(__dirname, 'sass'),
+    dest: path.join(__dirname, 'public/stylesheets'),
+    prefix: '/stylesheets',
+    /* outputStyle: 'compressed', */ // for production
+    debug: true
+  })
+)
+
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
