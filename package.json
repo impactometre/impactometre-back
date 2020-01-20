@@ -7,7 +7,7 @@
     "prefix": "postcss ./public/stylesheets/style.css --use autoprefixer -d ./public/stylesheets/prefixed/",
     "start": "npm run prefix && node ./bin/www",
     "devstart": "npm run prefix && DEBUG=impactometre:* nodemon ./bin/www",
-    "lint": "npx eslint . && npx stylelint \"./sass\" --syntax scss --fix",
+    "lint": "npx eslint . && npx stylelint ./sass --syntax scss --fix",
     "test": "mocha --recursive \"test/\""
   },
   "dependencies": {
@@ -32,10 +32,8 @@
     "eslint-plugin-standard": "^4.0.1",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.2",
-    "postcss-middleware": "^1.1.4",
     "stylelint": "^13.0.0",
-    "stylelint-config-recommended": "^3.0.0",
-    "stylelint-config-recommended-scss": "^4.1.0",
-    "stylelint-scss": "^3.13.0"
+    "stylelint-scss": "^3.13.0",
+    "stylelint-config-recommended-scss": "^4.1.0"
   }
 }
