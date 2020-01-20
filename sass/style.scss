@@ -1,10 +1,11 @@
-$primary-color: #00B7FF;
+@import "./utils/variables";
+@import "./utils/functions";
+@import "./utils/mixins";
+@import "./utils/extensions";
 
-body {
-	padding: 2rem;
-  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-	
-h1 {color: $primary-color;
-  display: flex;
-}
+@import "./base/base";
+@import "./base/typography";
+
+@import "./components/buttons";
+
+@import "./layout/header";
