@@ -31,7 +31,7 @@ app.use(
     debug: true
   })
 )
-// add the autoprefixer and the stylelinter via postcss middleware
+// add the autoprefixer via postcss middleware
 app.use(
   '/stylesheets', postcssMiddleware({
     src: function (req) {
