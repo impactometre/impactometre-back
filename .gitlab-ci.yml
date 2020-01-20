@@ -2,7 +2,7 @@ image: node:latest
 
 before_script:
   - npm install --save-dev eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
-  - npm install --save-dev stylelint stylelint-scss stylelint-config-recommended stylelint-config-recommended-scss
+  - npm install --save-dev stylelint stylelint-scss stylelint-config-recommended-scss
   - npm i
 stages:
   - lint
