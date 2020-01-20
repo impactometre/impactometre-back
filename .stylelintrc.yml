@@ -17,6 +17,13 @@
       "except": ["first-nested"],
       "ignore": ["after-comment"]
     } ],
+    "declaration-block-semicolon-newline-after": "always",
+    "block-opening-brace-newline-after": "always",
+    "block-closing-brace-newline-before": "always",
+    "block-closing-brace-newline-after": "always",
+    "no-empty-source": [ true, {
+      "severity": "warning"
+    } ],
     "unit-whitelist": ["em", "rem", "%", "s"]
   }
 }
