@@ -2,6 +2,7 @@
 
 const Damage = require('../shared/Damage')
 const Component = require('../shared/Component')
+const TransportationMean = require('./TransportationMean')
 const {
   meetingComponents
 } = require('../../../constants/meeting')
@@ -19,14 +20,20 @@ class Journey extends Component {
    * @param {Integer} numberOfPeople - The number of people of the journey.
    */
   constructor ({ passenger, mean, distance, numberOfPeople }) {
-    // A Journey object doesn't have a name attribute and a french attribute, because there is no Journey
-    // in database but only transportation means
-    super({ name: '', french: '', category: meetingComponents.JOURNEY })
+    super({ french: '', category: meetingComponents.JOURNEY })
+    this._mean = new TransportationMean({ name: mean })
     this._passenger = passenger
-    this._mean = mean
     this._distance = distance
     this._numberOfPeople = numberOfPeople
-    this._damage = this.computeDamage()
+
+    // Initialize journey french name
+    let french
+    if (numberOfPeople > 1) {
+      french = 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km avec ' + (numberOfPeople - 1) + ' autres personnes.'
+    } else {
+      french = 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.'
+    }
+    this.french = french
   }
 
   // Getters
@@ -57,6 +64,13 @@ class Journey extends Component {
    */
   get numberOfPeople () {
     return this._numberOfPeople
+  }
+
+  /**
+   * Getter of the damage caused by the journey.
+   */
+  get damage () {
+    return this._damage
   }
 
   // Setters
@@ -112,7 +126,7 @@ class Journey extends Component {
       const personKmAmount = this.distance * this.numberOfPeople
 
       embodiedDamage.mutate(category => {
-        transportationMeanDamage[category] *= personKmAmount
+        embodiedDamage[category] = transportationMeanDamage[category] * personKmAmount
       })
     } else {
       embodiedDamage.mutate(category => {
@@ -125,12 +139,11 @@ class Journey extends Component {
   }
 
   /**
-   * Compute the total damage of the journey.
+   * Compute and initialize the total damage of the journey.
    * There is a method with the same name for Software class and Hardware class.
-   * @returns {Damage} The total damage caused by the journey.
    */
   computeDamage () {
-    return this.computeEmbodiedDamage()
+    this._damage = this.computeEmbodiedDamage()
   }
 }
 

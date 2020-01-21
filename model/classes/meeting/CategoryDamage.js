@@ -1,26 +1,26 @@
 'use strict'
 
+const Hardware = require('./Hardware')
 const Damage = require('../shared/Damage')
+const Journey = require('./Journey')
+const Software = require('./Software')
+const {
+  meetingCategoryDamage
+} = require('../../../constants/meeting')
 
 class CategoryDamage {
   /**
    * Create a damage synthesis for all meeting components from the same category (hardware, software or transport).
    * It's composed of a total damage that is the sum of each component damage
    * and of a array that contains all the component damages.
-   * @param {Damage[]} damage - An array that contains all damages caused by a specific category of components of a meeting.
+   * @param {Object[]} components - An array of JSON objects that contain all necessary data to create the components of the meeting.
    * @param {String} category - The category of the components wich caused the damage.
    */
-  constructor ({ damage, category }) {
-    this._damage = damage
+  constructor ({ components, category }) {
     this._category = category
 
-    // The total damage is the sum of all damages
-    let totalDamage = new Damage()
-    damage.forEach(d => {
-      totalDamage = totalDamage.add(d)
-    })
-
-    this._totalDamage = totalDamage
+    // Create a hashmap that contains components and their id
+    this._components = this.arrayToMapComponents(components, category)
   }
 
   // Getters
@@ -33,10 +33,10 @@ class CategoryDamage {
   }
 
   /**
-   * Getter of the array that contains all the damages caused by a specific category of components of a meeting.
+   * Getter of the hasmhap that contains all the components indexed by a their id.
    */
-  get damage () {
-    return this._damage
+  get components () {
+    return this._components
   }
 
   /**
@@ -49,17 +49,10 @@ class CategoryDamage {
   // Setters
 
   /**
-   * Setter of the total category damage.
+   * setter of the hasmhap that contains all the components indexed by a their id.
    */
-  set totalDamage (totalDamage) {
-    this._totalDamage = totalDamage
-  }
-
-  /**
-   * Setter of the array that contains all the damages caused by a specific category of components of a meeting.
-   */
-  set damage (damage) {
-    this._damage = damage
+  set components (components) {
+    this._components = components
   }
 
   /**
@@ -70,6 +63,57 @@ class CategoryDamage {
   }
 
   // Other methods
+
+  /**
+   * From an array that contains all necessary data,
+   * Create a hashmap of components (hardware, software or journeys) indexed by their id
+   * @param {Object[]} components - An array of JSON objects that contain all necessary data to create the components of the meeting.
+   * @param {String} category - The category of the components that caused the damage.
+   */
+  arrayToMapComponents (components, category) {
+    // The hashmap that will contains components index by their id
+    const componentsMap = new Map()
+
+    switch (category) {
+      case meetingCategoryDamage.HARDWARE:
+        components.forEach(c => {
+          const component = new Hardware(c)
+          componentsMap.set(component.id, component)
+        })
+        break
+      case meetingCategoryDamage.SOFTWARE:
+        components.forEach(c => {
+          const component = new Software(c)
+          componentsMap.set(component.id, component)
+        })
+        break
+      case meetingCategoryDamage.JOURNEY:
+        components.forEach(c => {
+          const component = new Journey(c)
+          componentsMap.set(component.id, component)
+        })
+        break
+    }
+
+    return componentsMap
+  }
+
+  /**
+   * Compute the damage caused by each components of the categoryDamage object and
+   * initialize the total damage caused by all these components.
+   * @param categoryDamagePayload - A JSON object that conatins all necessary data to compute
+   * the damage caused by each components of the categoryDamage (hardware, software, journeys).
+   */
+  computeDamage (categoryDamagePayload) {
+    this._totalDamage = new Damage()
+
+    // Compute the damage caused by each component of the categoryDamage object
+    // and add it to the totalDamage caused by the components if the categoryDamage object.
+    this.components.forEach((c) => {
+      c.computeDamage(categoryDamagePayload)
+      this._totalDamage.add(c.damage)
+    })
+  }
 }
 
 module.exports = CategoryDamage

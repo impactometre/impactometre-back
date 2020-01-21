@@ -90,7 +90,7 @@ const transportationMeanSubCategories = {
 const meetingCategoryDamage = {
   HARDWARE: 'HARDWARE',
   SOFTWARE: 'SOFTWARE',
-  TRANSPORT: 'TRANSPORT'
+  JOURNEY: 'JOURNEY'
 }
 
 exports.hourToMinutes = hourToMinutes
