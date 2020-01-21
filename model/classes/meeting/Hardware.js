@@ -28,7 +28,8 @@ class Hardware extends Component {
     // Get the correspondinf JSON object
     const json = hardwareDatabase[name]
 
-    super({ name: json.name, french: json.french, category: json.category })
+    super({ french: json.french, category: json.category })
+    this._name = json.name
     this._size = size
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
@@ -57,8 +58,6 @@ class Hardware extends Component {
           : new Hardware(componentsPayload[name])
       })
     }
-
-    this._damage = this.computeDamage()
   }
 
   // Getters
@@ -160,6 +159,13 @@ class Hardware extends Component {
     return this._components
   }
 
+  /**
+   * Getter of the total damage caused by the hardware.
+   */
+  get damage () {
+    return this._damage
+  }
+
   // Setters
 
   set size (size) {
@@ -173,21 +179,20 @@ class Hardware extends Component {
   // Other methods
 
   /**
-   * Compute the total damage of the object by adding together
+   * Compute and initialize the total damage of the object by adding together
    * the four types of damage of the hardware.
    * @param {String} bound - The optional bound.
    * If equals to 'UPPER', we will use the upper values
    * of the damages if available, and the contrary if
    * bound equals to 'LOWER'.
-   * @returns {Damage} The total damage.
    */
-  computeDamage (meetingDuration, bound = null) {
+  computeDamage ({ meetingDuration, bound = null }) {
     const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
     const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound)
     const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound)
     const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound)
 
-    return operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
+    this._damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
   }
 
   /**

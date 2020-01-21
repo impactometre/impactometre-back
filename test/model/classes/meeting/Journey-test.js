@@ -11,7 +11,7 @@ describe('Journey class', () => {
     const electricCar = new TransportationMean({ name: transportDatabase.CAR_ELECTRIC_ONE_KM.name })
     const journeyElectricCar3People = new Journey({
       passenger: 'Passenger 1',
-      mean: electricCar,
+      mean: electricCar.name,
       distance: 100,
       numberOfPeople: 3
     })
@@ -31,7 +31,7 @@ describe('Journey class', () => {
 
     const journeyElectricCar5People = new Journey({
       passenger: 'Passenger 2',
-      mean: electricCar,
+      mean: electricCar.name,
       distance: 100,
       numberOfPeople: 5
     })
@@ -45,7 +45,7 @@ describe('Journey class', () => {
     const heatCar = new TransportationMean({ name: transportDatabase.CAR_HEAT_ENGINE_ONE_KM.name })
     const journeyHeatCar3People = new Journey({
       passenger: 'Passenger 2',
-      mean: heatCar,
+      mean: heatCar.name,
       distance: 100,
       numberOfPeople: 3
     })
@@ -59,13 +59,13 @@ describe('Journey class', () => {
     const intercontinentalPlane = new TransportationMean({ name: transportDatabase.PLANE_INTERCONTINENTAL_ONE_PERSON_KM.name })
     const intercontinentalPlaneJourney2People = new Journey({
       passenger: 'Passenger 1',
-      mean: intercontinentalPlane,
+      mean: intercontinentalPlane.name,
       distance: 1000,
       numberOfPeople: 2
     })
     const intercontinentalPlaneJourney4People = new Journey({
       passenger: 'Passenger 2',
-      mean: intercontinentalPlane,
+      mean: intercontinentalPlane.name,
       distance: 1000,
       numberOfPeople: 4
     })
@@ -95,13 +95,14 @@ describe('Journey class', () => {
     const numberOfPeople = 4
     const highSpeedTrainJourney = new Journey({
       passenger: 'Passenger 2',
-      mean: highSpeedTrain,
+      mean: highSpeedTrain.name,
       distance,
       numberOfPeople
     })
+    highSpeedTrainJourney.computeDamage()
     it('the total damage caused by a journey should by equal to its embodied damage', () => {
       assert.deepStrictEqual(
-        highSpeedTrainJourney.computeDamage(),
+        highSpeedTrainJourney.damage,
         highSpeedTrainJourney.computeEmbodiedDamage()
 
       )
