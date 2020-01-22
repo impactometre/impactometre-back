@@ -89,10 +89,6 @@ class MeetingDamage {
     this.softwareDamage.computeDamage(damagePayload[meetingCategoryDamage.SOFTWARE])
     this.journeyDamage.computeDamage(damagePayload[meetingCategoryDamage.JOURNEY])
 
-    /* const softwareDamage = this.softwareDamage.totalDamage
-    const hardwareDamage = this.hardwareDamage.totalDamage
-    const journeyDamage = this.journeyDamage.totalDamage */
-
     // Compute the total damage caused by all the components of the meetinf thanks to the
     // total damage caused by each category of components.
     this._totalDamage = this.softwareDamage.totalDamage.add(this.hardwareDamage.totalDamage).add(this.journeyDamage.totalDamage)
