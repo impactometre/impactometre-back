@@ -111,7 +111,7 @@ class CategoryDamage {
     // and add it to the totalDamage caused by the components if the categoryDamage object.
     this.components.forEach((c) => {
       c.computeDamage(categoryDamagePayload)
-      this._totalDamage.add(c.damage)
+      this._totalDamage = this._totalDamage.add(c.damage)
     })
   }
 }

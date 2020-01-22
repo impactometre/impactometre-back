@@ -85,49 +85,19 @@ describe('MeetingScenario class', () => {
     // Compute meeting total damage
     meetingScenario.computeDamage(damagePayload)
 
-    console.log('########## AFFICHAGE DES CARACTÉRISTIQUES DE LA RÉUION ##########\n')
-    console.log('###### COMPOSANTS DE LA RÉUNION ######')
-    console.log('### IMPACT TOTAL DE LA RÉUNION')
-    console.log(meetingScenario.damage.totalDamage)
-    console.log('### HARDWARE ###')
-    console.log('## IMPACT TOTAL DU HARWARE')
-    console.log(meetingScenario.damage.hardwareDamage.totalDamage)
-    meetingScenario.damage.hardwareDamage.components.forEach((component) => {
-      console.log('#' + component.french)
-      console.log(component.damage)
-      // console.log(component)
-    })
-    console.log('### SOFTWARE ###')
-    console.log('## IMPACT TOTAL DU SOFTWARE')
-    console.log(meetingScenario.damage.softwareDamage.totalDamage)
-    meetingScenario.damage.softwareDamage.components.forEach((component) => {
-      console.log('#' + component.french)
-      console.log(component.damage)
-      // console.log(component)
-    })
-    console.log('### TRAJETS ###')
-    console.log('## IMPACT TOTAL DES TRAJETS')
-    console.log(meetingScenario.damage.journeyDamage.totalDamage)
-    meetingScenario.damage.journeyDamage.components.forEach((component) => {
-      console.log('#' + component.french)
-      console.log(component.damage)
-      // console.log(component)
-    })
-
     it('should compute the total damage caused by the meeting', () => {
       assert.deepStrictEqual(
         meetingScenario.damage.totalDamage,
         meetingDamage.totalDamage
       )
     })
+    const meetingTotalDamage = meetingScenario.damage.hardwareDamage.totalDamage.add(
+      meetingScenario.damage.softwareDamage.totalDamage.add(
+        meetingScenario.damage.journeyDamage.totalDamage))
     it('the total damage of all components of a meeting should be the sum of the total damage of each category (hardware, software, journey)', () => {
       assert.deepStrictEqual(
         meetingScenario.damage.totalDamage,
-        meetingScenario.damage.hardwareDamage.totalDamage.add(
-          meetingScenario.damage.softwareDamage.totalDamage.add(
-            meetingScenario.damage.journeyDamage.totalDamage
-          )
-        )
+        meetingTotalDamage
       )
     })
   })

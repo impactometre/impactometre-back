@@ -88,10 +88,11 @@ describe('CategoryDamage class', () => {
       numberOfPeople: 1
     })
     journey5.computeDamage()
+    const totalDamage = journey1.damage.add(journey2.damage).add(journey3.damage).add(journey4.damage).add(journey5.damage)
     it('should compute the total damage of a journey categoryDamage object', () => {
       assert.deepStrictEqual(
         journeyCategoryDamage.totalDamage,
-        journey1.damage.add(journey2.damage).add(journey3.damage).add(journey4.damage).add(journey5.damage)
+        totalDamage
       )
     })
 
