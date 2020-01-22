@@ -213,7 +213,7 @@ class Hardware extends Component {
       and add it to composite hardware damage */
       Object.values(this.components).forEach(component => {
         const componentDamage = component.computeTypedDamage(damageType, meetingDuration, bound)
-        damage.add(componentDamage)
+        damage = damage.add(componentDamage)
       })
 
       return damage

@@ -107,6 +107,13 @@ class Journey extends Component {
     this._numberOfPeople = numberOfPeople
   }
 
+  /**
+   * Setter of the damage caused by the journey.
+   */
+  set damage (damage) {
+    this._damage = damage
+  }
+
   // Other methods
 
   /**
