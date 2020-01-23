@@ -85,7 +85,7 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    */
   computeDamage (damagePayload) {
-    this._damage.computeDamage(damagePayload)
+    this.damage.computeDamage(damagePayload)
   }
 }
 
