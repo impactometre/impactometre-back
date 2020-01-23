@@ -2,7 +2,7 @@
 
 const {
   meetingComponents
-} = require('../../../constants/meeting')
+} = require('../../constants/meeting')
 
 const software = {
   RENAVISIO: {

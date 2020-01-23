@@ -2,7 +2,7 @@
 
 const {
   transportationMeanSubCategories
-} = require('../../../constants/meeting')
+} = require('../../constants/meeting')
 
 const transportationMean = {
   PLANE_INTERCONTINENTAL_ONE_PERSON_KM: {
