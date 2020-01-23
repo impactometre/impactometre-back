@@ -9,7 +9,7 @@ class MeetingDamage {
   /**
    * Create a damage synthesis of a meeting.
    * It's composed of a Damage component that represents the total damage caused by the meeting
-   * and of three CategoryDamage objects that repesent the damages caused by the all
+   * and of three CategoryDamage objects that repesent the damages caused by all
    * the meeting components gathered by category (hardware, software, transport).
    * @param {Object[]} hardwareComponents - An array of JSON objects that contain all necessary data to create the hardware components of the meeting.
    * @param {Object[]} softwareComponents - An array of JSON objects that contain all necessary data to create the software components of the meeting.
