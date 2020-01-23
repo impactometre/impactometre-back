@@ -84,6 +84,7 @@ const transportationMeanSubCategories = {
   BUS: 'BUS',
   BIKE: 'BIKE'
 }
+
 /**
  * Damage categories for meetings
  */
