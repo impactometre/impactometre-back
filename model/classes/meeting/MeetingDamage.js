@@ -94,7 +94,7 @@ class MeetingDamage {
     this.softwareDamage.computeDamage(payload[meetingCategoryDamage.SOFTWARE])
     this.journeyDamage.computeDamage(payload[meetingCategoryDamage.JOURNEY])
 
-    // Compute the total damage caused by all the components of the meetinf thanks to the
+    // Compute the total damage caused by all the components of the meeting thanks to the
     // total damage caused by each category of components.
     this._totalDamage = this.softwareDamage.totalDamage.add(this.hardwareDamage.totalDamage).add(this.journeyDamage.totalDamage)
   }
