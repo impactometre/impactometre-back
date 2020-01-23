@@ -71,7 +71,7 @@ class CategoryDamage {
    * @param {String} category - The category of the components that caused the damage.
    */
   arrayToMapComponents (components, category) {
-    // The hashmap that will contains components index by their id
+    // The hashmap that will contain components indexed by their id
     const componentsMap = new Map()
 
     switch (category) {
