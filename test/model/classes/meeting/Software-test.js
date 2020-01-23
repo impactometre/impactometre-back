@@ -154,14 +154,25 @@ describe('Software class', () => {
       climateChange: networkBound.climateChange * fileSizeMoToBits * instancesNumber,
       resources: networkBound.resources * fileSizeMoToBits * instancesNumber
     })
-    const totalDamage = new Damage({ component: skype })
+    skype.computeDamage({
+      instancesNumber,
+      bandwithBound: constants.bounds.UPPER,
+      networkBound: constants.bounds.UPPER,
+      meetingDuration
+    })
+    const totalDamage = new Damage()
     Object.keys(totalDamage).map((categoryDamage) => {
       totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
     })
-
+    skype.computeDamage({
+      instancesNumber,
+      bandwithBound: constants.bounds.UPPER,
+      networkBound: constants.bounds.UPPER,
+      meetingDuration
+    })
     it('should return the total damage caused by a software during all the meeting (embodied damage + operating damage)', () => {
       assert.deepStrictEqual(
-        skype.computeDamage(instancesNumber, constants.bounds.UPPER, constants.bounds.UPPER, meetingDuration),
+        skype.damage,
         totalDamage
       )
     })
