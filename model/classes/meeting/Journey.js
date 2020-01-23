@@ -27,12 +27,10 @@ class Journey extends Component {
     this._numberOfPeople = numberOfPeople
 
     // Initialize journey french name
-    let french
-    if (numberOfPeople > 1) {
-      french = 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km avec ' + (numberOfPeople - 1) + ' autres personnes.'
-    } else {
-      french = 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.'
-    }
+    const french = (numberOfPeople > 1)
+      ? 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km avec ' + (numberOfPeople - 1) + ' autres personnes.'
+      : 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.'
+
     this.french = french
   }
 
