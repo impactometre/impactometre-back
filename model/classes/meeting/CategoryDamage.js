@@ -13,7 +13,7 @@ class CategoryDamage {
    * Create a damage synthesis for all meeting components from the same category (hardware, software or transport).
    * It's composed of a total damage that is the sum of each component damage
    * and of an array that contains all the component damages.
-   * @param {Object[]} components - An array of JSON objects that contain all necessary data to create the components of the meeting.
+   * @param {Object[]} components - An array of JSON objects that contains all necessary data to create the components of the category.
    * @param {String} category - The category of the components wich caused the damage.
    */
   constructor ({ components, category }) {
