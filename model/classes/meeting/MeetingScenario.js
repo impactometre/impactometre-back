@@ -12,7 +12,7 @@ class MeetingScenario extends Scenario {
    * @param {String} user - The user who creates the scenario.
    * @param {Number} meetingDuration - The scenario duration in minutes.
    * @param {Object} payload - A JSON object that contains three arrays that enable to create the three
-   * category damages (hardware, software, transport) linked to the meeting. The payloas is like:
+   * category damages (hardware, software, transport) linked to the meeting. The payload is like:
    * { [array_of_all_hardware_data], [array_of_all_software_data], [array_of_all_journey data]}.
    * @see MeetingDamage
    * @see CategoryDamage
