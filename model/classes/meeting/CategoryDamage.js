@@ -14,7 +14,7 @@ class CategoryDamage {
    * It's composed of a total damage that is the sum of each component damage
    * and of an array that contains all the component damages.
    * @param {Object[]} components - An array of JSON objects that contains all necessary data to create the components of the category.
-   * @param {String} category - The category of the components wich caused the damage.
+   * @param {String} category - The category of the given components.
    */
   constructor ({ components, category }) {
     this._category = category
