@@ -99,7 +99,7 @@ class CategoryDamage {
   }
 
   /**
-   * Compute the damage caused by each components of the categoryDamage object and
+   * Compute the damage caused by each component of the categoryDamage object and
    * initialize the total damage caused by all these components.
    * @param categoryDamagePayload - A JSON object that conatins all necessary data to compute
    * the damage caused by each components of the categoryDamage (hardware, software, journeys).
