@@ -113,5 +113,4 @@ exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 
 exports.meetingComponents = meetingComponents
 exports.transportationMeanSubCategories = transportationMeanSubCategories
-
 exports.meetingCategoryDamage = meetingCategoryDamage
