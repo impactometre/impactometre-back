@@ -76,17 +76,19 @@ class MeetingDamage {
     this._journeyDamage = journeyDamage
   }
 
+  /**
+   * Setter of the total damage caused by the meeting.
+   */
+  set totalDamage (totalDamage) {
+    this._totalDamage = totalDamage
+  }
+
   // Other methods
 
   /**
    * Compute the total damage caused by each category of components of the meeting and
-<<<<<<< Updated upstream
-   * initialize the total damage caused by all components of the meeting.
-   * @param damagePayload - A JSON object that contains all necessary data to compute
-=======
    * initialize the total damage caused by all components of the meetings.
    * @param payload - A JSON object send by front end that contains all necessary data to compute
->>>>>>> Stashed changes
    * the damage caused by the meeting.
    */
   computeDamage (payload) {
@@ -96,7 +98,7 @@ class MeetingDamage {
 
     // Compute the total damage caused by all the components of the meeting thanks to the
     // total damage caused by each category of components.
-    this._totalDamage = this.softwareDamage.totalDamage.add(this.hardwareDamage.totalDamage).add(this.journeyDamage.totalDamage)
+    this.totalDamage = this.softwareDamage.totalDamage.add(this.hardwareDamage.totalDamage).add(this.journeyDamage.totalDamage)
   }
 }
 
