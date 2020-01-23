@@ -3,9 +3,9 @@
 const assert = require('assert')
 const CategoryDamage = require('../../../../model/classes/meeting/CategoryDamage')
 const MeetingDamage = require('../../../../model/classes/meeting/MeetingDamage')
-const transportDatabase = require('../../../../model/database/meeting/transportationMean')
-const hardwareDatabase = require('../../../../model/database/meeting/hardware')
-const softwareDatabase = require('../../../../model/database/meeting/software')
+const transportDatabase = require('../../../../database/meeting/transportationMean')
+const hardwareDatabase = require('../../../../database/meeting/hardware')
+const softwareDatabase = require('../../../../database/meeting/software')
 const {
   meetingCategoryDamage,
   bounds

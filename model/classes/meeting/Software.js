@@ -10,8 +10,8 @@ const {
   minuteToSeconds,
   bounds
 } = require('../../../constants/meeting')
-const networkDatabase = require('../../database/meeting/network')
-const softwareDatabase = require('../../database/meeting/software')
+const networkDatabase = require('../../../database/meeting/network')
+const softwareDatabase = require('../../../database/meeting/software')
 
 /**
  * Software class.
