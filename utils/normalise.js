@@ -15,7 +15,7 @@ function normalise (numbers) {
   // Normalise the array
   const normalisedNumbers = numbers.map(number => (number / max) * 100)
 
-  return normalisedNumber
+  return normalisedNumbers
 }
 
 module.exports = normalise
