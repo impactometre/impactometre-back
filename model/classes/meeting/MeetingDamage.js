@@ -80,7 +80,7 @@ class MeetingDamage {
 
   /**
    * Compute the total damage caused by each category of components of the meeting and
-   * initialize the total damage caused by all components of the meetings.
+   * initialize the total damage caused by all components of the meeting.
    * @param damagePayload - A JSON object send by front end that contains all necessary data to compute
    * the damage caused by the meeting.
    */
