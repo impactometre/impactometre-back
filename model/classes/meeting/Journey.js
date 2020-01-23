@@ -148,7 +148,7 @@ class Journey extends Component {
    * There is a method with the same name for Software class and Hardware class.
    */
   computeDamage () {
-    this._damage = this.computeEmbodiedDamage()
+    this.damage = this.computeEmbodiedDamage()
   }
 }
 
