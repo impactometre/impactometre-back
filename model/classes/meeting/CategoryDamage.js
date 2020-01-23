@@ -49,6 +49,13 @@ class CategoryDamage {
   // Setters
 
   /**
+   * Setter of the total category damage.
+   */
+  set totalDamage (totalDamage) {
+    this._totalDamage = totalDamage
+  }
+
+  /**
    * setter of the hasmhap that contains all the components indexed by a their id.
    */
   set components (components) {
@@ -105,13 +112,13 @@ class CategoryDamage {
    * the damage caused by each component of the categoryDamage (hardware, software, journeys).
    */
   computeDamage (payload) {
-    this._totalDamage = new Damage()
+    this.totalDamage = new Damage()
 
     // Compute the damage caused by each component of the categoryDamage object
     // and add it to the totalDamage caused by the components of the categoryDamage object.
     this.components.forEach(c => {
       c.computeDamage(payload)
-      this._totalDamage = this._totalDamage.add(c.damage)
+      this.totalDamage = this.totalDamage.add(c.damage)
     })
   }
 }
