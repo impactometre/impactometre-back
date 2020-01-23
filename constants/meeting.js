@@ -74,12 +74,24 @@ const meetingComponents = {
   JOURNEY: 'JOURNEY'
 }
 
+/**
+ * Transportation mean sub categories
+ */
 const transportationMeanSubCategories = {
   CAR: 'CAR',
   PLANE: 'PLANE',
   TRAIN: 'TRAIN',
   BUS: 'BUS',
   BIKE: 'BIKE'
+}
+
+/**
+ * Damage categories for meetings
+ */
+const meetingCategoryDamage = {
+  HARDWARE: 'HARDWARE',
+  SOFTWARE: 'SOFTWARE',
+  JOURNEY: 'JOURNEY'
 }
 
 exports.hourToMinutes = hourToMinutes
@@ -101,3 +113,4 @@ exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 
 exports.meetingComponents = meetingComponents
 exports.transportationMeanSubCategories = transportationMeanSubCategories
+exports.meetingCategoryDamage = meetingCategoryDamage
