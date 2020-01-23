@@ -89,6 +89,13 @@ class Software extends Component {
     this._name = name
   }
 
+  /**
+   * Setter of the damage caused by the software usage during the meeting.
+   */
+  set damage (damage) {
+    this._damage = damage
+  }
+
   // Other methods
 
   /**
@@ -242,7 +249,7 @@ class Software extends Component {
     const totalDamage = new Damage().add(embodiedDamage).add(operatingDamage)
 
     // Return the computed total damage
-    this._damage = totalDamage
+    this.damage = totalDamage
   }
 }
 
