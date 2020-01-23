@@ -168,6 +168,10 @@ class Hardware extends Component {
 
   // Setters
 
+  set damage (damage) {
+    this._damage = damage
+  }
+
   set size (size) {
     this._size = size
   }
@@ -192,7 +196,7 @@ class Hardware extends Component {
     const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound)
     const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound)
 
-    this._damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
+    this.damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
   }
 
   /**
