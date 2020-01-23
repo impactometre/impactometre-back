@@ -13,7 +13,7 @@ function normalise (numbers) {
   const max = numbers[0]
 
   // Normalise the array
-  const normalisedNumber = numbers.map(number => (number / max) * 100)
+  const normalisedNumbers = numbers.map(number => (number / max) * 100)
 
   return normalisedNumber
 }
