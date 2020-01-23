@@ -21,7 +21,7 @@ class Software extends Component {
   /**
    * Create a software thanks to the software database.
    * @param {String} name - The key of a software database entry, also the software name.
-   * @param {Number} instancesNumber - The number of software instances used for the meeting
+   * @param {Number} instancesNumber - The number of software instances used for the meeting.
    * @param {String} bandwithBound - The bandwith bound used for the meeting.
    * @param {String} networkBound - The network estimation bound used for the meeting.
    * @param {Number} meetingDuration - The meeting duration in minutes.
