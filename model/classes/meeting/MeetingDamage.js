@@ -80,14 +80,19 @@ class MeetingDamage {
 
   /**
    * Compute the total damage caused by each category of components of the meeting and
+<<<<<<< Updated upstream
    * initialize the total damage caused by all components of the meeting.
    * @param damagePayload - A JSON object that contains all necessary data to compute
+=======
+   * initialize the total damage caused by all components of the meetings.
+   * @param payload - A JSON object send by front end that contains all necessary data to compute
+>>>>>>> Stashed changes
    * the damage caused by the meeting.
    */
-  computeDamage (damagePayload) {
-    this.hardwareDamage.computeDamage(damagePayload[meetingCategoryDamage.HARDWARE])
-    this.softwareDamage.computeDamage(damagePayload[meetingCategoryDamage.SOFTWARE])
-    this.journeyDamage.computeDamage(damagePayload[meetingCategoryDamage.JOURNEY])
+  computeDamage (payload) {
+    this.hardwareDamage.computeDamage(payload[meetingCategoryDamage.HARDWARE])
+    this.softwareDamage.computeDamage(payload[meetingCategoryDamage.SOFTWARE])
+    this.journeyDamage.computeDamage(payload[meetingCategoryDamage.JOURNEY])
 
     // Compute the total damage caused by all the components of the meetinf thanks to the
     // total damage caused by each category of components.
