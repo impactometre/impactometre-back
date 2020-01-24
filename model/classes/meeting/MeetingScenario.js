@@ -127,6 +127,7 @@ class MeetingScenario extends Scenario {
       })
     }
   }
+<<<<<<< HEAD
 
   /**
    * Generate alternatives scenarios based on this MeetingScenario.
@@ -317,6 +318,8 @@ class MeetingScenario extends Scenario {
   static remove (id) {
     return meetingScenarios.delete(id)
   }
+=======
+>>>>>>> WIP: add update functions
 }
 
 module.exports = MeetingScenario

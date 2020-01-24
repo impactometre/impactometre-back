@@ -100,6 +100,29 @@ class MeetingDamage {
     // total damage caused by each category of components.
     this.totalDamage = this.softwareDamage.totalDamage.add(this.hardwareDamage.totalDamage).add(this.journeyDamage.totalDamage)
   }
+
+  /**
+   * Update the category damages (hardware, software, journey) of this meetingDamage object.
+   * @param {Object[]} hardwareComponents - An array of JSON objects that contain all necessary data to update the hardware components of the meeting.
+   * @param {Object[]} softwareComponents - An array of JSON objects that contain all necessary data to update the software components of the meeting.
+   * @param {Object[]} journeyComponents - An array of JSON objects that contain all necessary data to update the transport components of the meeting.
+   * @see CategoryDamage
+   */
+  update ({ hardwareComponents = {}, softwareComponents = {}, journeyComponents = {} }) {
+    // For each category damage if the meeting damage isn't void, we update it
+
+    if (hardwareComponents !== {}) {
+      this.hardwareDamage.update({ components: hardwareComponents, category: meetingCategoryDamage.HARDWARE })
+    }
+
+    if (softwareComponents !== {}) {
+      this.softwareDamage.update({ components: softwareComponents, category: meetingCategoryDamage.SOFTWARE })
+    }
+
+    if (journeyComponents !== {}) {
+      this.journeyComponents.update({ components: journeyComponents, category: meetingCategoryDamage.JOURNEY })
+    }
+  }
 }
 
 module.exports = MeetingDamage
