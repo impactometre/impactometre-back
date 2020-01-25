@@ -26,7 +26,11 @@ function create ({ user, meetingDuration, payload }) {
  */
 function read (id) {
   const meetingScenario = meetingScenarios.get(id)
-  return meetingScenario
+  if (meetingScenario !== undefined) {
+    return meetingScenario
+  } else {
+    throw new Error('Required MeetingScenario not available in database.')
+  }
 }
 
 /**
@@ -35,7 +39,7 @@ function read (id) {
  * @param {Object} payload - A JSON object that contains all necessary data to update a meeting scenario.
  */
 function update (id, payload) {
-  meetingScenarios.get(id).update(payload)
+  throw new Error('Not implemented yet')
 }
 
 /**
