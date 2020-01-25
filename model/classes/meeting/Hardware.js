@@ -37,7 +37,11 @@ class Hardware extends Component {
     this._size = size
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
-    this._embodied = json.embodied
+
+    this._embodied = (json.embodiedAssimilatedTo)
+      ? hardwareDatabase[json.embodiedAssimilatedTo.embodied]
+      : json.embodied
+
     this._operatingOneMinVisio = json.operatingOneMinVisio
     this._operatingOneMinStandby = json.operatingOneMinStandby
     this._lifetime = json.lifetime
@@ -95,6 +99,16 @@ class Hardware extends Component {
   }
 
   /**
+   * Get the optional weight. Useful if the embodied
+   * damage is assilimated to the damage of 1g of another
+   * hardware.
+   * @returns {Number} The optional weight.
+   */
+  get weight () {
+    return this._weight
+  }
+
+  /**
    * Get the hardware share dedicated to visio.
    * E.g. if the hardware is a laptop, the user
    * may be multi-tasking during the visio,
@@ -113,6 +127,15 @@ class Hardware extends Component {
    */
   get isSizeDependent () {
     return this._isSizeDependent
+  }
+
+  /**
+   * Get the optional hardware name to which the current
+   * hardware's embodied damage is assimilated to.
+   * @see hardware.js in database
+   */
+  get embodiedAssimilatedTo () {
+    return this._embodiedAssimilatedTo
   }
 
   /**
