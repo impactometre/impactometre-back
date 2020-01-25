@@ -71,11 +71,10 @@ describe('meetingScenario controller', () => {
   })
 
   describe('#read()', () => {
-    meetingScenarios.forEach(element => {
-      const id = element.id
-      console.log(read(id))
-      console.log(meetingScenarios.get(id))
-      it('should read a meetingScenario thanks to its id', () => {
+    it('should read a meetingScenario thanks to its id', () => {
+      meetingScenarios.forEach(element => {
+        const id = element.id
+
         assert.deepStrictEqual(
           read(id),
           meetingScenarios.get(id)
@@ -84,17 +83,16 @@ describe('meetingScenario controller', () => {
     })
   })
   describe('#remove()', () => {
-    meetingScenarios.forEach(element => {
-      const id = element.id
-      remove(id)
-      it('should remove a meetingScenario thanks to its id', () => {
+    it('should remove a meetingScenario thanks to its id', () => {
+      meetingScenarios.forEach(element => {
+        const id = element.id
+        remove(id)
+
         assert.deepStrictEqual(
           meetingScenarios.get(id),
           undefined
         )
       })
     })
-    // Create again a meeting scenario because tests are not excecute it the order that they are written
-    create({ user, meetingDuration, payload })
   })
 })
