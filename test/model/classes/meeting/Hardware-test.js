@@ -1,7 +1,7 @@
 'use strict'
 
 const chai = require('chai')
-const hardwareDatabase = require('../../../../model/database/meeting/hardware')
+const hardwareDatabase = require('../../../../database/meeting/hardware')
 const Hardware = require('../../../../model/classes/meeting/Hardware')
 const Damage = require('../../../../model/classes/shared/Damage')
 const {
@@ -515,10 +515,12 @@ describe('Hardware class', () => {
     const meetingDuration = 60
     const component = new Hardware(hardwareDatabase.LAPTOP)
     it('if the meeting is twice longer the damage should be twice bigger', () => {
-      const simple = component.computeDamage(meetingDuration)
+      component.computeDamage({ meetingDuration })
+      const simple = component.damage
 
       // Compute expected
-      const double = component.computeDamage(meetingDuration * 2)
+      component.computeDamage({ meetingDuration: meetingDuration * 2 })
+      const double = component.damage
 
       Object.keys(double).forEach(category => {
         assert.strictEqual(double[category], simple[category] * 2)
@@ -526,8 +528,10 @@ describe('Hardware class', () => {
     })
     it('the lower bound damage should be lower than the default (upper) damage', () => {
       const component = new Hardware(hardwareDatabase.CODEC)
-      const lowerBound = component.computeDamage(meetingDuration, bounds.LOWER)
-      const defaultBound = component.computeDamage(meetingDuration)
+      component.computeDamage({ meetingDuration, bound: bounds.LOWER })
+      const lowerBound = component.damage
+      component.computeDamage({ meetingDuration })
+      const defaultBound = component.damage
 
       Object.keys(defaultBound).forEach(category => {
         assert.isAbove(defaultBound[category], lowerBound[category])
