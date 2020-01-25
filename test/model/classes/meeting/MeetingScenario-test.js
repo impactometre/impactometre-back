@@ -17,6 +17,8 @@ describe('MeetingScenario class', () => {
     const user = 'vlegauch'
     // The meeting duration in minutes
     const meetingDuration = 120
+    // Number of participants
+    const numberOfParticipants = 4
     // The JSON object that enables to creates components linked to the meeting
     const payload = {
       [meetingCategoryDamage.HARDWARE]: [
@@ -64,7 +66,7 @@ describe('MeetingScenario class', () => {
       ]
     }
     // Create the MeetingScenario object
-    const meetingScenario = new MeetingScenario({ user, meetingDuration, payload })
+    const meetingScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload })
 
     // Create the JSON object that enables to compute meeting total damage
     const damagePayload = {
