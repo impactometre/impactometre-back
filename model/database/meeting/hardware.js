@@ -10,8 +10,8 @@ const hardware = {
   /**
    * ASSIMILATION CANDIDATES
    * If we cannot have the damage values directly
-   * from Ecovinvent database, we assimile the damage
-   * caused by the object to the damage cause by a known
+   * from Ecovinvent database, we assimilate the damage
+   * caused by the object to the damage caused by a known
    * object.
    */
   ASSIMILATION_COMPUTER_TOWER_1G: {
@@ -194,7 +194,7 @@ const hardware = {
     // https://support.logi.com/hc/fr/articles/360023307294-C920-Caract%C3%A9ristiques-techniques
     // upper weight source: Logitech PTZ PRO 2 (camera: 580g, remote: 68g)
     // https://www.logitech.com/assets/65113/2/conferencecam-ptz-pro2-datasheet.FRA.pdf
-    wieght: {
+    weight: {
       lower: 162,
       upper: 628
     },
