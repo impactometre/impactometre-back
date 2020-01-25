@@ -8,4 +8,8 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Impactometre' })
 })
 
+router.get('/reunion', function (req, res, next) {
+  res.render('meeting/form', { title: 'Formulaire' })
+})
+
 module.exports = router
