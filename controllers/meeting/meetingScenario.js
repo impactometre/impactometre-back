@@ -7,13 +7,14 @@ const MeetingScenario = require('../../model/classes/meeting/MeetingScenario')
  * Create a scenario corresponding to a meeting and add it to the database.
  * @param {String} user - The user who creates the scenario.
  * @param {Number} meetingDuration - The scenario duration in minutes.
+ * @param {Number} numberOfParticipants - The number of people who participates in the meeting.
  * @param {Object} payload - A JSON object that contains three arrays that enable to create the three
  * category damages (hardware, software, transport) linked to the meeting. The payload is like:
  * { [array_of_all_hardware_data], [array_of_all_software_data], [array_of_all_journey data]}.
  */
-function create ({ user, meetingDuration, payload }) {
+function create ({ user, meetingDuration, numberOfParticipants, payload }) {
   // Create new MeetingScenario
-  const meetingScenario = new MeetingScenario({ user, meetingDuration, payload })
+  const meetingScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload })
 
   // Add it to the database
   meetingScenarios.set(meetingScenario.id, meetingScenario)
