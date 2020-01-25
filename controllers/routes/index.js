@@ -9,7 +9,7 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/reunion', function (req, res, next) {
-  res.render('meeting/form', { title: 'Formulaire' })
+  res.render('meeting/form', { title: 'Votre réunion' })
 })
 
 module.exports = router
