@@ -4,7 +4,7 @@ const {
   hardwareLifetime,
   hardwareOperatingTimePerDay,
   meetingComponents
-} = require('../../../constants/meeting')
+} = require('../../constants/meeting')
 
 const hardware = {
   /**
