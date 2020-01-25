@@ -33,12 +33,12 @@ const hardware = {
     name: 'DESKTOP',
     french: 'ordinateur fixe',
     isSizeDependent: false,
-    components: [
-      'DESKTOP_TOWER',
-      'COMPUTER_MOUSE',
-      'COMPUTER_SCREEN_LCD',
-      'COMPUTER_KEYBOARD'
-    ]
+    components: {
+      DESKTOP_TOWER: 1,
+      COMPUTER_MOUSE: 1,
+      COMPUTER_SCREEN_LCD: 1,
+      COMPUTER_KEYBOARD: 1
+    }
   },
   DESKTOP_TOWER: {
     name: 'DESKTOP_TOWER',
@@ -259,10 +259,10 @@ const hardware = {
     /* Even if a component (here TV_SCREEN) is size-dependent, we don't
     say that the composite element is itself size dependent */
     isSizeDependent: false,
-    components: [
-      'TV_BASE',
-      'TV_SCREEN'
-    ]
+    components: {
+      TV_BASE: 1,
+      TV_SCREEN: 1
+    }
   },
   /**
    * VISIO-CONFERENCE KIT
@@ -307,14 +307,10 @@ const hardware = {
     name: 'LOGITECH_KIT',
     french: 'kit de visioconférence Logitech',
     isSizeDependent: false,
-    components: [
-      'LOGITECH_KIT_WITHOUT_CABLE',
-      // contains 4 cables
-      'LOGITECH_CABLE'
-      /* 'LOGITECH_CABLE',
-      'LOGITECH_CABLE',
-      'LOGITECH_CABLE' */
-    ]
+    components: {
+      LOGITECH_KIT_WITHOUT_CABLE: 1,
+      LOGITECH_CABLE: 4
+    }
   },
   METAL_STRUCTURE: {
     name: 'METAL_STRUCTURE',
@@ -383,10 +379,10 @@ const hardware = {
     name: 'POWER_CABLE',
     french: 'câble d\'alimentaion 1 m avec fiches',
     isSizeDependent: false,
-    components: [
-      'POWER_CABLE_ONE_METER',
-      'POWER_CABLE_PLUGS'
-    ]
+    components: {
+      POWER_CABLE_ONE_METER: 1,
+      POWER_CABLE_PLUGS: 1
+    }
   },
   ETHERNET_CABLE_ONE_METER: {
     name: 'ETHERNET_CABLE_ONE_METER',
@@ -418,10 +414,10 @@ const hardware = {
     name: 'ETHERNET_CABLE',
     french: 'câble Ethernet 1 m avec fiches',
     isSizeDependent: false,
-    components: [
-      'ETHERNET_CABLE_ONE_METER',
-      'ETHERNET_CABLE_PLUGS'
-    ]
+    components: {
+      ETHERNET_CABLE_ONE_METER: 1,
+      ETHERNET_CABLE_PLUGS: 1
+    }
   },
   HDMI_CABLE_ONE_METER: {
     name: 'HDMI_CABLE_ONE_METER',
@@ -453,10 +449,10 @@ const hardware = {
     name: 'HDMI_CABLE',
     french: 'câble HDMI 1 m avec fiches',
     isSizeDependent: false,
-    components: [
-      'HDMI_CABLE_ONE_METER',
-      'HDMI_CABLE_PLUGS'
-    ]
+    components: {
+      HDMI_CABLE_ONE_METER: 1,
+      HDMI_CABLE_PLUGS: 1
+    }
   },
   JACK_CABLE_ONE_METER: {
     name: 'JACK_CABLE_ONE_METER',
@@ -501,10 +497,10 @@ const hardware = {
     name: 'VGA_CABLE',
     french: 'câble VGA 1 m avec fiches',
     isSizeDependent: false,
-    components: [
-      'VGA_CABLE_ONE_METER',
-      'VGA_CABLE_PLUGS'
-    ]
+    components: {
+      VGA_CABLE_ONE_METER: 1,
+      VGA_CABLE_PLUGS: 1
+    }
   }
 }
 
