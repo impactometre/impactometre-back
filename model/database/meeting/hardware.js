@@ -25,7 +25,7 @@ const hardware = {
       resources: 0.00185841
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   /**
    * DESKTOP AND LAPTOP
@@ -66,7 +66,7 @@ const hardware = {
       resources: 0.00703
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   COMPUTER_SCREEN_LCD: {
     name: 'COMPUTER_SCREEN_LCD',
@@ -92,7 +92,7 @@ const hardware = {
       resources: 4.26 * Math.pow(10, -5)
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   COMPUTER_KEYBOARD: {
     name: 'COMPUTER_KEYBOARD',
@@ -106,7 +106,7 @@ const hardware = {
       resources: 453
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   COMPUTER_MOUSE: {
     name: 'COMPUTER_MOUSE',
@@ -120,7 +120,7 @@ const hardware = {
       resources: 93.5
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   LAPTOP: {
     name: 'LAPTOP',
@@ -140,7 +140,7 @@ const hardware = {
       resources: 0.00852
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   /**
    * NETWORK ACCESS
@@ -163,7 +163,7 @@ const hardware = {
       resources: 2.2613
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   /**
    * PERIPHERALS
@@ -183,7 +183,7 @@ const hardware = {
       resources: 0.000533
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   CAMERA: {
     name: 'CAMERA',
@@ -206,7 +206,7 @@ const hardware = {
       resources: 0.00202
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   PROJECTOR: {
     name: 'PROJECTOR',
@@ -235,7 +235,7 @@ const hardware = {
     },
     // TODO: check in specific article
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   TV_BASE: {
     name: 'TV_BASE',
@@ -249,7 +249,7 @@ const hardware = {
       resources: 0.00426
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   TV_SCREEN: {
     name: 'TV_SCREEN',
@@ -271,7 +271,7 @@ const hardware = {
       resources: 0.0367
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   TV: {
     name: 'TV',
@@ -310,7 +310,7 @@ const hardware = {
       resources: 0.00181
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   LOGITECH_KIT_CABLE: {
     name: 'LOGITECH_KIT_CABLE',
@@ -324,7 +324,7 @@ const hardware = {
       resources: 18.5
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   LOGITECH_KIT: {
     name: 'LOGITECH_KIT',
@@ -347,7 +347,7 @@ const hardware = {
       resources: 1.18 * Math.pow(10, 3)
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   /** CODEC **/
   CODEC: {
@@ -370,7 +370,7 @@ const hardware = {
       }
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   /** CABLES ***/
   // Reference value for HDMI and VGA
@@ -386,7 +386,7 @@ const hardware = {
       resources: 8.59
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   POWER_CABLE_PLUGS: {
     name: 'POWER_CABLE_PLUGS',
@@ -399,7 +399,7 @@ const hardware = {
       resources: 6.83
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   POWER_CABLE: {
     name: 'POWER_CABLE',
@@ -422,7 +422,7 @@ const hardware = {
       resources: 8.73
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   ETHERNET_CABLE_PLUGS: {
     name: 'ETHERNET_CABLE_PLUGS',
@@ -435,7 +435,7 @@ const hardware = {
       resources: 1.06
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   ETHERNET_CABLE: {
     name: 'ETHERNET_CABLE',
@@ -458,7 +458,7 @@ const hardware = {
       resources: 8.59
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   HDMI_CABLE_PLUGS: {
     name: 'HDMI_CABLE_PLUGS',
@@ -471,7 +471,7 @@ const hardware = {
       resources: 6.83
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   HDMI_CABLE: {
     name: 'HDMI_CABLE',
@@ -494,7 +494,7 @@ const hardware = {
       resources: 8.73
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   VGA_CABLE_ONE_METER: {
     name: 'VGA_CABLE_ONE_METER',
@@ -508,7 +508,7 @@ const hardware = {
       resources: 8.59
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   VGA_CABLE_PLUGS: {
     name: 'VGA_CABLE_PLUGS',
@@ -521,7 +521,7 @@ const hardware = {
       resources: 6.83
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   VGA_CABLE: {
     name: 'VGA_CABLE',
