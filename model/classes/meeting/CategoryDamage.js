@@ -111,7 +111,7 @@ class CategoryDamage {
    * @param payload - A JSON object that contains all necessary data to compute
    * the damage caused by each component of the categoryDamage (hardware, software, journeys).
    */
-  computeDamage (payload) {
+  computeDamage (payload = {}) {
     this.totalDamage = new Damage()
 
     // Compute the damage caused by each component of the categoryDamage object
