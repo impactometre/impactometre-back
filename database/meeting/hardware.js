@@ -8,6 +8,26 @@ const {
 
 const hardware = {
   /**
+   * ASSIMILATION CANDIDATES
+   * If we cannot have the damage values directly
+   * from Ecovinvent database, we assimilate the damage
+   * caused by the object to the damage caused by a known
+   * object.
+   */
+  ASSIMILATION_COMPUTER_TOWER_1G: {
+    name: 'ASSIMILATION_COMPUTER_TOWER_1G',
+    french: '1 g d\'une tour d\'ordinateur',
+    isSizeDependent: false,
+    embodied: {
+      humanHealth: 0.004353982,
+      ecosystemQuality: 0.000843363,
+      climateChange: 0.002035398,
+      resources: 0.00185841
+    },
+    lifetime: hardwareLifetime.DESKTOP,
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
+  },
+  /**
    * DESKTOP AND LAPTOP
    * */
   DESKTOP: {
@@ -15,25 +35,23 @@ const hardware = {
     french: 'ordinateur fixe',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
-    operatingOneMinVisio: {
-      humanHealth: 1.55 * Math.pow(10, -10),
-      ecosystemQuality: 7.16 * Math.pow(10, -5),
-      climateChange: 0.000124,
-      resources: 0.032
-    },
-    lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    components: {
+      DESKTOP_TOWER: 1,
+      COMPUTER_MOUSE: 1,
+      COMPUTER_SCREEN_LCD: 1,
+      COMPUTER_KEYBOARD: 1
+    }
   },
-  DESKTOP_WITHOUT_SCREEN: {
-    name: 'DESKTOP_WITHOUT_SCREEN',
-    french: 'ordinateur sans écran',
+  DESKTOP_TOWER: {
+    name: 'DESKTOP_TOWER',
+    french: 'tour d\'ordinateur',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
-      humanHealth: 0.00041,
-      ecosystemQuality: 155,
-      climateChange: 266,
-      resources: 3.74 * Math.pow(10, 3)
+      humanHealth: 0.000349,
+      ecosystemQuality: 131,
+      climateChange: 228,
+      resources: 3.19 * Math.pow(10, 3)
     },
     operatingWithoutVisioOneMin: {
       humanHealth: 1.66 * Math.pow(10, -11),
@@ -48,10 +66,10 @@ const hardware = {
       resources: 0.00703
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
-  DESKTOP_SCREEN_LCD: {
-    name: 'DESKTOP_SCREEN_LCD',
+  COMPUTER_SCREEN_LCD: {
+    name: 'COMPUTER_SCREEN_LCD',
     french: 'écran d\'ordinateur LCD',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
@@ -61,25 +79,23 @@ const hardware = {
       climateChange: 360,
       resources: 4.79 * Math.pow(10, 3)
     },
-    lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
-  },
-  COMPUTER_TOWER: {
-    name: 'COMPUTER_TOWER',
-    french: 'tour',
-    category: meetingComponents.HARDWARE,
-    isSizeDependent: false,
-    embodied: {
-      humanHealth: 0.000349,
-      ecosystemQuality: 131,
-      climateChange: 228,
-      resources: 3.19 * Math.pow(10, 3)
+    operatingOneMinVisio: {
+      humanHealth: 1.04 * Math.pow(10, -11),
+      ecosystemQuality: 4.77 * Math.pow(10, -6),
+      climateChange: 8.25 * Math.pow(10, -6),
+      resources: 0.00213
+    },
+    operatingOneMinStandby: {
+      humanHealth: 2.07 * Math.pow(10, -13),
+      ecosystemQuality: 9.54 * Math.pow(10, -8),
+      climateChange: 1.65 * Math.pow(10, -7),
+      resources: 4.26 * Math.pow(10, -5)
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
-  KEYBOARD: {
-    name: 'KEYBOARD',
+  COMPUTER_KEYBOARD: {
+    name: 'COMPUTER_KEYBOARD',
     french: 'clavier',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
@@ -90,7 +106,7 @@ const hardware = {
       resources: 453
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   COMPUTER_MOUSE: {
     name: 'COMPUTER_MOUSE',
@@ -104,7 +120,7 @@ const hardware = {
       resources: 93.5
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   LAPTOP: {
     name: 'LAPTOP',
@@ -124,7 +140,7 @@ const hardware = {
       resources: 0.00852
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   /**
    * NETWORK ACCESS
@@ -140,8 +156,14 @@ const hardware = {
       climateChange: 7.21,
       resources: 103
     },
+    operatingOneMinVisio: {
+      humanHealth: 1.097 * Math.pow(10, -8),
+      ecosystemQuality: 0.0051,
+      climateChange: 0.0087,
+      resources: 2.2613
+    },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   /**
    * PERIPHERALS
@@ -151,6 +173,9 @@ const hardware = {
     french: 'micro',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
+    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1',
+    // source: Jabra Speak 410 - https://www.jabra.fr/business/speakerphones/jabra-speak-series/jabra-speak-410#/#7410-209
+    weight: 180.3,
     operatingOneMinVisio: {
       humanHealth: 2.59 * Math.pow(10, -12),
       ecosystemQuality: 1.19 * Math.pow(10, -6),
@@ -158,13 +183,22 @@ const hardware = {
       resources: 0.000533
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   CAMERA: {
     name: 'CAMERA',
     french: 'caméra',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
+    // lower weight source: Logitech C920 HD Pro Webcam
+    // https://support.logi.com/hc/fr/articles/360023307294-C920-Caract%C3%A9ristiques-techniques
+    // upper weight source: Logitech PTZ PRO 2 (camera: 580g, remote: 68g)
+    // https://www.logitech.com/assets/65113/2/conferencecam-ptz-pro2-datasheet.FRA.pdf
+    weight: {
+      lower: 162,
+      upper: 628
+    },
+    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     operatingOneMinVisio: {
       humanHealth: 9.84 * Math.pow(10, -12),
       ecosystemQuality: 4.53 * Math.pow(10, -6),
@@ -172,7 +206,7 @@ const hardware = {
       resources: 0.00202
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   PROJECTOR: {
     name: 'PROJECTOR',
@@ -186,14 +220,22 @@ const hardware = {
       resources: 821
     },
     operatingOneMinVisio: {
-      humanHealth: 1.4 * Math.pow(10, -10),
-      ecosystemQuality: 6.44 * Math.pow(10, -5),
-      climateChange: 0.000111,
-      resources: 0.0288
+      upper: {
+        humanHealth: 2.67 * Math.pow(10, -10),
+        ecosystemQuality: 0.000123,
+        climateChange: 0.000213,
+        resources: 0.055
+      },
+      lower: {
+        humanHealth: 8.12 * Math.pow(10, -11),
+        ecosystemQuality: 3.74 * Math.pow(10, -5),
+        climateChange: 6.47 * Math.pow(10, -5),
+        resources: 0.0167
+      }
     },
     // TODO: check in specific article
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   TV_BASE: {
     name: 'TV_BASE',
@@ -207,7 +249,7 @@ const hardware = {
       resources: 0.00426
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   TV_SCREEN: {
     name: 'TV_SCREEN',
@@ -215,6 +257,13 @@ const hardware = {
     category: meetingComponents.HARDWARE,
     // Damage is given for one meter square
     isSizeDependent: true,
+    // Same as COMPUTER_SCREEN_LCD
+    embodied: {
+      humanHealth: 0.000475,
+      ecosystemQuality: 140,
+      climateChange: 360,
+      resources: 4.79 * Math.pow(10, 3)
+    },
     operatingOneMinVisio: {
       humanHealth: 1.78 * Math.pow(10, -10),
       ecosystemQuality: 8.21 * Math.pow(10, -5),
@@ -222,7 +271,7 @@ const hardware = {
       resources: 0.0367
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   TV: {
     name: 'TV',
@@ -231,19 +280,23 @@ const hardware = {
     /* Even if a component (here TV_SCREEN) is size-dependent, we don't
     say that the composite element is itself size dependent */
     isSizeDependent: false,
-    components: [
-      'TV_BASE',
-      'TV_SCREEN'
-    ]
+    components: {
+      TV_BASE: 1,
+      TV_SCREEN: 1
+    }
   },
   /**
    * VISIO-CONFERENCE KIT
    */
-  LOGITECH_KIT: {
-    name: 'LOGITECH_KIT',
-    french: 'kit Logitech',
+  LOGITECH_KIT_WITHOUT_CABLE: {
+    // is composed of a camera, a hub, a speakerphone and a remote
+    name: 'LOGITECH_KIT_WITHOUT_CABLE',
+    french: 'kit Logitech sans les câbles',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
+    // camera = 670 g, hub = 170 g, speakerphone = 920g, remote = 51 g, TOTAL = 1811 g
+    weight: 1811,
+    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     operatingOneMinStandby: {
       humanHealth: 5.9 * Math.pow(10, -12),
       ecosystemQuality: 2.72 * Math.pow(10, -6),
@@ -257,25 +310,11 @@ const hardware = {
       resources: 0.00181
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
-  LOGITECH_KIT_CAMERA: {
-    name: 'LOGITECH_KIT_CAMERA',
-    french: 'caméra du kit Logitech',
-    category: meetingComponents.HARDWARE,
-    isSizeDependent: false,
-    operatingOneMinVisio: {
-      humanHealth: 4.04 * Math.pow(10, -12),
-      ecosystemQuality: 1.86 * Math.pow(10, -6),
-      climateChange: 3.22 * Math.pow(10, -6),
-      resources: 0.000831
-    },
-    lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
-  },
-  LOGITECH_CABLE: {
-    name: 'LOGITECH_CABLE',
-    french: 'câble Logitech',
+  LOGITECH_KIT_CABLE: {
+    name: 'LOGITECH_KIT_CABLE',
+    french: 'câble du kit Logitech',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
@@ -285,7 +324,16 @@ const hardware = {
       resources: 18.5
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
+  },
+  LOGITECH_KIT: {
+    name: 'LOGITECH_KIT',
+    french: 'kit de visioconférence Logitech',
+    isSizeDependent: false,
+    components: {
+      LOGITECH_KIT_WITHOUT_CABLE: 1,
+      LOGITECH_KIT_CABLE: 4
+    }
   },
   METAL_STRUCTURE: {
     name: 'METAL_STRUCTURE',
@@ -299,7 +347,7 @@ const hardware = {
       resources: 1.18 * Math.pow(10, 3)
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   /** CODEC **/
   CODEC: {
@@ -322,15 +370,28 @@ const hardware = {
       }
     },
     lifetime: hardwareLifetime.DESKTOP,
-    operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   /** CABLES ***/
   // Reference value for HDMI and VGA
   POWER_CABLE_ONE_METER: {
     name: 'POWER_CABLE_ONE_METER',
-    french: 'câble d\'alimentation 1 m',
+    french: 'câble d\'alimentation 1 m sans fiches',
     category: meetingComponents.HARDWARE,
     isSizeDependent: true,
+    embodied: {
+      humanHealth: 1.42 * Math.pow(10, -6),
+      ecosystemQuality: 0.84,
+      climateChange: 0.443,
+      resources: 8.59
+    },
+    lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
+  },
+  POWER_CABLE_PLUGS: {
+    name: 'POWER_CABLE_PLUGS',
+    french: 'fiches d\'un câble d\'alimentation',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
@@ -338,13 +399,35 @@ const hardware = {
       resources: 6.83
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
+  },
+  POWER_CABLE: {
+    name: 'POWER_CABLE',
+    french: 'câble d\'alimentaion 1 m avec fiches',
+    isSizeDependent: false,
+    components: {
+      POWER_CABLE_ONE_METER: 1,
+      POWER_CABLE_PLUGS: 1
+    }
   },
   ETHERNET_CABLE_ONE_METER: {
     name: 'ETHERNET_CABLE_ONE_METER',
-    french: 'câble Ethernet 1 m',
+    french: 'câble Ethernet 1 m sans fiches',
     category: meetingComponents.HARDWARE,
     isSizeDependent: true,
+    embodied: {
+      humanHealth: 1.7 * Math.pow(10, -6),
+      ecosystemQuality: 1.63,
+      climateChange: 0.551,
+      resources: 8.73
+    },
+    lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
+  },
+  ETHERNET_CABLE_PLUGS: {
+    name: 'ETHERNET_CABLE_PLUGS',
+    french: 'fiches d\'un câble Ethernet',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 1.42 * Math.pow(10, -7),
       ecosystemQuality: 0.0999,
@@ -352,13 +435,35 @@ const hardware = {
       resources: 1.06
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
+  },
+  ETHERNET_CABLE: {
+    name: 'ETHERNET_CABLE',
+    french: 'câble Ethernet 1 m avec fiches',
+    isSizeDependent: false,
+    components: {
+      ETHERNET_CABLE_ONE_METER: 1,
+      ETHERNET_CABLE_PLUGS: 1
+    }
   },
   HDMI_CABLE_ONE_METER: {
     name: 'HDMI_CABLE_ONE_METER',
-    french: 'câble HDMI 1 m',
+    french: 'câble HDMI 1 m sans fiches',
     category: meetingComponents.HARDWARE,
     isSizeDependent: true,
+    embodied: {
+      humanHealth: 1.42 * Math.pow(10, -6),
+      ecosystemQuality: 0.84,
+      climateChange: 0.443,
+      resources: 8.59
+    },
+    lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
+  },
+  HDMI_CABLE_PLUGS: {
+    name: 'HDMI_CABLE_PLUGS',
+    french: 'fiches de câble HDMI',
+    isSizeDependent: false,
     embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
@@ -366,7 +471,16 @@ const hardware = {
       resources: 6.83
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
+  },
+  HDMI_CABLE: {
+    name: 'HDMI_CABLE',
+    french: 'câble HDMI 1 m avec fiches',
+    isSizeDependent: false,
+    components: {
+      HDMI_CABLE_ONE_METER: 1,
+      HDMI_CABLE_PLUGS: 1
+    }
   },
   JACK_CABLE_ONE_METER: {
     name: 'JACK_CABLE_ONE_METER',
@@ -380,7 +494,7 @@ const hardware = {
       resources: 8.73
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   VGA_CABLE_ONE_METER: {
     name: 'VGA_CABLE_ONE_METER',
@@ -388,13 +502,35 @@ const hardware = {
     category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
+      humanHealth: 1.42 * Math.pow(10, -6),
+      ecosystemQuality: 0.84,
+      climateChange: 0.443,
+      resources: 8.59
+    },
+    lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
+  },
+  VGA_CABLE_PLUGS: {
+    name: 'VGA_CABLE_PLUGS',
+    french: 'fiches de câble VGA',
+    isSizeDependent: false,
+    embodied: {
       humanHealth: 8.8 * Math.pow(10, -7),
       ecosystemQuality: 0.59,
       climateChange: 0.34,
       resources: 6.83
     },
     lifetime: hardwareLifetime.POWER_CABLE_ONE_METER,
-    operatingTimePerDay: hardwareOperatingTimePerDay.DESKTOP
+    operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
+  },
+  VGA_CABLE: {
+    name: 'VGA_CABLE',
+    french: 'câble VGA 1 m avec fiches',
+    isSizeDependent: false,
+    components: {
+      VGA_CABLE_ONE_METER: 1,
+      VGA_CABLE_PLUGS: 1
+    }
   }
 }
 

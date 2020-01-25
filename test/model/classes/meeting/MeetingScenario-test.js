@@ -93,14 +93,5 @@ describe('MeetingScenario class', () => {
         meetingDamage.totalDamage
       )
     })
-    const meetingTotalDamage = meetingScenario.damage.hardwareDamage.totalDamage.add(
-      meetingScenario.damage.softwareDamage.totalDamage.add(
-        meetingScenario.damage.journeyDamage.totalDamage))
-    it('the total damage of all components of a meeting should be the sum of the total damage of each category (hardware, software, journey)', () => {
-      assert.deepStrictEqual(
-        meetingScenario.damage.totalDamage,
-        meetingTotalDamage
-      )
-    })
   })
 })

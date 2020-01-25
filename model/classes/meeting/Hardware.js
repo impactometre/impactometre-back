@@ -17,6 +17,8 @@ class Hardware extends Component {
   /**
    * Create a hardware.
    * @param {String} name - The key of an entry from the hardware database.
+   * @param {Quantity} - The instances number of the same hardware in the meeting.
+   * E.g. a Logitech Kit has 4 identical cables.
    * @param {Number} size - The optional size attached to the hardware.
    * E.g. if the hardware is a TV, the size would be the area of the screen in square meter.
    * @param {Float} shareForVisio - The share of the hardware dedicated to visio.
@@ -24,12 +26,14 @@ class Hardware extends Component {
    * with other software application running. Value is between O and 1.
    * @param {Array} componentsPayload - Optional components constructor parameters indexed by component name.
    */
-  constructor ({ name, size = 1, shareForVisio = 1, componentsPayload = {} }) {
-    // Get the correspondinf JSON object
+  constructor ({ name, quantity = 1, size = 1, shareForVisio = 1, componentsPayload = {} }) {
+    // Get the corresponding JSON object
     const json = hardwareDatabase[name]
 
     super({ french: json.french, category: json.category })
+
     this._name = json.name
+    this._quantity = quantity
     this._size = size
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
@@ -44,19 +48,19 @@ class Hardware extends Component {
     /* Check if components array is not undefined or null,
     and is actually an array */
     if (
-      Array.isArray(json.components) &&
-      json.components.length
+      json.components &&
+      Object.keys(json.components).length !== 0
     ) {
-      json.components.forEach(name => {
-        /* If the the payload contains an entry for the component found
-        in database, we construct the compondent from the payload. Else
-        we costruct it from the database. The payload will contain an
+      for (const [name, quantity] of Object.entries(json.components)) {
+        /* If the payload contains an entry for the component found
+        in database, we construct the component from the payload. Else
+        we construct it from the database. The payload will contain an
         entry if additional parameter is required (e.g. the size of a
         TV_SCREEN) */
         this._components[name] = (!componentsPayload[name])
-          ? new Hardware({ name })
+          ? new Hardware({ name, quantity })
           : new Hardware(componentsPayload[name])
-      })
+      }
     }
   }
 
@@ -68,6 +72,16 @@ class Hardware extends Component {
 
   get french () {
     return this._french
+  }
+
+  /**
+   * Get the instances number of the same hardware in
+   * the meeting.
+   *  E.g. a Logitech Kit has 4 identical cables.
+   * @returns {Number} The instances number of the same hardware.
+   */
+  get quantity () {
+    return this._quantity
   }
 
   /**
@@ -172,6 +186,10 @@ class Hardware extends Component {
     this._damage = damage
   }
 
+  set quantity (quantity) {
+    this._quantity = quantity
+  }
+
   set size (size) {
     this._size = size
   }
@@ -191,12 +209,31 @@ class Hardware extends Component {
    * bound equals to 'LOWER'.
    */
   computeDamage ({ meetingDuration, bound = null }) {
-    const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
-    const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound)
-    const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound)
-    const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound)
+    let damage
 
-    this.damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
+    // Hardware may be composed of other hardwares
+    if (Object.keys(this.components).length > 0) {
+      damage = new Damage()
+      /* For each component, compute its damage
+      and add it to composite hardware damage */
+      Object.values(this.components).forEach(component => {
+        component.computeDamage({ meetingDuration, bound })
+        damage.add(component.damage)
+      })
+    } else {
+      const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
+      const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound)
+      const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound)
+      const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound)
+
+      damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
+    }
+
+    damage.mutate(category => {
+      damage[category] *= this.quantity
+    })
+
+    this.damage = damage
   }
 
   /**
@@ -209,19 +246,6 @@ class Hardware extends Component {
   computeTypedDamage (damageType, meetingDuration, bound = null) {
     // Variable we will return
     let damage
-
-    // Hardware may be composed of other hardwares
-    if (Object.keys(this.components).length > 0) {
-      damage = new Damage({ component: this })
-      /* For each component, compute its operating damage
-      and add it to composite hardware damage */
-      Object.values(this.components).forEach(component => {
-        const componentDamage = component.computeTypedDamage(damageType, meetingDuration, bound)
-        damage = damage.add(componentDamage)
-      })
-
-      return damage
-    }
 
     // Hardware may not have any value for the required damage
     if (!this.getTypedDamage(damageType, bound)) {
