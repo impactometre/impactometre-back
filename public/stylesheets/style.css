@@ -1,8 +1,23 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
 
-a {
+html {
+  font-size: 62.5%; }
+
+body {
+  box-sizing: border-box;
+  padding: 2rem; }
+
+h1 {
   color: #00B7FF;
-}
+  display: flex; }
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 100;
+  line-height: 1.7; }

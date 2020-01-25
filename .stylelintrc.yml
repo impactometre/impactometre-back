@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "stylelint-config-recommended-scss"
+  ],
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "indentation": [ 2, {
+      "except": ["block"],
+      "message": "Please use 2 spaces for indentation.",
+      "severity": "warning"
+    } ],
+    "max-empty-lines": 2,
+    "rule-empty-line-before": [ "always", {
+      "except": ["first-nested"],
+      "ignore": ["after-comment"]
+    } ],
+    "declaration-block-semicolon-newline-after": "always",
+    "block-opening-brace-newline-after": "always",
+    "block-closing-brace-newline-before": "always",
+    "block-closing-brace-newline-after": "always",
+    "no-empty-source": [ true, {
+      "severity": "warning"
+    } ],
+    "unit-whitelist": ["em", "rem", "%", "s"]
+  }
+}

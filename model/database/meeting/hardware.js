@@ -2,7 +2,8 @@
 
 const {
   hardwareLifetime,
-  hardwareOperatingTimePerDay
+  hardwareOperatingTimePerDay,
+  meetingComponents
 } = require('../../../constants/meeting')
 
 const hardware = {
@@ -32,6 +33,7 @@ const hardware = {
   DESKTOP: {
     name: 'DESKTOP',
     french: 'ordinateur fixe',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     components: {
       DESKTOP_TOWER: 1,
@@ -43,6 +45,7 @@ const hardware = {
   DESKTOP_TOWER: {
     name: 'DESKTOP_TOWER',
     french: 'tour d\'ordinateur',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.000349,
@@ -68,6 +71,7 @@ const hardware = {
   COMPUTER_SCREEN_LCD: {
     name: 'COMPUTER_SCREEN_LCD',
     french: 'écran d\'ordinateur LCD',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.000475,
@@ -93,6 +97,7 @@ const hardware = {
   COMPUTER_KEYBOARD: {
     name: 'COMPUTER_KEYBOARD',
     french: 'clavier',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 5.01 * Math.pow(10, -5),
@@ -106,6 +111,7 @@ const hardware = {
   COMPUTER_MOUSE: {
     name: 'COMPUTER_MOUSE',
     french: 'souris',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 1.06 * Math.pow(10, -5),
@@ -119,6 +125,7 @@ const hardware = {
   LAPTOP: {
     name: 'LAPTOP',
     french: 'ordinateur portable',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.000274,
@@ -141,6 +148,7 @@ const hardware = {
   INTERNET_ACCESS_EQUIPMENT: {
     name: 'INTERNET_ACCESS_EQUIPMENT',
     french: 'équipement d\'accès Internet',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 1.26 * Math.pow(10, -5),
@@ -163,6 +171,7 @@ const hardware = {
   MICROPHONE: {
     name: 'MICROPHONE',
     french: 'micro',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1',
     // source: Jabra Speak 410 - https://www.jabra.fr/business/speakerphones/jabra-speak-series/jabra-speak-410#/#7410-209
@@ -179,6 +188,7 @@ const hardware = {
   CAMERA: {
     name: 'CAMERA',
     french: 'caméra',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     // lower weight source: Logitech C920 HD Pro Webcam
     // https://support.logi.com/hc/fr/articles/360023307294-C920-Caract%C3%A9ristiques-techniques
@@ -201,6 +211,7 @@ const hardware = {
   PROJECTOR: {
     name: 'PROJECTOR',
     french: 'projecteur',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 8.04 * Math.pow(10, -5),
@@ -229,6 +240,7 @@ const hardware = {
   TV_BASE: {
     name: 'TV_BASE',
     french: 'télévision sauf écran',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinVisio: {
       humanHealth: 2.07 * Math.pow(10, -11),
@@ -242,8 +254,16 @@ const hardware = {
   TV_SCREEN: {
     name: 'TV_SCREEN',
     french: 'écran de télévision',
+    category: meetingComponents.HARDWARE,
     // Damage is given for one meter square
     isSizeDependent: true,
+    // Same as COMPUTER_SCREEN_LCD
+    embodied: {
+      humanHealth: 0.000475,
+      ecosystemQuality: 140,
+      climateChange: 360,
+      resources: 4.79 * Math.pow(10, 3)
+    },
     operatingOneMinVisio: {
       humanHealth: 1.78 * Math.pow(10, -10),
       ecosystemQuality: 8.21 * Math.pow(10, -5),
@@ -256,6 +276,7 @@ const hardware = {
   TV: {
     name: 'TV',
     french: 'télévision',
+    category: meetingComponents.HARDWARE,
     /* Even if a component (here TV_SCREEN) is size-dependent, we don't
     say that the composite element is itself size dependent */
     isSizeDependent: false,
@@ -271,6 +292,7 @@ const hardware = {
     // is composed of a camera, a hub, a speakerphone and a remote
     name: 'LOGITECH_KIT_WITHOUT_CABLE',
     french: 'kit Logitech sans les câbles',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     // camera = 670 g, hub = 170 g, speakerphone = 920g, remote = 51 g, TOTAL = 1811 g
     weight: 1811,
@@ -290,9 +312,10 @@ const hardware = {
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.LOGITECH_KIT
   },
-  LOGITECH_CABLE: {
-    name: 'LOGITECH_CABLE',
-    french: 'câble Logitech',
+  LOGITECH_KIT_CABLE: {
+    name: 'LOGITECH_KIT_CABLE',
+    french: 'câble du kit Logitech',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 3.53 * Math.pow(10, -6),
@@ -309,12 +332,13 @@ const hardware = {
     isSizeDependent: false,
     components: {
       LOGITECH_KIT_WITHOUT_CABLE: 1,
-      LOGITECH_CABLE: 4
+      LOGITECH_KIT_CABLE: 4
     }
   },
   METAL_STRUCTURE: {
     name: 'METAL_STRUCTURE',
     french: 'structure métallique de support des écrans',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     embodied: {
       humanHealth: 0.000141,
@@ -329,6 +353,7 @@ const hardware = {
   CODEC: {
     name: 'CODEC',
     french: 'CODEC',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: false,
     operatingOneMinVisio: {
       upper: {
@@ -352,6 +377,7 @@ const hardware = {
   POWER_CABLE_ONE_METER: {
     name: 'POWER_CABLE_ONE_METER',
     french: 'câble d\'alimentation 1 m sans fiches',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.42 * Math.pow(10, -6),
@@ -387,6 +413,7 @@ const hardware = {
   ETHERNET_CABLE_ONE_METER: {
     name: 'ETHERNET_CABLE_ONE_METER',
     french: 'câble Ethernet 1 m sans fiches',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.7 * Math.pow(10, -6),
@@ -422,6 +449,7 @@ const hardware = {
   HDMI_CABLE_ONE_METER: {
     name: 'HDMI_CABLE_ONE_METER',
     french: 'câble HDMI 1 m sans fiches',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.42 * Math.pow(10, -6),
@@ -457,6 +485,7 @@ const hardware = {
   JACK_CABLE_ONE_METER: {
     name: 'JACK_CABLE_ONE_METER',
     french: 'câble jack 1 m',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.7 * Math.pow(10, -6),
@@ -470,6 +499,7 @@ const hardware = {
   VGA_CABLE_ONE_METER: {
     name: 'VGA_CABLE_ONE_METER',
     french: 'câble VGA 1 m',
+    category: meetingComponents.HARDWARE,
     isSizeDependent: true,
     embodied: {
       humanHealth: 1.42 * Math.pow(10, -6),

@@ -1,31 +1,42 @@
 'use strict'
 
 const getClosest = require('../../../utils/get-closest')
-const Damage = require('./Damage')
+const Damage = require('../shared/Damage')
+const Component = require('../shared/Component')
 const {
   octetToBits,
   moToOctets,
   kbitToBits,
-  secoundsInMinute,
+  minuteToSeconds,
   bounds
 } = require('../../../constants/meeting')
 const networkDatabase = require('../../database/meeting/network')
+const softwareDatabase = require('../../database/meeting/software')
 
-class Software {
-  constructor (software) {
-    this._french = software.french
-    this._fileSize = software.fileSize
-    this._bandwith = software.bandwith
+/**
+ * Software class.
+ * A software is a component of a meeting scenario.
+ */
+class Software extends Component {
+  /**
+   * Create a software thanks to the software database.
+   * @param {String} name - The key of a software database entry, also the software name.
+   * @param {Number} instancesNumber - The number of software instances used for the meeting.
+   * @param {String} bandwithBound - The bandwith bound used for the meeting.
+   * @param {String} networkBound - The network estimation bound used for the meeting.
+   * @param {Number} meetingDuration - The meeting duration in minutes.
+   */
+  constructor ({ name }) {
+    // Get the corresponding JSON object from software database
+    const json = softwareDatabase[name]
+
+    super({ french: json.french, category: json.category })
+    this.name = json.name
+    this._fileSize = json.fileSize
+    this._bandwith = json.bandwith
   }
 
   // Getter
-
-  /**
-   * Getter for software french name.
-   */
-  get french () {
-    return this._french
-  }
 
   /**
    * Getter for software file size.
@@ -34,19 +45,28 @@ class Software {
     return this._fileSize
   }
 
+  /**
+   * Getter for software bandwith.
+   */
   get bandwith () {
     return this._bandwith
   }
 
-  // Setters
+  /**
+   * Getter of the damage caused by the software usage during the meeting.
+   */
+  get damage () {
+    return this._damage
+  }
 
   /**
-   * Setter of software french name.
-   * @param french - The new software french name.
+   * Getter of the software name.
    */
-  set french (newFrench) {
-    this._french = newFrench
+  get name () {
+    return this._name
   }
+
+  // Setters
 
   /**
    * Setter for software file size.
@@ -62,7 +82,21 @@ class Software {
     this._bandwith = bandwith
   }
 
-  // Others methods
+  /**
+   * Setter of the software name.
+   */
+  set name (name) {
+    this._name = name
+  }
+
+  /**
+   * Setter of the damage caused by the software usage during the meeting.
+   */
+  set damage (damage) {
+    this._damage = damage
+  }
+
+  // Other methods
 
   /**
    * Get the software file size in bits (it is originaly in Mo)
@@ -139,7 +173,7 @@ class Software {
    */
   computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
     // Initialize the new operating damage
-    const operatingDamage = new Damage()
+    const operatingDamage = new Damage({ component: this })
 
     // If the software has no inboud bandwith in the database, we return an empty damage
     if (!this.bandwith) return operatingDamage
@@ -157,7 +191,7 @@ class Software {
       // (1000 * (damageUnit/s)) / 1000 = damageUnit/s
       operatingDamage[categoryDamage] /= kbitToBits
       // (damageUnit/s) * 60 = damageUnit/minute
-      operatingDamage[categoryDamage] *= secoundsInMinute
+      operatingDamage[categoryDamage] *= minuteToSeconds
       // Damage for one minute use for all the instances
       operatingDamage[categoryDamage] *= instancesNumber
       // Damage for all the meeting
@@ -198,14 +232,13 @@ class Software {
   }
 
   /**
-   * Compute the total damage caused by the software.
+   * Compute and initialize the total damage caused by the software.
    * @param {Number} instancesNumber - The number of software instances used for the meeting.
    * @param {String} bandwithBound - The bandwith bound ('upper' or 'lower').
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @param {Number} meetingDuration - The meeting duration in minutes.
-   * @returns {Damage} The total dammage caused the software.
    */
-  computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
+  computeDamage ({ instancesNumber, bandwithBound, networkBound, meetingDuration }) {
     // Compute the embodied damage (damage caused by downloads)
     const embodiedDamage = new Damage(this.computeEmbodiedDamage(instancesNumber, networkBound))
 
@@ -216,7 +249,7 @@ class Software {
     const totalDamage = new Damage().add(embodiedDamage).add(operatingDamage)
 
     // Return the computed total damage
-    return totalDamage
+    this.damage = totalDamage
   }
 }
 
