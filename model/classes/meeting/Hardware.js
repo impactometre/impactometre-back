@@ -9,7 +9,7 @@ const {
   bounds
 } = require('../../../constants/meeting')
 
-const hardwareDatabase = require('../../database/meeting/hardware')
+const hardwareDatabase = require('../../../database/meeting/hardware')
 const Damage = require('../shared/Damage')
 const Component = require('../shared/Component')
 

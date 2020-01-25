@@ -1,6 +1,6 @@
 'use strict'
 
-const transportationMeanDatabase = require('../../database/meeting/transportationMean')
+const transportationMeanDatabase = require('../../../database/meeting/transportationMean')
 
 /**
  * TransportationMan class.

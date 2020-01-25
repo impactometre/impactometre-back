@@ -9,9 +9,9 @@ const {
   meetingCategoryDamage,
   bounds
 } = require('../../../../constants/meeting')
-const transportDatabase = require('../../../../model/database/meeting/transportationMean')
-const softwareDatabase = require('../../../../model/database/meeting/software')
-const hardwareDatabase = require('../../../../model/database/meeting/hardware')
+const transportDatabase = require('../../../../database/meeting/transportationMean')
+const softwareDatabase = require('../../../../database/meeting/software')
+const hardwareDatabase = require('../../../../database/meeting/hardware')
 
 describe('CategoryDamage class', () => {
   describe('#computeDamage()', () => {
