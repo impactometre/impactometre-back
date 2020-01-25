@@ -8,8 +8,13 @@
     <h1><%= title %></h1>
     <h2>En quelques questions</h2>
 
-    <fieldset>
-      <%- include('form-fieldset-hardware', { title: 'Matériel' }) %>
-    </fieldset>
+    <form autocomplete="on">
+      Combien de personnes participent à la réunion ?<br>
+      <input type="number" name="participantNumber" min="2" max="30" required>      
+      <fieldset>
+        <%- include('form-fieldset-hardware', { title: 'Matériel' }) %>
+      </fieldset>
+  
+    </form>
   </body>
 </html>
