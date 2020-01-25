@@ -12,7 +12,7 @@ const MeetingScenario = require('../../model/classes/meeting/MeetingScenario')
  * { [array_of_all_hardware_data], [array_of_all_software_data], [array_of_all_journey data]}.
  */
 function create ({ user, meetingDuration, payload }) {
-  // Create new meetingScenario
+  // Create new MeetingScenario
   const meetingScenario = new MeetingScenario({ user, meetingDuration, payload })
 
   // Add it to the database
