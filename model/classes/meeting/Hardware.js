@@ -45,9 +45,9 @@ class Hardware {
       json.components.length
     ) {
       json.components.forEach(name => {
-        /* If the the payload contains an entry for the component found
-        in database, we construct the compondent from the payload. Else
-        we costruct it from the database. The payload will contain an
+        /* If the payload contains an entry for the component found
+        in database, we construct the component from the payload. Else
+        we construct it from the database. The payload will contain an
         entry if additional parameter is required (e.g. the size of a
         TV_SCREEN) */
         this._components[name] = (!componentsPayload[name])
