@@ -17,9 +17,10 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    * @see CategoryDamage
    */
-  constructor ({ user, meetingDuration, payload }) {
+  constructor ({ user, meetingDuration, numberOfParticipants, payload }) {
     super(user)
     this._meetingDuration = meetingDuration
+    this._numberOfParticipants = numberOfParticipants
     this._damage = new MeetingDamage({
       hardwareComponents: payload[meetingCategoryDamage.HARDWARE],
       softwareComponents: payload[meetingCategoryDamage.SOFTWARE],
@@ -51,6 +52,10 @@ class MeetingScenario extends Scenario {
     return this._damage
   }
 
+  get numberOfParticipants () {
+    return this._numberOfParticipants
+  }
+
   // Setters
 
   /**
@@ -73,6 +78,10 @@ class MeetingScenario extends Scenario {
    */
   set damage (damage) {
     this._damage = damage
+  }
+
+  set numberOfParticipants (numberOfParticipants) {
+    this._numberOfParticipants = numberOfParticipants
   }
 
   // Other methods
