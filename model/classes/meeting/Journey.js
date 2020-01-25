@@ -1,33 +1,46 @@
 'use strict'
 
-const uniqid = require('uniqid')
-const Damage = require('./Damage')
+const Damage = require('../shared/Damage')
+const Component = require('../shared/Component')
+const TransportationMean = require('./TransportationMean')
+const {
+  meetingComponents
+} = require('../../../constants/meeting')
 
 /**
  * A journey has a mean of transportation,
  * a distance and a number of people.
  */
-class Journey {
+class Journey extends Component {
   /**
    * The Journey class constructor.
+   * @param {String} passenger - The name of the passenger.
    * @param {TransportationMean} mean - The mean of transportation.
    * @param {Float} distance - The distance of the journey.
    * @param {Integer} numberOfPeople - The number of people of the journey.
    */
-  constructor (mean, distance, numberOfPeople) {
-    this._id = uniqid()
-    this._mean = mean
+  constructor ({ passenger, mean, distance, numberOfPeople }) {
+    super({ french: '', category: meetingComponents.JOURNEY })
+    this._mean = new TransportationMean({ name: mean })
+    this._passenger = passenger
     this._distance = distance
     this._numberOfPeople = numberOfPeople
+
+    // Initialize journey french name
+    const french = (numberOfPeople > 1)
+      ? 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km avec ' + (numberOfPeople - 1) + ' autres personnes.'
+      : 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.'
+
+    this.french = french
   }
 
   // Getters
 
   /**
-   * Getter of the journey id.
+   * Getter of the journey passenger name.
    */
-  get id () {
-    return this._id
+  get passenger () {
+    return this._passenger
   }
 
   /**
@@ -51,7 +64,22 @@ class Journey {
     return this._numberOfPeople
   }
 
+  /**
+   * Getter of the damage caused by the journey.
+   */
+  get damage () {
+    return this._damage
+  }
+
   // Setters
+
+  /**
+   * Setter of the journey distance.
+   * @param {Float} distance - The new journey distance.
+   */
+  set passenger (passenger) {
+    this._passenger = passenger
+  }
 
   /**
    * Setter of the journey transportation mean.
@@ -77,6 +105,13 @@ class Journey {
     this._numberOfPeople = numberOfPeople
   }
 
+  /**
+   * Setter of the damage caused by the journey.
+   */
+  set damage (damage) {
+    this._damage = damage
+  }
+
   // Other methods
 
   /**
@@ -96,11 +131,11 @@ class Journey {
       const personKmAmount = this.distance * this.numberOfPeople
 
       embodiedDamage.mutate(category => {
-        return transportationMeanDamage[category] * personKmAmount
+        embodiedDamage[category] = transportationMeanDamage[category] * personKmAmount
       })
     } else {
       embodiedDamage.mutate(category => {
-        return transportationMeanDamage[category] * this.distance
+        embodiedDamage[category] = transportationMeanDamage[category] * this.distance
       })
     }
 
@@ -109,12 +144,11 @@ class Journey {
   }
 
   /**
-   * Compute the total damage of the journey.
+   * Compute and initialize the total damage of the journey.
    * There is a method with the same name for Software class and Hardware class.
-   * @returns {Damage} The total damage caused by the journey.
    */
   computeDamage () {
-    return this.computeEmbodiedDamage()
+    this.damage = this.computeEmbodiedDamage()
   }
 }
 
