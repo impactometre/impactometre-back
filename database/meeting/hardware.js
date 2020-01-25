@@ -173,7 +173,7 @@ const hardware = {
     french: 'micro',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
-    embodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1',
+    embodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     // source: Jabra Speak 410 - https://www.jabra.fr/business/speakerphones/jabra-speak-series/jabra-speak-410#/#7410-209
     weight: 180.3,
     operatingOneMinVisio: {

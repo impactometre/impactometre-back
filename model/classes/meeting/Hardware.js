@@ -35,11 +35,13 @@ class Hardware extends Component {
     this._name = json.name
     this._quantity = quantity
     this._size = size
+    this._weight = json.weight
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
+    this._embodiedAssimilatedTo = json.embodiedAssimilatedTo
 
     this._embodied = (json.embodiedAssimilatedTo)
-      ? hardwareDatabase[json.embodiedAssimilatedTo.embodied]
+      ? hardwareDatabase[json.embodiedAssimilatedTo].embodied
       : json.embodied
 
     this._operatingOneMinVisio = json.operatingOneMinVisio
@@ -98,6 +100,10 @@ class Hardware extends Component {
     return this._size
   }
 
+  get weight () {
+    return this._weight
+  }
+
   /**
    * Get the optional weight. Useful if the embodied
    * damage is assilimated to the damage of 1g of another
@@ -127,6 +133,10 @@ class Hardware extends Component {
    */
   get isSizeDependent () {
     return this._isSizeDependent
+  }
+
+  get embodiedAssimilatedTo () {
+    return this._embodiedAssimilatedTo
   }
 
   /**
@@ -215,6 +225,10 @@ class Hardware extends Component {
 
   set size (size) {
     this._size = size
+  }
+
+  set weight (weight) {
+    this._weight = weight
   }
 
   set shareForVisio (shareForVisio) {
@@ -346,6 +360,30 @@ class Hardware extends Component {
     ) {
       // Damage is for visio time
       damageType = hardwareDamageTypes.EMBODIED
+
+      // Embodied damage may be assimilated to the one of another hardware
+      if (this.embodiedAssimilatedTo) {
+        /* Assimilated emmbodied is for 1 g, so we have to multiply
+        it by the weight of our hardware */
+
+        let weight
+
+        // Get weight specific value if available
+        if (this.weight.upper && this.weight.lower) {
+          weight = (bound != null)
+            ? this.weight[bound]
+            : this.weight[bounds.UPPER]
+        } else {
+          weight = this.weight
+        }
+
+        const weightEmbodied = this.embodied
+        Object.keys(weightEmbodied).map(category => {
+          weightEmbodied[category] *= weight
+        })
+
+        return weightEmbodied
+      }
     }
 
     if (!this[damageType]) {
