@@ -13,6 +13,8 @@ describe('meetingScenario controller', () => {
   const user = 'vlegauch'
   // The meeting duration in minutes
   const meetingDuration = 120
+  // Number of participants
+  const numberOfParticipants = 4
   // The JSON object that enables to creates components linked to the meeting
   const payload = {
     [meetingCategoryDamage.HARDWARE]: [
@@ -59,7 +61,7 @@ describe('meetingScenario controller', () => {
       }
     ]
   }
-  create({ user, meetingDuration, payload })
+  create({ user, meetingDuration, numberOfParticipants, payload })
   describe('#create()', () => {
     // Create the meeting scenario
     it('shoud create a meeting scenario and add it the database', () => {
