@@ -12,10 +12,9 @@ class Component {
    * @param {String} french - The component french name.
    * @param {string} category - The component catogory (hardware, software or journey)
    */
-  constructor ({ name, french, category }) {
+  constructor ({ french, category }) {
     if (new.target === Component) throw TypeError('Cannot create instance of Component because abstract class')
     this._id = uniqid()
-    this._name = name
     this._french = french
     this._category = category
   }
@@ -27,13 +26,6 @@ class Component {
    */
   get id () {
     return this._id
-  }
-
-  /**
-   * Getter of the component name.
-   */
-  get name () {
-    return this._name
   }
 
   /**
@@ -64,13 +56,6 @@ class Component {
    */
   set id (id) {
     this._id = id
-  }
-
-  /**
-   * Setter of the component name.
-   */
-  set name (name) {
-    this._name = name
   }
 
   /**

@@ -1,48 +1,39 @@
 'use strict'
 
 const Scenario = require('../shared/Scenario')
+const MeetingDamage = require('./MeetingDamage')
+const {
+  meetingCategoryDamage
+} = require('../../../constants/meeting')
 
 class MeetingScenario extends Scenario {
   /**
    * Create a scenario corresponding to a meeting.
    * @param {String} user - The user who creates the scenario.
-   * @param {Map<string, Journey>} journeys - All the journeys entered by the user indexed by their ids.
-   * @param {Hardware} hardware  - The different kinds of hardware device used for the meeting.
-   * @param {Software} software - The software used for the meeting.
    * @param {Number} meetingDuration - The scenario duration in minutes.
+   * @param {Object} payload - A JSON object that contains three arrays that enable to create the three
+   * category damages (hardware, software, transport) linked to the meeting. The payload is like:
+   * { [array_of_all_hardware_data], [array_of_all_software_data], [array_of_all_journey data]}.
+   * @see MeetingDamage
+   * @see CategoryDamage
    */
-  constructor (user, journeys, hardware, software, meetingDuration) {
+  constructor ({ user, meetingDuration, payload }) {
     super(user)
-    this._journeys = journeys
-    this._hardware = hardware
-    this._software = software
     this._meetingDuration = meetingDuration
+    this._damage = new MeetingDamage({
+      hardwareComponents: payload[meetingCategoryDamage.HARDWARE],
+      softwareComponents: payload[meetingCategoryDamage.SOFTWARE],
+      journeyComponents: payload[meetingCategoryDamage.JOURNEY]
+    })
   }
 
   // Getters
 
   /**
-   * Getter of all the journeys entered by the user indexed by their ids.
-   * @see {Journey}
+   * Getter of the user who creates the meeting scenario.
    */
-  get journeys () {
-    return this._journeys
-  }
-
-  /**
-   * Getter of the different kinds of hardware device used for the meeting.
-   * @see {Hardware}
-   */
-  get hardware () {
-    return this._hardware
-  }
-
-  /**
-   * Getter the software used for the scenario.
-   * @see {Sofware}
-   */
-  get software () {
-    return this._software
+  get user () {
+    return this._user
   }
 
   /**
@@ -52,30 +43,21 @@ class MeetingScenario extends Scenario {
     return this._meetingDuration
   }
 
+  /**
+   * Getter of the MeetingDamage object linked to the meeting scenario.
+   * @see MeetingDamage
+   */
+  get damage () {
+    return this._damage
+  }
+
   // Setters
 
   /**
-   * Setter of all the journeys entered by the user indexed by their ids.
-   * @see {Journey}
+   * Setter of the user who creates the meeting scenario.
    */
-  set journeys (journeys) {
-    this._journeys = journeys
-  }
-
-  /**
-   * Setter of the different kinds of hardware device used for the meeting.
-   * @see {Hardware}
-   */
-  set hardware (hardware) {
-    this._hardware = hardware
-  }
-
-  /**
-   * Setter the software used for the meeting.
-   * @see {Sofware}
-   */
-  set software (software) {
-    this._software = software
+  set user (user) {
+    this._user = user
   }
 
   /**
@@ -85,7 +67,26 @@ class MeetingScenario extends Scenario {
     this._meetingDuration = meetingDuration
   }
 
+  /**
+   * Setter of the MeetingDamage object linked to the meeting scenario.
+   * @see MeetingDamage
+   */
+  set damage (damage) {
+    this._damage = damage
+  }
+
   // Other methods
+
+  /**
+   * Compute the damage caused by all the meeting components (hardware , software and journeys)
+   * Call computeDamage() methods of the MeetingDamage object linked to the MeetingScenario object.
+   * @param damagePayload - A JSON object send by front end that contains all necessary data to compute
+   * the damage caused by the meeting.
+   * @see MeetingDamage
+   */
+  computeDamage (damagePayload) {
+    this.damage.computeDamage(damagePayload)
+  }
 }
 
 module.exports = MeetingScenario

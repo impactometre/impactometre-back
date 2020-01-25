@@ -69,17 +69,17 @@ class Damage {
   }
 
   /**
-   * Add the given damage values to the one
-   * of this damage.
+   * Return a new damage that is the addition between this damage and an other one.
    * @param {Damage} - The damage we want to add.
    * @returns {Damage} This bigger damage.
    */
   add (damage) {
-    Object.keys(this).map(category => {
-      this[category] += damage[category]
+    return new Damage({
+      humanHealth: this.humanHealth + damage.humanHealth,
+      ecosystemQuality: this.ecosystemQuality + damage.ecosystemQuality,
+      climateChange: this.climateChange + damage.climateChange,
+      resources: this.resources + damage.resources
     })
-
-    return this
   }
 }
 

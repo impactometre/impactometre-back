@@ -28,4 +28,4 @@ $ npm test
 ```
 
 ## Wiki
-Voir le [wiki](https://gitlab.utc.fr/tx-techno-num/impactometre/wikis/home) pour détails sur certains aspects du projet, notamment des définitions sur les données manipulées, et des guides sur les technos utilisées.
+Voir le [wiki](https://gitlab.utc.fr/tx-techno-num/impactometre/wikis/Accueil) pour détails sur certains aspects du projet, notamment des définitions sur les données manipulées, et des guides sur les technos utilisées.
