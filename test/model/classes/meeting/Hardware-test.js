@@ -91,7 +91,20 @@ describe('Hardware class', () => {
 
       assert.deepStrictEqual(expected, component._components)
     })
+    it('should create a hardware for all hardwares which embodied is assimilated to another one', () => {
+      Object.values(hardwareDatabase)
+        .filter(json => json.embodiedAssimilatedTo)
+        .forEach(json => {
+          const instance = new Hardware({ name: json.name })
+
+          assert.deepStrictEqual(
+            instance.embodied,
+            hardwareDatabase[json.embodiedAssimilatedTo].embodied
+          )
+        })
+    })
   })
+
   describe('#computeVisioOrStandbyTimeOverLife()', () => {
     describe('operating', () => {
       const hardwaresWithKnownOperatingTime = Object.keys(knownOperatingTimeOverLife)
@@ -261,7 +274,7 @@ describe('Hardware class', () => {
         }
 
         Object.values(hardwareDatabase).filter(json => {
-          return (!json[damageType])
+          return (!json[damageType] && !json.embodiedAssimilatedTo)
         }).forEach(json => {
           const component = new Hardware({ name: json.name })
           assert.strictEqual(
@@ -270,6 +283,31 @@ describe('Hardware class', () => {
           )
         })
       })
+    })
+    it('should get assimilated embodied damages', () => {
+      Object.values(hardwareDatabase)
+        .filter(json => json.embodiedAssimilatedTo)
+        .forEach(json => {
+          const instance = new Hardware({ name: json.name })
+
+          const weight = (json.weight.upper && json.weight.lower)
+            ? json.weight.upper
+            : json.weight
+
+          console.log(hardwareDatabase.ASSIMILATION_COMPUTER_TOWER_1G)
+          const expected = hardwareDatabase[json.embodiedAssimilatedTo].embodied
+          Object.keys(expected).map(category => {
+            expected[category] *= weight
+          })
+
+          assert.deepStrictEqual(
+            instance.getTypedDamage(hardwareDamageTypes.EMBODIED_VISIO),
+            expected
+          )
+          Object.values(expected).forEach(categoryDamageValue => {
+            assert.isNotNaN(categoryDamageValue)
+          })
+        })
     })
     it('should return the unique available value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -382,7 +420,7 @@ describe('Hardware class', () => {
         Object.values(hardwareDatabase)
           .filter(json => {
             return (
-              !json[damageType] &&
+              !json[damageType] && !json.embodiedAssimilatedTo &&
               !(
                 Array.isArray(json.components) &&
                 json.components.length
@@ -468,6 +506,30 @@ describe('Hardware class', () => {
             assert.deepStrictEqual(expected, component.computeTypedDamage(damageType, meetingDuration))
           })
       })
+    })
+    it('should compute assimilated embodied damages', () => {
+      Object.values(hardwareDatabase)
+        .filter(json => json.embodiedAssimilatedTo)
+        .forEach(json => {
+          const instance = new Hardware({ name: json.name })
+
+          const weight = (json.weight.upper && json.weight.lower)
+            ? json.weight.upper
+            : json.weight
+
+          const expected = hardwareDatabase[json.embodiedAssimilatedTo].embodied
+          Object.keys(expected).map(category => {
+            expected[category] *= weight
+          })
+
+          assert.deepStrictEqual(
+            instance.getTypedDamage(hardwareDamageTypes.EMBODIED_VISIO),
+            expected
+          )
+          Object.values(expected).forEach(categoryDamageValue => {
+            assert.isNotNaN(categoryDamageValue)
+          })
+        })
     })
     it('should compute the damage of a composite hardware', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
