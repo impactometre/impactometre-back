@@ -60,9 +60,9 @@ const knownOperatingTimeOverLife = {
  * Used hardwares operating time per day.
  */
 const hardwareOperatingTimePerDay = {
-  DESKTOP: 7,
+  NOT_VISIO_DEDICATED: 7,
   // Considering it is used 3 hours per week
-  LOGITECH_KIT: 3 / workedDaysByWeek
+  VISIO_DEDICATED: 3 / workedDaysByWeek
 }
 
 /**
