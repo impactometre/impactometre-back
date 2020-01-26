@@ -21,11 +21,15 @@ class MeetingScenario extends Scenario {
     super(user)
     this._meetingDuration = meetingDuration
     this._numberOfParticipants = numberOfParticipants
-    this._damage = new MeetingDamage({
-      hardwareComponents: payload[meetingCategoryDamage.HARDWARE],
-      softwareComponents: payload[meetingCategoryDamage.SOFTWARE],
-      journeyComponents: payload[meetingCategoryDamage.JOURNEY]
+
+    const params = {}
+    Object.values(meetingCategoryDamage).forEach(category => {
+      if (payload[category]) {
+        params[category] = payload[category]
+      }
     })
+
+    this._damage = new MeetingDamage(params)
   }
 
   // Getters

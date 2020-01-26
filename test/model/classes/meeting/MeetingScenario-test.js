@@ -1,6 +1,7 @@
 'use strict'
 
-const assert = require('assert')
+const chai = require('chai')
+const assert = chai.assert
 const MeetingScenario = require('../../../../model/classes/meeting/MeetingScenario')
 const MeetingDamage = require('../../../../model/classes/meeting/MeetingDamage')
 const hardwareDatabase = require('../../../../database/meeting/hardware')
@@ -12,59 +13,70 @@ const {
 } = require('../../../../constants/meeting')
 
 describe('MeetingScenario class', () => {
+  // The user who creates the meeting
+  const user = 'vlegauch'
+  // The meeting duration in minutes
+  const meetingDuration = 120
+  // Number of participants
+  const numberOfParticipants = 4
+  // The JSON object that enables to creates components linked to the meeting
+  const payload = {
+    [meetingCategoryDamage.HARDWARE]: [
+      { name: hardwareDatabase.DESKTOP.name },
+      { name: hardwareDatabase.DESKTOP.name },
+      { name: hardwareDatabase.DESKTOP.name },
+      { name: hardwareDatabase.LAPTOP.name },
+      { name: hardwareDatabase.LOGITECH_KIT.name },
+      { name: hardwareDatabase.TV.name },
+      { name: hardwareDatabase.TV.name },
+      { name: hardwareDatabase.METAL_STRUCTURE.name }
+    ],
+    [meetingCategoryDamage.SOFTWARE]: [{ name: softwareDatabase.SKYPE.name }],
+    [meetingCategoryDamage.JOURNEY]: [
+      {
+        passenger: 'Passenger 1',
+        mean: transportDatabase.CAR_ELECTRIC_ONE_KM.name,
+        distance: 120,
+        numberOfPeople: 4
+      },
+      {
+        passenger: 'Passenger 1',
+        mean: transportDatabase.BUS_LARGE_DISTANCE_ONE_PERSON_KM.name,
+        distance: 40,
+        numberOfPeople: 1
+      },
+      {
+        passenger: 'Passenger 2',
+        mean: transportDatabase.CAR_ELECTRIC_ONE_KM.name,
+        distance: 120,
+        numberOfPeople: 4
+      },
+      {
+        passenger: 'Passenger 2',
+        mean: transportDatabase.TRAIN_REGIONAL_ONE_PERSON_KM.name,
+        distance: 300,
+        numberOfPeople: 1
+      },
+      {
+        passenger: 'Passenger 2',
+        mean: transportDatabase.BIKE_ONE_PERSON_ONE_KM.name,
+        distance: 10,
+        numberOfPeople: 1
+      }
+    ]
+  }
+
+  // Create scenario with missing components in a category
+  const incompletePayload = Object.assign({}, payload)
+  delete incompletePayload[meetingCategoryDamage.JOURNEY]
+  const incompleteScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload: incompletePayload })
+
+  describe('#constructor()', () => {
+    it('should create a MeetingScenario without components in all categories', () => {
+      assert.notStrictEqual(incompleteScenario.damage.softwareDamage.components, new Map())
+    })
+  })
   describe('#computeDamage()', () => {
-    // The user who creates the meeting
-    const user = 'vlegauch'
-    // The meeting duration in minutes
-    const meetingDuration = 120
-    // Number of participants
-    const numberOfParticipants = 4
-    // The JSON object that enables to creates components linked to the meeting
-    const payload = {
-      [meetingCategoryDamage.HARDWARE]: [
-        { name: hardwareDatabase.DESKTOP.name },
-        { name: hardwareDatabase.DESKTOP.name },
-        { name: hardwareDatabase.DESKTOP.name },
-        { name: hardwareDatabase.LAPTOP.name },
-        { name: hardwareDatabase.LOGITECH_KIT.name },
-        { name: hardwareDatabase.TV.name },
-        { name: hardwareDatabase.TV.name },
-        { name: hardwareDatabase.METAL_STRUCTURE.name }
-      ],
-      [meetingCategoryDamage.SOFTWARE]: [{ name: softwareDatabase.SKYPE.name }],
-      [meetingCategoryDamage.JOURNEY]: [
-        {
-          passenger: 'Passenger 1',
-          mean: transportDatabase.CAR_ELECTRIC_ONE_KM.name,
-          distance: 120,
-          numberOfPeople: 4
-        },
-        {
-          passenger: 'Passenger 1',
-          mean: transportDatabase.BUS_LARGE_DISTANCE_ONE_PERSON_KM.name,
-          distance: 40,
-          numberOfPeople: 1
-        },
-        {
-          passenger: 'Passenger 2',
-          mean: transportDatabase.CAR_ELECTRIC_ONE_KM.name,
-          distance: 120,
-          numberOfPeople: 4
-        },
-        {
-          passenger: 'Passenger 2',
-          mean: transportDatabase.TRAIN_REGIONAL_ONE_PERSON_KM.name,
-          distance: 300,
-          numberOfPeople: 1
-        },
-        {
-          passenger: 'Passenger 2',
-          mean: transportDatabase.BIKE_ONE_PERSON_ONE_KM.name,
-          distance: 10,
-          numberOfPeople: 1
-        }
-      ]
-    }
     // Create the MeetingScenario object
     const meetingScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload })
 
@@ -77,9 +89,9 @@ describe('MeetingScenario class', () => {
 
     // Create the expected MeetingDamage object
     const meetingDamage = new MeetingDamage({
-      hardwareComponents: payload[meetingCategoryDamage.HARDWARE],
-      softwareComponents: payload[meetingCategoryDamage.SOFTWARE],
-      journeyComponents: payload[meetingCategoryDamage.JOURNEY]
+      hardware: payload[meetingCategoryDamage.HARDWARE],
+      software: payload[meetingCategoryDamage.SOFTWARE],
+      journey: payload[meetingCategoryDamage.JOURNEY]
     })
     // Compute its total damage
     meetingDamage.computeDamage(damagePayload)
@@ -88,10 +100,27 @@ describe('MeetingScenario class', () => {
     meetingScenario.computeDamage(damagePayload)
 
     it('should compute the total damage caused by the meeting', () => {
-      assert.deepStrictEqual(
-        meetingScenario.damage.totalDamage,
-        meetingDamage.totalDamage
-      )
+      Object.keys(meetingScenario.damage.totalDamage).forEach(category => {
+        assert.strictEqual(meetingScenario.damage.totalDamage[category], meetingDamage.totalDamage[category])
+        assert.isNotNaN(meetingScenario.damage.totalDamage)
+        assert.isNotNull(meetingScenario.damage.totalDamage)
+      })
+    })
+    it('should compute the damage of an incomplete scenario', () => {
+      const damagePayload = {
+        [meetingCategoryDamage.HARDWARE]: { meetingDuration: 120, bound: bounds.UPPER },
+        [meetingCategoryDamage.SOFTWARE]: { instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 },
+        [meetingCategoryDamage.JOURNEY]: {}
+      }
+      incompleteScenario.computeDamage(damagePayload)
+      const damage = incompleteScenario.damage.totalDamage
+      const expected = incompleteScenario.damage.hardwareDamage.totalDamage.add(incompleteScenario.damage.softwareDamage.totalDamage)
+
+      Object.keys(damage).forEach(category => {
+        assert.strictEqual(damage[category], expected[category])
+        assert.isNotNaN(damage[category])
+        assert.isNotNull(damage[category])
+      })
     })
   })
 })
