@@ -35,9 +35,15 @@ class Hardware extends Component {
     this._name = json.name
     this._quantity = quantity
     this._size = size
+    this._weight = json.weight
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
-    this._embodied = json.embodied
+    this._embodiedAssimilatedTo = json.embodiedAssimilatedTo
+
+    this._embodied = (json.embodiedAssimilatedTo)
+      ? Object.assign({}, hardwareDatabase[json.embodiedAssimilatedTo].embodied)
+      : json.embodied
+
     this._operatingOneMinVisio = json.operatingOneMinVisio
     this._operatingOneMinStandby = json.operatingOneMinStandby
     this._lifetime = json.lifetime
@@ -95,6 +101,16 @@ class Hardware extends Component {
   }
 
   /**
+   * Get the optional weight. Useful if the embodied
+   * damage is assilimated to the damage of 1g of another
+   * hardware.
+   * @returns {Number} The optional weight.
+   */
+  get weight () {
+    return this._weight
+  }
+
+  /**
    * Get the hardware share dedicated to visio.
    * E.g. if the hardware is a laptop, the user
    * may be multi-tasking during the visio,
@@ -113,6 +129,15 @@ class Hardware extends Component {
    */
   get isSizeDependent () {
     return this._isSizeDependent
+  }
+
+  /**
+   * Get the optional hardware name to which the current
+   * hardware's embodied damage is assimilated to.
+   * @see hardware.js in database
+   */
+  get embodiedAssimilatedTo () {
+    return this._embodiedAssimilatedTo
   }
 
   /**
@@ -194,6 +219,10 @@ class Hardware extends Component {
     this._size = size
   }
 
+  set weight (weight) {
+    this._weight = weight
+  }
+
   set shareForVisio (shareForVisio) {
     this._shareForVisio = shareForVisio
   }
@@ -266,7 +295,6 @@ class Hardware extends Component {
           damage[category] *= this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
       } else {
-        damage = new Damage({ component: this, ...this.getTypedDamage(damageType, bound) })
         damage.mutate(category => {
           damage[category] *= this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
@@ -323,6 +351,29 @@ class Hardware extends Component {
     ) {
       // Damage is for visio time
       damageType = hardwareDamageTypes.EMBODIED
+
+      // Embodied damage may be assimilated to the one of another hardware
+      if (this.embodiedAssimilatedTo) {
+        /* Assimilated embodied is for 1 g, so we have to multiply
+        it by the weight of our hardware */
+
+        let boundSpecificWeight
+        // Get weight specific value if available
+        if (this.weight.upper && this.weight.lower) {
+          boundSpecificWeight = (bound != null)
+            ? this.weight[bound]
+            : this.weight[bounds.UPPER]
+        } else {
+          boundSpecificWeight = this.weight
+        }
+
+        const weightEmbodied = Object.assign({}, this.embodied)
+        Object.keys(weightEmbodied).map(category => {
+          weightEmbodied[category] *= boundSpecificWeight
+        })
+
+        return weightEmbodied
+      }
     }
 
     if (!this[damageType]) {
