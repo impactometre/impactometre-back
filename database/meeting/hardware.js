@@ -13,7 +13,7 @@ const hardware = {
   * from Ecovinvent database, we assimilate the damage
   * caused by the object to the damage caused by a known
   * object.
-  * */
+  */
   ASSIMILATION_COMPUTER_TOWER_1G: {
     name: 'ASSIMILATION_COMPUTER_TOWER_1G',
     french: '1 g d\'une tour d\'ordinateur',
@@ -29,7 +29,7 @@ const hardware = {
   },
   /**
    * DESKTOP AND LAPTOP
-   * */
+   */
   DESKTOP: {
     name: 'DESKTOP',
     french: 'ordinateur fixe',
