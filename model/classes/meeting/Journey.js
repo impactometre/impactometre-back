@@ -140,7 +140,8 @@ class Journey extends Component {
       })
     }
 
-    /* If the transportation mean is a car, we return the damage only for one participant.
+    /* If the transportation mean is a car, we return the damage only for one participant
+    (i.e the total damage divided by the number of people travelling in the car).
     If two people travelled in the same car, two journeys will have been created, one for
     each traveller. */
     if (this.mean.subCategory === transportationMeanSubCategories.CAR) {
