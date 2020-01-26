@@ -100,10 +100,6 @@ class Hardware extends Component {
     return this._size
   }
 
-  get weight () {
-    return this._weight
-  }
-
   /**
    * Get the optional weight. Useful if the embodied
    * damage is assilimated to the damage of 1g of another
@@ -133,10 +129,6 @@ class Hardware extends Component {
    */
   get isSizeDependent () {
     return this._isSizeDependent
-  }
-
-  get embodiedAssimilatedTo () {
-    return this._embodiedAssimilatedTo
   }
 
   /**
