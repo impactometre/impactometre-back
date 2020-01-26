@@ -89,9 +89,9 @@ const transportationMeanSubCategories = {
  * Damage categories for meetings
  */
 const meetingCategoryDamage = {
-  HARDWARE: 'HARDWARE',
-  SOFTWARE: 'SOFTWARE',
-  JOURNEY: 'JOURNEY'
+  HARDWARE: 'hardware',
+  SOFTWARE: 'software',
+  JOURNEY: 'journey'
 }
 
 exports.hourToMinutes = hourToMinutes
