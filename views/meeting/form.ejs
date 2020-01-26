@@ -3,6 +3,7 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascripts/meeting/form.js"></script>
   </head>
   <body>
     <h1><%= title %></h1>
@@ -11,10 +12,11 @@
     <form>
 
       Combien de personnes participent à la réunion ?<br>
-      <input type="number" name="participantNumber" min="2" max="30" required>  
+      <input type="number" name="participantNumber" min="2" max="30">  
 
       <%- include('form-fieldset-hardware', { title: 'Matériel' }) %>
   
+      <input type="submit">
     </form>
   </body>
 </html>
