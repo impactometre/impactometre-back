@@ -21,3 +21,9 @@ body {
   font-size: 1rem;
   font-weight: 100;
   line-height: 1.7; }
+
+.conditionalForm {
+  display: none; }
+
+.conditionalForm--activator:checked ~ .conditionalForm {
+  display: block; }

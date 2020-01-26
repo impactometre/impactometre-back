@@ -1,0 +1,7 @@
+.conditionalForm {
+  display: none;
+}
+
+.conditionalForm--activator:checked ~ .conditionalForm {
+  display: inline-flex;
+}
