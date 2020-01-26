@@ -16,7 +16,7 @@ const hardware = {
   * */
   ASSIMILATION_COMPUTER_TOWER_1G: {
     name: 'ASSIMILATION_COMPUTER_TOWER_1G',
-    french: '1g tour ordinateur',
+    french: '1 g d\'une tour d\'ordinateur',
     isSizeDependent: false,
     embodied: {
       humanHealth: 4.35 * Math.pow(10, -3),
