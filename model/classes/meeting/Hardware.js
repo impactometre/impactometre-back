@@ -354,7 +354,7 @@ class Hardware extends Component {
 
       // Embodied damage may be assimilated to the one of another hardware
       if (this.embodiedAssimilatedTo) {
-        /* Assimilated emmbodied is for 1 g, so we have to multiply
+        /* Assimilated embodied is for 1 g, so we have to multiply
         it by the weight of our hardware */
 
         let boundSpecificWeight

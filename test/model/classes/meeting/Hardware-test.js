@@ -101,10 +101,12 @@ describe('Hardware class', () => {
             instance.embodied,
             hardwareDatabase[json.embodiedAssimilatedTo].embodied
           )
+          Object.values(instance.embodied).forEach(categoryDamageValue => {
+            assert.isNotNaN(categoryDamageValue)
+          })
         })
     })
   })
-
   describe('#computeVisioOrStandbyTimeOverLife()', () => {
     describe('operating', () => {
       const hardwaresWithKnownOperatingTime = Object.keys(knownOperatingTimeOverLife)
