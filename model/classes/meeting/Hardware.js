@@ -41,7 +41,7 @@ class Hardware extends Component {
     this._embodiedAssimilatedTo = json.embodiedAssimilatedTo
 
     this._embodied = (json.embodiedAssimilatedTo)
-      ? hardwareDatabase[json.embodiedAssimilatedTo].embodied
+      ? Object.assign({}, hardwareDatabase[json.embodiedAssimilatedTo].embodied)
       : json.embodied
 
     this._operatingOneMinVisio = json.operatingOneMinVisio
@@ -295,7 +295,6 @@ class Hardware extends Component {
           damage[category] *= this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
       } else {
-        damage = new Damage({ component: this, ...this.getTypedDamage(damageType, bound) })
         damage.mutate(category => {
           damage[category] *= this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
@@ -358,20 +357,19 @@ class Hardware extends Component {
         /* Assimilated emmbodied is for 1 g, so we have to multiply
         it by the weight of our hardware */
 
-        let weight
-
+        let boundSpecificWeight
         // Get weight specific value if available
         if (this.weight.upper && this.weight.lower) {
-          weight = (bound != null)
+          boundSpecificWeight = (bound != null)
             ? this.weight[bound]
             : this.weight[bounds.UPPER]
         } else {
-          weight = this.weight
+          boundSpecificWeight = this.weight
         }
 
-        const weightEmbodied = this.embodied
+        const weightEmbodied = Object.assign({}, this.embodied)
         Object.keys(weightEmbodied).map(category => {
-          weightEmbodied[category] *= weight
+          weightEmbodied[category] *= boundSpecificWeight
         })
 
         return weightEmbodied
