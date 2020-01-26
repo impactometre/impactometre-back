@@ -8,28 +8,28 @@ const {
 
 const hardware = {
   /**
-   * ASSIMILATION CANDIDATES
-   * If we cannot have the damage values directly
-   * from Ecovinvent database, we assimilate the damage
-   * caused by the object to the damage caused by a known
-   * object.
-   */
+  * ASSIMILATION CANDIDATES
+  * If we cannot have the damage values directly
+  * from Ecovinvent database, we assimilate the damage
+  * caused by the object to the damage caused by a known
+  * object.
+  */
   ASSIMILATION_COMPUTER_TOWER_1G: {
     name: 'ASSIMILATION_COMPUTER_TOWER_1G',
     french: '1 g d\'une tour d\'ordinateur',
     isSizeDependent: false,
     embodied: {
-      humanHealth: 0.004353982,
-      ecosystemQuality: 0.000843363,
-      climateChange: 0.002035398,
-      resources: 0.00185841
+      humanHealth: 4.35 * Math.pow(10, -3),
+      ecosystemQuality: 8.43 * Math.pow(10, -4),
+      climateChange: 2.04 * Math.pow(10, -3),
+      resources: 1.86 * Math.pow(10, -3)
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
   },
   /**
    * DESKTOP AND LAPTOP
-   * */
+   */
   DESKTOP: {
     name: 'DESKTOP',
     french: 'ordinateur fixe',
@@ -173,7 +173,7 @@ const hardware = {
     french: 'micro',
     category: meetingComponents.HARDWARE,
     isSizeDependent: false,
-    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1',
+    embodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     // source: Jabra Speak 410 - https://www.jabra.fr/business/speakerphones/jabra-speak-series/jabra-speak-410#/#7410-209
     weight: 180.3,
     operatingOneMinVisio: {
@@ -198,7 +198,7 @@ const hardware = {
       lower: 162,
       upper: 628
     },
-    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
+    embodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     operatingOneMinVisio: {
       humanHealth: 9.84 * Math.pow(10, -12),
       ecosystemQuality: 4.53 * Math.pow(10, -6),
@@ -296,7 +296,7 @@ const hardware = {
     isSizeDependent: false,
     // camera = 670 g, hub = 170 g, speakerphone = 920g, remote = 51 g, TOTAL = 1811 g
     weight: 1811,
-    isEmbodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
+    embodiedAssimilatedTo: 'ASSIMILATION_COMPUTER_TOWER_1G',
     operatingOneMinStandby: {
       humanHealth: 5.9 * Math.pow(10, -12),
       ecosystemQuality: 2.72 * Math.pow(10, -6),
