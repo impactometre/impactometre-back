@@ -11,16 +11,16 @@ class MeetingDamage {
    * It's composed of a Damage component that represents the total damage caused by the meeting
    * and of three CategoryDamage objects that repesent the damages caused by all
    * the meeting components gathered by category (hardware, software, transport).
-   * @param {Object[]} hardwareComponents - An array of JSON objects that contain all necessary data to create the hardware components of the meeting.
-   * @param {Object[]} softwareComponents - An array of JSON objects that contain all necessary data to create the software components of the meeting.
-   * @param {Object[]} journeyComponents - An array of JSON objects that contain all necessary data to create the transport components of the meeting.
+   * @param {Object[]} hardware - An array of JSON objects that contain all necessary data to create the hardware components of the meeting.
+   * @param {Object[]} software - An array of JSON objects that contain all necessary data to create the software components of the meeting.
+   * @param {Object[]} journey - An array of JSON objects that contain all necessary data to create the transport components of the meeting.
    * @see CategoryDamage
    */
-  constructor ({ hardwareComponents, softwareComponents, journeyComponents }) {
+  constructor ({ hardware = null, software = null, journey = null }) {
     // Create all the category damages linked to the meeting
-    this._hardwareDamage = new CategoryDamage({ components: hardwareComponents, category: meetingCategoryDamage.HARDWARE })
-    this._softwareDamage = new CategoryDamage({ components: softwareComponents, category: meetingCategoryDamage.SOFTWARE })
-    this._journeyDamage = new CategoryDamage({ components: journeyComponents, category: meetingCategoryDamage.JOURNEY })
+    this._hardwareDamage = new CategoryDamage({ components: hardware, category: meetingCategoryDamage.HARDWARE })
+    this._softwareDamage = new CategoryDamage({ components: software, category: meetingCategoryDamage.SOFTWARE })
+    this._journeyDamage = new CategoryDamage({ components: journey, category: meetingCategoryDamage.JOURNEY })
   }
 
   // Getters
