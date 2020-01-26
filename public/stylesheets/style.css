@@ -26,4 +26,4 @@ body {
   display: none; }
 
 .conditionalForm--activator:checked ~ .conditionalForm {
-  display: block; }
+  display: inline-block; }

@@ -64,7 +64,7 @@
             Non        
         </label><br>
 
-        <div class="conditionalForm">
+        <div id="additionalScreens" class="conditionalForm">
             Combien ? <br>
 
             <div>
@@ -75,12 +75,13 @@
             </div>
 
             <div>
-                <label for="tvScreenNumber">
-                    écrans tv        
-                </label><br> 
-                <input type="number" name="tvScreenNumber" id="tvScreenNumber" min="0" max="50">
+                <button type="button" onclick="removeATvScreen()">-</button>
+                <span id="tvScreenNumber"> 0 </span>
+                <button type="button" onclick="addATvScreen()">+</button>
+                écrans de télévision
+                <!--<input type="number" name="tvScreenNumber" id="tvScreenNumber" min="0" max="50"
+                    oninput="showScreenSizeInputs(value)"> -->
             </div>
-
         </div>
     </div>
 
@@ -90,7 +91,7 @@
         <label for="hasVideoproj">
             Oui
         </label>
-        <input type="radio" name="hasntVideoproj" id="hasntVideoproj" value="no">
+        <input type="radio" name="hasVideoproj" id="hasntVideoproj" value="no">
         <label for="hasntVideoproj">
             Non        
         </label><br>
