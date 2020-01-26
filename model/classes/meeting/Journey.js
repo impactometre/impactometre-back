@@ -4,7 +4,8 @@ const Damage = require('../shared/Damage')
 const Component = require('../shared/Component')
 const TransportationMean = require('./TransportationMean')
 const {
-  meetingComponents
+  meetingComponents,
+  transportationMeanSubCategories
 } = require('../../../constants/meeting')
 
 /**
@@ -136,6 +137,15 @@ class Journey extends Component {
     } else {
       embodiedDamage.mutate(category => {
         embodiedDamage[category] = transportationMeanDamage[category] * this.distance
+      })
+    }
+
+    /* If the transportation mean is a car, we return the damage only for one participant.
+    If two people travelled in the same car, two journeys will have been created, one for
+    each traveller. */
+    if (this.mean.subCategory === transportationMeanSubCategories.CAR) {
+      embodiedDamage.mutate(category => {
+        embodiedDamage[category] /= this.numberOfPeople
       })
     }
 
