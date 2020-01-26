@@ -100,6 +100,13 @@ const possibleJourneys = [
   { distance: 10, mean: 'CAR_ELECTRIC_ONE_KM', numberOfPeople: 4 }
 ]
 
+const damageEndpoints = {
+  HUMAN_HEALTH: 'HUMAN_HEALTH',
+  ECOSYSTEM_QUALITY: 'ECOSYSTEM_QUALITY',
+  CLIMATE_CHANGE: 'CLIMATE_CHANGE',
+  RESOURCES: 'RESOURCES'
+}
+
 exports.hourToMinutes = hourToMinutes
 exports.dayToHours = dayToHours
 exports.minuteToSeconds = minuteToSeconds
@@ -122,3 +129,5 @@ exports.transportationMeanSubCategories = transportationMeanSubCategories
 exports.meetingCategoryDamage = meetingCategoryDamage
 
 exports.possibleJourneys = possibleJourneys
+
+exports.damageEndpoints = damageEndpoints
