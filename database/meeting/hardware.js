@@ -8,21 +8,21 @@ const {
 
 const hardware = {
   /**
-   * ASSIMILATION CANDIDATES
-   * If we cannot have the damage values directly
-   * from Ecovinvent database, we assimilate the damage
-   * caused by the object to the damage caused by a known
-   * object.
-   */
+  * ASSIMILATION CANDIDATES
+  * If we cannot have the damage values directly
+  * from Ecovinvent database, we assimilate the damage
+  * caused by the object to the damage caused by a known
+  * object.
+  * */
   ASSIMILATION_COMPUTER_TOWER_1G: {
     name: 'ASSIMILATION_COMPUTER_TOWER_1G',
-    french: '1 g d\'une tour d\'ordinateur',
+    french: '1g tour ordinateur',
     isSizeDependent: false,
     embodied: {
-      humanHealth: 0.004353982,
-      ecosystemQuality: 0.000843363,
-      climateChange: 0.002035398,
-      resources: 0.00185841
+      humanHealth: 4.35 * Math.pow(10, -3),
+      ecosystemQuality: 8.43 * Math.pow(10, -4),
+      climateChange: 2.04 * Math.pow(10, -3),
+      resources: 1.86 * Math.pow(10, -3)
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
