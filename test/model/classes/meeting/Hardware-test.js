@@ -296,7 +296,6 @@ describe('Hardware class', () => {
             ? json.weight.upper
             : json.weight
 
-          console.log(hardwareDatabase.ASSIMILATION_COMPUTER_TOWER_1G)
           const expected = hardwareDatabase[json.embodiedAssimilatedTo].embodied
           Object.keys(expected).map(category => {
             expected[category] *= weight
