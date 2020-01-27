@@ -1,7 +1,9 @@
 'use strict'
 
+const roundTo = require('round-to')
 const {
-  damageEndpoints
+  damageEndpoints,
+  meetingCategoryDamage
 } = require('../constants/meeting')
 
 /**
@@ -45,62 +47,91 @@ function normalise (numbers) {
  * normaised by their damage values and ordered.
  */
 function normaliseDamages (meetingScenarios) {
-  let damages = []
+  let humanHealthDamages = []
+  let ecosystemQualityDamages = []
+  let climateChangeDamages = []
+  let resourcesDamages = []
 
   // For each meeting scenario, get the values for each damage end point
   // (human health, ecosysteme quality, climate change and resources) of its total damage
   for (const meetingScenario of meetingScenarios) {
-    damages = damages.concat(
+    humanHealthDamages = humanHealthDamages.concat(
       [{
         damageEndpoint: damageEndpoints.HUMAN_HEALTH,
         meetingScenario: meetingScenario.id,
-        value: meetingScenario.damage.totalDamage.humanHealth
-      }],
+        value: meetingScenario.damage.totalDamage.humanHealth,
+        [meetingCategoryDamage.HARDWARE]: meetingScenario.damage.hardwareDamage.totalDamage.humanHealth,
+        [meetingCategoryDamage.SOFTWARE]: meetingScenario.damage.softwareDamage.totalDamage.humanHealth,
+        [meetingCategoryDamage.JOURNEY]: meetingScenario.damage.journeyDamage.totalDamage.humanHealth
+      }]
+    )
+    ecosystemQualityDamages = ecosystemQualityDamages.concat(
       [{
         damageEndpoint: damageEndpoints.ECOSYSTEM_QUALITY,
         meetingScenario: meetingScenario.id,
-        value: meetingScenario.damage.totalDamage.ecosystemQuality
-      }],
+        value: meetingScenario.damage.totalDamage.ecosystemQuality,
+        [meetingCategoryDamage.HARDWARE]: meetingScenario.damage.hardwareDamage.totalDamage.ecosystemQuality,
+        [meetingCategoryDamage.SOFTWARE]: meetingScenario.damage.softwareDamage.totalDamage.ecosystemQuality,
+        [meetingCategoryDamage.JOURNEY]: meetingScenario.damage.journeyDamage.totalDamage.ecosystemQuality
+      }]
+    )
+    climateChangeDamages = climateChangeDamages.concat(
       [{
         damageEndpoint: damageEndpoints.CLIMATE_CHANGE,
         meetingScenario: meetingScenario.id,
-        value: meetingScenario.damage.totalDamage.climateChange
-      }],
+        value: meetingScenario.damage.totalDamage.climateChange,
+        [meetingCategoryDamage.HARDWARE]: meetingScenario.damage.hardwareDamage.totalDamage.climateChange,
+        [meetingCategoryDamage.SOFTWARE]: meetingScenario.damage.softwareDamage.totalDamage.climateChange,
+        [meetingCategoryDamage.JOURNEY]: meetingScenario.damage.journeyDamage.totalDamage.climateChange
+      }]
+    )
+    resourcesDamages = resourcesDamages.concat(
       [{
         damageEndpoint: damageEndpoints.RESOURCES,
         meetingScenario: meetingScenario.id,
-        value: meetingScenario.damage.totalDamage.resources
+        value: meetingScenario.damage.totalDamage.resources,
+        [meetingCategoryDamage.HARDWARE]: meetingScenario.damage.hardwareDamage.totalDamage.resources,
+        [meetingCategoryDamage.SOFTWARE]: meetingScenario.damage.softwareDamage.totalDamage.resources,
+        [meetingCategoryDamage.JOURNEY]: meetingScenario.damage.journeyDamage.totalDamage.resources
       }]
     )
   }
 
-  // Sort the damage values array and get the maximum value
-  damages.sort((a, b) => b.value - a.value)
-  const max = damages[0].value
+  const damages = [humanHealthDamages, ecosystemQualityDamages, climateChangeDamages, resourcesDamages]
 
-  /* Normalised the damage values
-  The biggest number is turned into 100, the other numbers are like percentages of the first one
-  example:
-  [
-    {HUMAN_HEALTH, meetingScenario1, 20},
-    {ECOSYSTEM_QUALITY, meetingScenario1, 18},
-    {CLIMATE_CHANGE, meetingScenario1, 14},
-    {RESOURCES, meetingScenario1, 6},
-    {HUMAN_HEALTH, meetingScenario2, 2}
-  ] => [
-    {HUMAN_HEALTH, meetingScenario1, 100},
-    {ECOSYSTEM_QUALITY, meetingScenario1, 90},
-    {CLIMATE_CHANGE, meetingScenario1, 70},
-    {RESOURCES, meetingScenario1, 30},
-    {HUMAN_HEALTH, meetingScenario2, 10}
-  ]
-  */
   const normalisedDamages = damages.map(function (damage) {
-    const normalisedDamage = {
-      damageEndpoint: damage.damageEndpoint,
-      meetingScenario: damage.meetingScenario,
-      value: (damage.value / max) * 100
-    }
+    // Sort the damage values array and get the maximum value
+    damage.sort((a, b) => b.value - a.value)
+    const max = damage[0].value
+
+    /* Normalised the damage values
+    The biggest number is turned into 100, the other numbers are like percentages of the first one
+    example:
+    [
+      {HUMAN_HEALTH, meetingScenario1, 20},
+      {ECOSYSTEM_QUALITY, meetingScenario1, 18},
+      {CLIMATE_CHANGE, meetingScenario1, 14},
+      {RESOURCES, meetingScenario1, 6},
+      {HUMAN_HEALTH, meetingScenario2, 2}
+    ] => [
+      {HUMAN_HEALTH, meetingScenario1, 100},
+      {ECOSYSTEM_QUALITY, meetingScenario1, 90},
+      {CLIMATE_CHANGE, meetingScenario1, 70},
+      {RESOURCES, meetingScenario1, 30},
+      {HUMAN_HEALTH, meetingScenario2, 10}
+    ]
+    */
+    const normalisedDamage = damage.map(function (damage) {
+      const x = {
+        damageEndpoint: damage.damageEndpoint,
+        meetingScenario: damage.meetingScenario,
+        value: roundTo((damage.value / max) * 100, 2),
+        [meetingCategoryDamage.HARDWARE]: roundTo((damage.hardware / max) * 100, 2),
+        [meetingCategoryDamage.SOFTWARE]: roundTo((damage.software / max) * 100, 2),
+        [meetingCategoryDamage.JOURNEY]: roundTo((damage.journey / max) * 100, 2)
+      }
+      return x
+    })
     return normalisedDamage
   })
 
