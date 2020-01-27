@@ -28,19 +28,19 @@ function normalise (numbers) {
  * Normalised the damages values of several meeting scenarios.
  * The biggest number is turned into 100, the other numbers are like percentages of the first one
  * example:
- * [
- * {HUMAN_HEALTH, meetingScenario1, 20},
- *  {ECOSYSTEM_QUALITY, meetingScenario1, 18},
- *  {CLIMATE_CHANGE, meetingScenario1, 14},
- *   {RESOURCES, meetingScenario1, 6},
- *   {HUMAN_HEALTH, meetingScenario2, 2}
- * ] => [
- *   {HUMAN_HEALTH, meetingScenario1, 100},
- *   {ECOSYSTEM_QUALITY, meetingScenario1, 90},
- *   {CLIMATE_CHANGE, meetingScenario1, 70},
- *   {RESOURCES, meetingScenario1, 30},
- *   {HUMAN_HEALTH, meetingScenario2, 10}
- * ]
+ *  [
+ *    {HUMAN_HEALTH, meetingScenario1, 20, 5, 5, 10},
+ *    {ECOSYSTEM_QUALITY, meetingScenario1, 18, 2, 2, 14},
+ *    {CLIMATE_CHANGE, meetingScenario1, 14, 5, 2, 7},
+ *    {RESOURCES, meetingScenario1, 6, 2, 2, 2},
+ *    {HUMAN_HEALTH, meetingScenario2, 2, 2, 0, 0}
+ *  ] => [
+ *    {HUMAN_HEALTH, meetingScenario1, 100, 25, 25, 50},
+ *    {ECOSYSTEM_QUALITY, meetingScenario1, 90, 10, 10, 70},
+ *    {CLIMATE_CHANGE, meetingScenario1, 70, 25, 10, 35},
+ *    {RESOURCES, meetingScenario1, 30, 10, 10, 10},
+ *    {HUMAN_HEALTH, meetingScenario2, 10, 10, 0, 0}
+ *  ]
  * The function is used to plot normalised damages.
  * @param {Object} meetingScenarios - Iterable object thats contains meetingScenarios we want to normalise the damage values
  * @returns An array that contains JSON objects (like {ECOSYSTEM_QUALITY, meetingScenario1, 90})
@@ -54,6 +54,7 @@ function normaliseDamages (meetingScenarios) {
 
   // For each meeting scenario, get the values for each damage end point
   // (human health, ecosysteme quality, climate change and resources) of its total damage
+  // and its values for all damage category (hardware, software, jounrney)
   for (const meetingScenario of meetingScenarios) {
     humanHealthDamages = humanHealthDamages.concat(
       [{
@@ -108,17 +109,17 @@ function normaliseDamages (meetingScenarios) {
     The biggest number is turned into 100, the other numbers are like percentages of the first one
     example:
     [
-      {HUMAN_HEALTH, meetingScenario1, 20},
-      {ECOSYSTEM_QUALITY, meetingScenario1, 18},
-      {CLIMATE_CHANGE, meetingScenario1, 14},
-      {RESOURCES, meetingScenario1, 6},
-      {HUMAN_HEALTH, meetingScenario2, 2}
+      {HUMAN_HEALTH, meetingScenario1, 20, 5, 5, 10},
+      {ECOSYSTEM_QUALITY, meetingScenario1, 18, 2, 2, 14},
+      {CLIMATE_CHANGE, meetingScenario1, 14, 5, 2, 7},
+      {RESOURCES, meetingScenario1, 6, 2, 2, 2},
+      {HUMAN_HEALTH, meetingScenario2, 2, 2, 0, 0}
     ] => [
-      {HUMAN_HEALTH, meetingScenario1, 100},
-      {ECOSYSTEM_QUALITY, meetingScenario1, 90},
-      {CLIMATE_CHANGE, meetingScenario1, 70},
-      {RESOURCES, meetingScenario1, 30},
-      {HUMAN_HEALTH, meetingScenario2, 10}
+      {HUMAN_HEALTH, meetingScenario1, 100, 25, 25, 50},
+      {ECOSYSTEM_QUALITY, meetingScenario1, 90, 10, 10, 70},
+      {CLIMATE_CHANGE, meetingScenario1, 70, 25, 10, 35},
+      {RESOURCES, meetingScenario1, 30, 10, 10, 10},
+      {HUMAN_HEALTH, meetingScenario2, 10, 10, 0, 0}
     ]
     */
     const normalisedDamage = damage.map(function (damage) {
