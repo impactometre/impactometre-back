@@ -38,7 +38,7 @@ function addAParticipant () {
     const clone = tmpl.content.cloneNode(true)
 
     clone.querySelector('#traveller-p').id = 'traveller-' + participantNumber
-    clone.querySelector('h3').innerHTML = 'Participant ' + participantNumber
+    clone.querySelector('h4').innerHTML = 'Participant ' + participantNumber
     clone.querySelector('button#traveller-p__addJourneyItem').id = 'traveller-' + participantNumber + '__addJourneyItem'
 
     document.querySelector('#travellers').appendChild(clone)
@@ -52,10 +52,6 @@ function removeAParticipant () {
     parent.querySelector('#traveller-' + participantNumber).remove()
     participantNumber -= 1
     document.querySelector('#participantNumber').innerHTML = participantNumber
-
-    for (var [clé, valeur] of travellers) {
-      console.log(clé + ' = ' + valeur)
-    }
   }
 }
 
@@ -181,7 +177,6 @@ function addJourneyItem (travellerId) {
 
   travellers.set('trav' + travId, actualJourneyNumber += 1)
   const newJourneyNumber = travellers.get('trav' + travId)
-  console.log('trav' + travId + ': ' + newJourneyNumber)
 
   if (travellers.get('trav' + travId) < journeyMaxNumber) {
     const tmpl = travellerSelector.querySelector('#journeyTmpl')
@@ -198,13 +193,10 @@ function addJourneyItem (travellerId) {
 }
 
 function removeJourneyItem (journeyId) {
-  console.log(journeyId)
   if (journeyNumber > journeyMinNumber) {
     journeyNumber -= 1
 
     const toRemove = document.querySelector('#' + journeyId).parentNode
-    console.log(toRemove.nodeName)
     toRemove.remove()
-    console.log(journeyNumber)
   }
 }
