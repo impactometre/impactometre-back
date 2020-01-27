@@ -9,7 +9,8 @@ const meetingScenarios = require('../../../database/meeting/meetingScenarios')
 const {
   meetingCategoryDamage,
   bounds,
-  possibleJourneys
+  possibleJourneys,
+  modificationTypes
 } = require('../../../constants/meeting')
 
 class MeetingScenario extends Scenario {
@@ -106,28 +107,6 @@ class MeetingScenario extends Scenario {
   computeDamage (damagePayload) {
     this.damage.computeDamage(damagePayload)
   }
-
-  /**
-   * Update a meeting scenario.
-   * Enable to update all meeting scenario object attributes, several or only one.
-   * @param {Number} - The new meeting duration in minutes.
-   * @param {Object} - A JSON object that enables update all meeting scenario object attributes, several or only one.
-   * @see MeetingDamage
-   */
-  update ({ meetingDuration = 0, payload = {} }) {
-    if (meetingDuration !== 0) {
-      this.meetingDuration = meetingDuration
-    }
-
-    if (payload !== {}) {
-      this.damage.update({
-        hardwareComponents: payload[meetingCategoryDamage.HARDWARE],
-        softwareComponents: payload[meetingCategoryDamage.SOFTWARE],
-        journeyComponents: payload[meetingCategoryDamage.JOURNEY]
-      })
-    }
-  }
-<<<<<<< HEAD
 
   /**
    * Generate alternatives scenarios based on this MeetingScenario.
@@ -302,15 +281,6 @@ class MeetingScenario extends Scenario {
   }
 
   /**
- * Update a meeting scenario.
- * @param {String} id - The id of the meeting scenario we want to update.
- * @param {Object} payload - A JSON object that contains all necessary data to update a meeting scenario.
- */
-  static update (id, payload) {
-    throw new Error('Not implemented yet')
-  }
-
-  /**
  * Delete a meeting scenario from the database.
  * @param {String} id - The id of the meeting scenario we want to delete.
  * @returns {Boolean} True if deletion succeeds, false if not.
@@ -318,8 +288,123 @@ class MeetingScenario extends Scenario {
   static remove (id) {
     return meetingScenarios.delete(id)
   }
-=======
->>>>>>> WIP: add update functions
+
+  /**
+   * Update a meeting scenario.
+   * Enable to update all meeting scenario object attributes, several or only one.
+   * @param {Number} meetingDuration - The new meeting duration in minutes.
+   * @param {Object} payload - A JSON object that enables update all meeting scenario object attributes, several or only one.
+   * @see MeetingDamage
+   */
+  modify ({ meetingDuration, numberOfParticipants, payload, damagePayload }) {
+    let shouldBeRecomputed = false
+
+    // Update if there is a new meeting duration
+    if (meetingDuration && this.meetingDuration !== meetingDuration) {
+      this.meetingDuration = meetingDuration
+      shouldBeRecomputed = true
+    }
+
+    // Update if there is a new number of participants
+    if (numberOfParticipants && this.numberOfParticipants !== numberOfParticipants) {
+      this.numberOfParticipants = numberOfParticipants
+      shouldBeRecomputed = true
+    }
+
+    // if there is a modification on meeting components (hardwares, softwares, journeys)
+    // All damages are recompute
+    if (payload && payload !== {}) {
+      // Get the modified component category damage (hardware, software or journey)
+      const categoryDamage = payload.categoryDamage
+
+      switch (payload.modificationType) {
+        case modificationTypes.UPDATE:
+          this.update({ id: payload.id, categoryDamage, payload: payload.data })
+          break
+        case modificationTypes.CREATE:
+          throw new Error('Not implemented yet.')
+        case modificationTypes.REMOVE:
+          throw new Error('Not implemented yet.')
+      }
+    }
+
+    // If all meeting damages should be recompted
+    if (shouldBeRecomputed) {
+      if (!damagePayload || damagePayload === {}) {
+        throw new Error('You should provide the necessary data to update meeting damage values.')
+      }
+      this.computeDamage(damagePayload)
+    }
+  }
+
+  /**
+   * Update caracteristc and damage value of a meeting component (hardware, software, journey).
+   * @param {Object} data - All necessary data to update a meeting component.
+   * @param {String} data.id - The id of the meeting component we want update.
+   * @param {String} data.categoryDamage - The category of the meeting component we want update (i.e. hardware, software or journey)
+   * @param {Object} data.payload - A JSON object that contains all necessary data update caracteristic and damage value of the meeting component.
+   */
+  update ({ id, categoryDamage, payload }) {
+    // oOld component damage value
+    let oldDamage
+    // Updated component damage value
+    let updatedDamage
+    // Total damage value of updated component category
+    let totalCategoryDamage
+    // Old damage value of updated component category
+    let odlTotalCategoryDamage
+
+    switch (categoryDamage) {
+      case meetingCategoryDamage.HARDWARE: {
+        const hardwareToUpdate = this.damage.hardwareDamage.components.get(id)
+        oldDamage = hardwareToUpdate.damage
+        hardwareToUpdate.update(payload)
+        updatedDamage = hardwareToUpdate.damage
+
+        // update hardware category total damage value
+        odlTotalCategoryDamage = this.damage.hardwareDamage.totalDamage
+        totalCategoryDamage = this.damage.hardwareDamage.totalDamage
+        totalCategoryDamage = totalCategoryDamage.minus(oldDamage)
+        totalCategoryDamage = totalCategoryDamage.add(updatedDamage)
+        this.damage.hardwareDamage.totalDamage = totalCategoryDamage
+        break
+      }
+      case meetingCategoryDamage.SOFTWARE: {
+        const softwareToUpdate = this.damage.softwareDamage.components.get(id)
+        oldDamage = softwareToUpdate.damage
+        softwareToUpdate.update(payload)
+        updatedDamage = softwareToUpdate.damage
+
+        // update software category total damage value
+        odlTotalCategoryDamage = this.damage.softwareDamage.totalDamage
+        totalCategoryDamage = this.damage.softwareDamage.totalDamage
+        totalCategoryDamage = totalCategoryDamage.minus(oldDamage)
+        totalCategoryDamage = totalCategoryDamage.add(updatedDamage)
+        this.damage.softwareDamage.totalDamage = totalCategoryDamage
+        break
+      }
+      case meetingCategoryDamage.JOURNEY: {
+        const journeyToUpdate = this.damage.journeyDamage.components.get(id)
+        oldDamage = journeyToUpdate.damage
+        journeyToUpdate.update(payload)
+        updatedDamage = journeyToUpdate.damage
+
+        // update journey category total damage value
+        odlTotalCategoryDamage = this.damage.journeyDamage.totalDamage
+        totalCategoryDamage = this.damage.journeyDamage.totalDamage
+        totalCategoryDamage = totalCategoryDamage.minus(oldDamage)
+        totalCategoryDamage = totalCategoryDamage.add(updatedDamage)
+        this.damage.journeyDamage.totalDamage = totalCategoryDamage
+        break
+      }
+    }
+
+    // Substract old total damage value of updated component category from meeting total damage value
+    this.damage.totalDamage = this.damage.totalDamage.minus(odlTotalCategoryDamage)
+
+    // Add the new total damage value of updated component category to meeting total damage value
+    this.damage.totalDamage = this.damage.totalDamage.add(totalCategoryDamage)
+  }
 }
 
 module.exports = MeetingScenario
