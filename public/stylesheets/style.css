@@ -22,6 +22,15 @@ body {
   font-weight: 100;
   line-height: 1.7; }
 
+.plusMinusBtn {
+  border: 0;
+  font-size: 1rem;
+  font-weight: 900;
+  background-color: transparent;
+  width: 2rem;
+  padding: 0 .4rem;
+  color: #71e06d; }
+
 .traveller {
   border-radius: 0.3rem;
   background-color: #f2f2f2; }
