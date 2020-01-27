@@ -1,6 +1,14 @@
 .traveller {
-  border-width: thin;
-  border-style: solid;
+  border-radius: 0.3rem;
+  background-color: darken($bcg-color, $amount: 5);
+
+&__header {
+  border-radius: 0.3rem 0.3rem 0 0;
+  background-color: $color-primary;
   padding: 1rem;
-  margin: 1rem;
+}
+
+&__journeys {
+  padding: 1rem;
+}
 }

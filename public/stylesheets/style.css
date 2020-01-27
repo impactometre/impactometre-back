@@ -13,7 +13,7 @@ body {
   padding: 2rem; }
 
 h1 {
-  color: #00B7FF;
+  color: #6dc0e0;
   display: flex; }
 
 body {
@@ -23,10 +23,17 @@ body {
   line-height: 1.7; }
 
 .traveller {
-  border-width: thin;
-  border-style: solid;
-  padding: 1rem;
-  margin: 1rem; }
+  border-radius: 0.3rem;
+  background-color: #f2f2f2; }
+  .traveller__header {
+    border-radius: 0.3rem 0.3rem 0 0;
+    background-color: #6dc0e0;
+    padding: 1rem; }
+  .traveller__journeys {
+    padding: 1rem; }
+
+fieldset {
+  padding: 1rem; }
 
 .conditionalForm {
   display: none; }
