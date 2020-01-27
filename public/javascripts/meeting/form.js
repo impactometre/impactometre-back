@@ -11,7 +11,7 @@ function inchesToCm (i) {
 
 function getIdNumber (id) {
   // Return the number n for an id attribute ending with -n
-  const idNumberFilter = /\w+-(\d{1,2})/
+  const idNumberFilter = /\w+-(\d{1,2}).*/
   const idNumber = id.replace(idNumberFilter, '$1')
 
   return idNumber
@@ -19,20 +19,36 @@ function getIdNumber (id) {
 
 // ========== MAIN ==========
 let participantNumber = 2
+const travellers = new Map()
 const participantMaxNumber = 30
 const participantMinNumber = 2
+
+for (let i = 1; i <= participantNumber; i++) {
+  travellers.set('trav' + i, 0)
+}
 
 function addAParticipant () {
   if (participantNumber < participantMaxNumber) {
     participantNumber += 1
     document.querySelector('#participantNumber').innerHTML = participantNumber
+
+    travellers.set('trav' + participantNumber, 0)
+
+    for (var [clé, valeur] of travellers) {
+      console.log(clé + ' = ' + valeur)
+    }
   }
 }
 
 function removeAParticipant () {
   if (participantNumber > participantMinNumber) {
+    travellers.delete('trav' + participantNumber, 0)
     participantNumber -= 1
     document.querySelector('#participantNumber').innerHTML = participantNumber
+
+    for (var [clé, valeur] of travellers) {
+      console.log(clé + ' = ' + valeur)
+    }
   }
 }
 
@@ -130,7 +146,7 @@ function changeScreenUnit (unit, id) {
 }
 
 // ========== JOURNEY ==========
-const travellerNumber = 1
+const travellerNumber = participantNumber
 let journeyNumber = 0
 const journeyMaxNumber = 50
 const journeyMinNumber = 0
@@ -151,20 +167,26 @@ function kmNumberUpdate (dist, id) {
   document.querySelector('#kmSlider-' + getIdNumber(id)).value = dist
 }
 
-function addJourneyItem () {
-  const travellerSelector = document.querySelector('.traveller__journeys')
-  journeyNumber += 1
+function addJourneyItem (travellerId) {
+  const travId = getIdNumber(travellerId)
+  let actualJourneyNumber = travellers.get('trav' + travId)
+  const travellerSelector = document.querySelector('#traveller-' + travId)
 
-  if (journeyNumber < journeyMaxNumber) {
-    const tmpl = document.querySelector('#journeyTmpl')
+  travellers.set('trav' + travId, actualJourneyNumber += 1)
+  const newJourneyNumber = travellers.get('trav' + travId)
+  console.log('trav' + travId + ': ' + newJourneyNumber)
+
+  if (travellers.get('trav' + travId) < journeyMaxNumber) {
+    const tmpl = travellerSelector.querySelector('#journeyTmpl')
     const clone = tmpl.content.cloneNode(true)
 
-    clone.querySelector('.traveller__journeyItem').id = 'traveller-' + travellerNumber + '__journeyItem-' + journeyNumber
+    clone.querySelector('.traveller__journeyItem').id = 'traveller-' + travId + '__journeyItem-' + newJourneyNumber
     // clone.querySelector('#removeBtn-1-n').id = 'removeBtn-' + travellerNumber + '-' + journeyNumber
-    clone.querySelector('input[type="number"]').id = 'kmNumber-' + journeyNumber
-    clone.querySelector('input[type="range"]').id = 'kmSlider-' + journeyNumber
+    clone.querySelector('input[type="number"]').id = 'kmNumber-' + newJourneyNumber
+    clone.querySelector('input[type="range"]').id = 'kmSlider-' + newJourneyNumber
 
-    travellerSelector.insertBefore(clone, travellerSelector.querySelector('.traveller__journeyItem--add'))
+    const lastItem = travellerSelector.querySelector('.traveller__journeyItem--add')
+    travellerSelector.querySelector('.traveller__journeys').insertBefore(clone, lastItem)
   }
 }
 
