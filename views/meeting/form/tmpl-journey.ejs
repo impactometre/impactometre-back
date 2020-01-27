@@ -1,0 +1,18 @@
+<div id="traveller-1__journeyItem-n" class="traveller__journeyItem">
+    <!--<button type="button" id="removeBtn-1-n" onclick="removeJourneyItem(id)">-</button>-->
+    <div>
+        <input type="number" min="0" max="5000" value="0" id="kmNumber-n"
+            oninput="kmNumberUpdate(value, id)" />
+
+        km parcourus en
+        <select>
+        <% Object.values(transportationMean).forEach(mean => { %>
+            <option value="<%= mean.name %>"><%= mean.french %></option>
+        <% }) %>
+        </select>
+
+        <br>
+        <input type="range" min="0" max="5000" value="0" id="kmSlider-n"
+            oninput="kmSliderUpdate(value, id)" />
+    </div>
+</div>
