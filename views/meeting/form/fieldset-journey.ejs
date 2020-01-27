@@ -2,20 +2,12 @@
 
     <legend><%= title %></legend>
 
-    <div class="traveller">
-        <div class="traveller__header">
-            <h3>Participant 1</h3>
-        </div>
-        <div class="traveller__journeys">
+    <%- include('tmpl-traveller', { p: '1'}) %>
 
-            <template id="journeyTmpl">
-                <%- include('tmpl-journey') %>
-            </template>
-            
-            <div id="traveller-1__addJourneyItem-add" class="traveller__journeyItem traveller__journeyItem--add">
-                <button type="button" onclick="addJourneyItem()" class="plusMinusBtn">+</button>
-            </div>
-        </div>
-    </div>
+    <%- include('tmpl-traveller', { p: '2'}) %>
+
+    <template id="travellerTmpl">
+        <%- include('tmpl-traveller', { p: 'p'}) %>
+    </template>
 
 </fieldset>
