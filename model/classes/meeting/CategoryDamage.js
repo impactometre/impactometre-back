@@ -20,7 +20,9 @@ class CategoryDamage {
     this._category = category
 
     // Create a hashmap that contains components and their id
-    this._components = this.arrayToMapComponents(components, category)
+    this._components = (components !== null)
+      ? this.arrayToMapComponents(components, category)
+      : new Map()
   }
 
   // Getters
