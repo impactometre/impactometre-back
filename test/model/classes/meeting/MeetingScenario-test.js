@@ -7,6 +7,7 @@ const MeetingDamage = require('../../../../model/classes/meeting/MeetingDamage')
 const hardwareDatabase = require('../../../../database/meeting/hardware')
 const transportDatabase = require('../../../../database/meeting/transportationMean')
 const softwareDatabase = require('../../../../database/meeting/software')
+const meetingScenarios = require('../../../../database/meeting/meetingScenarios')
 const {
   meetingCategoryDamage,
   bounds
@@ -66,6 +67,9 @@ describe('MeetingScenario class', () => {
     ]
   }
 
+  // Create the MeetingScenario object
+  const meetingScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload })
+
   // Create scenario with missing components in a category
   const incompletePayload = Object.assign({}, payload)
   delete incompletePayload[meetingCategoryDamage.JOURNEY]
@@ -77,9 +81,6 @@ describe('MeetingScenario class', () => {
     })
   })
   describe('#computeDamage()', () => {
-    // Create the MeetingScenario object
-    const meetingScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload })
-
     // Create the JSON object that enables to compute meeting total damage
     const damagePayload = {
       [meetingCategoryDamage.HARDWARE]: { meetingDuration: 120, bound: bounds.UPPER },
@@ -102,8 +103,9 @@ describe('MeetingScenario class', () => {
     it('should compute the total damage caused by the meeting', () => {
       Object.keys(meetingScenario.damage.totalDamage).forEach(category => {
         assert.strictEqual(meetingScenario.damage.totalDamage[category], meetingDamage.totalDamage[category])
-        assert.isNotNaN(meetingScenario.damage.totalDamage)
-        assert.isNotNull(meetingScenario.damage.totalDamage)
+        assert.isNotNaN(meetingScenario.damage.totalDamage[category])
+        assert.isNotNull(meetingScenario.damage.totalDamage[category])
+        assert.notEqual(0, meetingScenario.damage.totalDamage[category])
       })
     })
     it('should compute the damage of an incomplete scenario', () => {
@@ -120,6 +122,53 @@ describe('MeetingScenario class', () => {
         assert.strictEqual(damage[category], expected[category])
         assert.isNotNaN(damage[category])
         assert.isNotNull(damage[category])
+        assert.notEqual(0, damage[category])
+      })
+    })
+  })
+  describe('#generateAlternatives()', () => {
+    it('should create two alternative scenarios', () => {
+      const oldSize = meetingScenarios.size
+      meetingScenario.generateAlternatives()
+      assert.deepStrictEqual(
+        meetingScenarios.size,
+        oldSize + 2
+      )
+    })
+  })
+  describe('#create()', () => {
+    // Create the meeting scenario
+    it('shoud create a meeting scenario and add it the database', () => {
+      const oldSize = meetingScenarios.size
+      MeetingScenario.create({ user, meetingDuration, numberOfParticipants, payload })
+      assert.deepStrictEqual(
+        meetingScenarios.size,
+        oldSize + 1
+      )
+    })
+  })
+  describe('#read()', () => {
+    it('should read a meetingScenario thanks to its id', () => {
+      meetingScenarios.forEach(element => {
+        const id = element.id
+
+        assert.deepStrictEqual(
+          MeetingScenario.read(id),
+          meetingScenarios.get(id)
+        )
+      })
+    })
+  })
+  describe('#remove()', () => {
+    it('should remove a meetingScenario thanks to its id', () => {
+      meetingScenarios.forEach(element => {
+        const id = element.id
+        MeetingScenario.remove(id)
+
+        assert.deepStrictEqual(
+          meetingScenarios.get(id),
+          undefined
+        )
       })
     })
   })
