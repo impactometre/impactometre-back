@@ -34,15 +34,22 @@ function addAParticipant () {
 
     travellers.set('trav' + participantNumber, 0)
 
-    for (var [clé, valeur] of travellers) {
-      console.log(clé + ' = ' + valeur)
-    }
+    const tmpl = document.querySelector('#travellerTmpl')
+    const clone = tmpl.content.cloneNode(true)
+
+    clone.querySelector('#traveller-p').id = 'traveller-' + participantNumber
+    clone.querySelector('h3').innerHTML = 'Participant ' + participantNumber
+    clone.querySelector('button#traveller-p__addJourneyItem').id = 'traveller-' + participantNumber + '__addJourneyItem'
+
+    document.querySelector('#travellers').appendChild(clone)
   }
 }
 
 function removeAParticipant () {
   if (participantNumber > participantMinNumber) {
     travellers.delete('trav' + participantNumber, 0)
+    const parent = document.querySelector('#travellers')
+    parent.querySelector('#traveller-' + participantNumber).remove()
     participantNumber -= 1
     document.querySelector('#participantNumber').innerHTML = participantNumber
 

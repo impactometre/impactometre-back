@@ -1,11 +1,12 @@
 .traveller {
   border-radius: 0.3rem;
   background-color: darken($bcg-color, $amount: 5);
+  margin-bottom: 1rem;
 
 &__header {
   border-radius: 0.3rem 0.3rem 0 0;
   background-color: $color-primary;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 &__journeys {
