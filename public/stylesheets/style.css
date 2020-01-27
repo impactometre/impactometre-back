@@ -42,6 +42,13 @@ body {
   .traveller__journeys {
     padding: 1rem; }
 
+.form {
+  display: block;
+  justify-content: center;
+  width: 32vW; }
+  .form__header {
+    margin-bottom: 5%; }
+
 fieldset {
   padding: 1rem;
   margin-bottom: 1rem; }

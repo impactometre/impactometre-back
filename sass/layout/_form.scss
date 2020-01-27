@@ -1,3 +1,13 @@
+.form {
+  display: block;
+  justify-content: center;
+  width: 32vW;
+
+  &__header {
+    margin-bottom: 5%;
+  }
+}
+
 fieldset {
   padding: 1rem;
   margin-bottom: 1rem;
