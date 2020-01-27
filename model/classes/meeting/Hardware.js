@@ -17,6 +17,8 @@ class Hardware extends Component {
   /**
    * Create a hardware.
    * @param {String} name - The key of an entry from the hardware database.
+   * @param {Quantity} - The instances number of the same hardware in the meeting.
+   * E.g. a Logitech Kit has 4 identical cables.
    * @param {Number} size - The optional size attached to the hardware.
    * E.g. if the hardware is a TV, the size would be the area of the screen in square meter.
    * @param {Float} shareForVisio - The share of the hardware dedicated to visio.
@@ -24,16 +26,24 @@ class Hardware extends Component {
    * with other software application running. Value is between O and 1.
    * @param {Array} componentsPayload - Optional components constructor parameters indexed by component name.
    */
-  constructor ({ name, size = 1, shareForVisio = 1, componentsPayload = {} }) {
-    // Get the correspondinf JSON object
+  constructor ({ name, quantity = 1, size = 1, shareForVisio = 1, componentsPayload = {} }) {
+    // Get the corresponding JSON object
     const json = hardwareDatabase[name]
 
     super({ french: json.french, category: json.category })
+
     this._name = json.name
+    this._quantity = quantity
     this._size = size
+    this._weight = json.weight
     this._shareForVisio = shareForVisio
     this._isSizeDependent = json.isSizeDependent
-    this._embodied = json.embodied
+    this._embodiedAssimilatedTo = json.embodiedAssimilatedTo
+
+    this._embodied = (json.embodiedAssimilatedTo)
+      ? Object.assign({}, hardwareDatabase[json.embodiedAssimilatedTo].embodied)
+      : json.embodied
+
     this._operatingOneMinVisio = json.operatingOneMinVisio
     this._operatingOneMinStandby = json.operatingOneMinStandby
     this._lifetime = json.lifetime
@@ -44,19 +54,19 @@ class Hardware extends Component {
     /* Check if components array is not undefined or null,
     and is actually an array */
     if (
-      Array.isArray(json.components) &&
-      json.components.length
+      json.components &&
+      Object.keys(json.components).length !== 0
     ) {
-      json.components.forEach(name => {
-        /* If the the payload contains an entry for the component found
-        in database, we construct the compondent from the payload. Else
-        we costruct it from the database. The payload will contain an
+      for (const [name, quantity] of Object.entries(json.components)) {
+        /* If the payload contains an entry for the component found
+        in database, we construct the component from the payload. Else
+        we construct it from the database. The payload will contain an
         entry if additional parameter is required (e.g. the size of a
         TV_SCREEN) */
         this._components[name] = (!componentsPayload[name])
-          ? new Hardware({ name })
+          ? new Hardware({ name, quantity })
           : new Hardware(componentsPayload[name])
-      })
+      }
     }
   }
 
@@ -71,6 +81,16 @@ class Hardware extends Component {
   }
 
   /**
+   * Get the instances number of the same hardware in
+   * the meeting.
+   *  E.g. a Logitech Kit has 4 identical cables.
+   * @returns {Number} The instances number of the same hardware.
+   */
+  get quantity () {
+    return this._quantity
+  }
+
+  /**
    * Get the optional size attached to the hardware.
    * E.g. if the hardware is a TV, the size would be
    * the area of the screen in square meter.
@@ -78,6 +98,16 @@ class Hardware extends Component {
    */
   get size () {
     return this._size
+  }
+
+  /**
+   * Get the optional weight. Useful if the embodied
+   * damage is assilimated to the damage of 1g of another
+   * hardware.
+   * @returns {Number} The optional weight.
+   */
+  get weight () {
+    return this._weight
   }
 
   /**
@@ -99,6 +129,15 @@ class Hardware extends Component {
    */
   get isSizeDependent () {
     return this._isSizeDependent
+  }
+
+  /**
+   * Get the optional hardware name to which the current
+   * hardware's embodied damage is assimilated to.
+   * @see hardware.js in database
+   */
+  get embodiedAssimilatedTo () {
+    return this._embodiedAssimilatedTo
   }
 
   /**
@@ -168,16 +207,64 @@ class Hardware extends Component {
 
   // Setters
 
+  set name (name) {
+    this._name = name
+  }
+
+  set french (french) {
+    this._french = french
+  }
+
   set damage (damage) {
     this._damage = damage
+  }
+
+  set quantity (quantity) {
+    this._quantity = quantity
   }
 
   set size (size) {
     this._size = size
   }
 
+  set weight (weight) {
+    this._weight = weight
+  }
+
   set shareForVisio (shareForVisio) {
     this._shareForVisio = shareForVisio
+  }
+
+  set isSizeDependent (isSizeDependent) {
+    this._isSizeDependent = isSizeDependent
+  }
+
+  set embodiedAssimilatedTo (embodiedAssimilatedTo) {
+    this._embodiedAssimilatedTo = embodiedAssimilatedTo
+  }
+
+  set embodied (embodied) {
+    this._embodied = embodied
+  }
+
+  set operatingOneMinVisio (operatingOneMinVisio) {
+    this._operatingOneMinVisio = operatingOneMinVisio
+  }
+
+  set operatingOneMinStandby (operatingOneMinStandby) {
+    this._operatingOneMinStandby = operatingOneMinStandby
+  }
+
+  set lifetime (lifetime) {
+    this._lifetime = lifetime
+  }
+
+  set operatingTimePerDay (operatingTimePerDay) {
+    this._operatingTimePerDay = operatingTimePerDay
+  }
+
+  set components (components) {
+    this._components = components
   }
 
   // Other methods
@@ -191,12 +278,31 @@ class Hardware extends Component {
    * bound equals to 'LOWER'.
    */
   computeDamage ({ meetingDuration, bound = null }) {
-    const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
-    const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound)
-    const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound)
-    const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound)
+    let damage
 
-    this.damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
+    // Hardware may be composed of other hardwares
+    if (Object.keys(this.components).length > 0) {
+      damage = new Damage()
+      /* For each component, compute its damage
+      and add it to composite hardware damage */
+      Object.values(this.components).forEach(component => {
+        component.computeDamage({ meetingDuration, bound })
+        damage = damage.add(component.damage)
+      })
+    } else {
+      const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
+      const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound)
+      const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound)
+      const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound)
+
+      damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
+    }
+
+    damage.mutate(category => {
+      damage[category] *= this.quantity
+    })
+
+    this.damage = damage
   }
 
   /**
@@ -209,19 +315,6 @@ class Hardware extends Component {
   computeTypedDamage (damageType, meetingDuration, bound = null) {
     // Variable we will return
     let damage
-
-    // Hardware may be composed of other hardwares
-    if (Object.keys(this.components).length > 0) {
-      damage = new Damage({ component: this })
-      /* For each component, compute its operating damage
-      and add it to composite hardware damage */
-      Object.values(this.components).forEach(component => {
-        const componentDamage = component.computeTypedDamage(damageType, meetingDuration, bound)
-        damage = damage.add(componentDamage)
-      })
-
-      return damage
-    }
 
     // Hardware may not have any value for the required damage
     if (!this.getTypedDamage(damageType, bound)) {
@@ -242,7 +335,6 @@ class Hardware extends Component {
           damage[category] *= this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
       } else {
-        damage = new Damage({ component: this, ...this.getTypedDamage(damageType, bound) })
         damage.mutate(category => {
           damage[category] *= this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration)
         })
@@ -299,6 +391,29 @@ class Hardware extends Component {
     ) {
       // Damage is for visio time
       damageType = hardwareDamageTypes.EMBODIED
+
+      // Embodied damage may be assimilated to the one of another hardware
+      if (this.embodiedAssimilatedTo) {
+        /* Assimilated embodied is for 1 g, so we have to multiply
+        it by the weight of our hardware */
+
+        let boundSpecificWeight
+        // Get weight specific value if available
+        if (this.weight.upper && this.weight.lower) {
+          boundSpecificWeight = (bound != null)
+            ? this.weight[bound]
+            : this.weight[bounds.UPPER]
+        } else {
+          boundSpecificWeight = this.weight
+        }
+
+        const weightEmbodied = Object.assign({}, this.embodied)
+        Object.keys(weightEmbodied).forEach(category => {
+          weightEmbodied[category] *= boundSpecificWeight
+        })
+
+        return weightEmbodied
+      }
     }
 
     if (!this[damageType]) {
@@ -382,6 +497,69 @@ class Hardware extends Component {
     // We infer the standby time per day from the operating time
     const standbyTimePerDay = dayToHours - this.operatingTimePerDay
     return this.lifetime * daysWorkedByYear * standbyTimePerDay
+  }
+
+  update (payload) {
+    const name = payload.name
+    // if there is a new hardware name
+    if (name && name !== this.name) {
+      // Get the corresponding JSON object
+      const json = hardwareDatabase[name]
+
+      this.name = json.name
+      this.french = json.french
+      this.category = json.category
+      this.weight = json.weight
+      this.isSizeDependent = json.isSizeDependent
+      this.embodiedAssimilatedTo = json.embodiedAssimilatedTo
+
+      this.embodied = (json.embodiedAssimilatedTo)
+        ? Object.assign({}, hardwareDatabase[json.embodiedAssimilatedTo].embodied)
+        : json.embodied
+
+      this.operatingOneMinVisio = json.operatingOneMinVisio
+      this.operatingOneMinStandby = json.operatingOneMinStandby
+      this.lifetime = json.lifetime
+      this.operatingTimePerDay = json.operatingTimePerDay
+
+      this.components = {}
+
+      // Populate components if necessary
+      /* Check if components array is not undefined or null,
+      and is actually an array */
+      if (json.components && Object.keys(json.components).length !== 0) {
+        for (const [name, quantity] of Object.entries(json.components)) {
+          this.components[name] = new Hardware({ name, quantity })
+        }
+      }
+    }
+
+    const quantity = payload.quantity
+    // If there is a new quantity
+    if (quantity && this.quantity !== quantity) {
+      this.quantity = quantity
+    }
+
+    const size = payload.size
+    // If there is a new size
+    if (size && this.size !== size) {
+      this.size = size
+    }
+
+    const shareForVisio = payload.shareForVisio
+    // if there is a new share for visio
+    if (shareForVisio && this.shareForVisio !== shareForVisio) {
+      this.shareForVisio = shareForVisio
+    }
+
+    // Modifie damage
+    // It's necessary to always update damage because it's impossible to know if
+    // bound or meetind duration have changed
+    // (there are not stored)
+    const damagePayload = payload.damagePayload
+    this.computeDamage({ meetingDuration: damagePayload.meetingDuration, bound: damagePayload.bound })
+
+    return this.id
   }
 }
 

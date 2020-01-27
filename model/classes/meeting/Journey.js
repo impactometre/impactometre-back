@@ -4,7 +4,8 @@ const Damage = require('../shared/Damage')
 const Component = require('../shared/Component')
 const TransportationMean = require('./TransportationMean')
 const {
-  meetingComponents
+  meetingComponents,
+  transportationMeanSubCategories
 } = require('../../../constants/meeting')
 
 /**
@@ -139,6 +140,16 @@ class Journey extends Component {
       })
     }
 
+    /* If the transportation mean is a car, we return the damage only for one participant
+    (i.e the total damage divided by the number of people travelling in the car).
+    If two people travelled in the same car, two journeys will have been created, one for
+    each traveller. */
+    if (this.mean.subCategory === transportationMeanSubCategories.CAR) {
+      embodiedDamage.mutate(category => {
+        embodiedDamage[category] /= this.numberOfPeople
+      })
+    }
+
     // Return the journey embodied damage
     return embodiedDamage
   }
@@ -149,6 +160,57 @@ class Journey extends Component {
    */
   computeDamage () {
     this.damage = this.computeEmbodiedDamage()
+  }
+
+  update (payload) {
+    let modifiedFrench = false
+    let modifiedDamage = false
+
+    const passenger = payload.passenger
+    // If there a new passenger name
+    if (passenger && passenger !== this.passenger) {
+      this.passenger = passenger
+      modifiedFrench = true
+    }
+
+    const mean = payload.mean
+    // If there is a new transportation mean
+    if (mean && mean !== this.mean._name) {
+      this.mean = new TransportationMean({ name: mean })
+      modifiedFrench = true
+      modifiedDamage = true
+    }
+
+    const distance = payload.distance
+    // If there is a new distance
+    if (distance && distance !== this.distance) {
+      this.distance = distance
+      modifiedFrench = true
+      modifiedDamage = true
+    }
+
+    const numberOfPeople = payload.numberOfPeople
+    // If there is a new number of people
+    if (numberOfPeople && numberOfPeople !== this.numberOfPeople) {
+      this.numberOfPeople = numberOfPeople
+      modifiedFrench = true
+      modifiedDamage = true
+    }
+
+    // If one of the above attributes has been modified, french attribute should be modified
+    if (modifiedFrench) {
+      this.french = (numberOfPeople > 1)
+        ? 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km avec ' + (numberOfPeople - 1) + ' autres personnes.'
+        : 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.'
+    }
+
+    // If one of the attributes that are used to compute a journey damage has been modified,
+    // this journey damage should modified
+    if (modifiedDamage) {
+      this.computeDamage()
+    }
+
+    return this.id
   }
 }
 
