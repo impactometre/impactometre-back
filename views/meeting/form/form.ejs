@@ -14,9 +14,11 @@
       Combien de personnes participent à la réunion ?<br>
       <input type="number" name="participantNumber" min="2" max="30">  
 
-      <%- include('form-fieldset-hardware', { title: 'Matériel' }) %>
+      <%- include('fieldset-hardware', { title: 'Matériel' }) %>
   
-      <%- include('form-fieldset-software', { title: 'Logiciel' }) %>
+      <%- include('fieldset-software', { title: 'Logiciel' }) %>
+
+      <%- include('fieldset-journey', { title: 'Trajets' }) %>
 
       <input type="submit">
     </form>
