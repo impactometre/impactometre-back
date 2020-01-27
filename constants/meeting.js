@@ -107,6 +107,12 @@ const damageEndpoints = {
   RESOURCES: 'RESOURCES'
 }
 
+const modificationTypes = {
+  UPDATE: 'UPDATE',
+  CREATE: 'CREATE',
+  REMOVE: 'REMOVE'
+}
+
 exports.hourToMinutes = hourToMinutes
 exports.dayToHours = dayToHours
 exports.minuteToSeconds = minuteToSeconds
@@ -131,3 +137,5 @@ exports.meetingCategoryDamage = meetingCategoryDamage
 exports.possibleJourneys = possibleJourneys
 
 exports.damageEndpoints = damageEndpoints
+
+exports.modificationTypes = modificationTypes
