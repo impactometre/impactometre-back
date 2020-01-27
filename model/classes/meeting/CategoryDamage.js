@@ -123,6 +123,25 @@ class CategoryDamage {
       this.totalDamage = this.totalDamage.add(c.damage)
     })
   }
+
+  /**
+   *
+   * @param {Object} components - A JSON object that contains all necessary data to update all meeting components from a category.
+   * @param {String} category - The components category (hardware, software or journey)
+   */
+  update ({ components, category }) {
+    switch (category) {
+      case meetingCategoryDamage.HARDWARE:
+        components.forEach(component => {
+
+        })
+        break
+      case meetingCategoryDamage.SOFTWARE:
+        break
+      case meetingCategoryDamage.JOURNEY:
+        break
+    }
+  }
 }
 
 module.exports = CategoryDamage
