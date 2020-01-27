@@ -81,6 +81,28 @@ class Damage {
       resources: this.resources + damage.resources
     })
   }
+
+  /**
+   * Return a new damage that is the result of the substraction between this damage and an other one.
+   * @param {Damage} - The damage we want to add.
+   * @returns {Damage} The result damage.
+   */
+  minus (damage) {
+    const humanHealth = (this.humanHealth - damage.humanHealth > 0)
+      ? this.humanHealth - damage.humanHealth
+      : 0
+    const ecosystemQuality = (this.ecosystemQuality - damage.ecosystemQuality > 0)
+      ? this.ecosystemQuality - damage.ecosystemQuality
+      : 0
+    const climateChange = (this.climateChange - damage.climateChange > 0)
+      ? this.climateChange - damage.climateChange
+      : 0
+    const resources = (this.resources - damage.resources > 0)
+      ? this.resources - damage.resources
+      : 0
+
+    return new Damage({ humanHealth, ecosystemQuality, climateChange, resources })
+  }
 }
 
 module.exports = Damage

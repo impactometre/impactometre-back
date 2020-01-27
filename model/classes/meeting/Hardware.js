@@ -207,6 +207,14 @@ class Hardware extends Component {
 
   // Setters
 
+  set name (name) {
+    this._name = name
+  }
+
+  set french (french) {
+    this._french = french
+  }
+
   set damage (damage) {
     this._damage = damage
   }
@@ -225,6 +233,38 @@ class Hardware extends Component {
 
   set shareForVisio (shareForVisio) {
     this._shareForVisio = shareForVisio
+  }
+
+  set isSizeDependent (isSizeDependent) {
+    this._isSizeDependent = isSizeDependent
+  }
+
+  set embodiedAssimilatedTo (embodiedAssimilatedTo) {
+    this._embodiedAssimilatedTo = embodiedAssimilatedTo
+  }
+
+  set embodied (embodied) {
+    this._embodied = embodied
+  }
+
+  set operatingOneMinVisio (operatingOneMinVisio) {
+    this._operatingOneMinVisio = operatingOneMinVisio
+  }
+
+  set operatingOneMinStandby (operatingOneMinStandby) {
+    this._operatingOneMinStandby = operatingOneMinStandby
+  }
+
+  set lifetime (lifetime) {
+    this._lifetime = lifetime
+  }
+
+  set operatingTimePerDay (operatingTimePerDay) {
+    this._operatingTimePerDay = operatingTimePerDay
+  }
+
+  set components (components) {
+    this._components = components
   }
 
   // Other methods
@@ -457,6 +497,69 @@ class Hardware extends Component {
     // We infer the standby time per day from the operating time
     const standbyTimePerDay = dayToHours - this.operatingTimePerDay
     return this.lifetime * daysWorkedByYear * standbyTimePerDay
+  }
+
+  update (payload) {
+    const name = payload.name
+    // if there is a new hardware name
+    if (name && name !== this.name) {
+      // Get the corresponding JSON object
+      const json = hardwareDatabase[name]
+
+      this.name = json.name
+      this.french = json.french
+      this.category = json.category
+      this.weight = json.weight
+      this.isSizeDependent = json.isSizeDependent
+      this.embodiedAssimilatedTo = json.embodiedAssimilatedTo
+
+      this.embodied = (json.embodiedAssimilatedTo)
+        ? Object.assign({}, hardwareDatabase[json.embodiedAssimilatedTo].embodied)
+        : json.embodied
+
+      this.operatingOneMinVisio = json.operatingOneMinVisio
+      this.operatingOneMinStandby = json.operatingOneMinStandby
+      this.lifetime = json.lifetime
+      this.operatingTimePerDay = json.operatingTimePerDay
+
+      this.components = {}
+
+      // Populate components if necessary
+      /* Check if components array is not undefined or null,
+      and is actually an array */
+      if (json.components && Object.keys(json.components).length !== 0) {
+        for (const [name, quantity] of Object.entries(json.components)) {
+          this.components[name] = new Hardware({ name, quantity })
+        }
+      }
+    }
+
+    const quantity = payload.quantity
+    // If there is a new quantity
+    if (quantity && this.quantity !== quantity) {
+      this.quantity = quantity
+    }
+
+    const size = payload.size
+    // If there is a new size
+    if (size && this.size !== size) {
+      this.size = size
+    }
+
+    const shareForVisio = payload.shareForVisio
+    // if there is a new share for visio
+    if (shareForVisio && this.shareForVisio !== shareForVisio) {
+      this.shareForVisio = shareForVisio
+    }
+
+    // Modifie damage
+    // It's necessary to always update damage because it's impossible to know if
+    // bound or meetind duration have changed
+    // (there are not stored)
+    const damagePayload = payload.damagePayload
+    this.computeDamage({ meetingDuration: damagePayload.meetingDuration, bound: damagePayload.bound })
+
+    return this.id
   }
 }
 
