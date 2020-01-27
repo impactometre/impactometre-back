@@ -94,6 +94,19 @@ const meetingCategoryDamage = {
   JOURNEY: 'journey'
 }
 
+const possibleJourneys = [
+  { distance: 50, mean: 'TRAIN_REGIONAL_ONE_PERSON_KM', numberOfPeople: 1 },
+  { distance: 6, mean: 'BUS_CITY_ONE_PERSON_KM', numberOfPeople: 1 },
+  { distance: 10, mean: 'CAR_ELECTRIC_ONE_KM', numberOfPeople: 4 }
+]
+
+const damageEndpoints = {
+  HUMAN_HEALTH: 'HUMAN_HEALTH',
+  ECOSYSTEM_QUALITY: 'ECOSYSTEM_QUALITY',
+  CLIMATE_CHANGE: 'CLIMATE_CHANGE',
+  RESOURCES: 'RESOURCES'
+}
+
 exports.hourToMinutes = hourToMinutes
 exports.dayToHours = dayToHours
 exports.minuteToSeconds = minuteToSeconds
@@ -114,3 +127,7 @@ exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 exports.meetingComponents = meetingComponents
 exports.transportationMeanSubCategories = transportationMeanSubCategories
 exports.meetingCategoryDamage = meetingCategoryDamage
+
+exports.possibleJourneys = possibleJourneys
+
+exports.damageEndpoints = damageEndpoints
