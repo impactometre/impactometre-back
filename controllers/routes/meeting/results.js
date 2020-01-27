@@ -1,18 +1,23 @@
 'use strict'
 
-const assert = require('assert')
-const { create, read, remove } = require('../../../controllers/meeting/meetingScenario')
-const { meetingCategoryDamage } = require('../../../constants/meeting')
+const express = require('express')
 const hardwareDatabase = require('../../../database/meeting/hardware')
-const transportDatabase = require('../../../database/meeting/transportationMean')
 const softwareDatabase = require('../../../database/meeting/software')
+const transportDatabase = require('../../../database/meeting/transportationMean')
 const meetingScenarios = require('../../../database/meeting/meetingScenarios')
+const MeetingScenario = require('../../../model/classes/meeting/MeetingScenario')
+const { meetingCategoryDamage, bounds } = require('../../../constants/meeting')
+const { normaliseDamages } = require('../../../utils/normalise')
 
-describe('meetingScenario controller', () => {
+const router = express.Router()
+
+router.get('/', function (req, res, next) {
   // The user who creates the meeting
   const user = 'vlegauch'
   // The meeting duration in minutes
   const meetingDuration = 120
+  // Number of participants
+  const numberOfParticipants = 4
   // The JSON object that enables to creates components linked to the meeting
   const payload = {
     [meetingCategoryDamage.HARDWARE]: [
@@ -59,40 +64,31 @@ describe('meetingScenario controller', () => {
       }
     ]
   }
-  create({ user, meetingDuration, payload })
-  describe('#create()', () => {
-    // Create the meeting scenario
-    it('shoud create a meeting scenario and add it the database', () => {
-      assert.deepStrictEqual(
-        meetingScenarios.size,
-        1
-      )
-    })
+
+  meetingScenarios.clear()
+  // Create the MeetingScenario object
+  const meetingScenario = MeetingScenario.create({ user, meetingDuration, numberOfParticipants, payload })
+
+  const damageComputePayload = {
+    [meetingCategoryDamage.HARDWARE]: { meetingDuration: 120, bound: bounds.UPPER },
+    [meetingCategoryDamage.SOFTWARE]: { instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 },
+    [meetingCategoryDamage.JOURNEY]: {}
+  }
+
+  meetingScenario.computeDamage(damageComputePayload)
+
+  meetingScenario.generateAlternatives()
+
+  const scenarios = []
+  meetingScenarios.forEach(scenario => {
+    if (scenario.user === user) {
+      scenarios.push(scenario)
+    }
   })
 
-  describe('#read()', () => {
-    it('should read a meetingScenario thanks to its id', () => {
-      meetingScenarios.forEach(element => {
-        const id = element.id
+  const normalisedDamages = normaliseDamages(scenarios)
 
-        assert.deepStrictEqual(
-          read(id),
-          meetingScenarios.get(id)
-        )
-      })
-    })
-  })
-  describe('#remove()', () => {
-    it('should remove a meetingScenario thanks to its id', () => {
-      meetingScenarios.forEach(element => {
-        const id = element.id
-        remove(id)
-
-        assert.deepStrictEqual(
-          meetingScenarios.get(id),
-          undefined
-        )
-      })
-    })
-  })
+  res.render('meeting/results/results', { title: 'Résultats', scenarios, normalisedDamages })
 })
+
+module.exports = router

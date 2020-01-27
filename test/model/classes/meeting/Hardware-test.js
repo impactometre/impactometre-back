@@ -19,9 +19,11 @@ describe('Hardware class', () => {
   describe('#constructor()', () => {
     it('should create an Hardware component for each non-composite hardware', () => {
       Object.values(hardwareDatabase).filter(json => {
-        return !(
-          Array.isArray(json.components) &&
-          json.components.length
+        return (
+          // Either there is no components key
+          !json.components ||
+          // Either the value is an empty object
+          Object.keys(json.components).length === 0
         )
       }).forEach(json => {
         const component = new Hardware({ name: json.name })
@@ -31,17 +33,17 @@ describe('Hardware class', () => {
     it('should create an Hardware component for each composite hardware', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (
-          Array.isArray(json.components) &&
-          json.components.length
+          json.components &&
+          Object.keys(json.components).length !== 0
         )
       }).forEach(json => {
         const component = new Hardware({ name: json.name })
 
         // Compute expected components
         const expected = {}
-        json.components.forEach(name => {
-          expected[name] = new Hardware({ name })
-        })
+        for (const [name, quantity] of Object.entries(json.components)) {
+          expected[name] = new Hardware({ name, quantity })
+        }
 
         // Delete components ids because they are always different (they are uniq)
         Object.values(expected).forEach(component => {
@@ -88,6 +90,21 @@ describe('Hardware class', () => {
       })
 
       assert.deepStrictEqual(expected, component._components)
+    })
+    it('should create a hardware for all hardwares which embodied is assimilated to another one', () => {
+      Object.values(hardwareDatabase)
+        .filter(json => json.embodiedAssimilatedTo)
+        .forEach(json => {
+          const instance = new Hardware({ name: json.name })
+
+          assert.deepStrictEqual(
+            instance.embodied,
+            hardwareDatabase[json.embodiedAssimilatedTo].embodied
+          )
+          Object.values(instance.embodied).forEach(categoryDamageValue => {
+            assert.isNotNaN(categoryDamageValue)
+          })
+        })
     })
   })
   describe('#computeVisioOrStandbyTimeOverLife()', () => {
@@ -259,7 +276,7 @@ describe('Hardware class', () => {
         }
 
         Object.values(hardwareDatabase).filter(json => {
-          return (!json[damageType])
+          return (!json[damageType] && !json.embodiedAssimilatedTo)
         }).forEach(json => {
           const component = new Hardware({ name: json.name })
           assert.strictEqual(
@@ -268,6 +285,32 @@ describe('Hardware class', () => {
           )
         })
       })
+    })
+    it('should get assimilated embodied damages', () => {
+      Object.values(hardwareDatabase)
+        .filter(json => json.embodiedAssimilatedTo)
+        .forEach(json => {
+          const instance = new Hardware({ name: json.name })
+
+          const weight = (json.weight.upper && json.weight.lower)
+            ? json.weight.upper
+            : json.weight
+
+          const expected = hardwareDatabase[json.embodiedAssimilatedTo].embodied
+          Object.keys(expected).map(category => {
+            expected[category] *= weight
+          })
+
+          assert.deepStrictEqual(
+            instance.getTypedDamage(hardwareDamageTypes.EMBODIED_VISIO),
+            expected
+          )
+          Object.values(expected).forEach(categoryDamageValue => {
+            assert.isNotNaN(categoryDamageValue)
+            assert.isNotNull(categoryDamageValue)
+            assert.notEqual(0, categoryDamageValue)
+          })
+        })
     })
     it('should return the unique available value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -380,7 +423,7 @@ describe('Hardware class', () => {
         Object.values(hardwareDatabase)
           .filter(json => {
             return (
-              !json[damageType] &&
+              !json[damageType] && !json.embodiedAssimilatedTo &&
               !(
                 Array.isArray(json.components) &&
                 json.components.length
@@ -388,10 +431,11 @@ describe('Hardware class', () => {
             )
           }).forEach(json => {
             const component = new Hardware({ name: json.name })
+            const damage = component.computeTypedDamage(damageType, meetingDuration)
 
-            // Compute expected damage
-            const expected = new Damage({ component })
-            assert.deepStrictEqual(expected, component.computeTypedDamage(damageType, meetingDuration))
+            Object.keys(damage).forEach(category => {
+              assert.strictEqual(damage[category], 0)
+            })
           })
       })
     })
@@ -427,7 +471,13 @@ describe('Hardware class', () => {
               })
             }
 
-            assert.deepStrictEqual(expected, component.computeTypedDamage(damageType, meetingDuration))
+            const damage = component.computeTypedDamage(damageType, meetingDuration)
+            Object.keys(damage).forEach(category => {
+              assert.strictEqual(damage[category], expected[category])
+              assert.isNotNaN(damage[category])
+              assert.isNotNull(damage[category])
+              assert.notEqual(0, damage[category])
+            })
           })
       })
     })
@@ -463,7 +513,13 @@ describe('Hardware class', () => {
               })
             }
 
-            assert.deepStrictEqual(expected, component.computeTypedDamage(damageType, meetingDuration))
+            const damage = component.computeTypedDamage(damageType, meetingDuration)
+            Object.keys(damage).forEach(category => {
+              assert.strictEqual(damage[category], expected[category])
+              assert.isNotNaN(damage[category])
+              assert.isNotNull(damage[category])
+              assert.notEqual(0, damage[category])
+            })
           })
       })
     })
@@ -524,6 +580,9 @@ describe('Hardware class', () => {
 
       Object.keys(double).forEach(category => {
         assert.strictEqual(double[category], simple[category] * 2)
+        assert.isNotNaN(double[category])
+        assert.isNotNull(double[category])
+        assert.notEqual(0, double[category])
       })
     })
     it('the lower bound damage should be lower than the default (upper) damage', () => {
@@ -535,6 +594,59 @@ describe('Hardware class', () => {
 
       Object.keys(defaultBound).forEach(category => {
         assert.isAbove(defaultBound[category], lowerBound[category])
+      })
+    })
+    it('should compute the damage of a composite hardware with x instances of the same component (x > 1)', () => {
+      const json = hardwareDatabase.LOGITECH_KIT
+      const instance = new Hardware({ name: json.name })
+      // Compute expected damage
+      let expected = new Damage()
+      for (const [name, quantity] of Object.entries(json.components)) {
+        const component = new Hardware({ name, quantity: 1 })
+        component.computeDamage({ meetingDuration })
+        component.damage.mutate(category => {
+          component.damage[category] *= quantity
+        })
+
+        expected = expected.add(component.damage)
+      }
+
+      instance.computeDamage({ meetingDuration })
+      const actual = instance.damage
+
+      assert.deepStrictEqual(actual, expected)
+      Object.values(actual).forEach(categoryDamageValue => {
+        assert.isNotNaN(categoryDamageValue)
+        assert.isNotNull(categoryDamageValue)
+        assert.notEqual(0, categoryDamageValue)
+      })
+    })
+    it('should compute the damage of each composite hardware', () => {
+      Object.values(hardwareDatabase).filter(json => {
+        return (
+          json.components &&
+          Object.keys(json.components).length !== 0
+        )
+      }).forEach(json => {
+        const instance = new Hardware({ name: json.name })
+
+        // Compute expected damage
+        let expected = new Damage()
+        for (const [name, quantity] of Object.entries(json.components)) {
+          const component = new Hardware({ name, quantity })
+          component.computeDamage({ meetingDuration })
+          expected = expected.add(component.damage)
+        }
+
+        instance.computeDamage({ meetingDuration })
+        const actual = instance.damage
+        assert.deepStrictEqual(actual, expected)
+
+        Object.values(actual).forEach(categoryDamageValue => {
+          assert.isNotNaN(categoryDamageValue)
+          assert.isNotNull(categoryDamageValue)
+          assert.notEqual(0, categoryDamageValue)
+        })
       })
     })
   })

@@ -46,11 +46,17 @@ const software = {
     }
   },
   JITSI: {
+    /* Measured for 3 people
+    - 1 000 000 kBytes received by all people for 15 minutes
+    - 66 666 kBystes received each minute by all people
+    - 8 888 kbits received each seconde by all people
+    - 2963 kbits received each second by each people
+    */
     name: 'JITSI',
     french: 'Jitsi',
     category: meetingComponents.SOFTWARE,
     bandwith: {
-      inbound: 'unknown'
+      inbound: 2963
     }
   },
   HANGOUTS: {

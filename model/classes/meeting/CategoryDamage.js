@@ -20,7 +20,9 @@ class CategoryDamage {
     this._category = category
 
     // Create a hashmap that contains components and their id
-    this._components = this.arrayToMapComponents(components, category)
+    this._components = (components !== null)
+      ? this.arrayToMapComponents(components, category)
+      : new Map()
   }
 
   // Getters
@@ -111,7 +113,7 @@ class CategoryDamage {
    * @param payload - A JSON object that contains all necessary data to compute
    * the damage caused by each component of the categoryDamage (hardware, software, journeys).
    */
-  computeDamage (payload) {
+  computeDamage (payload = {}) {
     this.totalDamage = new Damage()
 
     // Compute the damage caused by each component of the categoryDamage object
@@ -120,6 +122,25 @@ class CategoryDamage {
       c.computeDamage(payload)
       this.totalDamage = this.totalDamage.add(c.damage)
     })
+  }
+
+  /**
+   *
+   * @param {Object} components - A JSON object that contains all necessary data to update all meeting components from a category.
+   * @param {String} category - The components category (hardware, software or journey)
+   */
+  update ({ components, category }) {
+    switch (category) {
+      case meetingCategoryDamage.HARDWARE:
+        components.forEach(component => {
+
+        })
+        break
+      case meetingCategoryDamage.SOFTWARE:
+        break
+      case meetingCategoryDamage.JOURNEY:
+        break
+    }
   }
 }
 

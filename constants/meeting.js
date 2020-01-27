@@ -60,9 +60,9 @@ const knownOperatingTimeOverLife = {
  * Used hardwares operating time per day.
  */
 const hardwareOperatingTimePerDay = {
-  DESKTOP: 7,
+  NOT_VISIO_DEDICATED: 7,
   // Considering it is used 3 hours per week
-  LOGITECH_KIT: 3 / workedDaysByWeek
+  VISIO_DEDICATED: 3 / workedDaysByWeek
 }
 
 /**
@@ -89,9 +89,28 @@ const transportationMeanSubCategories = {
  * Damage categories for meetings
  */
 const meetingCategoryDamage = {
-  HARDWARE: 'HARDWARE',
-  SOFTWARE: 'SOFTWARE',
-  JOURNEY: 'JOURNEY'
+  HARDWARE: 'hardware',
+  SOFTWARE: 'software',
+  JOURNEY: 'journey'
+}
+
+const possibleJourneys = [
+  { distance: 50, mean: 'TRAIN_REGIONAL_ONE_PERSON_KM', numberOfPeople: 1 },
+  { distance: 6, mean: 'BUS_CITY_ONE_PERSON_KM', numberOfPeople: 1 },
+  { distance: 10, mean: 'CAR_ELECTRIC_ONE_KM', numberOfPeople: 4 }
+]
+
+const damageEndpoints = {
+  HUMAN_HEALTH: 'HUMAN_HEALTH',
+  ECOSYSTEM_QUALITY: 'ECOSYSTEM_QUALITY',
+  CLIMATE_CHANGE: 'CLIMATE_CHANGE',
+  RESOURCES: 'RESOURCES'
+}
+
+const modificationTypes = {
+  UPDATE: 'UPDATE',
+  CREATE: 'CREATE',
+  REMOVE: 'REMOVE'
 }
 
 exports.hourToMinutes = hourToMinutes
@@ -114,3 +133,9 @@ exports.hardwareOperatingTimePerDay = hardwareOperatingTimePerDay
 exports.meetingComponents = meetingComponents
 exports.transportationMeanSubCategories = transportationMeanSubCategories
 exports.meetingCategoryDamage = meetingCategoryDamage
+
+exports.possibleJourneys = possibleJourneys
+
+exports.damageEndpoints = damageEndpoints
+
+exports.modificationTypes = modificationTypes
