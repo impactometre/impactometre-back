@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css' />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script type="text/javascript" src="/javascripts/meeting/utils.js"></script>
+    <script type="text/javascript" src="/javascripts/meeting/switchVue.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <button id="switchVue" onclick="switchVue()" type="button">
+      Détailler les graphiques
+    </button>
+    <div id="multiWrapper" class="wrapper" style="display: grid; grid-template-columns: repeat(3, 1fr);">
+      <div id="monoDiv" style=" grid-column: 1 / span 2; grid-row: 1">
+        <canvas id="monoChart"></canvas>
+      </div>
+      <div id="humanHealthChart" style="grid-column: 1; grid-row: 1" hidden>
+        <canvas id="humanHealth"></canvas>
+      </div>
+      <div id="climateChangeChart" style="grid-column: 2; grid-row: 1" hidden>
+        <canvas id="climateChange"></canvas>
+      </div>
+      <div id="resourcesChart" style="grid-column: 1; grid-row: 2" hidden>
+        <canvas id="resources"></canvas>
+      </div>
+      <div id="ecosystemQualityChart" style="grid-column: 2; grid-row: 2" hidden>
+        <canvas id="ecosystemQuality"></canvas>
+      </div>
+    </div>
+
+    <script>
+      const damages = JSON.parse('<%- JSON.stringify(normalisedDamages) %>')
+      const scenarios = JSON.parse('<%- JSON.stringify(scenarios) %>')
+
+      // Draw graphs when page reload
+      const ctx = document.getElementById('monoChart').getContext('2d')
+      barChart(ctx)
+
+    </script>
+  </body>
+</html>
