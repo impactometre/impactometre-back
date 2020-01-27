@@ -1,5 +1,6 @@
 /* eslint no-unused-vars: 0 */
 
+// ========== UTILS ==========
 function cmToInches (i) {
   return Math.round(i * 0.39370)
 }
@@ -14,6 +15,25 @@ function getIdNumber (id) {
   const idNumber = id.replace(idNumberFilter, '$1')
 
   return idNumber
+}
+
+// ========== MAIN ==========
+let participantNumber = 2
+const participantMaxNumber = 30
+const participantMinNumber = 2
+
+function addAParticipant () {
+  if (participantNumber < participantMaxNumber) {
+    participantNumber += 1
+    document.querySelector('#participantNumber').innerHTML = participantNumber
+  }
+}
+
+function removeAParticipant () {
+  if (participantNumber > participantMinNumber) {
+    participantNumber -= 1
+    document.querySelector('#participantNumber').innerHTML = participantNumber
+  }
 }
 
 // =========== HARDWARE ==========
@@ -76,7 +96,7 @@ function changeScreenUnit (unit, id) {
   const screenSizesCm = new Map([
     ['min', 43],
     ['value', 107],
-    ['max', 228]
+    ['max', 229]
   ])
   const cmIterator = screenSizesCm.entries()
 
