@@ -1,6 +1,7 @@
 'use strict'
 
-const assert = require('assert')
+const chai = require('chai')
+const assert = chai.assert
 const transportDatabase = require('../../../../database/meeting/transportationMean')
 const TransportationMean = require('../../../../model/classes/meeting/TransportationMean')
 const Journey = require('../../../../model/classes/meeting/Journey')
@@ -16,12 +17,19 @@ describe('Journey class', () => {
       numberOfPeople: 3
     })
     const embodiedDamage = new Damage({
-      humanHealth: electricCar.embodied.humanHealth * 100,
-      ecosystemQuality: electricCar.embodied.ecosystemQuality * 100,
-      climateChange: electricCar.embodied.climateChange * 100,
-      resources: electricCar.embodied.resources * 100
+      humanHealth: electricCar.embodied.humanHealth * 100 / 3,
+      ecosystemQuality: electricCar.embodied.ecosystemQuality * 100 / 3,
+      climateChange: electricCar.embodied.climateChange * 100 / 3,
+      resources: electricCar.embodied.resources * 100 / 3
     })
 
+    it('the damage of a car journey should be divided by the number of people in the car', () => {
+      const actual = journeyElectricCar3People.computeEmbodiedDamage()
+      Object.keys(actual).forEach(category => {
+        assert.strictEqual(actual[category], embodiedDamage[category])
+        assert.isNotNaN(actual[category])
+      })
+    })
     it('should return the damage caused by 3 people in a eletric car for one kilometer ', () => {
       assert.deepStrictEqual(
         journeyElectricCar3People.computeEmbodiedDamage(),
@@ -35,11 +43,14 @@ describe('Journey class', () => {
       distance: 100,
       numberOfPeople: 5
     })
-    it('two journeys with the same kind of car and the same distance should cause the same damage (i.e. the number of people desn\'t matter)', () => {
-      assert.deepStrictEqual(
-        journeyElectricCar3People.computeEmbodiedDamage(),
-        journeyElectricCar5People.computeEmbodiedDamage()
-      )
+    it('two identical journeys except for the number of people should cause different damages ', () => {
+      const threePeople = journeyElectricCar3People.computeEmbodiedDamage()
+      const fivePeople = journeyElectricCar5People.computeEmbodiedDamage()
+
+      Object.keys(threePeople).forEach(category => {
+        assert.isBelow(fivePeople[category], threePeople[category])
+        assert.isNotNaN(fivePeople[category])
+      })
     })
 
     const heatCar = new TransportationMean({ name: transportDatabase.CAR_HEAT_ENGINE_ONE_KM.name })

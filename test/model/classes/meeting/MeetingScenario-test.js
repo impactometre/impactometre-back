@@ -1,6 +1,7 @@
 'use strict'
 
-const assert = require('assert')
+const chai = require('chai')
+const assert = chai.assert
 const MeetingScenario = require('../../../../model/classes/meeting/MeetingScenario')
 const MeetingDamage = require('../../../../model/classes/meeting/MeetingDamage')
 const hardwareDatabase = require('../../../../database/meeting/hardware')
@@ -16,9 +17,9 @@ describe('MeetingScenario class', () => {
   // The user who creates the meeting
   const user = 'vlegauch'
   // The meeting duration in minutes
-  const meetingDuration = 90
+  const meetingDuration = 120
   // Number of participants
-  const numberOfParticipants = 5
+  const numberOfParticipants = 4
   // The JSON object that enables to creates components linked to the meeting
   const payload = {
     [meetingCategoryDamage.HARDWARE]: [
@@ -65,33 +66,64 @@ describe('MeetingScenario class', () => {
       }
     ]
   }
+
   // Create the MeetingScenario object
   const meetingScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload })
 
-  // Create the JSON object that enables to compute meeting total damage
-  const damagePayload = {
-    [meetingCategoryDamage.HARDWARE]: { meetingDuration: 90, bound: bounds.UPPER },
-    [meetingCategoryDamage.SOFTWARE]: { instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 },
-    [meetingCategoryDamage.JOURNEY]: {}
-  }
+  // Create scenario with missing components in a category
+  const incompletePayload = Object.assign({}, payload)
+  delete incompletePayload[meetingCategoryDamage.JOURNEY]
+  const incompleteScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload: incompletePayload })
 
-  // Create the expected MeetingDamage object
-  const meetingDamage = new MeetingDamage({
-    hardwareComponents: payload[meetingCategoryDamage.HARDWARE],
-    softwareComponents: payload[meetingCategoryDamage.SOFTWARE],
-    journeyComponents: payload[meetingCategoryDamage.JOURNEY]
+  describe('#constructor()', () => {
+    it('should create a MeetingScenario without components in all categories', () => {
+      assert.notStrictEqual(incompleteScenario.damage.softwareDamage.components, new Map())
+    })
   })
-  // Compute its total damage
-  meetingDamage.computeDamage(damagePayload)
-
-  // Compute meeting total damage
-  meetingScenario.computeDamage(damagePayload)
   describe('#computeDamage()', () => {
+    // Create the JSON object that enables to compute meeting total damage
+    const damagePayload = {
+      [meetingCategoryDamage.HARDWARE]: { meetingDuration: 120, bound: bounds.UPPER },
+      [meetingCategoryDamage.SOFTWARE]: { instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 },
+      [meetingCategoryDamage.JOURNEY]: {}
+    }
+
+    // Create the expected MeetingDamage object
+    const meetingDamage = new MeetingDamage({
+      hardware: payload[meetingCategoryDamage.HARDWARE],
+      software: payload[meetingCategoryDamage.SOFTWARE],
+      journey: payload[meetingCategoryDamage.JOURNEY]
+    })
+    // Compute its total damage
+    meetingDamage.computeDamage(damagePayload)
+
+    // Compute meeting total damage
+    meetingScenario.computeDamage(damagePayload)
+
     it('should compute the total damage caused by the meeting', () => {
-      assert.deepStrictEqual(
-        meetingScenario.damage.totalDamage,
-        meetingDamage.totalDamage
-      )
+      Object.keys(meetingScenario.damage.totalDamage).forEach(category => {
+        assert.strictEqual(meetingScenario.damage.totalDamage[category], meetingDamage.totalDamage[category])
+        assert.isNotNaN(meetingScenario.damage.totalDamage[category])
+        assert.isNotNull(meetingScenario.damage.totalDamage[category])
+        assert.notEqual(0, meetingScenario.damage.totalDamage[category])
+      })
+    })
+    it('should compute the damage of an incomplete scenario', () => {
+      const damagePayload = {
+        [meetingCategoryDamage.HARDWARE]: { meetingDuration: 120, bound: bounds.UPPER },
+        [meetingCategoryDamage.SOFTWARE]: { instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 },
+        [meetingCategoryDamage.JOURNEY]: {}
+      }
+      incompleteScenario.computeDamage(damagePayload)
+      const damage = incompleteScenario.damage.totalDamage
+      const expected = incompleteScenario.damage.hardwareDamage.totalDamage.add(incompleteScenario.damage.softwareDamage.totalDamage)
+
+      Object.keys(damage).forEach(category => {
+        assert.strictEqual(damage[category], expected[category])
+        assert.isNotNaN(damage[category])
+        assert.isNotNull(damage[category])
+        assert.notEqual(0, damage[category])
+      })
     })
   })
   describe('#generateAlternatives()', () => {
@@ -115,7 +147,6 @@ describe('MeetingScenario class', () => {
       )
     })
   })
-
   describe('#read()', () => {
     it('should read a meetingScenario thanks to its id', () => {
       meetingScenarios.forEach(element => {

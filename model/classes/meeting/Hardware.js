@@ -247,7 +247,7 @@ class Hardware extends Component {
       and add it to composite hardware damage */
       Object.values(this.components).forEach(component => {
         component.computeDamage({ meetingDuration, bound })
-        damage.add(component.damage)
+        damage = damage.add(component.damage)
       })
     } else {
       const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
@@ -368,7 +368,7 @@ class Hardware extends Component {
         }
 
         const weightEmbodied = Object.assign({}, this.embodied)
-        Object.keys(weightEmbodied).map(category => {
+        Object.keys(weightEmbodied).forEach(category => {
           weightEmbodied[category] *= boundSpecificWeight
         })
 

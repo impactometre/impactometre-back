@@ -71,9 +71,9 @@ describe('MeetingDamage class', () => {
 
     // Create the MeetingDamage object thnaks to three arrays of JSON object
     const meetingDamage = new MeetingDamage({
-      hardwareComponents: hardwareJSON,
-      softwareComponents: softwareJSON,
-      journeyComponents: journeyJSON
+      hardware: hardwareJSON,
+      software: softwareJSON,
+      journey: journeyJSON
     })
     // Compute the total damage linked to the MeetingDamage object
     const totalDamageJSON = {
