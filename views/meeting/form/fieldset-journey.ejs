@@ -2,12 +2,14 @@
 
     <legend><%= title %></legend>
 
-    <%- include('tmpl-traveller', { p: '1'}) %>
+    <div id="travellers">
+        <%- include('tmpl-traveller', { p: '1'}) %>
 
-    <%- include('tmpl-traveller', { p: '2'}) %>
-
-    <template id="travellerTmpl">
-        <%- include('tmpl-traveller', { p: 'p'}) %>
-    </template>
+        <%- include('tmpl-traveller', { p: '2'}) %>
+    
+        <template id="travellerTmpl">
+            <%- include('tmpl-traveller', { p: 'p'}) %>
+        </template>    
+    </div>
 
 </fieldset>
