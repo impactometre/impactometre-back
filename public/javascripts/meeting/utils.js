@@ -1,3 +1,6 @@
+/* eslint no-unused-vars: 0 */
+/* eslint no-undef: 0 */
+
 const color = Chart.helpers.color
 
 window.chartColors = {
@@ -11,7 +14,7 @@ window.chartColors = {
 }
 
 const colors = [
-  color(window.chartColors.red).alpha(0.5).rgbString(), 
+  color(window.chartColors.red).alpha(0.5).rgbString(),
   color(window.chartColors.orange).alpha(0.5).rgbString(),
   color(window.chartColors.yellow).alpha(0.5).rgbString(),
   color(window.chartColors.green).alpha(0.5).rgbString(),
@@ -40,7 +43,7 @@ function barChart (ctx) {
     options: {
       responsive: true,
       legend: {
-        position: 'top',
+        position: 'top'
       },
       title: {
         display: true,
