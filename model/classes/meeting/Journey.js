@@ -20,7 +20,7 @@ class Journey extends Component {
    * @param {Float} distance - The distance of the journey.
    * @param {Integer} numberOfPeople - The number of people of the journey.
    */
-  constructor ({ passenger, mean, distance, numberOfPeople }) {
+  constructor ({ passenger, mean, distance, numberOfPeople = 1 }) {
     super({ french: '', category: meetingComponents.JOURNEY })
     this._mean = new TransportationMean({ name: mean })
     this._passenger = passenger

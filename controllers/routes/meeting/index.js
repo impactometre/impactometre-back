@@ -10,6 +10,7 @@ const hardwareDb = require('../../../database/meeting/hardware')
 const softwareDb = require('../../../database/meeting/software')
 const transportationMeanDb = require('../../../database/meeting/transportationMean')
 const MeetingScenario = require('../../../model/classes/meeting/MeetingScenario')
+const { meetingCategoryDamage, bounds } = require('../../../constants/meeting')
 
 router.get('/', function (req, res, next) {
   res.redirect('/reunion/commencer')
@@ -25,9 +26,24 @@ router.post('/creer', (req, res) => {
   const user = uniqid()
   payload.user = user
 
+  console.log(payload)
   const meetingScenario = MeetingScenario.create(payload)
 
-  return res.json({ redirect: '/reunion/resultats' })
+  const damageComputePayload = {
+    [meetingCategoryDamage.HARDWARE]: { meetingDuration: payload.meetingDuration, bound: bounds.UPPER },
+    [meetingCategoryDamage.SOFTWARE]: { instancesNumber: payload.numberOfParticipants, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: payload.meetingDuration },
+    [meetingCategoryDamage.JOURNEY]: {}
+  }
+
+  meetingScenario.computeDamage(damageComputePayload)
+
+  console.log('ICCCCCCCCCCCCCCCCCI')
+  console.log(meetingScenario.damage.totalDamage)
+
+  // Generates the two alternatives scenarios for the comparison
+  meetingScenario.generateAlternatives()
+
+  return res.json({ redirect: '/reunion/resultats/' + user })
 })
 
 router.use('/resultats', resultsRouter)
