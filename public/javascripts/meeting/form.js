@@ -158,18 +158,18 @@ const journeyMinNumber = 0
 
 function getIdNumbers (id) {
   // Return the number n for an id attribute ending with -n
-  const idNumberFilter = /\w+-(\d{1,2})__\w+-(\d{1,2})/
-  const idNumber = id.replace(idNumberFilter, '$2')
+  const idNumberFilter = /\w+-(\d{1,2}-\d{1,2})/
+  const ids = id.replace(idNumberFilter, '$1')
 
-  return idNumber
+  return ids
 }
 
 function kmSliderUpdate (dist, id) {
-  document.querySelector('#kmNumber-' + getIdNumber(id)).value = dist
+  document.querySelector('#kmNumber-' + getIdNumbers(id)).value = dist
 }
 
 function kmNumberUpdate (dist, id) {
-  document.querySelector('#kmSlider-' + getIdNumber(id)).value = dist
+  document.querySelector('#kmSlider-' + getIdNumbers(id)).value = dist
 }
 
 function addJourneyItem (travellerId) {
@@ -186,8 +186,12 @@ function addJourneyItem (travellerId) {
 
     clone.querySelector('.traveller__journeyItem').id = 'traveller-' + travId + '__journeyItem-' + newJourneyNumber
     // clone.querySelector('#removeBtn-1-n').id = 'removeBtn-' + travellerNumber + '-' + journeyNumber
-    clone.querySelector('input[type="number"]').id = 'kmNumber-' + newJourneyNumber
-    clone.querySelector('input[type="range"]').id = 'kmSlider-' + newJourneyNumber
+    clone.querySelector('input[type="hidden"]').name = 'journeys[traveller-' + travId + '__journeyItem-' + newJourneyNumber + '][user]'
+    clone.querySelector('input[type="hidden"]').value = 'Participant ' + travId
+    clone.querySelector('input[type="number"]').id = 'kmNumber-' + travId + '-' + newJourneyNumber
+    clone.querySelector('input[type="number"]').name = 'journeys[traveller-' + travId + '__journeyItem-' + newJourneyNumber + '][distance]'
+    clone.querySelector('select').name = 'journeys[traveller-' + travId + '__journeyItem-' + newJourneyNumber + '][mean]'
+    clone.querySelector('input[type="range"]').id = 'kmSlider-' + travId + '-' + newJourneyNumber
 
     const lastItem = travellerSelector.querySelector('.traveller__journeyItem--add')
     travellerSelector.querySelector('.traveller__journeys').insertBefore(clone, lastItem)
