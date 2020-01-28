@@ -31,6 +31,7 @@ function addAParticipant () {
   if (participantNumber < participantMaxNumber) {
     participantNumber += 1
     document.querySelector('#participantNumber').innerHTML = participantNumber
+    document.querySelector('#numberOfParticipants').value = participantNumber
 
     travellers.set('trav' + participantNumber, 0)
 
@@ -51,7 +52,9 @@ function removeAParticipant () {
     const parent = document.querySelector('#travellers')
     parent.querySelector('#traveller-' + participantNumber).remove()
     participantNumber -= 1
+
     document.querySelector('#participantNumber').innerHTML = participantNumber
+    document.querySelector('#numberOfParticipants').value = participantNumber
   }
 }
 
@@ -89,10 +92,10 @@ function addATvScreen () {
     div.innerHTML += '<input type="range" min="48" max="228" value="107" id="tvScreenSize-' + tvScreenNumber + '"' +
     'oninput="outputUpdate(value, id)">' +
     '<output for="tvScreenSize-' + tvScreenNumber + '" id="screenSize-' + tvScreenNumber + '">' +
-    '<input type="number" min="48" max="228" value="107" id="screenSizeNumberInput-' + tvScreenNumber + '"' +
+    '<input type="number" min="48" max="228" value="107" name="hardware[tvs][' + tvScreenNumber + '][value]" id="screenSizeNumberInput-' + tvScreenNumber + '"' +
     'oninput="rangeUpdate(value, id)">' +
     '</output>' +
-    '<select id="screenSizeUnit-' + tvScreenNumber + '" name="unit"' +
+    '<select name="hardware[tvs][' + tvScreenNumber + '][unit]" id="screenSizeUnit-' + tvScreenNumber + '" name="unit"' +
     'onchange="changeScreenUnit(value, id)">' +
     '<option value="cm" id="cm" selected>centimètres</option>' +
     '<option value="inch" id="inch">pouces</option>' +
@@ -149,7 +152,6 @@ function changeScreenUnit (unit, id) {
 }
 
 // ========== JOURNEY ==========
-const travellerNumber = participantNumber
 let journeyNumber = 0
 const journeyMaxNumber = 50
 const journeyMinNumber = 0

@@ -6,7 +6,7 @@
 
         km parcourus en
         <select>
-        <% Object.values(transportationMean).forEach(mean => { %>
+        <% Object.values(transportationMeanDb).forEach(mean => { %>
             <option value="<%= mean.name %>"><%= mean.french %></option>
         <% }) %>
         </select>
