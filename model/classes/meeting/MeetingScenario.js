@@ -24,8 +24,8 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    * @see CategoryDamage
    */
-  constructor ({ user, meetingDuration, numberOfParticipants, payload }) {
-    super(user)
+  constructor ({ user, name, meetingDuration, numberOfParticipants, payload }) {
+    super(user, name)
     this._meetingDuration = meetingDuration
     this._numberOfParticipants = numberOfParticipants
 
@@ -162,7 +162,7 @@ class MeetingScenario extends Scenario {
       [meetingCategoryDamage.JOURNEY]: journeyComponents
     }
     // Generate the MeetingScenario and add it the database
-    const heavyVisioScenario = MeetingScenario.create({ user, meetingDuration, numberOfParticipants, payload: heavyVisioPayload })
+    const heavyVisioScenario = MeetingScenario.create({ user, name: 'Alternative visio lourde', meetingDuration, numberOfParticipants, payload: heavyVisioPayload })
 
     // Compute its damage
     const DamagePayload = {
@@ -240,7 +240,7 @@ class MeetingScenario extends Scenario {
       [meetingCategoryDamage.JOURNEY]: journeyComponents
     }
     // Generate meeting scenario
-    const lightTransportScenario = MeetingScenario.create({ user, meetingDuration, numberOfParticipants, payload: lightTransportPayload })
+    const lightTransportScenario = MeetingScenario.create({ user, name: 'Alternative transports légers', meetingDuration, numberOfParticipants, payload: lightTransportPayload })
     // Compute its damage
     lightTransportScenario.computeDamage(DamagePayload)
   }
@@ -255,9 +255,9 @@ class MeetingScenario extends Scenario {
  * { [array_of_all_hardware_data], [array_of_all_software_data], [array_of_all_journey data]}.
  * @returns {MeetingScenario} The created meetingScenario.
  */
-  static create ({ user, meetingDuration, numberOfParticipants, payload }) {
+  static create ({ user, name = '', meetingDuration, numberOfParticipants, payload }) {
   // Create new MeetingScenario
-    const meetingScenario = new MeetingScenario({ user, meetingDuration, numberOfParticipants, payload })
+    const meetingScenario = new MeetingScenario({ user, name, meetingDuration, numberOfParticipants, payload })
 
     // Add it to the database
     meetingScenarios.set(meetingScenario.id, meetingScenario)
