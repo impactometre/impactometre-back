@@ -32,8 +32,10 @@ function submitMeeting () {
     payload.software.push({ name: softwareChoice })
   }
 
-  const filteredJourneys = Object.values(journeys).filter(journey => journey.distance > 0)
-  payload.journey = filteredJourneys
+  if (journeys !== undefined) {
+    const filteredJourneys = Object.values(journeys).filter(journey => journey.distance > 0)
+    payload.journey = filteredJourneys
+  }
 
   const data = { meetingDuration, numberOfParticipants, payload }
 
