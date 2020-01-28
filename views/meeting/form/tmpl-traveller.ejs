@@ -1,0 +1,16 @@
+<div id="traveller-<%= p %>" class="traveller">
+    <div class="traveller__header">
+        <h4>Participant <%= p %></h4>
+    </div>
+    <div class="traveller__journeys">
+
+        <template id="journeyTmpl"> 
+            <%- include('tmpl-journey') %>
+        </template>
+        
+        <div class="traveller__journeyItem traveller__journeyItem--add">
+            <button type="button" onclick="addJourneyItem(id)" id="traveller-<%= p %>__addJourneyItem" class="plusMinusBtn">+</button>
+            Ajouter un trajet
+        </div>
+    </div>
+</div>
