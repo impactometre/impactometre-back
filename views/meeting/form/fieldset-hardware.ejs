@@ -20,14 +20,14 @@
                 <label for="laptopNumber">
                     ordinateurs portables      
                 </label><br>
-                <input type="number" name="laptopNumber" id="laptopNumber" min="0" max="50"><br>
+                <input type="number" name="hardware[<%= hardwareDb.LAPTOP.name %>]" id="laptopNumber" min="0" max="50"><br>
             </div>
 
             <div>
                 <label for="desktopNumber">
                     ordinateurs de bureau        
                 </label><br> 
-                <input type="number" name="desktopNumber" id="desktopNumber" min="0" max="50"><br>    
+                <input type="number" name="hardware[<%= hardwareDb.DESKTOP.name %>]" id="desktopNumber" min="0" max="50"><br>    
             </div>
 
         </div>
@@ -48,7 +48,7 @@
             Combien ? <br>
 
             <div>
-                <input type="number" name="visioKitNumber" min="1" max="50">
+                <input type="number" name="hardware[<%= hardwareDb.LOGITECH_KIT.name %>]" min="1" max="50">
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
                 <label for="computerScreenNumber">
                     écrans d'ordinateur        
                 </label><br> 
-                <input type="number" name="computerScreenNumber" id="computerScreenNumber" min="0" max="50">
+                <input type="number" name="hardware[<%= hardwareDb.COMPUTER_SCREEN_LCD.name %>]" id="computerScreenNumber" min="0" max="50">
             </div>
 
             <div>
@@ -98,7 +98,7 @@
             Combien ? <br>
 
             <div>
-                <input type="number" name="videoprojNumber" min="1" max="50">
+                <input type="number" name="hardware[<%= hardwareDb.PROJECTOR.name %>]" min="1" max="50">
             </div>
         </div>
     </div>

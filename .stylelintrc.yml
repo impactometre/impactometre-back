@@ -23,6 +23,6 @@
     "no-empty-source": [ true, {
       "severity": "warning"
     } ],
-    "unit-whitelist": ["em", "rem", "%", "s"]
+    "unit-whitelist": ["em", "rem", "%", "s", "vw", "vh"]
   }
 }

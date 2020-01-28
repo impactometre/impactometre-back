@@ -4,28 +4,18 @@
 
     <div>
         Quel logiciel de visioconférence utilisez-vous ? <br>
-        <input type="radio" name="softwareChoice" id="renavisio" value="renavisio">
-        <label for="renavisio">
-            Renavisio
-        </label><br>
-        <input type="radio" name="softwareChoice" id="framatalk" value="framatalk">
-        <label for="framatalk">
-            Framatalk        
-        </label><br>
-        <input type="radio" name="softwareChoice" id="hangouts" value="hangouts">
-        <label for="hangouts">
-            Google Hangouts        
-        </label><br> 
-        <input type="radio" name="softwareChoice" id="skype" value="skype">
-        <label for="skype">
-            Microsoft Skype        
-        </label><br> 
+
+        <% Object.values(softwareDb).forEach(software => { %>
+            <input type="radio" name="softwareChoice" id="<%= software.name %>" value="<%= software.name %>">
+            <label for="<%= software.name %>"><%= software.french %></label><br>
+        <% }) %>
+
         <input type="radio" name="softwareChoice" id="other" value="other">
         <label for="other">
             Autre        
         </label><br> 
-        <input type="radio" name="softwareChoice" id="noSfotware" value="noSfotware">
-        <label for="noSfotware">
+        <input type="radio" name="softwareChoice" id="noSoftware" value="noSoftware">
+        <label for="noSoftware">
             Aucun logiciel        
         </label>
     </div>

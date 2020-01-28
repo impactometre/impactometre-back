@@ -10,4 +10,5 @@ globals:
   SharedArrayBuffer: readonly
 parserOptions:
   ecmaVersion: 2018
+ignorePatterns: ["jquery.serializejson.js"]
 rules: {}

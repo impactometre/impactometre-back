@@ -3,7 +3,10 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/javascripts/jquery.serializejson.js"></script>
     <script type="text/javascript" src="/javascripts/meeting/form.js"></script>
+    <script type="text/javascript" src="/javascripts/meeting/submit.js"></script>
   </head>
   <body>
     <div id="multiWrapper" class="wrapper" style="display: grid; grid-template-columns: repeat(3, 1fr);">
@@ -13,7 +16,7 @@
           <h4>En quelques questions</h4>
         </div>
     
-        <form>
+        <form id="meetingForm">
     
           Combien de personnes assisteront à la réunion ?<br> 
           <div>
@@ -21,7 +24,13 @@
             <span id="participantNumber"> 2 </span>
             <button type="button" onclick="addAParticipant()" class="plusMinusBtn">+</button>
             participants
+            <input type="number" value="2" name="numberOfParticipants" id="numberOfParticipants" hidden>
           </div>
+
+          <label for="duration">
+            À combien estimez-vous sa durée ?
+          </label><br> 
+          <input type="number" name="meetingDuration" id="meetingDuration" min="0" max="1200"> minutes<br>
         
           <%- include('fieldset-hardware', { title: 'Matériel' }) %>
       
@@ -29,7 +38,7 @@
     
           <%- include('fieldset-journey', { title: 'Trajets' }) %>
     
-          <input type="submit">
+          <button type="button" onclick="submitMeeting()">Voir les impacts</button>
         </form>  
       </div>
     </div>
