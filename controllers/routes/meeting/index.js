@@ -25,8 +25,8 @@ router.post('/creer', (req, res) => {
   // Generate an id for the user who creates the meeting
   const user = uniqid()
   payload.user = user
+  payload.name = 'Référence'
 
-  console.log(payload)
   const meetingScenario = MeetingScenario.create(payload)
 
   const damageComputePayload = {
@@ -36,9 +36,6 @@ router.post('/creer', (req, res) => {
   }
 
   meetingScenario.computeDamage(damageComputePayload)
-
-  console.log('ICCCCCCCCCCCCCCCCCI')
-  console.log(meetingScenario.damage.totalDamage)
 
   // Generates the two alternatives scenarios for the comparison
   meetingScenario.generateAlternatives()

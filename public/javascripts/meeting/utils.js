@@ -92,7 +92,7 @@ function barData (damages, scenarios) {
   scenarios.forEach(scenario => {
     const index = i + 1
     datasets[scenario._id] = {
-      label: 'Scénario ' + index,
+      label: scenario._name,
       backgroundColor: colors[i],
       borderColor: Object.values(window.chartColors)[i],
       data: []
@@ -128,7 +128,7 @@ function stackedBarData (damages, scenarios, category) {
   let i = 0
   scenarios.forEach(scenario => {
     const index = i + 1
-    chartData.labels.push('Scénario ' + index)
+    chartData.labels.push(scenario._name)
     i++
   })
 

@@ -17,7 +17,6 @@ router.get('/:userId', function (req, res, next) {
     }
   })
 
-  console.log(scenarios)
   const normalisedDamages = normaliseDamages(scenarios)
 
   res.render('meeting/results/results', { title: 'Résultats', scenarios, normalisedDamages })
