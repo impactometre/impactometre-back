@@ -1,0 +1,106 @@
+<fieldset>
+
+    <legend><%= title %></legend>
+
+    <div>
+        Utilisez-vous un ou plusieurs ordinateurs ? <br>
+        <input type="radio" name="hasComputer" id="hasComputer" value="yes" class="conditionalForm--activator">
+        <label for="hasComputer">
+            Oui
+        </label>
+        <input type="radio" name="hasComputer" id="hasntComputer" value="no">
+        <label for="hasntComputer">
+            Non        
+        </label><br>    
+
+        <div class="conditionalForm">
+            Combien ? <br>
+
+            <div>
+                <label for="laptopNumber">
+                    ordinateurs portables      
+                </label><br>
+                <input type="number" name="hardware[<%= hardwareDb.LAPTOP.name %>]" id="laptopNumber" min="0" max="50"><br>
+            </div>
+
+            <div>
+                <label for="desktopNumber">
+                    ordinateurs de bureau        
+                </label><br> 
+                <input type="number" name="hardware[<%= hardwareDb.DESKTOP.name %>]" id="desktopNumber" min="0" max="50"><br>    
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+        Faites-vous usage d'un système de visioconférence dédié ? <br>
+        <input type="radio" name="hasVisioKit" id="hasVisioKit" class="conditionalForm--activator"> 
+        <label for="hasVisioKit">
+            Oui
+        </label>
+        <input type="radio" name="hasVisioKit" id="hasntVisioKit" value="no">
+        <label for="hasntVisioKit">
+            Non        
+        </label><br>
+
+        <div class="conditionalForm">
+            Combien ? <br>
+
+            <div>
+                <input type="number" name="hardware[<%= hardwareDb.LOGITECH_KIT.name %>]" min="1" max="50">
+            </div>
+        </div>
+    </div>
+
+    <div>
+        Vous servez-vous d'écrans supplémentaires ? <br>
+        <input type="radio" name="hasMoreScreens" id="hasMoreScreens" value="yes" class="conditionalForm--activator">
+        <label for="hasMoreScreens">
+            Oui
+        </label>        
+        <input type="radio" name="hasMoreScreens" id="hasntMoreScreens" value="no"> 
+        <label for="hasntMoreScreens">
+            Non        
+        </label><br>
+
+        <div id="additionalScreens" class="conditionalForm">
+            Combien ? <br>
+
+            <div>
+                <label for="computerScreenNumber">
+                    écrans d'ordinateur        
+                </label><br> 
+                <input type="number" name="hardware[<%= hardwareDb.COMPUTER_SCREEN_LCD.name %>]" id="computerScreenNumber" min="0" max="50">
+            </div>
+
+            <div>
+                <button type="button" onclick="removeATvScreen()" class="plusMinusBtn">-</button>
+                <span id="tvScreenNumber"> 0 </span>
+                <button type="button" onclick="addATvScreen()" class="plusMinusBtn">+</button>
+                écrans de télévision
+            </div>
+        </div>
+    </div>
+
+    <div>
+        Utilisez-vous un ou plusieurs vidéoprojecteurs ? <br>
+        <input type="radio" name="hasVideoproj" id="hasVideoproj" class="conditionalForm--activator"> 
+        <label for="hasVideoproj">
+            Oui
+        </label>
+        <input type="radio" name="hasVideoproj" id="hasntVideoproj" value="no">
+        <label for="hasntVideoproj">
+            Non        
+        </label><br>
+
+        <div class="conditionalForm">
+            Combien ? <br>
+
+            <div>
+                <input type="number" name="hardware[<%= hardwareDb.PROJECTOR.name %>]" min="1" max="50">
+            </div>
+        </div>
+    </div>
+
+</fieldset>
