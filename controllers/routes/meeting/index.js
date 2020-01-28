@@ -27,7 +27,7 @@ router.post('/creer', (req, res) => {
 
   const meetingScenario = MeetingScenario.create(payload)
 
-  console.log(meetingScenario)
+  return res.json({ redirect: '/reunion/resultats' })
 })
 
 router.use('/resultats', resultsRouter)
