@@ -8,7 +8,7 @@ function submitMeeting () {
     parseNumbers: true
   })
 
-  const { meetingDuration, numberOfParticipants, softwareChoice } = form
+  const { meetingDuration, numberOfParticipants, softwareChoice, journeys } = form
 
   payload = { ...payload, meetingDuration, numberOfParticipants }
 
@@ -34,8 +34,6 @@ function submitMeeting () {
     payload.software.push({ name: softwareChoice })
   }
 
-  console.log(travellers)
-
-  console.log(payload)
-  console.log(form)
+  const filteredJourneys = Object.values(journeys).filter(journey => journey.distance > 0)
+  payload.journey = filteredJourneys
 }
