@@ -2,15 +2,13 @@
 /* eslint no-undef: 0 */
 
 function submitMeeting () {
-  let payload = { hardware: [], software: [], journey: [] }
+  const payload = { hardware: [], software: [], journey: [] }
 
   const form = $('#meetingForm').serializeJSON({
     parseNumbers: true
   })
 
   const { meetingDuration, numberOfParticipants, softwareChoice, journeys } = form
-
-  payload = { ...payload, meetingDuration, numberOfParticipants }
 
   Object.keys(form.hardware).forEach(key => {
     if (key === 'tvs') {
@@ -36,4 +34,10 @@ function submitMeeting () {
 
   const filteredJourneys = Object.values(journeys).filter(journey => journey.distance > 0)
   payload.journey = filteredJourneys
+
+  const data = { meetingDuration, numberOfParticipants, payload }
+
+  $.post('creer', { payload: JSON.stringify(data) }).done(data => {
+    window.location.href = data.redirect
+  })
 }
