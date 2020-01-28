@@ -251,6 +251,34 @@ class Software extends Component {
     // Return the computed total damage
     this.damage = totalDamage
   }
+
+  update (payload) {
+    const name = payload.name
+    // If there is a new softare name
+    if (name && name !== this.name) {
+      const json = softwareDatabase[name]
+
+      this.name = json.name
+      this.fileSize = json.fileSize
+      this.bandwith = json.bandwith
+      this.french = json.french
+      this.category = json.category
+    }
+
+    // Modifie the damage
+    // It's necessary to always update damage because it's impossible to know if
+    // instances number, bandwith bound, network bound or meetind duration have changed
+    // (there are not stored)
+    const damagePayload = payload.damagePayload
+    this.computeDamage({
+      instancesNumber: damagePayload.instancesNumber,
+      bandwithBound: damagePayload.bandwithBound,
+      networkBound: damagePayload.networkBound,
+      meetingDuration: damagePayload.meetingDuration
+    })
+
+    return this.id
+  }
 }
 
 module.exports = Software

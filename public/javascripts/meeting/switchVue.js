@@ -1,4 +1,7 @@
-function switchVue() {
+/* eslint no-unused-vars: 0 */
+/* eslint no-undef: 0 */
+
+function switchVue () {
   if (document.getElementById('monoDiv').hidden === false) {
     let ctx = document.getElementById('humanHealth').getContext('2d')
     stackedBarChart(ctx, 'HUMAN_HEALTH')
