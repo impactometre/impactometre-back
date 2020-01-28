@@ -34,6 +34,8 @@ function submitMeeting () {
     payload.software.push({ name: softwareChoice })
   }
 
+  console.log(travellers)
+
   console.log(payload)
   console.log(form)
 }
