@@ -126,9 +126,12 @@ function stackedBarData (damages, scenarios, category) {
   }
 
   let i = 0
+  const scenarioBarchartPosition = new Map()
+  // Associate a scenario id and its the position of the position of its corresponding barchart
+  // The fisrt label correspond to the first dataset, the second label to the second dataset, etc.
   scenarios.forEach(scenario => {
-    const index = i + 1
     chartData.labels.push(scenario._name)
+    scenarioBarchartPosition.set(scenario._id, i)
     i++
   })
 
@@ -146,11 +149,14 @@ function stackedBarData (damages, scenarios, category) {
     i++
   })
 
+  i = 0
   // Populate the datasets
   const categoryDamage = damages.filter(damageCategory => damageCategory[0].damageEndpoint === category)[0]
   Object.values(categoryDamage).forEach(damage => {
+    // Get the right scenraio barchart position (thanks to the scenarioBarchartPosition )
+    const actualScenario = scenarioBarchartPosition.get(damage.meetingScenario)
     Object.keys(componentsCategoriesMap).forEach(componentCategory => {
-      datasets[componentCategory].data.push(damage[componentCategory])
+      datasets[componentCategory].data[actualScenario] = damage[componentCategory]
     })
   })
 
