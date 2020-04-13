@@ -19,10 +19,10 @@ const hardware = {
     french: '1 g d\'une tour d\'ordinateur',
     isSizeDependent: false,
     embodied: {
-      humanHealth: 4.35 * Math.pow(10, -3),
-      ecosystemQuality: 8.43 * Math.pow(10, -4),
-      climateChange: 2.04 * Math.pow(10, -3),
-      resources: 1.86 * Math.pow(10, -3)
+      humanHealth: 3.088 * Math.pow(10, -8),
+      ecosystemQuality: 1.159 * Math.pow(10, -2),
+      climateChange: 2.018 * Math.pow(10, -2),
+      resources: 2.823 * Math.pow(10, -1)
     },
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.NOT_VISIO_DEDICATED
