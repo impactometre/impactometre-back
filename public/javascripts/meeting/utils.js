@@ -127,7 +127,7 @@ function stackedBarData (damages, scenarios, category) {
 
   let i = 0
   const scenarioBarchartPosition = new Map()
-  // Associate a scenario id and its the position of the position of its corresponding barchart
+  // Associate a scenario id and the position of its corresponding barchart
   // The fisrt label correspond to the first dataset, the second label to the second dataset, etc.
   scenarios.forEach(scenario => {
     chartData.labels.push(scenario._name)
