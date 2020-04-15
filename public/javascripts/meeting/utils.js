@@ -153,7 +153,7 @@ function stackedBarData (damages, scenarios, category) {
   // Populate the datasets
   const categoryDamage = damages.filter(damageCategory => damageCategory[0].damageEndpoint === category)[0]
   Object.values(categoryDamage).forEach(damage => {
-    // Get the right scenraio barchart position (thanks to the scenarioBarchartPosition )
+    // Get the right scenario barchart position (thanks to the scenarioBarchartPosition )
     const actualScenario = scenarioBarchartPosition.get(damage.meetingScenario)
     Object.keys(componentsCategoriesMap).forEach(componentCategory => {
       datasets[componentCategory].data[actualScenario] = damage[componentCategory]
