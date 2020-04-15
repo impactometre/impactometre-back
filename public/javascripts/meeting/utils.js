@@ -149,7 +149,6 @@ function stackedBarData (damages, scenarios, category) {
     i++
   })
 
-  i = 0
   // Populate the datasets
   const categoryDamage = damages.filter(damageCategory => damageCategory[0].damageEndpoint === category)[0]
   Object.values(categoryDamage).forEach(damage => {
