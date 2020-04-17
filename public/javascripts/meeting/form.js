@@ -1,5 +1,7 @@
 /* eslint no-unused-vars: 0 */
 
+
+
 // ========== UTILS ==========
 function cmToInches (i) {
   return Math.round(i * 0.39370)
@@ -15,6 +17,19 @@ function getIdNumber (id) {
   const idNumber = id.replace(idNumberFilter, '$1')
 
   return idNumber
+}
+
+/**
+ * Compute a rectangle arear thanks to its diagonal lenght.
+ * We assume that ratio between rectangle width and lenght is 16:9.
+ * @param {Number} diagonal - diagonal lenght in centimeters
+ * @returns The rectangle area expressed in square meters.
+ */
+function areaFromDiagonal (diagonal) {
+  const width = (diagonal * 9) / Math.sqrt(377)
+  const lenght = (diagonal * 16) / Math.sqrt(377)
+
+  return Math.round(width * lenght) / 10000
 }
 
 // ========== MAIN ==========

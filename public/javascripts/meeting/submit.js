@@ -14,16 +14,18 @@ function submitMeeting () {
     if (key === 'tvs') {
       Object.values(form.hardware[key]).forEach(tv => {
         const size = (tv.unit === 'inch')
-          ? inchesToCm(tv.value)
-          : tv.value
+          ? areaFromDiagonal(inchesToCm(tv.value))
+          : areaFromDiagonal(tv.value)
 
-        payload.hardware.push({ name: 'TV_SCREEN', size })
+          payload.hardware.push({ name: 'TV_SCREEN', size })
       })
     } else {
       for (let i = 0; i < form.hardware[key]; i++) {
         payload.hardware.push({ name: key })
       }
     }
+
+    console.log(payload)
   })
 
   if (softwareChoice === 'other') {
