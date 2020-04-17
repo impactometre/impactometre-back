@@ -1,7 +1,5 @@
 /* eslint no-unused-vars: 0 */
 
-
-
 // ========== UTILS ==========
 function cmToInches (i) {
   return Math.round(i * 0.39370)
