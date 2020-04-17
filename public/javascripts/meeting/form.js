@@ -22,6 +22,7 @@ function getIdNumber (id) {
 /**
  * Compute a rectangle arear thanks to its diagonal lenght.
  * We assume that ratio between rectangle width and lenght is 16:9.
+ * Formula source is from the script used by : https://ckoideja.com/calcul-taille-ecran/
  * @param {Number} diagonal - diagonal lenght in centimeters
  * @returns The rectangle area expressed in square meters.
  */
