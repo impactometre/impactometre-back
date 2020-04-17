@@ -257,12 +257,14 @@ const hardware = {
     category: meetingComponents.HARDWARE,
     // Damage is given for one meter square
     isSizeDependent: true,
-    // Same as COMPUTER_SCREEN_LCD
+    /* Embodied is compute from COMPUTER_SCREEN_LCD
+    The area of a 17 inches 16:9 format screen is 0.07967 m²
+    */
     embodied: {
-      humanHealth: 0.000475,
-      ecosystemQuality: 140,
-      climateChange: 360,
-      resources: 4.79 * Math.pow(10, 3)
+      humanHealth: 0.000475 * (1/0.07967),
+      ecosystemQuality: 140 * (1/0.07967),
+      climateChange: 360 * (1/0.07967),
+      resources: 4.79 * Math.pow(10, 3) * (1/0.07967)
     },
     operatingOneMinVisio: {
       humanHealth: 1.78 * Math.pow(10, -10),
