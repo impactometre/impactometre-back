@@ -24,7 +24,6 @@ function submitMeeting () {
         payload.hardware.push({ name: key })
       }
     }
-
     console.log(payload)
   })
 
