@@ -314,16 +314,16 @@ class Hardware extends Component {
    */
   computeTypedDamage (damageType, meetingDuration, bound = null) {
     // Variable we will return
-    let damage
+    let damage = this.getTypedDamage(damageType, bound)
 
     // Hardware may not have any value for the required damage
-    if (!this.getTypedDamage(damageType, bound)) {
+    if (!damage) {
       damage = new Damage({ component: this })
 
       return damage
     }
 
-    damage = new Damage({ component: this, ...this.getTypedDamage(damageType, bound) })
+    damage = new Damage({ component: this, ...damage })
     if (
       damageType === hardwareDamageTypes.OPERATING_STANDBY ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -389,9 +389,7 @@ class Hardware extends Component {
       damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.EMBODIED_STANDBY
     ) {
-      // Damage is for visio time
-      damageType = hardwareDamageTypes.EMBODIED
-
+      // Required damage is for embodied life cycle phase
       // Embodied damage may be assimilated to the one of another hardware
       if (this.embodiedAssimilatedTo) {
         /* Assimilated embodied is for 1 g, so we have to multiply
@@ -414,8 +412,11 @@ class Hardware extends Component {
 
         return weightEmbodied
       }
+
+      return this.embodied
     }
 
+    // Required damage type is for operating lifecycle phase
     if (!this[damageType]) {
       return null
     }
