@@ -251,7 +251,7 @@ const hardware = {
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
-  TV_SCREEN: {
+  TV_SCREEN_ONE_METER_SQUARE: {
     name: 'TV_SCREEN',
     french: 'écran de télévision',
     category: meetingComponents.HARDWARE,
