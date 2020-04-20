@@ -414,6 +414,8 @@ class Hardware extends Component {
 
         return weightEmbodied
       }
+
+      return this.embodied
     }
 
     if (!this[damageType]) {
