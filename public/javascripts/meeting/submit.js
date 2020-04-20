@@ -17,7 +17,7 @@ function submitMeeting () {
           ? areaFromDiagonal(inchesToCm(tv.value))
           : areaFromDiagonal(tv.value)
 
-        payload.hardware.push({ name: 'TV_SCREEN', size })
+        payload.hardware.push({ name: 'TV_SCREEN_ONE_METER_SQUARE', size })
       })
     } else {
       for (let i = 0; i < form.hardware[key]; i++) {

@@ -252,7 +252,7 @@ const hardware = {
     operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
   TV_SCREEN_ONE_METER_SQUARE: {
-    name: 'TV_SCREEN',
+    name: 'TV_SCREEN_ONE_METER_SQUARE',
     french: 'écran de télévision',
     category: meetingComponents.HARDWARE,
     isSizeDependent: true,
@@ -278,12 +278,12 @@ const hardware = {
     name: 'TV',
     french: 'télévision',
     category: meetingComponents.HARDWARE,
-    /* Even if a component (here TV_SCREEN) is size-dependent, we don't
+    /* Even if a component (here TV_SCREEN_ONE_METER_SQUARE) is size-dependent, we don't
     say that the composite element is itself size dependent */
     isSizeDependent: false,
     components: {
       TV_BASE: 1,
-      TV_SCREEN: 1
+      TV_SCREEN_ONE_METER_SQUARE: 1
     }
   },
   /**
