@@ -255,7 +255,6 @@ const hardware = {
     name: 'TV_SCREEN',
     french: 'écran de télévision',
     category: meetingComponents.HARDWARE,
-    // Damage is given for one meter square
     isSizeDependent: true,
     /* Embodied is computed from COMPUTER_SCREEN_LCD
     The area of a 17 inches 16:9 format screen is 0.07967 m²
