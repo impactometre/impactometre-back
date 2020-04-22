@@ -59,8 +59,8 @@ describe('Hardware class', () => {
     })
     it('should create a composite hardware component using components payload', () => {
       const componentsPayload = {}
-      componentsPayload[hardwareDatabase.TV_SCREEN.name] = {
-        name: hardwareDatabase.TV_SCREEN.name,
+      componentsPayload[hardwareDatabase.TV_SCREEN_ONE_METER_SQUARE.name] = {
+        name: hardwareDatabase.TV_SCREEN_ONE_METER_SQUARE.name,
         size: 2
       }
 
@@ -75,8 +75,8 @@ describe('Hardware class', () => {
         name: hardwareDatabase.TV_BASE.name
       })
 
-      expected[hardwareDatabase.TV_SCREEN.name] = new Hardware({
-        name: hardwareDatabase.TV_SCREEN.name,
+      expected[hardwareDatabase.TV_SCREEN_ONE_METER_SQUARE.name] = new Hardware({
+        name: hardwareDatabase.TV_SCREEN_ONE_METER_SQUARE.name,
         size: 2
       })
 

@@ -17,6 +17,20 @@ function getIdNumber (id) {
   return idNumber
 }
 
+/**
+ * Compute a rectangle arear thanks to its diagonal length.
+ * We assume that ratio between rectangle width and length is 16:9.
+ * Formula source is from the script used by : https://ckoideja.com/calcul-taille-ecran/
+ * @param {Number} diagonal - diagonal length in centimeters
+ * @returns The rectangle area expressed in square meters.
+ */
+function areaFromDiagonal (diagonal) {
+  const width = (diagonal * 9) / Math.sqrt(377)
+  const lenght = (diagonal * 16) / Math.sqrt(377)
+
+  return Math.round(width * lenght) / 10000
+}
+
 // ========== MAIN ==========
 let participantNumber = 2
 const travellers = new Map()

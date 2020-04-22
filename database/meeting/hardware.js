@@ -251,18 +251,19 @@ const hardware = {
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
   },
-  TV_SCREEN: {
-    name: 'TV_SCREEN',
+  TV_SCREEN_ONE_METER_SQUARE: {
+    name: 'TV_SCREEN_ONE_METER_SQUARE',
     french: 'écran de télévision',
     category: meetingComponents.HARDWARE,
-    // Damage is given for one meter square
     isSizeDependent: true,
-    // Same as COMPUTER_SCREEN_LCD
+    /* Embodied is computed from COMPUTER_SCREEN_LCD
+    The area of a 17 inches 16:9 format screen is 0.07967 m²
+    */
     embodied: {
-      humanHealth: 0.000475,
-      ecosystemQuality: 140,
-      climateChange: 360,
-      resources: 4.79 * Math.pow(10, 3)
+      humanHealth: 0.000475 * (1 / 0.07967),
+      ecosystemQuality: 140 * (1 / 0.07967),
+      climateChange: 360 * (1 / 0.07967),
+      resources: 4.79 * Math.pow(10, 3) * (1 / 0.07967)
     },
     operatingOneMinVisio: {
       humanHealth: 1.78 * Math.pow(10, -10),
@@ -277,12 +278,12 @@ const hardware = {
     name: 'TV',
     french: 'télévision',
     category: meetingComponents.HARDWARE,
-    /* Even if a component (here TV_SCREEN) is size-dependent, we don't
+    /* Even if a component (here TV_SCREEN_ONE_METER_SQUARE) is size-dependent, we don't
     say that the composite element is itself size dependent */
     isSizeDependent: false,
     components: {
       TV_BASE: 1,
-      TV_SCREEN: 1
+      TV_SCREEN_ONE_METER_SQUARE: 1
     }
   },
   /**
