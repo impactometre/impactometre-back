@@ -53,7 +53,7 @@ const hardwareLifetime = {
  */
 const knownOperatingTimeOverLife = {
   TV_SCREEN_BASE: 50000,
-  TV_SCREEN: 50000
+  TV_SCREEN_ONE_METER_SQUARE: 50000
 }
 
 /**

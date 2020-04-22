@@ -62,7 +62,7 @@ class Hardware extends Component {
         in database, we construct the component from the payload. Else
         we construct it from the database. The payload will contain an
         entry if additional parameter is required (e.g. the size of a
-        TV_SCREEN) */
+        TV_SCREEN_ONE_METER_SQUARE) */
         this._components[name] = (!componentsPayload[name])
           ? new Hardware({ name, quantity })
           : new Hardware(componentsPayload[name])
@@ -191,7 +191,7 @@ class Hardware extends Component {
   /**
    * Get the hardware components.
    * E.g. a TV is composed of TV_SCREEN_BASE and
-   * TV_SCREEN components.
+   * TV_SCREEN_ONE_METER_SQUARE components.
    * @returns {Object} Components indexed by name.
    */
   get components () {
