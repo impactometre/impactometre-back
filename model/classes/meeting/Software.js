@@ -223,7 +223,7 @@ class Software extends Component {
     const fileSize = this.fileSizeMoToBits()
 
     // We compute the total damage for each damage shere (in damageUnit)
-    Object.keys(embodiedDamage).map((categoryDamage) => {
+    Object.keys(embodiedDamage).forEach((categoryDamage) => {
       embodiedDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber
     })
 

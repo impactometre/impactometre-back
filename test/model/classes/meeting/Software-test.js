@@ -71,27 +71,6 @@ describe('Software class', () => {
         embodiedDamage
       )
     })
-    const jitsi = new Software({ name: softwareDatabase.JITSI.name })
-    const emptyDamage = new Damage({ component: jitsi })
-    it('should return an empty damage because Jitsi has any file to download', () => {
-      assert.deepStrictEqual(
-        jitsi.computeEmbodiedDamage(5, networkEnergeticIntensityUpper),
-        emptyDamage
-      )
-    })
-    it('should return 0 because the number of people doesn\'t matter when there no file to download', () => {
-      assert.deepStrictEqual(
-        jitsi.computeEmbodiedDamage(5, networkEnergeticIntensityUpper),
-        jitsi.computeEmbodiedDamage(10, networkEnergeticIntensityUpper)
-      )
-    })
-    const networkEnergeticIntensityLower = constants.bounds.LOWER
-    it('should return 0 because the network energetic intensity value doesn\'t matter when there no file to download', () => {
-      assert.deepStrictEqual(
-        jitsi.computeEmbodiedDamage(5, networkEnergeticIntensityLower),
-        jitsi.computeEmbodiedDamage(10, networkEnergeticIntensityLower)
-      )
-    })
   })
   describe('#computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration)', () => {
     const skype = new Software({ name: softwareDatabase.SKYPE.name })
