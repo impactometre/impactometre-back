@@ -347,7 +347,7 @@ class Hardware extends Component {
     if (this.isSizeDependent) {
       damage.mutate(category => {
         // Embodied damage on the whole lifetime
-        damage[category] *= this.shareForVisio * this.size
+        damage[category] *= this.size
 
         // Embodied damage for an hour
         damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType)
@@ -360,7 +360,6 @@ class Hardware extends Component {
       })
     } else {
       damage.mutate(category => {
-        damage[category] *= this.shareForVisio
         damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType)
         damage[category] /= hourToMinutes
         damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
