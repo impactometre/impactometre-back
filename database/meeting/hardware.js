@@ -233,6 +233,12 @@ const hardware = {
         resources: 0.0167
       }
     },
+    operatingOneMinStandby: {
+      humanHealth: 2.07 * Math.pow(10, -13),
+      ecosystemQuality: 9.54 * Math.pow(10, -8),
+      climateChange: 1.65 * Math.pow(10, -7),
+      resources: 4.26 * Math.pow(10, -5)
+    },
     // TODO: check in specific article
     lifetime: hardwareLifetime.DESKTOP,
     operatingTimePerDay: hardwareOperatingTimePerDay.VISIO_DEDICATED
