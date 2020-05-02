@@ -28,7 +28,7 @@ describe('Software class', () => {
     it('should return the matching available (lower bound) value', () => {
       assert.strictEqual(
         skype.getInboundBandwith(2, constants.bounds.LOWER),
-        30
+        128
       )
     })
 
