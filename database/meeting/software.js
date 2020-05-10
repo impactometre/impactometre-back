@@ -68,7 +68,7 @@ const software = {
     name: 'HANGOUTS',
     french: 'Google Hangouts',
     category: meetingComponents.SOFTWARE,
-    // Source : https://support.google.com/hangouts/answer/2944865?co=GENIE.Platform%3DDesktop&hl=en
+    // Source : https://support.google.com/hangouts/answer/2944865?hl=fr
     bandwith: {
       inbound: {
         2: {
