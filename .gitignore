@@ -66,5 +66,5 @@ typings/
 /front/dist
 
 # IDE FILES
-/.vscode
-/.idea
+.vscode/
+.idea/
