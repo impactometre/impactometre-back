@@ -1,12 +1,12 @@
-'use strict'
+'use strict';
 
-const Damage = require('../shared/Damage')
-const Component = require('../shared/Component')
-const TransportationMean = require('./TransportationMean')
+const Damage = require('../shared/Damage');
+const Component = require('../shared/Component');
+const TransportationMean = require('./TransportationMean');
 const {
   meetingComponents,
   transportationMeanSubCategories
-} = require('../../../constants/meeting')
+} = require('../../../constants/meeting');
 
 /**
  * A journey has a mean of transportation,
@@ -21,16 +21,16 @@ class Journey extends Component {
    * @param {Integer} numberOfPeople - The number of people of the journey.
    */
   constructor ({ passenger, mean, distance, numberOfPeople = 1 }) {
-    super({ french: '', category: meetingComponents.JOURNEY })
-    this._mean = new TransportationMean({ name: mean })
-    this._passenger = passenger
-    this._distance = distance
-    this._numberOfPeople = numberOfPeople
+    super({ french: '', category: meetingComponents.JOURNEY });
+    this._mean = new TransportationMean({ name: mean });
+    this._passenger = passenger;
+    this._distance = distance;
+    this._numberOfPeople = numberOfPeople;
 
     // Initialize journey french name
     const french = (numberOfPeople > 1)
       ? 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km avec ' + (numberOfPeople - 1) + ' autres personnes.'
-      : 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.'
+      : 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.';
 
     this.french = french
   }
@@ -121,15 +121,15 @@ class Journey extends Component {
    */
   computeEmbodiedDamage () {
     // Get the transportation mean damage for one personKm or one kilometer
-    const transportationMeanDamage = new Damage(this.mean.embodied)
+    const transportationMeanDamage = new Damage(this.mean.embodied);
 
     // Initialize the returned damage
-    const embodiedDamage = new Damage()
+    const embodiedDamage = new Damage();
 
     // Compute damage for each sphere (calculation mode is by personKm or by kilometer)
     if (this.mean.isComputedByPersonKm) {
       // Compute the personKilometers amount
-      const personKmAmount = this.distance * this.numberOfPeople
+      const personKmAmount = this.distance * this.numberOfPeople;
 
       embodiedDamage.mutate(category => {
         embodiedDamage[category] = transportationMeanDamage[category] * personKmAmount
@@ -163,37 +163,37 @@ class Journey extends Component {
   }
 
   update (payload) {
-    let modifiedFrench = false
-    let modifiedDamage = false
+    let modifiedFrench = false;
+    let modifiedDamage = false;
 
-    const passenger = payload.passenger
+    const passenger = payload.passenger;
     // If there a new passenger name
     if (passenger && passenger !== this.passenger) {
-      this.passenger = passenger
+      this.passenger = passenger;
       modifiedFrench = true
     }
 
-    const mean = payload.mean
+    const mean = payload.mean;
     // If there is a new transportation mean
     if (mean && mean !== this.mean._name) {
-      this.mean = new TransportationMean({ name: mean })
-      modifiedFrench = true
+      this.mean = new TransportationMean({ name: mean });
+      modifiedFrench = true;
       modifiedDamage = true
     }
 
-    const distance = payload.distance
+    const distance = payload.distance;
     // If there is a new distance
     if (distance && distance !== this.distance) {
-      this.distance = distance
-      modifiedFrench = true
+      this.distance = distance;
+      modifiedFrench = true;
       modifiedDamage = true
     }
 
-    const numberOfPeople = payload.numberOfPeople
+    const numberOfPeople = payload.numberOfPeople;
     // If there is a new number of people
     if (numberOfPeople && numberOfPeople !== this.numberOfPeople) {
-      this.numberOfPeople = numberOfPeople
-      modifiedFrench = true
+      this.numberOfPeople = numberOfPeople;
+      modifiedFrench = true;
       modifiedDamage = true
     }
 
@@ -214,4 +214,4 @@ class Journey extends Component {
   }
 }
 
-module.exports = Journey
+module.exports = Journey;

@@ -1,0 +1,26 @@
+{
+  scenarios: [
+    {
+      "id": 1,
+      "name": "Scénario A",
+      "meetingDuration": 1,
+      "numberOfParticipants": 1,
+      "data": {
+        "array_of_all_hardware_data": [],
+        "array_of_all_software_data": [],
+        "array_of_all_journey_data": []
+      }
+    },
+    {
+      "id": 2,
+      "name": "Scénario B",
+      "meetingDuration": 1,
+      "numberOfParticipants": 1,
+      "data": {
+        "array_of_all_hardware_data": [],
+        "array_of_all_software_data": [],
+        "array_of_all_journey_data": []
+      }
+    }
+  ]
+}

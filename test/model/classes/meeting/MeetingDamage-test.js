@@ -1,15 +1,15 @@
-'use strict'
+'use strict';
 
-const assert = require('assert')
-const CategoryDamage = require('../../../../model/classes/meeting/CategoryDamage')
-const MeetingDamage = require('../../../../model/classes/meeting/MeetingDamage')
-const transportDatabase = require('../../../../database/meeting/transportationMean')
-const hardwareDatabase = require('../../../../database/meeting/hardware')
-const softwareDatabase = require('../../../../database/meeting/software')
+const assert = require('assert');
+const CategoryDamage = require('../../../../model/classes/meeting/CategoryDamage');
+const MeetingDamage = require('../../../../model/classes/meeting/MeetingDamage');
+const transportDatabase = require('../../../../database/meeting/transportationMean');
+const hardwareDatabase = require('../../../../database/meeting/hardware');
+const softwareDatabase = require('../../../../database/meeting/software');
 const {
   meetingCategoryDamage,
   bounds
-} = require('../../../../constants/meeting')
+} = require('../../../../constants/meeting');
 
 describe('MeetingDamage class', () => {
   describe('#computeDamage()', () => {
@@ -45,16 +45,16 @@ describe('MeetingDamage class', () => {
         distance: 10,
         numberOfPeople: 1
       }
-    ]
+    ];
     // Create the corresponding journey CategoryDamage object and compute its total damage
-    const journeyCategoryDamage = new CategoryDamage({ components: journeyJSON, category: meetingCategoryDamage.JOURNEY })
-    journeyCategoryDamage.computeDamage()
+    const journeyCategoryDamage = new CategoryDamage({ components: journeyJSON, category: meetingCategoryDamage.JOURNEY });
+    journeyCategoryDamage.computeDamage();
 
     // Create the array of JSON objects that enables to create the software components of the meeting
-    const softwareJSON = [{ name: softwareDatabase.SKYPE.name }]
+    const softwareJSON = [{ name: softwareDatabase.SKYPE.name }];
     // Create the corresponding software CategoryDamage object and compute its total damage
-    const softwareCategoryDamage = new CategoryDamage({ components: softwareJSON, category: meetingCategoryDamage.SOFTWARE })
-    softwareCategoryDamage.computeDamage({ instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 })
+    const softwareCategoryDamage = new CategoryDamage({ components: softwareJSON, category: meetingCategoryDamage.SOFTWARE });
+    softwareCategoryDamage.computeDamage({ instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 });
 
     // Create the array of JSON objects that enables to create the hardware components of the meeting
     const hardwareJSON = [
@@ -64,24 +64,24 @@ describe('MeetingDamage class', () => {
       { name: hardwareDatabase.TV.name },
       { name: hardwareDatabase.TV.name },
       { name: hardwareDatabase.METAL_STRUCTURE.name }
-    ]
+    ];
     // Create the corresponding software CategoryDamage object and compute its total damage
-    const hardwareCategoryDamage = new CategoryDamage({ components: hardwareJSON, category: meetingCategoryDamage.HARDWARE })
-    hardwareCategoryDamage.computeDamage({ meetingDuration: 120, bound: bounds.UPPER })
+    const hardwareCategoryDamage = new CategoryDamage({ components: hardwareJSON, category: meetingCategoryDamage.HARDWARE });
+    hardwareCategoryDamage.computeDamage({ meetingDuration: 120, bound: bounds.UPPER });
 
     // Create the MeetingDamage object thnaks to three arrays of JSON object
     const meetingDamage = new MeetingDamage({
       hardware: hardwareJSON,
       software: softwareJSON,
       journey: journeyJSON
-    })
+    });
     // Compute the total damage linked to the MeetingDamage object
     const totalDamageJSON = {
       [meetingCategoryDamage.HARDWARE]: { meetingDuration: 120, bound: bounds.UPPER },
       [meetingCategoryDamage.SOFTWARE]: { instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 },
       [meetingCategoryDamage.JOURNEY]: {}
-    }
-    meetingDamage.computeDamage(totalDamageJSON)
+    };
+    meetingDamage.computeDamage(totalDamageJSON);
     it('should compute the total damage caused by all the compoments linked to the MeetingDamage object', () => {
       assert.deepStrictEqual(
         meetingDamage.totalDamage,
@@ -89,4 +89,4 @@ describe('MeetingDamage class', () => {
       )
     })
   })
-})
+});

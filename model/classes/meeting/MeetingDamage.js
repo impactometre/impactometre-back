@@ -1,9 +1,9 @@
-'use strict'
+'use strict';
 
-const CategoryDamage = require('./CategoryDamage')
+const CategoryDamage = require('./CategoryDamage');
 const {
   meetingCategoryDamage
-} = require('../../../constants/meeting')
+} = require('../../../constants/meeting');
 
 class MeetingDamage {
   /**
@@ -18,8 +18,8 @@ class MeetingDamage {
    */
   constructor ({ hardware = null, software = null, journey = null }) {
     // Create all the category damages linked to the meeting
-    this._hardwareDamage = new CategoryDamage({ components: hardware, category: meetingCategoryDamage.HARDWARE })
-    this._softwareDamage = new CategoryDamage({ components: software, category: meetingCategoryDamage.SOFTWARE })
+    this._hardwareDamage = new CategoryDamage({ components: hardware, category: meetingCategoryDamage.HARDWARE });
+    this._softwareDamage = new CategoryDamage({ components: software, category: meetingCategoryDamage.SOFTWARE });
     this._journeyDamage = new CategoryDamage({ components: journey, category: meetingCategoryDamage.JOURNEY })
   }
 
@@ -92,9 +92,9 @@ class MeetingDamage {
    * the damage caused by the meeting.
    */
   computeDamage (payload) {
-    this.hardwareDamage.computeDamage(payload[meetingCategoryDamage.HARDWARE])
-    this.softwareDamage.computeDamage(payload[meetingCategoryDamage.SOFTWARE])
-    this.journeyDamage.computeDamage(payload[meetingCategoryDamage.JOURNEY])
+    this.hardwareDamage.computeDamage(payload[meetingCategoryDamage.HARDWARE]);
+    this.softwareDamage.computeDamage(payload[meetingCategoryDamage.SOFTWARE]);
+    this.journeyDamage.computeDamage(payload[meetingCategoryDamage.JOURNEY]);
 
     // Compute the total damage caused by all the components of the meeting thanks to the
     // total damage caused by each category of components.
@@ -125,4 +125,4 @@ class MeetingDamage {
   }
 }
 
-module.exports = MeetingDamage
+module.exports = MeetingDamage;

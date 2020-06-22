@@ -1,12 +1,12 @@
-'use strict'
+'use strict';
 
-const Hardware = require('./Hardware')
-const Damage = require('../shared/Damage')
-const Journey = require('./Journey')
-const Software = require('./Software')
+const Hardware = require('./Hardware');
+const Damage = require('../shared/Damage');
+const Journey = require('./Journey');
+const Software = require('./Software');
 const {
   meetingCategoryDamage
-} = require('../../../constants/meeting')
+} = require('../../../constants/meeting');
 
 class CategoryDamage {
   /**
@@ -17,7 +17,7 @@ class CategoryDamage {
    * @param {String} category - The category of the given components.
    */
   constructor ({ components, category }) {
-    this._category = category
+    this._category = category;
 
     // Create a hashmap that contains components and their id
     this._components = (components !== null)
@@ -81,26 +81,26 @@ class CategoryDamage {
    */
   arrayToMapComponents (components, category) {
     // The hashmap that will contain components indexed by their id
-    const componentsMap = new Map()
+    const componentsMap = new Map();
 
     switch (category) {
       case meetingCategoryDamage.HARDWARE:
         components.forEach(c => {
-          const component = new Hardware(c)
+          const component = new Hardware(c);
           componentsMap.set(component.id, component)
-        })
-        break
+        });
+        break;
       case meetingCategoryDamage.SOFTWARE:
         components.forEach(c => {
-          const component = new Software(c)
+          const component = new Software(c);
           componentsMap.set(component.id, component)
-        })
-        break
+        });
+        break;
       case meetingCategoryDamage.JOURNEY:
         components.forEach(c => {
-          const component = new Journey(c)
+          const component = new Journey(c);
           componentsMap.set(component.id, component)
-        })
+        });
         break
     }
 
@@ -114,12 +114,12 @@ class CategoryDamage {
    * the damage caused by each component of the categoryDamage (hardware, software, journeys).
    */
   computeDamage (payload = {}) {
-    this.totalDamage = new Damage()
+    this.totalDamage = new Damage();
 
     // Compute the damage caused by each component of the categoryDamage object
     // and add it to the totalDamage caused by the components of the categoryDamage object.
     this.components.forEach(c => {
-      c.computeDamage(payload)
+      c.computeDamage(payload);
       this.totalDamage = this.totalDamage.add(c.damage)
     })
   }
@@ -134,14 +134,14 @@ class CategoryDamage {
       case meetingCategoryDamage.HARDWARE:
         components.forEach(component => {
 
-        })
-        break
+        });
+        break;
       case meetingCategoryDamage.SOFTWARE:
-        break
+        break;
       case meetingCategoryDamage.JOURNEY:
         break
     }
   }
 }
 
-module.exports = CategoryDamage
+module.exports = CategoryDamage;

@@ -32,11 +32,11 @@
     </div>
 
     <script>
-      const damages = JSON.parse('<%- JSON.stringify(normalisedDamages) %>')
-      const scenarios = JSON.parse('<%- JSON.stringify(scenarios) %>')
+      const damages = JSON.parse('<%- JSON.stringify(normalisedDamages) %>');
+      const scenarios = JSON.parse('<%- JSON.stringify(scenarios) %>');
 
       // Draw graphs when page reload
-      const ctx = document.getElementById('monoChart').getContext('2d')
+      const ctx = document.getElementById('monoChart').getContext('2d');
       barChart(ctx)
 
     </script>

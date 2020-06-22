@@ -60,3 +60,11 @@ typings/
 
 # next.js build output
 .next
+
+# VUEJS DEPENDENCIES & GENERATED FILES
+/front/node_modules
+/front/dist
+
+# IDE FILES
+/.vscode
+/.idea

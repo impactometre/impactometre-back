@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const network = {
   NETWORK_ENERGETIC_INTENSITY: {
@@ -18,6 +18,6 @@ const network = {
       }
     }
   }
-}
+};
 
-module.exports = network
+module.exports = network;

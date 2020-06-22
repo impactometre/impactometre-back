@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
 const {
   meetingComponents
-} = require('../../constants/meeting')
+} = require('../../constants/meeting');
 
 const software = {
   RENAVISIO: {
@@ -86,6 +86,6 @@ const software = {
       }
     }
   }
-}
+};
 
-module.exports = software
+module.exports = software;

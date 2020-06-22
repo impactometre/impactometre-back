@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const uniqid = require('uniqid')
+const uniqid = require('uniqid');
 
 /**
  * Abstract class Scenario.
@@ -11,9 +11,9 @@ class Scenario {
    * @param {String} user - The user who creates the scenario.
    */
   constructor (user, name) {
-    if (new.target === Scenario) throw TypeError('Cannot create instance of Scenario because abstract class')
-    this._id = uniqid()
-    this._user = user
+    if (new.target === Scenario) throw TypeError('Cannot create instance of Scenario because abstract class');
+    this._id = uniqid();
+    this._user = user;
     this._name = name
   }
 
@@ -49,4 +49,4 @@ class Scenario {
   // Other methods
 }
 
-module.exports = Scenario
+module.exports = Scenario;

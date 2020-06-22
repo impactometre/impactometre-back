@@ -1,17 +1,17 @@
-'use strict'
+'use strict';
 
-const Scenario = require('../shared/Scenario')
-const MeetingDamage = require('./MeetingDamage')
-const hardwareDatabase = require('../../../database/meeting/hardware')
-const softwareDatabase = require('../../../database/meeting/software')
-const transportDatabase = require('../../../database/meeting/transportationMean')
-const meetingScenarios = require('../../../database/meeting/meetingScenarios')
+const Scenario = require('../shared/Scenario');
+const MeetingDamage = require('./MeetingDamage');
+const hardwareDatabase = require('../../../database/meeting/hardware');
+const softwareDatabase = require('../../../database/meeting/software');
+const transportDatabase = require('../../../database/meeting/transportationMean');
+const meetingScenarios = require('../../../database/meeting/meetingScenarios');
 const {
   meetingCategoryDamage,
   bounds,
   possibleJourneys,
   modificationTypes
-} = require('../../../constants/meeting')
+} = require('../../../constants/meeting');
 
 class MeetingScenario extends Scenario {
   /**
@@ -25,16 +25,16 @@ class MeetingScenario extends Scenario {
    * @see CategoryDamage
    */
   constructor ({ user, name, meetingDuration, numberOfParticipants, payload }) {
-    super(user, name)
-    this._meetingDuration = meetingDuration
-    this._numberOfParticipants = numberOfParticipants
+    super(user, name);
+    this._meetingDuration = meetingDuration;
+    this._numberOfParticipants = numberOfParticipants;
 
-    const params = {}
+    const params = {};
     Object.values(meetingCategoryDamage).forEach(category => {
       if (payload[category]) {
         params[category] = payload[category]
       }
-    })
+    });
 
     this._damage = new MeetingDamage(params)
   }
@@ -113,29 +113,29 @@ class MeetingScenario extends Scenario {
    * @returns An array that contains alternative MeetingScenarios.
    */
   generateAlternatives () {
-    const numberOfParticipants = this.numberOfParticipants
-    const user = this.user
-    const meetingDuration = this.meetingDuration
+    const numberOfParticipants = this.numberOfParticipants;
+    const user = this.user;
+    const meetingDuration = this.meetingDuration;
 
     // **** Generate first alternative scenario: heavy visio
     // Generate hardware components
     // - 1/3 of used hardware is heavy visio system
     // - 2/3 are light hardware, i.e. desktops with cameras and microphones
-    const heavyHardwareNumber = Math.ceil(numberOfParticipants / 3)
-    const lightHardwareNumber = numberOfParticipants - heavyHardwareNumber
-    let hardwareComponents = []
+    const heavyHardwareNumber = Math.ceil(numberOfParticipants / 3);
+    const lightHardwareNumber = numberOfParticipants - heavyHardwareNumber;
+    let hardwareComponents = [];
     const heavyHardwareComponent = [
       { name: hardwareDatabase.DESKTOP.name },
       { name: hardwareDatabase.LOGITECH_KIT.name },
       { name: hardwareDatabase.TV.name },
       { name: hardwareDatabase.TV.name },
       { name: hardwareDatabase.METAL_STRUCTURE.name }
-    ]
+    ];
     const lightHardwareComponent = [
       { name: hardwareDatabase.DESKTOP.name },
       { name: hardwareDatabase.CAMERA.name },
       { name: hardwareDatabase.MICROPHONE.name }
-    ]
+    ];
     // Add the ritght number of heavy visio systems used for the meeting
     for (let i = 0; i < heavyHardwareNumber; i++) {
       hardwareComponents = hardwareComponents.concat(heavyHardwareComponent)
@@ -145,46 +145,46 @@ class MeetingScenario extends Scenario {
       hardwareComponents = hardwareComponents.concat(lightHardwareComponent)
     }
     // Generate software component
-    let softwareComponents = [{ name: softwareDatabase.SKYPE.name }]
+    let softwareComponents = [{ name: softwareDatabase.SKYPE.name }];
     // Generate journey components
     // - 1/5 of the particpants take the city bus
-    const journeyNumber = Math.ceil(numberOfParticipants / 5)
+    const journeyNumber = Math.ceil(numberOfParticipants / 5);
     let journeyComponents = [{
       passenger: 'Meeting passengers',
       mean: transportDatabase.BUS_CITY_ONE_PERSON_KM.name,
       distance: 5,
       numberOfPeople: journeyNumber
-    }]
+    }];
     // Concatenate all meeting component to create the payload used to initilise the first alternative MeetingScenario
     const heavyVisioPayload = {
       [meetingCategoryDamage.HARDWARE]: hardwareComponents,
       [meetingCategoryDamage.SOFTWARE]: softwareComponents,
       [meetingCategoryDamage.JOURNEY]: journeyComponents
-    }
+    };
     // Generate the MeetingScenario and add it the database
-    const heavyVisioScenario = MeetingScenario.create({ user, name: 'Alternative visio lourde', meetingDuration, numberOfParticipants, payload: heavyVisioPayload })
+    const heavyVisioScenario = MeetingScenario.create({ user, name: 'Alternative visio lourde', meetingDuration, numberOfParticipants, payload: heavyVisioPayload });
 
     // Compute its damage
     const DamagePayload = {
       [meetingCategoryDamage.HARDWARE]: { meetingDuration, bound: bounds.UPPER },
       [meetingCategoryDamage.SOFTWARE]: { instancesNumber: numberOfParticipants, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration },
       [meetingCategoryDamage.JOURNEY]: {}
-    }
-    heavyVisioScenario.computeDamage(DamagePayload)
+    };
+    heavyVisioScenario.computeDamage(DamagePayload);
 
     // **** Generate the secound alternative scenario: light transport
     // Generate hardware components
-    hardwareComponents = []
-    const laptop = [{ name: hardwareDatabase.LAPTOP.name }]
+    hardwareComponents = [];
+    const laptop = [{ name: hardwareDatabase.LAPTOP.name }];
     // 2/3 of particpants have a laptop
     for (let i = 0; i < Math.ceil(numberOfParticipants * (2 / 3)); i++) {
       hardwareComponents = hardwareComponents.concat(laptop)
     }
     // Generate software components (no software compoents for this alternative scenario)
-    softwareComponents = [{ name: softwareDatabase.SKYPE.name }]
+    softwareComponents = [{ name: softwareDatabase.SKYPE.name }];
     // Generate journey components
     // Initialise meeting journey components
-    journeyComponents = []
+    journeyComponents = [];
 
     /* We considered a mean journey for one person has
      - 50 km by train
@@ -201,14 +201,14 @@ class MeetingScenario extends Scenario {
     */
 
     // Initialise the journey counter needed for the loop (from 0 to possibleJouneys.lenght)
-    let journeyCounter = 0
+    let journeyCounter = 0;
 
     // Compute the factor by wich we multiply the distance done by each participant
     // For each possible journey, the total distance (done by all meeting participants)
     // done is numberOfParticpants * possibleJourneys[i].distance
     const computeDistanceFactor = (numberOfParticipants < possibleJourneys.length)
       ? numberOfParticipants
-      : possibleJourneys.length
+      : possibleJourneys.length;
 
     for (let i = 0; i < numberOfParticipants; i++) {
       const journey = [{
@@ -216,9 +216,9 @@ class MeetingScenario extends Scenario {
         mean: possibleJourneys[journeyCounter].mean,
         distance: possibleJourneys[journeyCounter].distance * computeDistanceFactor,
         numberOfPeople: possibleJourneys[journeyCounter].numberOfPeople
-      }]
+      }];
       // Add the created journey to meeting journey components
-      journeyComponents = journeyComponents.concat(journey)
+      journeyComponents = journeyComponents.concat(journey);
 
       // If the last possible journey is reached, go back to the first one
       if (journeyCounter === possibleJourneys.length - 1) {
@@ -238,9 +238,9 @@ class MeetingScenario extends Scenario {
       [meetingCategoryDamage.HARDWARE]: hardwareComponents,
       [meetingCategoryDamage.SOFTWARE]: softwareComponents,
       [meetingCategoryDamage.JOURNEY]: journeyComponents
-    }
+    };
     // Generate meeting scenario
-    const lightTransportScenario = MeetingScenario.create({ user, name: 'Alternative transports légers', meetingDuration, numberOfParticipants, payload: lightTransportPayload })
+    const lightTransportScenario = MeetingScenario.create({ user, name: 'Alternative transports légers', meetingDuration, numberOfParticipants, payload: lightTransportPayload });
     // Compute its damage
     lightTransportScenario.computeDamage(DamagePayload)
   }
@@ -255,12 +255,9 @@ class MeetingScenario extends Scenario {
  * { [array_of_all_hardware_data], [array_of_all_software_data], [array_of_all_journey data]}.
  * @returns {MeetingScenario} The created meetingScenario.
  */
-  static create ({ user, name = '', meetingDuration, numberOfParticipants, payload }) {
+  static create ({ user = '', name = '', meetingDuration, numberOfParticipants, payload }) {
   // Create new MeetingScenario
-    const meetingScenario = new MeetingScenario({ user, name, meetingDuration, numberOfParticipants, payload })
-
-    // Add it to the database
-    meetingScenarios.set(meetingScenario.id, meetingScenario)
+    const meetingScenario = new MeetingScenario({ user, name, meetingDuration, numberOfParticipants, payload });
 
     // Return the created meetingScenario
     return meetingScenario
@@ -272,7 +269,7 @@ class MeetingScenario extends Scenario {
  * @returns {MeetingScenario} The meeting scenario we want to return.
  */
   static read (id) {
-    const meetingScenario = meetingScenarios.get(id)
+    const meetingScenario = meetingScenarios.get(id);
     if (meetingScenario !== undefined) {
       return meetingScenario
     } else {
@@ -297,17 +294,17 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    */
   modify ({ meetingDuration, numberOfParticipants, payload, damagePayload }) {
-    let shouldBeRecomputed = false
+    let shouldBeRecomputed = false;
 
     // Update if there is a new meeting duration
     if (meetingDuration && this.meetingDuration !== meetingDuration) {
-      this.meetingDuration = meetingDuration
+      this.meetingDuration = meetingDuration;
       shouldBeRecomputed = true
     }
 
     // Update if there is a new number of participants
     if (numberOfParticipants && this.numberOfParticipants !== numberOfParticipants) {
-      this.numberOfParticipants = numberOfParticipants
+      this.numberOfParticipants = numberOfParticipants;
       shouldBeRecomputed = true
     }
 
@@ -315,14 +312,14 @@ class MeetingScenario extends Scenario {
     // All damages are recompute
     if (payload && payload !== {}) {
       // Get the modified component category damage (hardware, software or journey)
-      const categoryDamage = payload.categoryDamage
+      const categoryDamage = payload.categoryDamage;
 
       switch (payload.modificationType) {
         case modificationTypes.UPDATE:
-          this.update({ id: payload.id, categoryDamage, payload: payload.data })
-          break
+          this.update({ id: payload.id, categoryDamage, payload: payload.data });
+          break;
         case modificationTypes.CREATE:
-          throw new Error('Not implemented yet.')
+          throw new Error('Not implemented yet.');
         case modificationTypes.REMOVE:
           throw new Error('Not implemented yet.')
       }
@@ -346,65 +343,65 @@ class MeetingScenario extends Scenario {
    */
   update ({ id, categoryDamage, payload }) {
     // oOld component damage value
-    let oldDamage
+    let oldDamage;
     // Updated component damage value
-    let updatedDamage
+    let updatedDamage;
     // Total damage value of updated component category
-    let totalCategoryDamage
+    let totalCategoryDamage;
     // Old damage value of updated component category
-    let odlTotalCategoryDamage
+    let odlTotalCategoryDamage;
 
     switch (categoryDamage) {
       case meetingCategoryDamage.HARDWARE: {
-        const hardwareToUpdate = this.damage.hardwareDamage.components.get(id)
-        oldDamage = hardwareToUpdate.damage
-        hardwareToUpdate.update(payload)
-        updatedDamage = hardwareToUpdate.damage
+        const hardwareToUpdate = this.damage.hardwareDamage.components.get(id);
+        oldDamage = hardwareToUpdate.damage;
+        hardwareToUpdate.update(payload);
+        updatedDamage = hardwareToUpdate.damage;
 
         // update hardware category total damage value
-        odlTotalCategoryDamage = this.damage.hardwareDamage.totalDamage
-        totalCategoryDamage = this.damage.hardwareDamage.totalDamage
-        totalCategoryDamage = totalCategoryDamage.minus(oldDamage)
-        totalCategoryDamage = totalCategoryDamage.add(updatedDamage)
-        this.damage.hardwareDamage.totalDamage = totalCategoryDamage
+        odlTotalCategoryDamage = this.damage.hardwareDamage.totalDamage;
+        totalCategoryDamage = this.damage.hardwareDamage.totalDamage;
+        totalCategoryDamage = totalCategoryDamage.minus(oldDamage);
+        totalCategoryDamage = totalCategoryDamage.add(updatedDamage);
+        this.damage.hardwareDamage.totalDamage = totalCategoryDamage;
         break
       }
       case meetingCategoryDamage.SOFTWARE: {
-        const softwareToUpdate = this.damage.softwareDamage.components.get(id)
-        oldDamage = softwareToUpdate.damage
-        softwareToUpdate.update(payload)
-        updatedDamage = softwareToUpdate.damage
+        const softwareToUpdate = this.damage.softwareDamage.components.get(id);
+        oldDamage = softwareToUpdate.damage;
+        softwareToUpdate.update(payload);
+        updatedDamage = softwareToUpdate.damage;
 
         // update software category total damage value
-        odlTotalCategoryDamage = this.damage.softwareDamage.totalDamage
-        totalCategoryDamage = this.damage.softwareDamage.totalDamage
-        totalCategoryDamage = totalCategoryDamage.minus(oldDamage)
-        totalCategoryDamage = totalCategoryDamage.add(updatedDamage)
-        this.damage.softwareDamage.totalDamage = totalCategoryDamage
+        odlTotalCategoryDamage = this.damage.softwareDamage.totalDamage;
+        totalCategoryDamage = this.damage.softwareDamage.totalDamage;
+        totalCategoryDamage = totalCategoryDamage.minus(oldDamage);
+        totalCategoryDamage = totalCategoryDamage.add(updatedDamage);
+        this.damage.softwareDamage.totalDamage = totalCategoryDamage;
         break
       }
       case meetingCategoryDamage.JOURNEY: {
-        const journeyToUpdate = this.damage.journeyDamage.components.get(id)
-        oldDamage = journeyToUpdate.damage
-        journeyToUpdate.update(payload)
-        updatedDamage = journeyToUpdate.damage
+        const journeyToUpdate = this.damage.journeyDamage.components.get(id);
+        oldDamage = journeyToUpdate.damage;
+        journeyToUpdate.update(payload);
+        updatedDamage = journeyToUpdate.damage;
 
         // update journey category total damage value
-        odlTotalCategoryDamage = this.damage.journeyDamage.totalDamage
-        totalCategoryDamage = this.damage.journeyDamage.totalDamage
-        totalCategoryDamage = totalCategoryDamage.minus(oldDamage)
-        totalCategoryDamage = totalCategoryDamage.add(updatedDamage)
-        this.damage.journeyDamage.totalDamage = totalCategoryDamage
+        odlTotalCategoryDamage = this.damage.journeyDamage.totalDamage;
+        totalCategoryDamage = this.damage.journeyDamage.totalDamage;
+        totalCategoryDamage = totalCategoryDamage.minus(oldDamage);
+        totalCategoryDamage = totalCategoryDamage.add(updatedDamage);
+        this.damage.journeyDamage.totalDamage = totalCategoryDamage;
         break
       }
     }
 
     // Substract old total damage value of updated component category from meeting total damage value
-    this.damage.totalDamage = this.damage.totalDamage.minus(odlTotalCategoryDamage)
+    this.damage.totalDamage = this.damage.totalDamage.minus(odlTotalCategoryDamage);
 
     // Add the new total damage value of updated component category to meeting total damage value
     this.damage.totalDamage = this.damage.totalDamage.add(totalCategoryDamage)
   }
 }
 
-module.exports = MeetingScenario
+module.exports = MeetingScenario;

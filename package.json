@@ -11,6 +11,7 @@
     "test": "mocha --recursive \"test/\""
   },
   "dependencies": {
+    "impactometre-front": "file:front/",
     "autoprefixer": "^9.7.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

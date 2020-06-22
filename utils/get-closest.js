@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /**
  * Get the closest item array from a given number.
@@ -8,17 +8,17 @@
  * @param {Array} numbers - The array of numbers.
  */
 function getClosest (number, numbers) {
-  let exactMatch = false
-  let currentClosest = numbers[0]
-  let index = 1
+  let exactMatch = false;
+  let currentClosest = numbers[0];
+  let index = 1;
   while (!exactMatch && index < numbers.length) {
-    const currentItem = numbers[index]
+    const currentItem = numbers[index];
     if (currentItem === number) {
-      currentClosest = currentItem
+      currentClosest = currentItem;
       exactMatch = true
     } else {
-      const diffWithCurrentClosest = Math.abs(number - currentClosest)
-      const diffWithCurrentItem = Math.abs(number - currentItem)
+      const diffWithCurrentClosest = Math.abs(number - currentClosest);
+      const diffWithCurrentItem = Math.abs(number - currentItem);
 
       /* Get the greater if given number is exactly between
       two items of the array */
@@ -37,4 +37,4 @@ function getClosest (number, numbers) {
   return currentClosest
 }
 
-module.exports = getClosest
+module.exports = getClosest;

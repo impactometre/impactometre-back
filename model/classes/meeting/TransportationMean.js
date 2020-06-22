@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const transportationMeanDatabase = require('../../../database/meeting/transportationMean')
+const transportationMeanDatabase = require('../../../database/meeting/transportationMean');
 
 /**
  * TransportationMan class.
@@ -14,13 +14,13 @@ class TransportationMean {
    */
   constructor ({ name }) {
     // Get the corresponding JSON object from the transportation means database
-    const json = transportationMeanDatabase[name]
+    const json = transportationMeanDatabase[name];
 
     // Initialize TransportationMean object thanks to the JSON object
-    this._name = json.name
-    this._french = json.french
-    this._subCategory = json.subCategory
-    this._embodied = json.embodied
+    this._name = json.name;
+    this._french = json.french;
+    this._subCategory = json.subCategory;
+    this._embodied = json.embodied;
     this._isComputedByPersonKm = json.isComputedByPersonKm
   }
 
@@ -101,4 +101,4 @@ class TransportationMean {
   }
 }
 
-module.exports = TransportationMean
+module.exports = TransportationMean;

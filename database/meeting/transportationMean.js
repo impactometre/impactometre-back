@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
 const {
   transportationMeanSubCategories
-} = require('../../constants/meeting')
+} = require('../../constants/meeting');
 
 const transportationMean = {
   PLANE_INTERCONTINENTAL_ONE_PERSON_KM: {
@@ -137,6 +137,6 @@ const transportationMean = {
     },
     isComputedByPersonKm: true
   }
-}
+};
 
-module.exports = transportationMean
+module.exports = transportationMean;
