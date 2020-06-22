@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
-const roundTo = require('round-to')
+const roundTo = require('round-to');
 const {
   damageEndpoints,
   meetingCategoryDamage
-} = require('../constants/meeting')
+} = require('../constants/meeting');
 
 /**
  * Normalise the array
@@ -15,11 +15,11 @@ const {
  */
 function normalise (numbers) {
   // Sort the array, the biggest number is first
-  numbers.sort((a, b) => b - a)
-  const max = numbers[0]
+  numbers.sort((a, b) => b - a);
+  const max = numbers[0];
 
   // Normalise the array
-  const normalisedNumbers = numbers.map(number => (number / max) * 100)
+  const normalisedNumbers = numbers.map(number => (number / max) * 100);
 
   return normalisedNumbers
 }
@@ -47,10 +47,10 @@ function normalise (numbers) {
  * normaised by their damage values and ordered.
  */
 function normaliseDamages (meetingScenarios) {
-  let humanHealthDamages = []
-  let ecosystemQualityDamages = []
-  let climateChangeDamages = []
-  let resourcesDamages = []
+  let humanHealthDamages = [];
+  let ecosystemQualityDamages = [];
+  let climateChangeDamages = [];
+  let resourcesDamages = [];
 
   // For each meeting scenario, get the values for each damage end point
   // (human health, ecosysteme quality, climate change and resources) of its total damage
@@ -65,7 +65,7 @@ function normaliseDamages (meetingScenarios) {
         [meetingCategoryDamage.SOFTWARE]: meetingScenario.damage.softwareDamage.totalDamage.humanHealth,
         [meetingCategoryDamage.JOURNEY]: meetingScenario.damage.journeyDamage.totalDamage.humanHealth
       }]
-    )
+    );
     ecosystemQualityDamages = ecosystemQualityDamages.concat(
       [{
         damageEndpoint: damageEndpoints.ECOSYSTEM_QUALITY,
@@ -75,7 +75,7 @@ function normaliseDamages (meetingScenarios) {
         [meetingCategoryDamage.SOFTWARE]: meetingScenario.damage.softwareDamage.totalDamage.ecosystemQuality,
         [meetingCategoryDamage.JOURNEY]: meetingScenario.damage.journeyDamage.totalDamage.ecosystemQuality
       }]
-    )
+    );
     climateChangeDamages = climateChangeDamages.concat(
       [{
         damageEndpoint: damageEndpoints.CLIMATE_CHANGE,
@@ -85,7 +85,7 @@ function normaliseDamages (meetingScenarios) {
         [meetingCategoryDamage.SOFTWARE]: meetingScenario.damage.softwareDamage.totalDamage.climateChange,
         [meetingCategoryDamage.JOURNEY]: meetingScenario.damage.journeyDamage.totalDamage.climateChange
       }]
-    )
+    );
     resourcesDamages = resourcesDamages.concat(
       [{
         damageEndpoint: damageEndpoints.RESOURCES,
@@ -98,12 +98,12 @@ function normaliseDamages (meetingScenarios) {
     )
   }
 
-  const damages = [humanHealthDamages, ecosystemQualityDamages, climateChangeDamages, resourcesDamages]
+  const damages = [humanHealthDamages, ecosystemQualityDamages, climateChangeDamages, resourcesDamages];
 
   const normalisedDamages = damages.map(function (damage) {
     // Sort the damage values array and get the maximum value
-    damage.sort((a, b) => b.value - a.value)
-    const max = damage[0].value
+    damage.sort((a, b) => b.value - a.value);
+    const max = damage[0].value;
 
     /* Normalised the damage values
     The biggest number is turned into 100, the other numbers are like percentages of the first one
@@ -130,13 +130,13 @@ function normaliseDamages (meetingScenarios) {
         [meetingCategoryDamage.HARDWARE]: roundTo((damage.hardware / max) * 100, 2),
         [meetingCategoryDamage.SOFTWARE]: roundTo((damage.software / max) * 100, 2),
         [meetingCategoryDamage.JOURNEY]: roundTo((damage.journey / max) * 100, 2)
-      }
+      };
       return x
-    })
+    });
     return normalisedDamage
-  })
+  });
 
   return normalisedDamages
 }
 
-module.exports = { normalise, normaliseDamages }
+module.exports = { normalise, normaliseDamages };

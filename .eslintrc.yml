@@ -11,4 +11,6 @@ globals:
 parserOptions:
   ecmaVersion: 2018
 ignorePatterns: ["jquery.serializejson.js"]
-rules: {}
+rules: {
+  semi: [2, "always", { "omitLastInOneLineBlock": true}]
+}

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const {
   daysWorkedByYear,
@@ -7,11 +7,11 @@ const {
   hardwareDamageTypes,
   hourToMinutes,
   bounds
-} = require('../../../constants/meeting')
+} = require('../../../constants/meeting');
 
-const hardwareDatabase = require('../../../database/meeting/hardware')
-const Damage = require('../shared/Damage')
-const Component = require('../shared/Component')
+const hardwareDatabase = require('../../../database/meeting/hardware');
+const Damage = require('../shared/Damage');
+const Component = require('../shared/Component');
 
 class Hardware extends Component {
   /**
@@ -28,27 +28,27 @@ class Hardware extends Component {
    */
   constructor ({ name, quantity = 1, size = 1, shareForVisio = 1, componentsPayload = {} }) {
     // Get the corresponding JSON object
-    const json = hardwareDatabase[name]
+    const json = hardwareDatabase[name];
 
-    super({ french: json.french, category: json.category })
+    super({ french: json.french, category: json.category });
 
-    this._name = json.name
-    this._quantity = quantity
-    this._size = size
-    this._weight = json.weight
-    this._shareForVisio = shareForVisio
-    this._isSizeDependent = json.isSizeDependent
-    this._embodiedAssimilatedTo = json.embodiedAssimilatedTo
+    this._name = json.name;
+    this._quantity = quantity;
+    this._size = size;
+    this._weight = json.weight;
+    this._shareForVisio = shareForVisio;
+    this._isSizeDependent = json.isSizeDependent;
+    this._embodiedAssimilatedTo = json.embodiedAssimilatedTo;
 
     this._embodied = (json.embodiedAssimilatedTo)
       ? Object.assign({}, hardwareDatabase[json.embodiedAssimilatedTo].embodied)
-      : json.embodied
+      : json.embodied;
 
-    this._operatingOneMinVisio = json.operatingOneMinVisio
-    this._operatingOneMinStandby = json.operatingOneMinStandby
-    this._lifetime = json.lifetime
-    this._operatingTimePerDay = json.operatingTimePerDay
-    this._components = {}
+    this._operatingOneMinVisio = json.operatingOneMinVisio;
+    this._operatingOneMinStandby = json.operatingOneMinStandby;
+    this._lifetime = json.lifetime;
+    this._operatingTimePerDay = json.operatingTimePerDay;
+    this._components = {};
 
     // Populate components if necessary
     /* Check if components array is not undefined or null,
@@ -278,29 +278,29 @@ class Hardware extends Component {
    * bound equals to 'LOWER'.
    */
   computeDamage ({ meetingDuration, bound = null }) {
-    let damage
+    let damage;
 
     // Hardware may be composed of other hardwares
     if (Object.keys(this.components).length > 0) {
-      damage = new Damage()
+      damage = new Damage();
       /* For each component, compute its damage
       and add it to composite hardware damage */
       Object.values(this.components).forEach(component => {
-        component.computeDamage({ meetingDuration, bound })
+        component.computeDamage({ meetingDuration, bound });
         damage = damage.add(component.damage)
       })
     } else {
-      const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound)
-      const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound)
-      const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound)
-      const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound)
+      const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound);
+      const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound);
+      const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound);
+      const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound);
 
       damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
     }
 
     damage.mutate(category => {
       damage[category] *= this.quantity
-    })
+    });
 
     this.damage = damage
   }
@@ -314,16 +314,16 @@ class Hardware extends Component {
    */
   computeTypedDamage (damageType, meetingDuration, bound = null) {
     // Variable we will return
-    let damage = this.getTypedDamage(damageType, bound)
+    let damage = this.getTypedDamage(damageType, bound);
 
     // Hardware may not have any value for the required damage
     if (!damage) {
-      damage = new Damage({ component: this })
+      damage = new Damage({ component: this });
 
       return damage
     }
 
-    damage = new Damage({ component: this, ...damage })
+    damage = new Damage({ component: this, ...damage });
     if (
       damageType === hardwareDamageTypes.OPERATING_STANDBY ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -347,21 +347,21 @@ class Hardware extends Component {
     if (this.isSizeDependent) {
       damage.mutate(category => {
         // Embodied damage on the whole lifetime
-        damage[category] *= this.size
+        damage[category] *= this.size;
 
         // Embodied damage for an hour
-        damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType)
+        damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType);
 
         // Embodied damage for a minute
-        damage[category] /= hourToMinutes
+        damage[category] /= hourToMinutes;
 
         // Embodied damage for the meeting
         damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
       })
     } else {
       damage.mutate(category => {
-        damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType)
-        damage[category] /= hourToMinutes
+        damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType);
+        damage[category] /= hourToMinutes;
         damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
       })
     }
@@ -394,7 +394,7 @@ class Hardware extends Component {
         /* Assimilated embodied is for 1 g, so we have to multiply
         it by the weight of our hardware */
 
-        let boundSpecificWeight
+        let boundSpecificWeight;
         // Get weight specific value if available
         if (this.weight.upper && this.weight.lower) {
           boundSpecificWeight = (bound != null)
@@ -404,10 +404,10 @@ class Hardware extends Component {
           boundSpecificWeight = this.weight
         }
 
-        const weightEmbodied = Object.assign({}, this.embodied)
+        const weightEmbodied = Object.assign({}, this.embodied);
         Object.keys(weightEmbodied).forEach(category => {
           weightEmbodied[category] *= boundSpecificWeight
-        })
+        });
 
         return weightEmbodied
       }
@@ -427,7 +427,7 @@ class Hardware extends Component {
       upper value. */
       const boundSpecificValue = (bound != null)
         ? this[damageType][bound]
-        : this[damageType][bounds.UPPER]
+        : this[damageType][bounds.UPPER];
 
       return boundSpecificValue
     }
@@ -456,13 +456,13 @@ class Hardware extends Component {
     /* If damage is for standby time we compute how many hours of
     standby we have for the meeting duration. First we compute how many hours of
     standby we have for one hour of meeting. */
-    let standbyDurationForOneHourVisio = this.computeVisioOrStandbyTimeOverLife(damageType) / this.computeVisioOrStandbyTimeOverLife(hardwareDamageTypes.OPERATING_VISIO)
+    let standbyDurationForOneHourVisio = this.computeVisioOrStandbyTimeOverLife(damageType) / this.computeVisioOrStandbyTimeOverLife(hardwareDamageTypes.OPERATING_VISIO);
 
     // Convert to minutes
-    standbyDurationForOneHourVisio *= hourToMinutes
+    standbyDurationForOneHourVisio *= hourToMinutes;
 
     // Get the corresponding value for the meeting duration (cross product)
-    const standbyDurationForMeeting = meetingDuration * standbyDurationForOneHourVisio / hourToMinutes
+    const standbyDurationForMeeting = meetingDuration * standbyDurationForOneHourVisio / hourToMinutes;
 
     return standbyDurationForMeeting
   }
@@ -485,44 +485,44 @@ class Hardware extends Component {
       }
 
       // How many days the hardware is used over its lifetime in years
-      let time = this.lifetime * daysWorkedByYear
+      let time = this.lifetime * daysWorkedByYear;
 
       // Multiply by the number of hours the hardware is used per day
-      time *= this.operatingTimePerDay
+      time *= this.operatingTimePerDay;
 
       return time
     }
 
     // Damage is for standby time
     // We infer the standby time per day from the operating time
-    const standbyTimePerDay = dayToHours - this.operatingTimePerDay
+    const standbyTimePerDay = dayToHours - this.operatingTimePerDay;
     return this.lifetime * daysWorkedByYear * standbyTimePerDay
   }
 
   update (payload) {
-    const name = payload.name
+    const name = payload.name;
     // if there is a new hardware name
     if (name && name !== this.name) {
       // Get the corresponding JSON object
-      const json = hardwareDatabase[name]
+      const json = hardwareDatabase[name];
 
-      this.name = json.name
-      this.french = json.french
-      this.category = json.category
-      this.weight = json.weight
-      this.isSizeDependent = json.isSizeDependent
-      this.embodiedAssimilatedTo = json.embodiedAssimilatedTo
+      this.name = json.name;
+      this.french = json.french;
+      this.category = json.category;
+      this.weight = json.weight;
+      this.isSizeDependent = json.isSizeDependent;
+      this.embodiedAssimilatedTo = json.embodiedAssimilatedTo;
 
       this.embodied = (json.embodiedAssimilatedTo)
         ? Object.assign({}, hardwareDatabase[json.embodiedAssimilatedTo].embodied)
-        : json.embodied
+        : json.embodied;
 
-      this.operatingOneMinVisio = json.operatingOneMinVisio
-      this.operatingOneMinStandby = json.operatingOneMinStandby
-      this.lifetime = json.lifetime
-      this.operatingTimePerDay = json.operatingTimePerDay
+      this.operatingOneMinVisio = json.operatingOneMinVisio;
+      this.operatingOneMinStandby = json.operatingOneMinStandby;
+      this.lifetime = json.lifetime;
+      this.operatingTimePerDay = json.operatingTimePerDay;
 
-      this.components = {}
+      this.components = {};
 
       // Populate components if necessary
       /* Check if components array is not undefined or null,
@@ -534,19 +534,19 @@ class Hardware extends Component {
       }
     }
 
-    const quantity = payload.quantity
+    const quantity = payload.quantity;
     // If there is a new quantity
     if (quantity && this.quantity !== quantity) {
       this.quantity = quantity
     }
 
-    const size = payload.size
+    const size = payload.size;
     // If there is a new size
     if (size && this.size !== size) {
       this.size = size
     }
 
-    const shareForVisio = payload.shareForVisio
+    const shareForVisio = payload.shareForVisio;
     // if there is a new share for visio
     if (shareForVisio && this.shareForVisio !== shareForVisio) {
       this.shareForVisio = shareForVisio
@@ -556,11 +556,11 @@ class Hardware extends Component {
     // It's necessary to always update damage because it's impossible to know if
     // bound or meetind duration have changed
     // (there are not stored)
-    const damagePayload = payload.damagePayload
-    this.computeDamage({ meetingDuration: damagePayload.meetingDuration, bound: damagePayload.bound })
+    const damagePayload = payload.damagePayload;
+    this.computeDamage({ meetingDuration: damagePayload.meetingDuration, bound: damagePayload.bound });
 
     return this.id
   }
 }
 
-module.exports = Hardware
+module.exports = Hardware;

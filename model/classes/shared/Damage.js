@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 class Damage {
   /**
@@ -10,9 +10,9 @@ class Damage {
    * @param {Number} resources - The damage value on Resources.
    */
   constructor ({ humanHealth = 0, ecosystemQuality = 0, climateChange = 0, resources = 0 } = {}) {
-    this._humanHealth = humanHealth
-    this._ecosystemQuality = ecosystemQuality
-    this._climateChange = climateChange
+    this._humanHealth = humanHealth;
+    this._ecosystemQuality = ecosystemQuality;
+    this._climateChange = climateChange;
     this._resources = resources
   }
 
@@ -63,7 +63,7 @@ class Damage {
   mutate (mutation) {
     Object.keys(this).map(category => {
       mutation(category)
-    })
+    });
 
     return this
   }
@@ -90,19 +90,19 @@ class Damage {
   minus (damage) {
     const humanHealth = (this.humanHealth - damage.humanHealth > 0)
       ? this.humanHealth - damage.humanHealth
-      : 0
+      : 0;
     const ecosystemQuality = (this.ecosystemQuality - damage.ecosystemQuality > 0)
       ? this.ecosystemQuality - damage.ecosystemQuality
-      : 0
+      : 0;
     const climateChange = (this.climateChange - damage.climateChange > 0)
       ? this.climateChange - damage.climateChange
-      : 0
+      : 0;
     const resources = (this.resources - damage.resources > 0)
       ? this.resources - damage.resources
-      : 0
+      : 0;
 
     return new Damage({ humanHealth, ecosystemQuality, climateChange, resources })
   }
 }
 
-module.exports = Damage
+module.exports = Damage;

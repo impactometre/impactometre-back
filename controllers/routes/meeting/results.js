@@ -1,25 +1,25 @@
-'use strict'
+'use strict';
 
-const express = require('express')
+const express = require('express');
 
-const meetingScenarios = require('../../../database/meeting/meetingScenarios')
-const { normaliseDamages } = require('../../../utils/normalise')
+const meetingScenarios = require('../../../database/meeting/meetingScenarios');
+const { normaliseDamages } = require('../../../utils/normalise');
 
-const router = express.Router()
+const router = express.Router();
 
 router.get('/:userId', function (req, res, next) {
-  const userId = req.params.userId
+  const userId = req.params.userId;
 
-  const scenarios = []
+  const scenarios = [];
   meetingScenarios.forEach(scenario => {
     if (scenario.user === userId) {
       scenarios.push(scenario)
     }
-  })
+  });
 
-  const normalisedDamages = normaliseDamages(scenarios)
+  const normalisedDamages = normaliseDamages(scenarios);
 
   res.render('meeting/results/results', { title: 'Résultats', scenarios, normalisedDamages })
-})
+});
 
-module.exports = router
+module.exports = router;

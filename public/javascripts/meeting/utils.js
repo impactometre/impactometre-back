@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
 
-const color = Chart.helpers.color
+const color = Chart.helpers.color;
 
 window.chartColors = {
   red: 'rgb(255, 99, 132)',
@@ -11,7 +11,7 @@ window.chartColors = {
   blue: 'rgb(54, 162, 235)',
   purple: 'rgb(153, 102, 255)',
   grey: 'rgb(201, 203, 207)'
-}
+};
 
 const colors = [
   color(window.chartColors.red).alpha(0.5).rgbString(),
@@ -21,20 +21,20 @@ const colors = [
   color(window.chartColors.blue).alpha(0.5).rgbString(),
   color(window.chartColors.purple).alpha(0.5).rgbString(),
   color(window.chartColors.grey).alpha(0.5).rgbString()
-]
+];
 
 const labelsMap = {
   RESOURCES: 'Ressources',
   CLIMATE_CHANGE: 'Changement climatique',
   ECOSYSTEM_QUALITY: 'Écosystèmes',
   HUMAN_HEALTH: 'Santé humaine'
-}
+};
 
 const componentsCategoriesMap = {
   hardware: 'Hardware',
   software: 'Software',
   journey: 'Transport'
-}
+};
 
 function barChart (ctx) {
   window.myBar = new Chart(ctx, {
@@ -84,36 +84,36 @@ function barData (damages, scenarios) {
   const chartData = {
     labels: [],
     datasets: []
-  }
+  };
 
   // Initialize one dataset per scenario
-  const datasets = {}
-  let i = 0
+  const datasets = {};
+  let i = 0;
   scenarios.forEach(scenario => {
-    const index = i + 1
+    const index = i + 1;
     datasets[scenario._id] = {
       label: scenario._name,
       backgroundColor: colors[i],
       borderColor: Object.values(window.chartColors)[i],
       data: []
-    }
+    };
 
     i++
-  })
+  });
 
   // Populate the datasets by category
   damages.forEach(categoryDamage => {
     // New category in chart labels
-    chartData.labels.push(labelsMap[categoryDamage[0].damageEndpoint])
+    chartData.labels.push(labelsMap[categoryDamage[0].damageEndpoint]);
 
     // Get the value for each dataset
     categoryDamage.forEach(scenario => {
       datasets[scenario.meetingScenario].data.push(scenario.value)
     })
-  })
+  });
 
   // Set the chart datasets to the populated datasets
-  Object.values(datasets).forEach(dataset => chartData.datasets.push(dataset))
+  Object.values(datasets).forEach(dataset => chartData.datasets.push(dataset));
 
   return chartData
 }
@@ -123,44 +123,44 @@ function stackedBarData (damages, scenarios, category) {
   const chartData = {
     labels: [],
     datasets: []
-  }
+  };
 
-  let i = 0
-  const scenarioBarchartPosition = new Map()
+  let i = 0;
+  const scenarioBarchartPosition = new Map();
   // Associate a scenario id and the position of its corresponding barchart
   // The fisrt label correspond to the first dataset, the second label to the second dataset, etc.
   scenarios.forEach(scenario => {
-    chartData.labels.push(scenario._name)
-    scenarioBarchartPosition.set(scenario._id, i)
+    chartData.labels.push(scenario._name);
+    scenarioBarchartPosition.set(scenario._id, i);
     i++
-  })
+  });
 
   // Initialize one dataset per component category
-  const datasets = {}
-  i = 0
+  const datasets = {};
+  i = 0;
   Object.keys(componentsCategoriesMap).forEach(category => {
     datasets[category] = {
       label: componentsCategoriesMap[category],
       backgroundColor: colors[colors.length - 1 - i],
       borderColor: Object.values(window.chartColors)[colors.length - 1 - i],
       data: []
-    }
+    };
 
     i++
-  })
+  });
 
   // Populate the datasets
-  const categoryDamage = damages.filter(damageCategory => damageCategory[0].damageEndpoint === category)[0]
+  const categoryDamage = damages.filter(damageCategory => damageCategory[0].damageEndpoint === category)[0];
   Object.values(categoryDamage).forEach(damage => {
     // Get the right scenario barchart position (thanks to the scenarioBarchartPosition )
-    const actualScenario = scenarioBarchartPosition.get(damage.meetingScenario)
+    const actualScenario = scenarioBarchartPosition.get(damage.meetingScenario);
     Object.keys(componentsCategoriesMap).forEach(componentCategory => {
       datasets[componentCategory].data[actualScenario] = damage[componentCategory]
     })
-  })
+  });
 
   // Set the chart datasets to the populated datasets
-  Object.values(datasets).forEach(dataset => chartData.datasets.push(dataset))
+  Object.values(datasets).forEach(dataset => chartData.datasets.push(dataset));
 
   return chartData
 }

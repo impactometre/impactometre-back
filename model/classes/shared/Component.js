@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const uniqid = require('uniqid')
+const uniqid = require('uniqid');
 
 /**
  * Component abstract class.
@@ -13,9 +13,9 @@ class Component {
    * @param {string} category - The component catogory (hardware, software or journey)
    */
   constructor ({ french, category }) {
-    if (new.target === Component) throw TypeError('Cannot create instance of Component because abstract class')
-    this._id = uniqid()
-    this._french = french
+    if (new.target === Component) throw TypeError('Cannot create instance of Component because abstract class');
+    this._id = uniqid();
+    this._french = french;
     this._category = category
   }
 
@@ -89,4 +89,4 @@ class Component {
   }
 }
 
-module.exports = Component
+module.exports = Component;

@@ -1,24 +1,24 @@
-'used strict'
+'used strict';
 
-const assert = require('assert')
-const hardwareDatabase = require('../../database/meeting/hardware')
-const softwareDatabase = require('../../database/meeting/software')
-const transportDatabase = require('../../database/meeting/transportationMean')
-const meetingScenarios = require('../../database/meeting/meetingScenarios')
-const MeetingScenario = require('../../model/classes/meeting/MeetingScenario')
+const assert = require('assert');
+const hardwareDatabase = require('../../database/meeting/hardware');
+const softwareDatabase = require('../../database/meeting/software');
+const transportDatabase = require('../../database/meeting/transportationMean');
+const meetingScenarios = require('../../database/meeting/meetingScenarios');
+const MeetingScenario = require('../../model/classes/meeting/MeetingScenario');
 const {
   meetingCategoryDamage,
   bounds
-} = require('../../constants/meeting')
+} = require('../../constants/meeting');
 const {
   normalise,
   normaliseDamages
-} = require('../../utils/normalise')
+} = require('../../utils/normalise');
 
 describe('Normalise utilitary function', () => {
   describe('#normalise()', () => {
-    const originalArray = [20, 18, 14, 6, 2]
-    const normalisedArray = [100, 90, 70, 30, 10]
+    const originalArray = [20, 18, 14, 6, 2];
+    const normalisedArray = [100, 90, 70, 30, 10];
     it('should normalise the array', () => {
       assert.deepStrictEqual(
         normalise(originalArray),
@@ -26,7 +26,7 @@ describe('Normalise utilitary function', () => {
       )
     })
   })
-})
+});
 describe('Normalise damages function', () => {
   describe('#normaliseDamages()', () => {
     it('should return an array with normalised values for several meeting scenarios', () => {
@@ -35,13 +35,13 @@ describe('Normalise damages function', () => {
         [meetingCategoryDamage.HARDWARE]: { meetingDuration: 90, bound: bounds.UPPER },
         [meetingCategoryDamage.SOFTWARE]: { instancesNumber: 5, bandwithBound: bounds.UPPER, networkBound: bounds.UPPER, meetingDuration: 120 },
         [meetingCategoryDamage.JOURNEY]: {}
-      }
+      };
       // The user who creates the meeting
-      const user = 'vlegauch'
+      const user = 'vlegauch';
       // The meeting duration in minutes
-      const meetingDuration = 120
+      const meetingDuration = 120;
       // Number of participants
-      const numberOfParticipants = 5
+      const numberOfParticipants = 5;
       // The JSON object that enables to creates components linked to the meeting
       const firstPayload = {
         [meetingCategoryDamage.HARDWARE]: [
@@ -87,9 +87,9 @@ describe('Normalise damages function', () => {
             numberOfPeople: 1
           }
         ]
-      }
-      const firstMeetingScenario = MeetingScenario.create({ user, meetingDuration, numberOfParticipants, payload: firstPayload })
-      firstMeetingScenario.computeDamage(damagePayload)
+      };
+      const firstMeetingScenario = MeetingScenario.create({ user, meetingDuration, numberOfParticipants, payload: firstPayload });
+      firstMeetingScenario.computeDamage(damagePayload);
       const secoundPayload = {
         [meetingCategoryDamage.HARDWARE]: [
           { name: hardwareDatabase.LAPTOP.name },
@@ -119,14 +119,14 @@ describe('Normalise damages function', () => {
             numberOfPeople: 1
           }
         ]
-      }
-      const secoundMeetingScenario = MeetingScenario.create({ user, meetingDuration, numberOfParticipants, payload: secoundPayload })
-      secoundMeetingScenario.computeDamage(damagePayload)
-      secoundMeetingScenario.generateAlternatives()
+      };
+      const secoundMeetingScenario = MeetingScenario.create({ user, meetingDuration, numberOfParticipants, payload: secoundPayload });
+      secoundMeetingScenario.computeDamage(damagePayload);
+      secoundMeetingScenario.generateAlternatives();
       meetingScenarios.forEach(meetingScenario => {
         meetingScenario.computeDamage(damagePayload)
-      })
+      });
       normaliseDamages(meetingScenarios.values())
     })
   })
-})
+});

@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
 const {
   hardwareLifetime,
   hardwareOperatingTimePerDay,
   meetingComponents
-} = require('../../constants/meeting')
+} = require('../../constants/meeting');
 
 const hardware = {
   /**
@@ -539,6 +539,6 @@ const hardware = {
       VGA_CABLE_PLUGS: 1
     }
   }
-}
+};
 
-module.exports = hardware
+module.exports = hardware;
