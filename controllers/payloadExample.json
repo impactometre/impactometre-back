@@ -1,5 +1,5 @@
 {
-  scenarios: [
+  "scenarios": [
     {
       "id": 1,
       "name": "Scénario A",

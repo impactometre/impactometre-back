@@ -4,9 +4,8 @@
   "private": true,
   "browserslist": "last 4 versions",
   "scripts": {
-    "prefix": "postcss ./public/stylesheets/style.css --use autoprefixer -d ./public/stylesheets/prefixed/",
-    "start": "npm run prefix && node ./bin/www",
-    "devstart": "npm run prefix && DEBUG=impactometre:* nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "devstart": "DEBUG=impactometre:* nodemon ./bin/www",
     "lint": "npx eslint . && npx stylelint ./sass --syntax scss --fix",
     "test": "mocha --recursive \"test/\""
   },
