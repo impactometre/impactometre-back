@@ -14,7 +14,7 @@ function payloadStructureIsCorrect () {
   return false;
 }
 
-app.post('/getDamagesForScenarios', (req, res) => {
+app.post('/meeting', (req, res) => {
   const scenarios = req.body;
   if (!payloadStructureIsCorrect(scenarios)) {
     const errorMessage = { error: 400, message: 'Server cannot process the request due to a malformed request syntax.' };
