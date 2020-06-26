@@ -2,7 +2,6 @@ image: node:latest
 
 before_script:
   - npm install --save-dev eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
-  - npm install --save-dev stylelint stylelint-scss stylelint-config-recommended-scss
   - npm i
 stages:
   - lint
@@ -15,16 +14,9 @@ eslint:
   tags:
   - docker
 
-stylelint:
-  stage: lint
-  script:
-  - npx stylelint ./sass --config .stylelintrc.yml
-  tags:
-  - docker
-
-unit-tests:
-  stage: test
-  script: 
-  - ./node_modules/mocha/bin/mocha --recursive \"test/\"
-  tags:
-  - docker
+#unit-tests:
+#  stage: test
+#  script:
+#  - ./node_modules/mocha/bin/mocha --recursive \"test/\"
+#  tags:
+#  - docker
