@@ -33,7 +33,7 @@ class Software extends Component {
     super({ french: json.french, category: json.category });
     this.name = json.name;
     this._fileSize = json.fileSize;
-    this._bandwith = json.bandwith
+    this._bandwith = json.bandwith;
   }
 
   // Getter
@@ -42,28 +42,28 @@ class Software extends Component {
    * Getter for software file size.
    */
   get fileSize () {
-    return this._fileSize
+    return this._fileSize;
   }
 
   /**
    * Getter for software bandwith.
    */
   get bandwith () {
-    return this._bandwith
+    return this._bandwith;
   }
 
   /**
    * Getter of the damage caused by the software usage during the meeting.
    */
   get damage () {
-    return this._damage
+    return this._damage;
   }
 
   /**
    * Getter of the software name.
    */
   get name () {
-    return this._name
+    return this._name;
   }
 
   // Setters
@@ -72,28 +72,28 @@ class Software extends Component {
    * Setter for software file size.
    */
   set fileSize (fileSize) {
-    this._fileSize = fileSize
+    this._fileSize = fileSize;
   }
 
   /**
    * Setter for software bandwith.
    */
   set bandwith (bandwith) {
-    this._bandwith = bandwith
+    this._bandwith = bandwith;
   }
 
   /**
    * Setter of the software name.
    */
   set name (name) {
-    this._name = name
+    this._name = name;
   }
 
   /**
    * Setter of the damage caused by the software usage during the meeting.
    */
   set damage (damage) {
-    this._damage = damage
+    this._damage = damage;
   }
 
   // Other methods
@@ -102,7 +102,7 @@ class Software extends Component {
    * Get the software file size in bits (it is originaly in Mo)
    */
   fileSizeMoToBits () {
-    return this.fileSize * octetToBits * moToOctets
+    return this.fileSize * octetToBits * moToOctets;
   }
 
   /**
@@ -117,7 +117,7 @@ class Software extends Component {
     /* If we don't have data specific to a number of
     participants, we return the unique value we got */
     if (typeof rawInbound === 'number') {
-      return rawInbound
+      return rawInbound;
     }
 
     /* Among the available download speed values, we get the
@@ -135,7 +135,7 @@ class Software extends Component {
     /* If we don't have bound specific data,
     we return the unique value we got */
     if (typeof closestValue === 'number') {
-      return closestValue
+      return closestValue;
     }
 
     /* If desired bound value was given, we return
@@ -146,7 +146,7 @@ class Software extends Component {
       ? closestValue[bound]
       : closestValue[bounds.UPPER];
 
-    return boundSpecificValue
+    return boundSpecificValue;
   }
 
   /**
@@ -160,7 +160,7 @@ class Software extends Component {
       ? networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[networkBound]
       : networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit[bounds.UPPER];
 
-    return networkEnergeticIntensity
+    return networkEnergeticIntensity;
   }
 
   /**
@@ -195,11 +195,11 @@ class Software extends Component {
       // Damage for one minute use for all the instances
       operatingDamage[categoryDamage] *= instancesNumber;
       // Damage for all the meeting
-      operatingDamage[categoryDamage] *= meetingDuration
+      operatingDamage[categoryDamage] *= meetingDuration;
     });
 
     // Return the computed operating damage
-    return operatingDamage
+    return operatingDamage;
   }
 
   /**
@@ -224,11 +224,11 @@ class Software extends Component {
 
     // We compute the total damage for each damage shere (in damageUnit)
     Object.keys(embodiedDamage).forEach((categoryDamage) => {
-      embodiedDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber
+      embodiedDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber;
     });
 
     // Return the computed embodied damage
-    return embodiedDamage
+    return embodiedDamage;
   }
 
   /**
@@ -249,7 +249,7 @@ class Software extends Component {
     const totalDamage = new Damage().add(embodiedDamage).add(operatingDamage);
 
     // Return the computed total damage
-    this.damage = totalDamage
+    this.damage = totalDamage;
   }
 
   update (payload) {
@@ -262,7 +262,7 @@ class Software extends Component {
       this.fileSize = json.fileSize;
       this.bandwith = json.bandwith;
       this.french = json.french;
-      this.category = json.category
+      this.category = json.category;
     }
 
     // Modifie the damage
@@ -277,7 +277,7 @@ class Software extends Component {
       meetingDuration: damagePayload.meetingDuration
     });
 
-    return this.id
+    return this.id;
   }
 }
 

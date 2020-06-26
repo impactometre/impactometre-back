@@ -32,7 +32,7 @@ class Journey extends Component {
       ? 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km avec ' + (numberOfPeople - 1) + ' autres personnes.'
       : 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.';
 
-    this.french = french
+    this.french = french;
   }
 
   // Getters
@@ -41,35 +41,35 @@ class Journey extends Component {
    * Getter of the journey passenger name.
    */
   get passenger () {
-    return this._passenger
+    return this._passenger;
   }
 
   /**
    * Getter of the journey transportation mean.
    */
   get mean () {
-    return this._mean
+    return this._mean;
   }
 
   /**
    * Getter of the journey distance.
    */
   get distance () {
-    return this._distance
+    return this._distance;
   }
 
   /**
    * Getter of the journey number of people.
    */
   get numberOfPeople () {
-    return this._numberOfPeople
+    return this._numberOfPeople;
   }
 
   /**
    * Getter of the damage caused by the journey.
    */
   get damage () {
-    return this._damage
+    return this._damage;
   }
 
   // Setters
@@ -79,7 +79,7 @@ class Journey extends Component {
    * @param {Float} distance - The new journey distance.
    */
   set passenger (passenger) {
-    this._passenger = passenger
+    this._passenger = passenger;
   }
 
   /**
@@ -87,7 +87,7 @@ class Journey extends Component {
    * @param {TransportationMean} transportationMean - The new journey transportation mean.
    */
   set mean (transportationMean) {
-    this._mean = transportationMean
+    this._mean = transportationMean;
   }
 
   /**
@@ -95,7 +95,7 @@ class Journey extends Component {
    * @param {Float} distance - The new journey distance.
    */
   set distance (distance) {
-    this._distance = distance
+    this._distance = distance;
   }
 
   /**
@@ -103,14 +103,14 @@ class Journey extends Component {
    * @param {Integer} numberOfPeople - The new journey number of people.
    */
   set numberOfPeople (numberOfPeople) {
-    this._numberOfPeople = numberOfPeople
+    this._numberOfPeople = numberOfPeople;
   }
 
   /**
    * Setter of the damage caused by the journey.
    */
   set damage (damage) {
-    this._damage = damage
+    this._damage = damage;
   }
 
   // Other methods
@@ -132,12 +132,12 @@ class Journey extends Component {
       const personKmAmount = this.distance * this.numberOfPeople;
 
       embodiedDamage.mutate(category => {
-        embodiedDamage[category] = transportationMeanDamage[category] * personKmAmount
-      })
+        embodiedDamage[category] = transportationMeanDamage[category] * personKmAmount;
+      });
     } else {
       embodiedDamage.mutate(category => {
-        embodiedDamage[category] = transportationMeanDamage[category] * this.distance
-      })
+        embodiedDamage[category] = transportationMeanDamage[category] * this.distance;
+      });
     }
 
     /* If the transportation mean is a car, we return the damage only for one participant
@@ -146,12 +146,12 @@ class Journey extends Component {
     each traveller. */
     if (this.mean.subCategory === transportationMeanSubCategories.CAR) {
       embodiedDamage.mutate(category => {
-        embodiedDamage[category] /= this.numberOfPeople
-      })
+        embodiedDamage[category] /= this.numberOfPeople;
+      });
     }
 
     // Return the journey embodied damage
-    return embodiedDamage
+    return embodiedDamage;
   }
 
   /**
@@ -159,7 +159,7 @@ class Journey extends Component {
    * There is a method with the same name for Software class and Hardware class.
    */
   computeDamage () {
-    this.damage = this.computeEmbodiedDamage()
+    this.damage = this.computeEmbodiedDamage();
   }
 
   update (payload) {
@@ -170,7 +170,7 @@ class Journey extends Component {
     // If there a new passenger name
     if (passenger && passenger !== this.passenger) {
       this.passenger = passenger;
-      modifiedFrench = true
+      modifiedFrench = true;
     }
 
     const mean = payload.mean;
@@ -178,7 +178,7 @@ class Journey extends Component {
     if (mean && mean !== this.mean._name) {
       this.mean = new TransportationMean({ name: mean });
       modifiedFrench = true;
-      modifiedDamage = true
+      modifiedDamage = true;
     }
 
     const distance = payload.distance;
@@ -186,7 +186,7 @@ class Journey extends Component {
     if (distance && distance !== this.distance) {
       this.distance = distance;
       modifiedFrench = true;
-      modifiedDamage = true
+      modifiedDamage = true;
     }
 
     const numberOfPeople = payload.numberOfPeople;
@@ -194,23 +194,23 @@ class Journey extends Component {
     if (numberOfPeople && numberOfPeople !== this.numberOfPeople) {
       this.numberOfPeople = numberOfPeople;
       modifiedFrench = true;
-      modifiedDamage = true
+      modifiedDamage = true;
     }
 
     // If one of the above attributes has been modified, french attribute should be modified
     if (modifiedFrench) {
       this.french = (numberOfPeople > 1)
         ? 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km avec ' + (numberOfPeople - 1) + ' autres personnes.'
-        : 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.'
+        : 'Trajet de ' + passenger + ' en ' + this._mean.french + ' de ' + distance + ' km.';
     }
 
     // If one of the attributes that are used to compute a journey damage has been modified,
     // this journey damage should modified
     if (modifiedDamage) {
-      this.computeDamage()
+      this.computeDamage();
     }
 
-    return this.id
+    return this.id;
   }
 }
 
