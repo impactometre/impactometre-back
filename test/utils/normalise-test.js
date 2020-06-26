@@ -23,9 +23,9 @@ describe('Normalise utilitary function', () => {
       assert.deepStrictEqual(
         normalise(originalArray),
         normalisedArray
-      )
-    })
-  })
+      );
+    });
+  });
 });
 describe('Normalise damages function', () => {
   describe('#normaliseDamages()', () => {
@@ -124,9 +124,9 @@ describe('Normalise damages function', () => {
       secoundMeetingScenario.computeDamage(damagePayload);
       secoundMeetingScenario.generateAlternatives();
       meetingScenarios.forEach(meetingScenario => {
-        meetingScenario.computeDamage(damagePayload)
+        meetingScenario.computeDamage(damagePayload);
       });
-      normaliseDamages(meetingScenarios.values())
-    })
-  })
+      normaliseDamages(meetingScenarios.values());
+    });
+  });
 });

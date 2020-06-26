@@ -15,7 +15,7 @@ function getClosest (number, numbers) {
     const currentItem = numbers[index];
     if (currentItem === number) {
       currentClosest = currentItem;
-      exactMatch = true
+      exactMatch = true;
     } else {
       const diffWithCurrentClosest = Math.abs(number - currentClosest);
       const diffWithCurrentItem = Math.abs(number - currentItem);
@@ -24,17 +24,17 @@ function getClosest (number, numbers) {
       two items of the array */
       if (diffWithCurrentItem === diffWithCurrentClosest) {
         if (currentItem > currentClosest) {
-          currentClosest = currentItem
+          currentClosest = currentItem;
         }
       } else if (diffWithCurrentItem < diffWithCurrentClosest) {
-        currentClosest = currentItem
+        currentClosest = currentItem;
       }
     }
 
-    index = index + 1
+    index = index + 1;
   }
 
-  return currentClosest
+  return currentClosest;
 }
 
 module.exports = getClosest;

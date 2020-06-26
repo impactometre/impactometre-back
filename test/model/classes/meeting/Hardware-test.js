@@ -24,38 +24,38 @@ describe('Hardware class', () => {
           !json.components ||
           // Either the value is an empty object
           Object.keys(json.components).length === 0
-        )
+        );
       }).forEach(json => {
         const component = new Hardware({ name: json.name });
-        assert.deepStrictEqual({}, component._components)
-      })
+        assert.deepStrictEqual({}, component._components);
+      });
     });
     it('should create an Hardware component for each composite hardware', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (
           json.components &&
           Object.keys(json.components).length !== 0
-        )
+        );
       }).forEach(json => {
         const component = new Hardware({ name: json.name });
 
         // Compute expected components
         const expected = {};
         for (const [name, quantity] of Object.entries(json.components)) {
-          expected[name] = new Hardware({ name, quantity })
+          expected[name] = new Hardware({ name, quantity });
         }
 
         // Delete components ids because they are always different (they are uniq)
         Object.values(expected).forEach(component => {
-          delete component._id
+          delete component._id;
         });
 
         Object.values(component._components).forEach(component => {
-          delete component._id
+          delete component._id;
         });
 
-        assert.deepStrictEqual(expected, component._components)
-      })
+        assert.deepStrictEqual(expected, component._components);
+      });
     });
     it('should create a composite hardware component using components payload', () => {
       const componentsPayload = {};
@@ -82,14 +82,14 @@ describe('Hardware class', () => {
 
       // Delete components ids because they are always different (they are uniq)
       Object.values(expected).forEach(component => {
-        delete component._id
+        delete component._id;
       });
 
       Object.values(component._components).forEach(component => {
-        delete component._id
+        delete component._id;
       });
 
-      assert.deepStrictEqual(expected, component._components)
+      assert.deepStrictEqual(expected, component._components);
     });
     it('should create a hardware for all hardwares which embodied is assimilated to another one', () => {
       Object.values(hardwareDatabase)
@@ -102,10 +102,10 @@ describe('Hardware class', () => {
             hardwareDatabase[json.embodiedAssimilatedTo].embodied
           );
           Object.values(instance.embodied).forEach(categoryDamageValue => {
-            assert.isNotNaN(categoryDamageValue)
-          })
-        })
-    })
+            assert.isNotNaN(categoryDamageValue);
+          });
+        });
+    });
   });
   describe('#computeVisioOrStandbyTimeOverLife()', () => {
     describe('operating', () => {
@@ -115,18 +115,18 @@ describe('Hardware class', () => {
           return (
             damageType === hardwareDamageTypes.EMBODIED_VISIO ||
             damageType === hardwareDamageTypes.OPERATING_VISIO
-          )
+          );
         }).forEach(damageType => {
           Object.values(hardwareDatabase).filter(json => {
-            return hardwaresWithKnownOperatingTime.includes(json.name)
+            return hardwaresWithKnownOperatingTime.includes(json.name);
           }).forEach(json => {
             const component = new Hardware({ name: json.name });
             assert.strictEqual(
               knownOperatingTimeOverLife[component._name],
               component.computeVisioOrStandbyTimeOverLife(damageType)
-            )
-          })
-        })
+            );
+          });
+        });
       });
       describe('should compute the value if not known', () => {
         it('when lifetime and operatingTimePerDay are based on DESKTOP values', () => {
@@ -134,68 +134,68 @@ describe('Hardware class', () => {
             return (
               damageType === hardwareDamageTypes.EMBODIED_VISIO ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
-            )
+            );
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
                 !(hardwaresWithKnownOperatingTime.includes(json.name)) &&
                 json.lifetime === hardwareLifetime.DESKTOP &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
-              )
+              );
             }).forEach(json => {
               const component = new Hardware({ name: json.name });
               assert.strictEqual(
                 8050,
                 component.computeVisioOrStandbyTimeOverLife(damageType)
-              )
-            })
-          })
+              );
+            });
+          });
         });
         it('when lifetime is based on DESKTOP value and operatingTimePerDay on LOGITECH_KIT', () => {
           Object.values(hardwareDamageTypes).filter(damageType => {
             return (
               damageType === hardwareDamageTypes.EMBODIED_VISIO ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
-            )
+            );
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
                 !(hardwaresWithKnownOperatingTime.includes(json.name)) &&
                 json.lifetime === hardwareLifetime.DESKTOP &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.LOGITECH_KIT
-              )
+              );
             }).forEach(json => {
               const component = new Hardware({ name: json.name });
               assert.strictEqual(
                 690,
                 component.computeVisioOrStandbyTimeOverLife(damageType)
-              )
-            })
-          })
+              );
+            });
+          });
         });
         it('when lifetime is based on POWER_CABLE_ONE_METER value and operatingTimePerDay on DESKTOP', () => {
           Object.values(hardwareDamageTypes).filter(damageType => {
             return (
               damageType === hardwareDamageTypes.EMBODIED_VISIO ||
               damageType === hardwareDamageTypes.OPERATING_VISIO
-            )
+            );
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
                 !(hardwaresWithKnownOperatingTime.includes(json.name)) &&
                 json.lifetime === hardwareLifetime.POWER_CABLE_ONE_METER &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
-              )
+              );
             }).forEach(json => {
               const component = new Hardware({ name: json.name });
               assert.strictEqual(
                 32200,
                 component.computeVisioOrStandbyTimeOverLife(damageType)
-              )
-            })
-          })
-        })
-      })
+              );
+            });
+          });
+        });
+      });
     });
     describe('standby', () => {
       describe('should compute the value', () => {
@@ -204,66 +204,66 @@ describe('Hardware class', () => {
             return (
               damageType === hardwareDamageTypes.EMBODIED_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_STANDBY
-            )
+            );
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
                 json.lifetime === hardwareLifetime.DESKTOP &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
-              )
+              );
             }).forEach(json => {
               const component = new Hardware({ name: json.name });
               assert.strictEqual(
                 19550,
                 component.computeVisioOrStandbyTimeOverLife(damageType)
-              )
-            })
-          })
+              );
+            });
+          });
         });
         it('when lifetime is based on DESKTOP value and operatingTimePerDay on LOGITECH_KIT', () => {
           Object.values(hardwareDamageTypes).filter(damageType => {
             return (
               damageType === hardwareDamageTypes.EMBODIED_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_STANDBY
-            )
+            );
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
                 json.lifetime === hardwareLifetime.DESKTOP &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.LOGITECH_KIT
-              )
+              );
             }).forEach(json => {
               const component = new Hardware({ name: json.name });
               assert.strictEqual(
                 26910,
                 component.computeVisioOrStandbyTimeOverLife(damageType)
-              )
-            })
-          })
+              );
+            });
+          });
         });
         it('when lifetime is based on POWER_CABLE_ONE_METER value and operatingTimePerDay on DESKTOP', () => {
           Object.values(hardwareDamageTypes).filter(damageType => {
             return (
               damageType === hardwareDamageTypes.EMBODIED_STANDBY ||
               damageType === hardwareDamageTypes.OPERATING_STANDBY
-            )
+            );
           }).forEach(damageType => {
             Object.values(hardwareDatabase).filter(json => {
               return (
                 json.lifetime === hardwareLifetime.POWER_CABLE_ONE_METER &&
                 json.operatingTimePerDay === hardwareOperatingTimePerDay.DESKTOP
-              )
+              );
             }).forEach(json => {
               const component = new Hardware({ name: json.name });
               assert.strictEqual(
                 78200,
                 component.computeVisioOrStandbyTimeOverLife(damageType)
-              )
-            })
-          })
-        })
-      })
-    })
+              );
+            });
+          });
+        });
+      });
+    });
   });
   describe('#getTypedDamage()', () => {
     it('should return null if no available value', () => {
@@ -272,19 +272,19 @@ describe('Hardware class', () => {
           damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
-          damageType = 'embodied'
+          damageType = 'embodied';
         }
 
         Object.values(hardwareDatabase).filter(json => {
-          return (!json[damageType] && !json.embodiedAssimilatedTo)
+          return (!json[damageType] && !json.embodiedAssimilatedTo);
         }).forEach(json => {
           const component = new Hardware({ name: json.name });
           assert.strictEqual(
             null,
             component.getTypedDamage(damageType)
-          )
-        })
-      })
+          );
+        });
+      });
     });
     it('should get assimilated embodied damages', () => {
       Object.values(hardwareDatabase)
@@ -298,7 +298,7 @@ describe('Hardware class', () => {
 
           const expected = hardwareDatabase[json.embodiedAssimilatedTo].embodied;
           Object.keys(expected).map(category => {
-            expected[category] *= weight
+            expected[category] *= weight;
           });
 
           assert.deepStrictEqual(
@@ -308,9 +308,9 @@ describe('Hardware class', () => {
           Object.values(expected).forEach(categoryDamageValue => {
             assert.isNotNaN(categoryDamageValue);
             assert.isNotNull(categoryDamageValue);
-            assert.notEqual(0, categoryDamageValue)
-          })
-        })
+            assert.notEqual(0, categoryDamageValue);
+          });
+        });
     });
     it('should return the unique available value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -318,7 +318,7 @@ describe('Hardware class', () => {
           damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
-          damageType = 'embodied'
+          damageType = 'embodied';
         }
 
         Object.values(hardwareDatabase).filter(json => {
@@ -326,15 +326,15 @@ describe('Hardware class', () => {
             json[damageType] != null &&
             !(json[damageType].lower) &&
             !(json[damageType].upper)
-          )
+          );
         }).forEach(json => {
           const component = new Hardware({ name: json.name });
           assert.strictEqual(
             json[damageType],
             component.getTypedDamage(damageType)
-          )
-        })
-      })
+          );
+        });
+      });
     });
     it('should return the matching lower value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -342,7 +342,7 @@ describe('Hardware class', () => {
           damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
-          damageType = 'embodied'
+          damageType = 'embodied';
         }
 
         Object.values(hardwareDatabase).filter(json => {
@@ -350,15 +350,15 @@ describe('Hardware class', () => {
             json[damageType] != null &&
             json[damageType].lower &&
             json[damageType].upper
-          )
+          );
         }).forEach(json => {
           const component = new Hardware({ name: json.name });
           assert.strictEqual(
             json[damageType].lower,
             component.getTypedDamage(damageType, bounds.LOWER)
-          )
-        })
-      })
+          );
+        });
+      });
     });
     it('should return the matching upper value', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -366,7 +366,7 @@ describe('Hardware class', () => {
           damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
-          damageType = 'embodied'
+          damageType = 'embodied';
         }
 
         Object.values(hardwareDatabase).filter(json => {
@@ -374,15 +374,15 @@ describe('Hardware class', () => {
             json[damageType] != null &&
             json[damageType].lower &&
             json[damageType].upper
-          )
+          );
         }).forEach(json => {
           const component = new Hardware({ name: json.name });
           assert.strictEqual(
             json[damageType].upper,
             component.getTypedDamage(damageType, bounds.UPPER)
-          )
-        })
-      })
+          );
+        });
+      });
     });
     it('should return the upper value by default', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -390,7 +390,7 @@ describe('Hardware class', () => {
           damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
-          damageType = 'embodied'
+          damageType = 'embodied';
         }
 
         Object.values(hardwareDatabase).filter(json => {
@@ -398,16 +398,16 @@ describe('Hardware class', () => {
             json[damageType] != null &&
             json[damageType].lower &&
             json[damageType].upper
-          )
+          );
         }).forEach(json => {
           const component = new Hardware({ name: json.name });
           assert.strictEqual(
             json[damageType].upper,
             component.getTypedDamage(damageType)
-          )
-        })
-      })
-    })
+          );
+        });
+      });
+    });
   });
   describe('#computeTypedDamage()', () => {
     const meetingDuration = 60;
@@ -417,7 +417,7 @@ describe('Hardware class', () => {
           damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
-          damageType = 'embodied'
+          damageType = 'embodied';
         }
 
         Object.values(hardwareDatabase)
@@ -428,16 +428,16 @@ describe('Hardware class', () => {
                 Array.isArray(json.components) &&
                 json.components.length
               )
-            )
+            );
           }).forEach(json => {
             const component = new Hardware({ name: json.name });
             const damage = component.computeTypedDamage(damageType, meetingDuration);
 
             Object.keys(damage).forEach(category => {
-              assert.strictEqual(damage[category], 0)
-            })
-          })
-      })
+              assert.strictEqual(damage[category], 0);
+            });
+          });
+      });
     });
     it('should compute the damage of a non size-dependent hardware', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -445,7 +445,7 @@ describe('Hardware class', () => {
           damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
-          damageType = 'embodied'
+          damageType = 'embodied';
         }
 
         Object.values(hardwareDatabase)
@@ -460,15 +460,15 @@ describe('Hardware class', () => {
               damageType === hardwareDamageTypes.OPERATING_VISIO
             ) {
               expected.mutate(category => {
-                expected[category] *= component.shareForVisio * component.getVisioOrStandbyDuration(damageType, meetingDuration)
-              })
+                expected[category] *= component.shareForVisio * component.getVisioOrStandbyDuration(damageType, meetingDuration);
+              });
             } else {
               expected.mutate(category => {
                 expected[category] *= component._shareForVisio;
                 expected[category] /= component.computeVisioOrStandbyTimeOverLife(damageType);
                 expected[category] /= hourToMinutes;
-                expected[category] *= component.getVisioOrStandbyDuration(damageType, meetingDuration)
-              })
+                expected[category] *= component.getVisioOrStandbyDuration(damageType, meetingDuration);
+              });
             }
 
             const damage = component.computeTypedDamage(damageType, meetingDuration);
@@ -476,10 +476,10 @@ describe('Hardware class', () => {
               assert.strictEqual(damage[category], expected[category]);
               assert.isNotNaN(damage[category]);
               assert.isNotNull(damage[category]);
-              assert.notEqual(0, damage[category])
-            })
-          })
-      })
+              assert.notEqual(0, damage[category]);
+            });
+          });
+      });
     });
     it('should compute the damage of a size-dependent hardware', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -487,7 +487,7 @@ describe('Hardware class', () => {
           damageType === hardwareDamageTypes.EMBODIED_VISIO ||
           damageType === hardwareDamageTypes.EMBODIED_STANDBY
         ) {
-          damageType = 'embodied'
+          damageType = 'embodied';
         }
 
         Object.values(hardwareDatabase)
@@ -502,15 +502,15 @@ describe('Hardware class', () => {
               damageType === hardwareDamageTypes.OPERATING_VISIO
             ) {
               expected.mutate(category => {
-                expected[category] *= component.shareForVisio * component.size * component.getVisioOrStandbyDuration(damageType, meetingDuration)
-              })
+                expected[category] *= component.shareForVisio * component.size * component.getVisioOrStandbyDuration(damageType, meetingDuration);
+              });
             } else {
               expected.mutate(category => {
                 expected[category] *= component._shareForVisio * component.size;
                 expected[category] /= component.computeVisioOrStandbyTimeOverLife(damageType);
                 expected[category] /= hourToMinutes;
-                expected[category] *= component.getVisioOrStandbyDuration(damageType, meetingDuration)
-              })
+                expected[category] *= component.getVisioOrStandbyDuration(damageType, meetingDuration);
+              });
             }
 
             const damage = component.computeTypedDamage(damageType, meetingDuration);
@@ -518,10 +518,10 @@ describe('Hardware class', () => {
               assert.strictEqual(damage[category], expected[category]);
               assert.isNotNaN(damage[category]);
               assert.isNotNull(damage[category]);
-              assert.notEqual(0, damage[category])
-            })
-          })
-      })
+              assert.notEqual(0, damage[category]);
+            });
+          });
+      });
     });
     it('should compute the damage of a composite hardware', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -530,7 +530,7 @@ describe('Hardware class', () => {
             return (
               Array.isArray(json.components) &&
               json.components.length
-            )
+            );
           }).forEach(json => {
             const component = new Hardware({ name: json.name });
 
@@ -541,13 +541,13 @@ describe('Hardware class', () => {
               const componentDamage = component.computeTypedDamage(damageType, meetingDuration);
 
               Object.keys(expected).map(category => {
-                expected[category] += componentDamage[category]
-              })
+                expected[category] += componentDamage[category];
+              });
             });
 
-            assert.deepStrictEqual(expected, component.computeTypedDamage(damageType, meetingDuration))
-          })
-      })
+            assert.deepStrictEqual(expected, component.computeTypedDamage(damageType, meetingDuration));
+          });
+      });
     });
     it('if the meeting is twice longer the damage should be twice bigger', () => {
       Object.values(hardwareDamageTypes).forEach(damageType => {
@@ -561,11 +561,11 @@ describe('Hardware class', () => {
             const double = component.computeTypedDamage(damageType, meetingDuration * 2);
 
             Object.keys(double).forEach(category => {
-              assert.strictEqual(simple[category] * 2, double[category])
-            })
-          })
-      })
-    })
+              assert.strictEqual(simple[category] * 2, double[category]);
+            });
+          });
+      });
+    });
   });
   describe('#computeDamage()', () => {
     const meetingDuration = 60;
@@ -582,8 +582,8 @@ describe('Hardware class', () => {
         assert.strictEqual(double[category], simple[category] * 2);
         assert.isNotNaN(double[category]);
         assert.isNotNull(double[category]);
-        assert.notEqual(0, double[category])
-      })
+        assert.notEqual(0, double[category]);
+      });
     });
     it('the lower bound damage should be lower than the default (upper) damage', () => {
       const component = new Hardware(hardwareDatabase.CODEC);
@@ -593,8 +593,8 @@ describe('Hardware class', () => {
       const defaultBound = component.damage;
 
       Object.keys(defaultBound).forEach(category => {
-        assert.isAbove(defaultBound[category], lowerBound[category])
-      })
+        assert.isAbove(defaultBound[category], lowerBound[category]);
+      });
     });
     it('should compute the damage of a composite hardware with x instances of the same component (x > 1)', () => {
       const json = hardwareDatabase.LOGITECH_KIT;
@@ -605,10 +605,10 @@ describe('Hardware class', () => {
         const component = new Hardware({ name, quantity: 1 });
         component.computeDamage({ meetingDuration });
         component.damage.mutate(category => {
-          component.damage[category] *= quantity
+          component.damage[category] *= quantity;
         });
 
-        expected = expected.add(component.damage)
+        expected = expected.add(component.damage);
       }
 
       instance.computeDamage({ meetingDuration });
@@ -618,15 +618,15 @@ describe('Hardware class', () => {
       Object.values(actual).forEach(categoryDamageValue => {
         assert.isNotNaN(categoryDamageValue);
         assert.isNotNull(categoryDamageValue);
-        assert.notEqual(0, categoryDamageValue)
-      })
+        assert.notEqual(0, categoryDamageValue);
+      });
     });
     it('should compute the damage of each composite hardware', () => {
       Object.values(hardwareDatabase).filter(json => {
         return (
           json.components &&
           Object.keys(json.components).length !== 0
-        )
+        );
       }).forEach(json => {
         const instance = new Hardware({ name: json.name });
 
@@ -635,7 +635,7 @@ describe('Hardware class', () => {
         for (const [name, quantity] of Object.entries(json.components)) {
           const component = new Hardware({ name, quantity });
           component.computeDamage({ meetingDuration });
-          expected = expected.add(component.damage)
+          expected = expected.add(component.damage);
         }
 
         instance.computeDamage({ meetingDuration });
@@ -645,9 +645,9 @@ describe('Hardware class', () => {
         Object.values(actual).forEach(categoryDamageValue => {
           assert.isNotNaN(categoryDamageValue);
           assert.isNotNull(categoryDamageValue);
-          assert.notEqual(0, categoryDamageValue)
-        })
-      })
-    })
-  })
+          assert.notEqual(0, categoryDamageValue);
+        });
+      });
+    });
+  });
 });

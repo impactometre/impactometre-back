@@ -36,7 +36,7 @@ app.use(
 app.use(
   '/stylesheets', postcssMiddleware({
     src: function (req) {
-      return path.join(__dirname, 'public', 'stylesheets', req.path)
+      return path.join(__dirname, 'public', 'stylesheets', req.path);
     },
     plugins: [
       autoprefixer({
@@ -54,7 +54,7 @@ app.use('/reunion', meetingRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404))
+  next(createError(404));
 });
 
 // error handler
@@ -65,7 +65,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error')
+  res.render('error');
 });
 
 module.exports = app;

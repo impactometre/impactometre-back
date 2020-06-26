@@ -93,7 +93,7 @@ describe('CategoryDamage class', () => {
       assert.deepStrictEqual(
         journeyCategoryDamage.totalDamage,
         totalDamage
-      )
+      );
     });
 
     // Create the array of JSON objects that enables to create a software categoryDamage object
@@ -119,7 +119,7 @@ describe('CategoryDamage class', () => {
       assert.deepStrictEqual(
         softwareCategoryDamage.totalDamage,
         skype.damage
-      )
+      );
     });
 
     // Create the array of JSON objects that enables to create a software categoryDamage object
@@ -148,7 +148,7 @@ describe('CategoryDamage class', () => {
       assert.deepStrictEqual(
         hardwareCategoryDamage.totalDamage,
         laptop.damage.add(logitechKit.damage).add(TV1.damage).add(TV2.damage).add(metalStructure.damage)
-      )
-    })
-  })
+      );
+    });
+  });
 });

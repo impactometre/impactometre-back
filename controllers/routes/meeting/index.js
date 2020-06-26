@@ -13,11 +13,11 @@ const MeetingScenario = require('../../../model/classes/meeting/MeetingScenario'
 const { meetingCategoryDamage, bounds } = require('../../../constants/meeting');
 
 router.get('/', function (req, res, next) {
-  res.redirect('/reunion/commencer')
+  res.redirect('/reunion/commencer');
 });
 
 router.get('/commencer', function (req, res, next) {
-  res.render('meeting/form/form', { title: 'Votre réunion', hardwareDb, softwareDb, transportationMeanDb })
+  res.render('meeting/form/form', { title: 'Votre réunion', hardwareDb, softwareDb, transportationMeanDb });
 });
 
 router.post('/creer', (req, res) => {
@@ -40,7 +40,7 @@ router.post('/creer', (req, res) => {
   // Generates the two alternatives scenarios for the comparison
   meetingScenario.generateAlternatives();
 
-  return res.json({ redirect: '/reunion/resultats/' + user })
+  return res.json({ redirect: '/reunion/resultats/' + user });
 });
 
 router.use('/resultats', resultsRouter);

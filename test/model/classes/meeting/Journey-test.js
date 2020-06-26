@@ -27,14 +27,14 @@ describe('Journey class', () => {
       const actual = journeyElectricCar3People.computeEmbodiedDamage();
       Object.keys(actual).forEach(category => {
         assert.strictEqual(actual[category], embodiedDamage[category]);
-        assert.isNotNaN(actual[category])
-      })
+        assert.isNotNaN(actual[category]);
+      });
     });
     it('should return the damage caused by 3 people in a eletric car for one kilometer ', () => {
       assert.deepStrictEqual(
         journeyElectricCar3People.computeEmbodiedDamage(),
         embodiedDamage
-      )
+      );
     });
 
     const journeyElectricCar5People = new Journey({
@@ -49,8 +49,8 @@ describe('Journey class', () => {
 
       Object.keys(threePeople).forEach(category => {
         assert.isBelow(fivePeople[category], threePeople[category]);
-        assert.isNotNaN(fivePeople[category])
-      })
+        assert.isNotNaN(fivePeople[category]);
+      });
     });
 
     const heatCar = new TransportationMean({ name: transportDatabase.CAR_HEAT_ENGINE_ONE_KM.name });
@@ -64,7 +64,7 @@ describe('Journey class', () => {
       assert.strictEqual(
         journeyElectricCar3People.mean.isComputedByPersonKm && journeyHeatCar3People.mean.isComputedByPersonKm,
         false
-      )
+      );
     });
 
     const intercontinentalPlane = new TransportationMean({ name: transportDatabase.PLANE_INTERCONTINENTAL_ONE_PERSON_KM.name });
@@ -92,13 +92,13 @@ describe('Journey class', () => {
       resources
     });
 
-    embodiedDamageTwice.mutate(category => { embodiedDamageTwice[category] *= 2 });
+    embodiedDamageTwice.mutate(category => { embodiedDamageTwice[category] *= 2; });
     it('a 4 people journey by plane should cause twice the damage of a 2 people journey by plane', () => {
       assert.deepStrictEqual(
         intercontinentalPlaneJourney4People.computeEmbodiedDamage(),
         embodiedDamageTwice
-      )
-    })
+      );
+    });
   });
   describe('#computeDamage ()', () => {
     const highSpeedTrain = new TransportationMean({ name: transportDatabase.TRAIN_HIGH_SPEED_ONE_PERSON_KM.name });
@@ -116,7 +116,7 @@ describe('Journey class', () => {
         highSpeedTrainJourney.damage,
         highSpeedTrainJourney.computeEmbodiedDamage()
 
-      )
-    })
-  })
+      );
+    });
+  });
 });

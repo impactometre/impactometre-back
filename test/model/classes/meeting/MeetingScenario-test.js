@@ -78,8 +78,8 @@ describe('MeetingScenario class', () => {
 
   describe('#constructor()', () => {
     it('should create a MeetingScenario without components in all categories', () => {
-      assert.notStrictEqual(incompleteScenario.damage.softwareDamage.components, new Map())
-    })
+      assert.notStrictEqual(incompleteScenario.damage.softwareDamage.components, new Map());
+    });
   });
   describe('#computeDamage()', () => {
     // Create the JSON object that enables to compute meeting total damage
@@ -106,8 +106,8 @@ describe('MeetingScenario class', () => {
         assert.strictEqual(meetingScenario.damage.totalDamage[category], meetingDamage.totalDamage[category]);
         assert.isNotNaN(meetingScenario.damage.totalDamage[category]);
         assert.isNotNull(meetingScenario.damage.totalDamage[category]);
-        assert.notEqual(0, meetingScenario.damage.totalDamage[category])
-      })
+        assert.notEqual(0, meetingScenario.damage.totalDamage[category]);
+      });
     });
     it('should compute the damage of an incomplete scenario', () => {
       const damagePayload = {
@@ -123,9 +123,9 @@ describe('MeetingScenario class', () => {
         assert.strictEqual(damage[category], expected[category]);
         assert.isNotNaN(damage[category]);
         assert.isNotNull(damage[category]);
-        assert.notEqual(0, damage[category])
-      })
-    })
+        assert.notEqual(0, damage[category]);
+      });
+    });
   });
   describe('#generateAlternatives()', () => {
     it('should create two alternative scenarios', () => {
@@ -134,8 +134,8 @@ describe('MeetingScenario class', () => {
       assert.deepStrictEqual(
         meetingScenarios.size,
         oldSize + 2
-      )
-    })
+      );
+    });
   });
   describe('#create()', () => {
     // Create the meeting scenario
@@ -145,8 +145,8 @@ describe('MeetingScenario class', () => {
       assert.deepStrictEqual(
         meetingScenarios.size,
         oldSize + 1
-      )
-    })
+      );
+    });
   });
   describe('#read()', () => {
     it('should read a meetingScenario thanks to its id', () => {
@@ -156,9 +156,9 @@ describe('MeetingScenario class', () => {
         assert.deepStrictEqual(
           MeetingScenario.read(id),
           meetingScenarios.get(id)
-        )
-      })
-    })
+        );
+      });
+    });
   });
   describe('#remove()', () => {
     it('should remove a meetingScenario thanks to its id', () => {
@@ -169,9 +169,9 @@ describe('MeetingScenario class', () => {
         assert.deepStrictEqual(
           meetingScenarios.get(id),
           undefined
-        )
-      })
-    })
+        );
+      });
+    });
   });
   describe('#modify()', () => {
     describe('update a component', () => {
@@ -220,8 +220,8 @@ describe('MeetingScenario class', () => {
             assert.notDeepEqual(oldMeetingTotalDamage[category], updatedMeetingTotalDamage);
             assert.isNotNaN(updatedMeetingTotalDamage[category]);
             assert.isNotNull(updatedMeetingTotalDamage[category]);
-            assert.notEqual(0, updatedMeetingTotalDamage[category])
-          })
+            assert.notEqual(0, updatedMeetingTotalDamage[category]);
+          });
         }
       });
       it('should update a software component caracteristics and its damage value, total software category damage value and total meeting damage value', () => {
@@ -273,8 +273,8 @@ describe('MeetingScenario class', () => {
             assert.notDeepEqual(oldMeetingTotalDamage[category], updatedMeetingTotalDamage);
             assert.isNotNaN(updatedMeetingTotalDamage[category]);
             assert.isNotNull(updatedMeetingTotalDamage[category]);
-            assert.notEqual(0, updatedMeetingTotalDamage[category])
-          })
+            assert.notEqual(0, updatedMeetingTotalDamage[category]);
+          });
         }
       });
       it('should update a journey component caracteristics and its damage value, total journey category damage value and total meeting damage value', () => {
@@ -324,8 +324,8 @@ describe('MeetingScenario class', () => {
             assert.notDeepEqual(oldMeetingTotalDamage[category], updatedMeetingTotalDamage);
             assert.isNotNaN(updatedMeetingTotalDamage[category]);
             assert.isNotNull(updatedMeetingTotalDamage[category]);
-            assert.notEqual(0, updatedMeetingTotalDamage[category])
-          })
+            assert.notEqual(0, updatedMeetingTotalDamage[category]);
+          });
         }
       });
       it('should update meeting duration, number of participants and meeting damage values', () => {
@@ -368,9 +368,9 @@ describe('MeetingScenario class', () => {
           assert.notEqual(0, updatedHardwareTotalDamage[category]);
           assert.notEqual(0, updatedSoftwareTotalDamage[category]);
           assert.notEqual(0, updatedJourneyTotalDamage[category]);
-          assert.notEqual(0, updatedMeetingTotalDamage[category])
-        })
-      })
-    })
-  })
+          assert.notEqual(0, updatedMeetingTotalDamage[category]);
+        });
+      });
+    });
+  });
 });

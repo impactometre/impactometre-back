@@ -38,15 +38,15 @@ function normalizePort (val) {
 
   if (isNaN(port)) {
     // named pipe
-    return val
+    return val;
   }
 
   if (port >= 0) {
     // port number
-    return port
+    return port;
   }
 
-  return false
+  return false;
 }
 
 /**
@@ -55,7 +55,7 @@ function normalizePort (val) {
 
 function onError (error) {
   if (error.syscall !== 'listen') {
-    throw error
+    throw error;
   }
 
   var bind = typeof port === 'string'
@@ -67,13 +67,11 @@ function onError (error) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
-      break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
-      break;
     default:
-      throw error
+      throw error;
   }
 }
 
@@ -86,5 +84,5 @@ function onListening () {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind)
+  debug('Listening on ' + bind);
 }
