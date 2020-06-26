@@ -13,43 +13,43 @@ class Damage {
     this._humanHealth = humanHealth;
     this._ecosystemQuality = ecosystemQuality;
     this._climateChange = climateChange;
-    this._resources = resources
+    this._resources = resources;
   }
 
   // Getters
 
   get humanHealth () {
-    return this._humanHealth
+    return this._humanHealth;
   }
 
   get ecosystemQuality () {
-    return this._ecosystemQuality
+    return this._ecosystemQuality;
   }
 
   get climateChange () {
-    return this._climateChange
+    return this._climateChange;
   }
 
   get resources () {
-    return this._resources
+    return this._resources;
   }
 
   // Setters
 
   set humanHealth (humanHealth) {
-    this._humanHealth = humanHealth
+    this._humanHealth = humanHealth;
   }
 
   set ecosystemQuality (ecosystemQuality) {
-    this._ecosystemQuality = ecosystemQuality
+    this._ecosystemQuality = ecosystemQuality;
   }
 
   set climateChange (climateChange) {
-    this._climateChange = climateChange
+    this._climateChange = climateChange;
   }
 
   set resources (resources) {
-    this._resources = resources
+    this._resources = resources;
   }
 
   // Other methods
@@ -62,10 +62,10 @@ class Damage {
    */
   mutate (mutation) {
     Object.keys(this).map(category => {
-      mutation(category)
+      mutation(category);
     });
 
-    return this
+    return this;
   }
 
   /**
@@ -79,7 +79,7 @@ class Damage {
       ecosystemQuality: this.ecosystemQuality + damage.ecosystemQuality,
       climateChange: this.climateChange + damage.climateChange,
       resources: this.resources + damage.resources
-    })
+    });
   }
 
   /**
@@ -101,7 +101,7 @@ class Damage {
       ? this.resources - damage.resources
       : 0;
 
-    return new Damage({ humanHealth, ecosystemQuality, climateChange, resources })
+    return new Damage({ humanHealth, ecosystemQuality, climateChange, resources });
   }
 }
 

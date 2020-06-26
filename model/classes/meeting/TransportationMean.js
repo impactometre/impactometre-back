@@ -21,7 +21,7 @@ class TransportationMean {
     this._french = json.french;
     this._subCategory = json.subCategory;
     this._embodied = json.embodied;
-    this._isComputedByPersonKm = json.isComputedByPersonKm
+    this._isComputedByPersonKm = json.isComputedByPersonKm;
   }
 
   // Getters
@@ -30,28 +30,28 @@ class TransportationMean {
    * Getter of the transportation name.
    */
   get name () {
-    return this._name
+    return this._name;
   }
 
   /**
    * Getter of the transportation mean french name.
    */
   get french () {
-    return this._french
+    return this._french;
   }
 
   /**
    * Getter of the transporation mean sub-category (i.e. car, plane, train, bus or bike)
    */
   get subCategory () {
-    return this._subCategory
+    return this._subCategory;
   }
 
   /**
    * Getter of the transportation mean embodied damage.
    */
   get embodied () {
-    return this._embodied
+    return this._embodied;
   }
 
   /**
@@ -59,7 +59,7 @@ class TransportationMean {
    * calculate by personKm (true) or by kilometer (false).
    */
   get isComputedByPersonKm () {
-    return this._isComputedByPersonKm
+    return this._isComputedByPersonKm;
   }
 
   // Setters
@@ -68,28 +68,28 @@ class TransportationMean {
    * Setter of the transportation mean name.
    */
   set name (name) {
-    this._name = name
+    this._name = name;
   }
 
   /**
    * Setter of the transportation mean french name.
    */
   set french (french) {
-    this._french = french
+    this._french = french;
   }
 
   /**
    * Setter of the transporation mean sub-category (i.e. car, plane, train, bus or bike)
    */
   set subCategory (subCategory) {
-    this._subCategory = subCategory
+    this._subCategory = subCategory;
   }
 
   /**
    * Setter of the transportation mean embodied damage.
    */
   set embodied (embodied) {
-    this._embodied = embodied
+    this._embodied = embodied;
   }
 
   /**
@@ -97,7 +97,7 @@ class TransportationMean {
    * in personKm (true) or in kilometer (false).
    */
   set isComputedByPersonKm (isComputedByPersonKm) {
-    this._isComputedByPersonKm = isComputedByPersonKm
+    this._isComputedByPersonKm = isComputedByPersonKm;
   }
 }
 

@@ -65,7 +65,7 @@ class Hardware extends Component {
         TV_SCREEN_ONE_METER_SQUARE) */
         this._components[name] = (!componentsPayload[name])
           ? new Hardware({ name, quantity })
-          : new Hardware(componentsPayload[name])
+          : new Hardware(componentsPayload[name]);
       }
     }
   }
@@ -73,11 +73,11 @@ class Hardware extends Component {
   // Getters
 
   get name () {
-    return this._name
+    return this._name;
   }
 
   get french () {
-    return this._french
+    return this._french;
   }
 
   /**
@@ -87,7 +87,7 @@ class Hardware extends Component {
    * @returns {Number} The instances number of the same hardware.
    */
   get quantity () {
-    return this._quantity
+    return this._quantity;
   }
 
   /**
@@ -97,7 +97,7 @@ class Hardware extends Component {
    * @returns {Number} The optional size.
    */
   get size () {
-    return this._size
+    return this._size;
   }
 
   /**
@@ -107,7 +107,7 @@ class Hardware extends Component {
    * @returns {Number} The optional weight.
    */
   get weight () {
-    return this._weight
+    return this._weight;
   }
 
   /**
@@ -118,7 +118,7 @@ class Hardware extends Component {
    * @returns {Float} The share for visio (between O and 1).
    */
   get shareForVisio () {
-    return this._shareForVisio
+    return this._shareForVisio;
   }
 
   /**
@@ -128,7 +128,7 @@ class Hardware extends Component {
    * @returns {Boolean} The size dependance boolean.
    */
   get isSizeDependent () {
-    return this._isSizeDependent
+    return this._isSizeDependent;
   }
 
   /**
@@ -137,7 +137,7 @@ class Hardware extends Component {
    * @see hardware.js in database
    */
   get embodiedAssimilatedTo () {
-    return this._embodiedAssimilatedTo
+    return this._embodiedAssimilatedTo;
   }
 
   /**
@@ -147,7 +147,7 @@ class Hardware extends Component {
    * @returns {Object} - Raw embodied damage.
    */
   get embodied () {
-    return this._embodied
+    return this._embodied;
   }
 
   /**
@@ -157,7 +157,7 @@ class Hardware extends Component {
    * @returns {Object} - Raw visio operating damage.
    */
   get operatingOneMinVisio () {
-    return this._operatingOneMinVisio
+    return this._operatingOneMinVisio;
   }
 
   /**
@@ -167,7 +167,7 @@ class Hardware extends Component {
    * @returns {Object} - Raw standby operating damage.
    */
   get operatingOneMinStandby () {
-    return this._operatingOneMinStandby
+    return this._operatingOneMinStandby;
   }
 
   /**
@@ -176,7 +176,7 @@ class Hardware extends Component {
    * @returns {Number} The lifetime.
    */
   get lifetime () {
-    return this._lifetime
+    return this._lifetime;
   }
 
   /**
@@ -185,7 +185,7 @@ class Hardware extends Component {
    * @returns {Number} The operating time per day (in hours)
    */
   get operatingTimePerDay () {
-    return this._operatingTimePerDay
+    return this._operatingTimePerDay;
   }
 
   /**
@@ -195,76 +195,76 @@ class Hardware extends Component {
    * @returns {Object} Components indexed by name.
    */
   get components () {
-    return this._components
+    return this._components;
   }
 
   /**
    * Getter of the total damage caused by the hardware.
    */
   get damage () {
-    return this._damage
+    return this._damage;
   }
 
   // Setters
 
   set name (name) {
-    this._name = name
+    this._name = name;
   }
 
   set french (french) {
-    this._french = french
+    this._french = french;
   }
 
   set damage (damage) {
-    this._damage = damage
+    this._damage = damage;
   }
 
   set quantity (quantity) {
-    this._quantity = quantity
+    this._quantity = quantity;
   }
 
   set size (size) {
-    this._size = size
+    this._size = size;
   }
 
   set weight (weight) {
-    this._weight = weight
+    this._weight = weight;
   }
 
   set shareForVisio (shareForVisio) {
-    this._shareForVisio = shareForVisio
+    this._shareForVisio = shareForVisio;
   }
 
   set isSizeDependent (isSizeDependent) {
-    this._isSizeDependent = isSizeDependent
+    this._isSizeDependent = isSizeDependent;
   }
 
   set embodiedAssimilatedTo (embodiedAssimilatedTo) {
-    this._embodiedAssimilatedTo = embodiedAssimilatedTo
+    this._embodiedAssimilatedTo = embodiedAssimilatedTo;
   }
 
   set embodied (embodied) {
-    this._embodied = embodied
+    this._embodied = embodied;
   }
 
   set operatingOneMinVisio (operatingOneMinVisio) {
-    this._operatingOneMinVisio = operatingOneMinVisio
+    this._operatingOneMinVisio = operatingOneMinVisio;
   }
 
   set operatingOneMinStandby (operatingOneMinStandby) {
-    this._operatingOneMinStandby = operatingOneMinStandby
+    this._operatingOneMinStandby = operatingOneMinStandby;
   }
 
   set lifetime (lifetime) {
-    this._lifetime = lifetime
+    this._lifetime = lifetime;
   }
 
   set operatingTimePerDay (operatingTimePerDay) {
-    this._operatingTimePerDay = operatingTimePerDay
+    this._operatingTimePerDay = operatingTimePerDay;
   }
 
   set components (components) {
-    this._components = components
+    this._components = components;
   }
 
   // Other methods
@@ -287,22 +287,22 @@ class Hardware extends Component {
       and add it to composite hardware damage */
       Object.values(this.components).forEach(component => {
         component.computeDamage({ meetingDuration, bound });
-        damage = damage.add(component.damage)
-      })
+        damage = damage.add(component.damage);
+      });
     } else {
       const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound);
       const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound);
       const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound);
       const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound);
 
-      damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby)
+      damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby);
     }
 
     damage.mutate(category => {
-      damage[category] *= this.quantity
+      damage[category] *= this.quantity;
     });
 
-    this.damage = damage
+    this.damage = damage;
   }
 
   /**
@@ -320,7 +320,7 @@ class Hardware extends Component {
     if (!damage) {
       damage = new Damage({ component: this });
 
-      return damage
+      return damage;
     }
 
     damage = new Damage({ component: this, ...damage });
@@ -332,15 +332,15 @@ class Hardware extends Component {
       // Hardware damage may depends on its size
       if (this.isSizeDependent) {
         damage.mutate(category => {
-          damage[category] *= this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration)
-        })
+          damage[category] *= this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration);
+        });
       } else {
         damage.mutate(category => {
-          damage[category] *= this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration)
-        })
+          damage[category] *= this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration);
+        });
       }
 
-      return damage
+      return damage;
     }
 
     // Required damage is for embodied lifecycle phase
@@ -356,17 +356,17 @@ class Hardware extends Component {
         damage[category] /= hourToMinutes;
 
         // Embodied damage for the meeting
-        damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
-      })
+        damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration);
+      });
     } else {
       damage.mutate(category => {
         damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType);
         damage[category] /= hourToMinutes;
-        damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration)
-      })
+        damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration);
+      });
     }
 
-    return damage
+    return damage;
   }
 
   /**
@@ -399,25 +399,25 @@ class Hardware extends Component {
         if (this.weight.upper && this.weight.lower) {
           boundSpecificWeight = (bound != null)
             ? this.weight[bound]
-            : this.weight[bounds.UPPER]
+            : this.weight[bounds.UPPER];
         } else {
-          boundSpecificWeight = this.weight
+          boundSpecificWeight = this.weight;
         }
 
         const weightEmbodied = Object.assign({}, this.embodied);
         Object.keys(weightEmbodied).forEach(category => {
-          weightEmbodied[category] *= boundSpecificWeight
+          weightEmbodied[category] *= boundSpecificWeight;
         });
 
-        return weightEmbodied
+        return weightEmbodied;
       }
 
-      return this.embodied
+      return this.embodied;
     }
 
     // Required damage type is for operating lifecycle phase
     if (!this[damageType]) {
-      return null
+      return null;
     }
 
     // If bound specific values are available
@@ -429,11 +429,11 @@ class Hardware extends Component {
         ? this[damageType][bound]
         : this[damageType][bounds.UPPER];
 
-      return boundSpecificValue
+      return boundSpecificValue;
     }
 
     // Else we return the unique value available
-    return this[damageType]
+    return this[damageType];
   }
 
   /**
@@ -450,7 +450,7 @@ class Hardware extends Component {
       damageType === hardwareDamageTypes.OPERATING_VISIO
     ) {
       // If damage is for visio time we return the meeting duration
-      return meetingDuration
+      return meetingDuration;
     }
 
     /* If damage is for standby time we compute how many hours of
@@ -464,7 +464,7 @@ class Hardware extends Component {
     // Get the corresponding value for the meeting duration (cross product)
     const standbyDurationForMeeting = meetingDuration * standbyDurationForOneHourVisio / hourToMinutes;
 
-    return standbyDurationForMeeting
+    return standbyDurationForMeeting;
   }
 
   /**
@@ -481,7 +481,7 @@ class Hardware extends Component {
       // Damage is for visio time
       // We may not need to compute the value
       if (knownOperatingTimeOverLife[this.name]) {
-        return knownOperatingTimeOverLife[this.name]
+        return knownOperatingTimeOverLife[this.name];
       }
 
       // How many days the hardware is used over its lifetime in years
@@ -490,13 +490,13 @@ class Hardware extends Component {
       // Multiply by the number of hours the hardware is used per day
       time *= this.operatingTimePerDay;
 
-      return time
+      return time;
     }
 
     // Damage is for standby time
     // We infer the standby time per day from the operating time
     const standbyTimePerDay = dayToHours - this.operatingTimePerDay;
-    return this.lifetime * daysWorkedByYear * standbyTimePerDay
+    return this.lifetime * daysWorkedByYear * standbyTimePerDay;
   }
 
   update (payload) {
@@ -529,7 +529,7 @@ class Hardware extends Component {
       and is actually an array */
       if (json.components && Object.keys(json.components).length !== 0) {
         for (const [name, quantity] of Object.entries(json.components)) {
-          this.components[name] = new Hardware({ name, quantity })
+          this.components[name] = new Hardware({ name, quantity });
         }
       }
     }
@@ -537,19 +537,19 @@ class Hardware extends Component {
     const quantity = payload.quantity;
     // If there is a new quantity
     if (quantity && this.quantity !== quantity) {
-      this.quantity = quantity
+      this.quantity = quantity;
     }
 
     const size = payload.size;
     // If there is a new size
     if (size && this.size !== size) {
-      this.size = size
+      this.size = size;
     }
 
     const shareForVisio = payload.shareForVisio;
     // if there is a new share for visio
     if (shareForVisio && this.shareForVisio !== shareForVisio) {
-      this.shareForVisio = shareForVisio
+      this.shareForVisio = shareForVisio;
     }
 
     // Modifie damage
@@ -559,7 +559,7 @@ class Hardware extends Component {
     const damagePayload = payload.damagePayload;
     this.computeDamage({ meetingDuration: damagePayload.meetingDuration, bound: damagePayload.bound });
 
-    return this.id
+    return this.id;
   }
 }
 

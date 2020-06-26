@@ -21,7 +21,7 @@ function normalise (numbers) {
   // Normalise the array
   const normalisedNumbers = numbers.map(number => (number / max) * 100);
 
-  return normalisedNumbers
+  return normalisedNumbers;
 }
 
 /**
@@ -95,7 +95,7 @@ function normaliseDamages (meetingScenarios) {
         [meetingCategoryDamage.SOFTWARE]: meetingScenario.damage.softwareDamage.totalDamage.resources,
         [meetingCategoryDamage.JOURNEY]: meetingScenario.damage.journeyDamage.totalDamage.resources
       }]
-    )
+    );
   }
 
   const damages = [humanHealthDamages, ecosystemQualityDamages, climateChangeDamages, resourcesDamages];
@@ -131,12 +131,12 @@ function normaliseDamages (meetingScenarios) {
         [meetingCategoryDamage.SOFTWARE]: roundTo((damage.software / max) * 100, 2),
         [meetingCategoryDamage.JOURNEY]: roundTo((damage.journey / max) * 100, 2)
       };
-      return x
+      return x;
     });
-    return normalisedDamage
+    return normalisedDamage;
   });
 
-  return normalisedDamages
+  return normalisedDamages;
 }
 
 module.exports = { normalise, normaliseDamages };

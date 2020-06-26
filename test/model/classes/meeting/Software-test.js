@@ -14,14 +14,14 @@ describe('Software class', () => {
       assert.strictEqual(
         renavisio.getInboundBandwith('RENAVISIO'),
         1080
-      )
+      );
     });
 
     it('should return the unique available value even if number of participants specified', () => {
       assert.strictEqual(
         renavisio.getInboundBandwith(3),
         1080
-      )
+      );
     });
 
     const skype = new Software({ name: softwareDatabase.SKYPE.name });
@@ -29,29 +29,29 @@ describe('Software class', () => {
       assert.strictEqual(
         skype.getInboundBandwith(2, constants.bounds.LOWER),
         128
-      )
+      );
     });
 
     it('should return the matching available upper bound value when no bound specified', () => {
       assert.strictEqual(
         skype.getInboundBandwith(2),
         1050
-      )
+      );
     });
 
     it('should return the closest greater available (upper bound) value', () => {
       assert.strictEqual(
         skype.getInboundBandwith(4, constants.bounds.UPPER),
         4000
-      )
+      );
     });
 
     it('should return the last available value if participants number is greater than available values', () => {
       assert.strictEqual(
         skype.getInboundBandwith(8, constants.bounds.UPPER),
         8000
-      )
-    })
+      );
+    });
   });
   describe('#computeEmbodiedDamage (instancesNumber, networkBound)', () => {
     const renavisio = new Software({ name: softwareDatabase.RENAVISIO.name });
@@ -69,8 +69,8 @@ describe('Software class', () => {
       assert.deepStrictEqual(
         renavisio.computeEmbodiedDamage(5, constants.bounds.UPPER),
         embodiedDamage
-      )
-    })
+      );
+    });
   });
   describe('#computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration)', () => {
     const skype = new Software({ name: softwareDatabase.SKYPE.name });
@@ -90,7 +90,7 @@ describe('Software class', () => {
       assert.deepStrictEqual(
         skype.computeOperatingDamage(instancesNumber, constants.bounds.UPPER, constants.bounds.UPPER, meetingDuration),
         operatingDamage
-      )
+      );
     });
     const inboundBandwithMinimun = skype.getInboundBandwith(5, constants.bounds.LOWER);
     const networkLowerBound = networkDatabase.NETWORK_ENERGETIC_INTENSITY.operatingOneBit.lower;
@@ -107,8 +107,8 @@ describe('Software class', () => {
       assert.deepStrictEqual(
         skype.computeOperatingDamage(instancesNumber, constants.bounds.LOWER, constants.bounds.LOWER, meetingDuration),
         operatingDamageMinimumBandwith
-      )
-    })
+      );
+    });
   });
   describe('#computeDamage (instancesNumber, bandwithBound, networkBound, meetingDuration)', () => {
     const meetingDuration = 120;
@@ -141,7 +141,7 @@ describe('Software class', () => {
     });
     const totalDamage = new Damage();
     Object.keys(totalDamage).map((categoryDamage) => {
-      totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage]
+      totalDamage[categoryDamage] = operatingDamage[categoryDamage] + embodiedDamage[categoryDamage];
     });
     skype.computeDamage({
       instancesNumber,
@@ -153,7 +153,7 @@ describe('Software class', () => {
       assert.deepStrictEqual(
         skype.damage,
         totalDamage
-      )
-    })
-  })
+      );
+    });
+  });
 });

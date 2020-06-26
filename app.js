@@ -1,6 +1,5 @@
 'use strict';
 
-const createError = require('http-errors');
 const path = require('path');
 
 const express = require('express');
@@ -16,7 +15,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRouter);
 
 module.exports = app;
