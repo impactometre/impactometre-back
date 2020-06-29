@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "DEBUG=impactometre:* nodemon ./bin/www",
-    "lint": "npx eslint . && npx stylelint ./sass --syntax scss --fix",
+    "lint": "npx eslint .",
     "test": "mocha --recursive \"test/\""
   },
   "dependencies": {
@@ -18,9 +18,6 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "node-sass-middleware": "^0.11.0",
-    "postcss-cli": "7.1.0",
-    "postcss-middleware": "^1.1.4",
     "round-to": "^4.1.0",
     "uniqid": "^5.2.0"
   },
@@ -34,9 +31,6 @@
     "eslint-plugin-standard": "^4.0.1",
     "vue-eslint-parser": "^7.1.0",
     "mocha": "^6.2.2",
-    "nodemon": "^2.0.2",
-    "stylelint": "^13.0.0",
-    "stylelint-scss": "^3.13.0",
-    "stylelint-config-recommended-scss": "^4.1.0"
+    "nodemon": "^2.0.2"
   }
 }
