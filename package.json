@@ -5,24 +5,27 @@
   "browserslist": "last 4 versions",
   "scripts": {
     "start": "node ./bin/www",
-    "devstart": "DEBUG=impactometre:* nodemon ./bin/www",
-    "lint": "npx eslint .",
+    "server": "DEBUG=impactometre:* nodemon ./bin/www",
+    "front": "cd front && npm run serve",
+    "devstart": "concurrently \"npm run server\" \"npm run front\"",
+    "lint": "npx eslint . && npx stylelint ./sass --syntax scss --fix",
     "test": "mocha --recursive \"test/\""
   },
   "dependencies": {
-    "impactometre-front": "file:front/",
     "autoprefixer": "^9.7.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^2.6.2",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "impactometre-front": "file:front/",
     "morgan": "~1.9.1",
     "round-to": "^4.1.0",
     "uniqid": "^5.2.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "concurrently": "^5.2.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.19.1",
