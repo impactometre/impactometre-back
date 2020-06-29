@@ -17,29 +17,29 @@ function submitMeeting () {
           ? areaFromDiagonal(inchesToCm(tv.value))
           : areaFromDiagonal(tv.value);
 
-        payload.hardware.push({ name: 'TV_SCREEN_ONE_METER_SQUARE', size })
-      })
+        payload.hardware.push({ name: 'TV_SCREEN_ONE_METER_SQUARE', size });
+      });
     } else {
       for (let i = 0; i < form.hardware[key]; i++) {
-        payload.hardware.push({ name: key })
+        payload.hardware.push({ name: key });
       }
     }
   });
 
   if (softwareChoice === 'other') {
-    payload.software.push({ name: 'SKYPE' })
+    payload.software.push({ name: 'SKYPE' });
   } else if (softwareChoice !== 'noSoftware') {
-    payload.software.push({ name: softwareChoice })
+    payload.software.push({ name: softwareChoice });
   }
 
   if (journeys !== undefined) {
     const filteredJourneys = Object.values(journeys).filter(journey => journey.distance > 0);
-    payload.journey = filteredJourneys
+    payload.journey = filteredJourneys;
   }
 
   const data = { meetingDuration, numberOfParticipants, payload };
 
   $.post('creer', { payload: JSON.stringify(data) }).done(data => {
-    window.location.href = data.redirect
-  })
+    window.location.href = data.redirect;
+  });
 }

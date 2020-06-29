@@ -22,7 +22,7 @@ class CategoryDamage {
     // Create a hashmap that contains components and their id
     this._components = (components !== null)
       ? this.arrayToMapComponents(components, category)
-      : new Map()
+      : new Map();
   }
 
   // Getters
@@ -31,21 +31,21 @@ class CategoryDamage {
    * Getter of the total category damage.
    */
   get totalDamage () {
-    return this._totalDamage
+    return this._totalDamage;
   }
 
   /**
    * Getter of the hasmhap that contains all the components indexed by a their id.
    */
   get components () {
-    return this._components
+    return this._components;
   }
 
   /**
    * Getter of The category of the components wich caused the damage.
    */
   get category () {
-    return this._category
+    return this._category;
   }
 
   // Setters
@@ -54,21 +54,21 @@ class CategoryDamage {
    * Setter of the total category damage.
    */
   set totalDamage (totalDamage) {
-    this._totalDamage = totalDamage
+    this._totalDamage = totalDamage;
   }
 
   /**
    * setter of the hasmhap that contains all the components indexed by a their id.
    */
   set components (components) {
-    this._components = components
+    this._components = components;
   }
 
   /**
    * Setter of The category of the components wich caused the damage.
    */
   set category (category) {
-    this._category = category
+    this._category = category;
   }
 
   // Other methods
@@ -87,24 +87,24 @@ class CategoryDamage {
       case meetingCategoryDamage.HARDWARE:
         components.forEach(c => {
           const component = new Hardware(c);
-          componentsMap.set(component.id, component)
+          componentsMap.set(component.id, component);
         });
         break;
       case meetingCategoryDamage.SOFTWARE:
         components.forEach(c => {
           const component = new Software(c);
-          componentsMap.set(component.id, component)
+          componentsMap.set(component.id, component);
         });
         break;
       case meetingCategoryDamage.JOURNEY:
         components.forEach(c => {
           const component = new Journey(c);
-          componentsMap.set(component.id, component)
+          componentsMap.set(component.id, component);
         });
-        break
+        break;
     }
 
-    return componentsMap
+    return componentsMap;
   }
 
   /**
@@ -120,8 +120,8 @@ class CategoryDamage {
     // and add it to the totalDamage caused by the components of the categoryDamage object.
     this.components.forEach(c => {
       c.computeDamage(payload);
-      this.totalDamage = this.totalDamage.add(c.damage)
-    })
+      this.totalDamage = this.totalDamage.add(c.damage);
+    });
   }
 
   /**
@@ -139,7 +139,7 @@ class CategoryDamage {
       case meetingCategoryDamage.SOFTWARE:
         break;
       case meetingCategoryDamage.JOURNEY:
-        break
+        break;
     }
   }
 }

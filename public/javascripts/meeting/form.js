@@ -2,11 +2,11 @@
 
 // ========== UTILS ==========
 function cmToInches (i) {
-  return Math.round(i * 0.39370)
+  return Math.round(i * 0.39370);
 }
 
 function inchesToCm (i) {
-  return Math.round(i / 0.39370)
+  return Math.round(i / 0.39370);
 }
 
 function getIdNumber (id) {
@@ -14,7 +14,7 @@ function getIdNumber (id) {
   const idNumberFilter = /\w+-(\d{1,2}).*/;
   const idNumber = id.replace(idNumberFilter, '$1');
 
-  return idNumber
+  return idNumber;
 }
 
 /**
@@ -28,7 +28,7 @@ function areaFromDiagonal (diagonal) {
   const width = (diagonal * 9) / Math.sqrt(377);
   const lenght = (diagonal * 16) / Math.sqrt(377);
 
-  return Math.round(width * lenght) / 10000
+  return Math.round(width * lenght) / 10000;
 }
 
 // ========== MAIN ==========
@@ -38,7 +38,7 @@ const participantMaxNumber = 30;
 const participantMinNumber = 2;
 
 for (let i = 1; i <= participantNumber; i++) {
-  travellers.set('trav' + i, 0)
+  travellers.set('trav' + i, 0);
 }
 
 function addAParticipant () {
@@ -56,7 +56,7 @@ function addAParticipant () {
     clone.querySelector('h4').innerHTML = 'Participant ' + participantNumber;
     clone.querySelector('button#traveller-p__addJourneyItem').id = 'traveller-' + participantNumber + '__addJourneyItem';
 
-    document.querySelector('#travellers').appendChild(clone)
+    document.querySelector('#travellers').appendChild(clone);
   }
 }
 
@@ -68,7 +68,7 @@ function removeAParticipant () {
     participantNumber -= 1;
 
     document.querySelector('#participantNumber').innerHTML = participantNumber;
-    document.querySelector('#numberOfParticipants').value = participantNumber
+    document.querySelector('#numberOfParticipants').value = participantNumber;
   }
 }
 
@@ -78,15 +78,15 @@ const tvScreenMaxNumber = 50;
 const tvScreenMinNumber = 0;
 
 function outputUpdate (size, id) {
-  document.querySelector('#screenSizeNumberInput-' + getIdNumber(id)).value = size
+  document.querySelector('#screenSizeNumberInput-' + getIdNumber(id)).value = size;
 }
 
 function rangeUpdate (size, id) {
-  document.querySelector('#tvScreenSize-' + getIdNumber(id)).value = size
+  document.querySelector('#tvScreenSize-' + getIdNumber(id)).value = size;
 }
 
 function updateTvScreenNumberSpan (number) {
-  document.querySelector('#tvScreenNumber').innerHTML = number
+  document.querySelector('#tvScreenNumber').innerHTML = number;
 }
 
 function addATvScreen () {
@@ -98,9 +98,9 @@ function addATvScreen () {
     const div = document.createElement('div');
 
     if (tvScreenNumber === 1) {
-      div.innerHTML = '<label for="tvScreenSize-' + tvScreenNumber + '">taille du ' + tvScreenNumber + '<sup>er</sup> écran</label>'
+      div.innerHTML = '<label for="tvScreenSize-' + tvScreenNumber + '">taille du ' + tvScreenNumber + '<sup>er</sup> écran</label>';
     } else {
-      div.innerHTML = '<label for="tvScreenSize-' + tvScreenNumber + '">taille du ' + tvScreenNumber + '<sup>e</sup> écran</label>'
+      div.innerHTML = '<label for="tvScreenSize-' + tvScreenNumber + '">taille du ' + tvScreenNumber + '<sup>e</sup> écran</label>';
     }
 
     div.innerHTML += '<input type="range" min="48" max="228" value="107" id="tvScreenSize-' + tvScreenNumber + '"' +
@@ -114,7 +114,7 @@ function addATvScreen () {
     '<option value="cm" id="cm" selected>centimètres</option>' +
     '<option value="inch" id="inch">pouces</option>' +
     '</select>';
-    parent.appendChild(div)
+    parent.appendChild(div);
   }
 }
 
@@ -124,7 +124,7 @@ function removeATvScreen () {
     updateTvScreenNumberSpan(tvScreenNumber);
 
     const parent = document.querySelector('#additionalScreens');
-    parent.removeChild(parent.lastChild)
+    parent.removeChild(parent.lastChild);
   }
 }
 
@@ -153,14 +153,14 @@ function changeScreenUnit (unit, id) {
     screenSizeNumberInputSelector.value = inchesToCm(screenSizeNumberInputSelector.value);
     for (const [key, value] of cmIterator) {
       tvScreenSizeSelector.setAttribute(key, value);
-      screenSizeNumberInputSelector.setAttribute(key, value)
+      screenSizeNumberInputSelector.setAttribute(key, value);
     }
   } else {
     tvScreenSizeSelector.value = cmToInches(tvScreenSizeSelector.value);
     screenSizeNumberInputSelector.value = cmToInches(screenSizeNumberInputSelector.value);
     for (const [key, value] of inchIterator) {
       tvScreenSizeSelector.setAttribute(key, value);
-      screenSizeNumberInputSelector.setAttribute(key, value)
+      screenSizeNumberInputSelector.setAttribute(key, value);
     }
   }
 }
@@ -175,15 +175,15 @@ function getIdNumbers (id) {
   const idNumberFilter = /\w+-(\d{1,2}-\d{1,2})/;
   const ids = id.replace(idNumberFilter, '$1');
 
-  return ids
+  return ids;
 }
 
 function kmSliderUpdate (dist, id) {
-  document.querySelector('#kmNumber-' + getIdNumbers(id)).value = dist
+  document.querySelector('#kmNumber-' + getIdNumbers(id)).value = dist;
 }
 
 function kmNumberUpdate (dist, id) {
-  document.querySelector('#kmSlider-' + getIdNumbers(id)).value = dist
+  document.querySelector('#kmSlider-' + getIdNumbers(id)).value = dist;
 }
 
 function addJourneyItem (travellerId) {
@@ -208,7 +208,7 @@ function addJourneyItem (travellerId) {
     clone.querySelector('input[type="range"]').id = 'kmSlider-' + travId + '-' + newJourneyNumber;
 
     const lastItem = travellerSelector.querySelector('.traveller__journeyItem--add');
-    travellerSelector.querySelector('.traveller__journeys').insertBefore(clone, lastItem)
+    travellerSelector.querySelector('.traveller__journeys').insertBefore(clone, lastItem);
   }
 }
 
@@ -217,6 +217,6 @@ function removeJourneyItem (journeyId) {
     journeyNumber -= 1;
 
     const toRemove = document.querySelector('#' + journeyId).parentNode;
-    toRemove.remove()
+    toRemove.remove();
   }
 }

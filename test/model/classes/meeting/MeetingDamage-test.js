@@ -86,7 +86,7 @@ describe('MeetingDamage class', () => {
       assert.deepStrictEqual(
         meetingDamage.totalDamage,
         hardwareCategoryDamage.totalDamage.add(softwareCategoryDamage.totalDamage).add(journeyCategoryDamage.totalDamage)
-      )
-    })
-  })
+      );
+    });
+  });
 });
