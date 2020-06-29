@@ -25,7 +25,7 @@ class MeetingScenario extends Scenario {
    * @see CategoryDamage
    */
   constructor ({ duration, participantCount, hardware, software, journey }) {
-    super("user", "name"); // TODO DELETE
+    super('user', 'name'); // TODO DELETE
     this._meetingDuration = duration;
     this._numberOfParticipants = participantCount;
 
