@@ -8,7 +8,7 @@ const app = express();
 // const softwareDb = require('../../database/meeting/software');
 // const transportationMeanDb = require('../../database/meeting/transportationMean');
 const MeetingScenario = require('../../model/classes/meeting/MeetingScenario');
-const { meetingCategoryDamage, bounds } = require('../../constants/meeting');
+// const { meetingCategoryDamage, bounds } = require('../../constants/meeting');
 
 function payloadStructureIsCorrect () {
   // TODO check payload structure
