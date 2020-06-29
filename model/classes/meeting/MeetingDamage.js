@@ -16,7 +16,7 @@ class MeetingDamage {
    * @param {Object[]} journey - An array of JSON objects that contain all necessary data to create the transport components of the meeting.
    * @see CategoryDamage
    */
-  constructor ({ hardware = null, software = null, journey = null }) {
+  constructor (hardware = null, software = null, journey = null) {
     // Create all the category damages linked to the meeting
     this._hardwareDamage = new CategoryDamage({ components: hardware, category: meetingCategoryDamage.HARDWARE });
     this._softwareDamage = new CategoryDamage({ components: software, category: meetingCategoryDamage.SOFTWARE });

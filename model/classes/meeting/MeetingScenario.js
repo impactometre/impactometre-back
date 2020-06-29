@@ -24,19 +24,12 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    * @see CategoryDamage
    */
-  constructor ({ user, name, meetingDuration, numberOfParticipants, payload }) {
-    super(user, name);
-    this._meetingDuration = meetingDuration;
-    this._numberOfParticipants = numberOfParticipants;
+  constructor ({ duration, participantCount, hardware, software, journey }) {
+    super('user', 'name'); // TODO DELETE
+    this._meetingDuration = duration;
+    this._numberOfParticipants = participantCount;
 
-    const params = {};
-    Object.values(meetingCategoryDamage).forEach(category => {
-      if (payload[category]) {
-        params[category] = payload[category];
-      }
-    });
-
-    this._damage = new MeetingDamage(params);
+    this._damage = new MeetingDamage(hardware, software, journey);
   }
 
   // Getters

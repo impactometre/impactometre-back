@@ -1,26 +1,87 @@
-{
-  "scenarios": [
+[{
+  "meetingDuration": 1,
+  "numberOfParticipants": 3,
+  "hardware": [
     {
-      "id": 1,
-      "name": "Scénario A",
-      "meetingDuration": 1,
-      "numberOfParticipants": 1,
-      "data": {
-        "array_of_all_hardware_data": [],
-        "array_of_all_software_data": [],
-        "array_of_all_journey_data": []
-      }
+      "name": "LAPTOP",
+      "qty": 2
     },
     {
-      "id": 2,
-      "name": "Scénario B",
-      "meetingDuration": 1,
-      "numberOfParticipants": 1,
-      "data": {
-        "array_of_all_hardware_data": [],
-        "array_of_all_software_data": [],
-        "array_of_all_journey_data": []
-      }
+      "name": "DESKTOP",
+      "qty": 3
+    },
+    {
+      "name": "LOGITECH_KIT",
+      "qty": 4
+    },
+    {
+      "name": "COMPUTER_SCREEN_LCD",
+      "qty": 5
+    },
+    {
+      "name": "PROJECTOR",
+      "qty": 6
+    }
+  ],
+  "software": {
+    "name": "RENAVISIO"
+  },
+  "journey": [
+    {
+      "mean": "PLANE_INTERCONTINENTAL_ONE_PERSON_KM",
+      "distance": 148
+    },
+    {
+      "mean": "BUS_CITY_ONE_PERSON_KM",
+      "distance": 5
+    },
+    {
+      "mean": "TRAIN_REGIONAL_ONE_PERSON_KM",
+      "distance": 481
     }
   ]
-}
+},
+  {
+    "meetingDuration": 1,
+    "numberOfParticipants": 3,
+    "hardware": [
+      {
+        "name": "LAPTOP",
+        "qty": 2
+      },
+      {
+        "name": "DESKTOP",
+        "qty": 3
+      },
+      {
+        "name": "LOGITECH_KIT",
+        "qty": 4
+      },
+      {
+        "name": "COMPUTER_SCREEN_LCD",
+        "qty": 5
+      },
+      {
+        "name": "PROJECTOR",
+        "qty": 6
+      }
+    ],
+    "software": {
+      "name": "RENAVISIO"
+    },
+    "journey": [
+      {
+        "mean": "PLANE_INTERCONTINENTAL_ONE_PERSON_KM",
+        "distance": 148
+      },
+      {
+        "mean": "BUS_CITY_ONE_PERSON_KM",
+        "distance": 5
+      },
+      {
+        "mean": "TRAIN_REGIONAL_ONE_PERSON_KM",
+        "distance": 481
+      }
+    ]
+  }
+]
