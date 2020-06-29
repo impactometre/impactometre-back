@@ -3,7 +3,6 @@
 const express = require('express');
 const app = express();
 
-
 // const hardwareDb = require('../../database/meeting/hardware');
 // const softwareDb = require('../../database/meeting/software');
 // const transportationMeanDb = require('../../database/meeting/transportationMean');
