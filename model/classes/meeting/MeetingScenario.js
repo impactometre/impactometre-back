@@ -24,19 +24,12 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    * @see CategoryDamage
    */
-  constructor ({ user, name, meetingDuration, numberOfParticipants, payload }) {
-    super(user, name);
-    this._meetingDuration = meetingDuration;
-    this._numberOfParticipants = numberOfParticipants;
+  constructor ({ duration, participantCount, hardware, software, journey }) {
+    super('user', 'name'); // TODO DELETE
+    this._meetingDuration = duration;
+    this._numberOfParticipants = participantCount;
 
-    const params = {};
-    Object.values(meetingCategoryDamage).forEach(category => {
-      if (payload[category]) {
-        params[category] = payload[category]
-      }
-    });
-
-    this._damage = new MeetingDamage(params)
+    this._damage = new MeetingDamage(hardware, software, journey);
   }
 
   // Getters
@@ -45,14 +38,14 @@ class MeetingScenario extends Scenario {
    * Getter of the user who creates the meeting scenario.
    */
   get user () {
-    return this._user
+    return this._user;
   }
 
   /**
    * Getter of the meeting duration in minutes.
    */
   get meetingDuration () {
-    return this._meetingDuration
+    return this._meetingDuration;
   }
 
   /**
@@ -60,11 +53,11 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    */
   get damage () {
-    return this._damage
+    return this._damage;
   }
 
   get numberOfParticipants () {
-    return this._numberOfParticipants
+    return this._numberOfParticipants;
   }
 
   // Setters
@@ -73,14 +66,14 @@ class MeetingScenario extends Scenario {
    * Setter of the user who creates the meeting scenario.
    */
   set user (user) {
-    this._user = user
+    this._user = user;
   }
 
   /**
    * Setter of the meeting duration in minutes.
    */
   set meetingDuration (meetingDuration) {
-    this._meetingDuration = meetingDuration
+    this._meetingDuration = meetingDuration;
   }
 
   /**
@@ -88,11 +81,11 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    */
   set damage (damage) {
-    this._damage = damage
+    this._damage = damage;
   }
 
   set numberOfParticipants (numberOfParticipants) {
-    this._numberOfParticipants = numberOfParticipants
+    this._numberOfParticipants = numberOfParticipants;
   }
 
   // Other methods
@@ -105,7 +98,7 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    */
   computeDamage (damagePayload) {
-    this.damage.computeDamage(damagePayload)
+    this.damage.computeDamage(damagePayload);
   }
 
   /**
@@ -138,11 +131,11 @@ class MeetingScenario extends Scenario {
     ];
     // Add the ritght number of heavy visio systems used for the meeting
     for (let i = 0; i < heavyHardwareNumber; i++) {
-      hardwareComponents = hardwareComponents.concat(heavyHardwareComponent)
+      hardwareComponents = hardwareComponents.concat(heavyHardwareComponent);
     }
     // Add the right number of light visio systems used for the meeting
     for (let i = 0; i < lightHardwareNumber; i++) {
-      hardwareComponents = hardwareComponents.concat(lightHardwareComponent)
+      hardwareComponents = hardwareComponents.concat(lightHardwareComponent);
     }
     // Generate software component
     let softwareComponents = [{ name: softwareDatabase.SKYPE.name }];
@@ -178,7 +171,7 @@ class MeetingScenario extends Scenario {
     const laptop = [{ name: hardwareDatabase.LAPTOP.name }];
     // 2/3 of particpants have a laptop
     for (let i = 0; i < Math.ceil(numberOfParticipants * (2 / 3)); i++) {
-      hardwareComponents = hardwareComponents.concat(laptop)
+      hardwareComponents = hardwareComponents.concat(laptop);
     }
     // Generate software components (no software compoents for this alternative scenario)
     softwareComponents = [{ name: softwareDatabase.SKYPE.name }];
@@ -222,15 +215,15 @@ class MeetingScenario extends Scenario {
 
       // If the last possible journey is reached, go back to the first one
       if (journeyCounter === possibleJourneys.length - 1) {
-        journeyCounter = 0
+        journeyCounter = 0;
       } else {
         // If the last participant is reached, but not the last possible
         // don't increase partcipant counter (i.e. i) in order to give all not reached possible
         // journeys to the last participant (see explanations above the loop)
         if (i === numberOfParticipants - 1 && journeyCounter !== possibleJourneys.lengt - 1) {
-          i--
+          i--;
         }
-        journeyCounter++
+        journeyCounter++;
       }
     }
     // Create the payload
@@ -242,7 +235,7 @@ class MeetingScenario extends Scenario {
     // Generate meeting scenario
     const lightTransportScenario = MeetingScenario.create({ user, name: 'Alternative transports légers', meetingDuration, numberOfParticipants, payload: lightTransportPayload });
     // Compute its damage
-    lightTransportScenario.computeDamage(DamagePayload)
+    lightTransportScenario.computeDamage(DamagePayload);
   }
 
   /**
@@ -260,7 +253,7 @@ class MeetingScenario extends Scenario {
     const meetingScenario = new MeetingScenario({ user, name, meetingDuration, numberOfParticipants, payload });
 
     // Return the created meetingScenario
-    return meetingScenario
+    return meetingScenario;
   }
 
   /**
@@ -271,9 +264,9 @@ class MeetingScenario extends Scenario {
   static read (id) {
     const meetingScenario = meetingScenarios.get(id);
     if (meetingScenario !== undefined) {
-      return meetingScenario
+      return meetingScenario;
     } else {
-      throw new Error('Required MeetingScenario not available in database.')
+      throw new Error('Required MeetingScenario not available in database.');
     }
   }
 
@@ -283,7 +276,7 @@ class MeetingScenario extends Scenario {
  * @returns {Boolean} True if deletion succeeds, false if not.
  */
   static remove (id) {
-    return meetingScenarios.delete(id)
+    return meetingScenarios.delete(id);
   }
 
   /**
@@ -299,13 +292,13 @@ class MeetingScenario extends Scenario {
     // Update if there is a new meeting duration
     if (meetingDuration && this.meetingDuration !== meetingDuration) {
       this.meetingDuration = meetingDuration;
-      shouldBeRecomputed = true
+      shouldBeRecomputed = true;
     }
 
     // Update if there is a new number of participants
     if (numberOfParticipants && this.numberOfParticipants !== numberOfParticipants) {
       this.numberOfParticipants = numberOfParticipants;
-      shouldBeRecomputed = true
+      shouldBeRecomputed = true;
     }
 
     // if there is a modification on meeting components (hardwares, softwares, journeys)
@@ -321,16 +314,16 @@ class MeetingScenario extends Scenario {
         case modificationTypes.CREATE:
           throw new Error('Not implemented yet.');
         case modificationTypes.REMOVE:
-          throw new Error('Not implemented yet.')
+          throw new Error('Not implemented yet.');
       }
     }
 
     // If all meeting damages should be recompted
     if (shouldBeRecomputed) {
       if (!damagePayload || damagePayload === {}) {
-        throw new Error('You should provide the necessary data to update meeting damage values.')
+        throw new Error('You should provide the necessary data to update meeting damage values.');
       }
-      this.computeDamage(damagePayload)
+      this.computeDamage(damagePayload);
     }
   }
 
@@ -364,7 +357,7 @@ class MeetingScenario extends Scenario {
         totalCategoryDamage = totalCategoryDamage.minus(oldDamage);
         totalCategoryDamage = totalCategoryDamage.add(updatedDamage);
         this.damage.hardwareDamage.totalDamage = totalCategoryDamage;
-        break
+        break;
       }
       case meetingCategoryDamage.SOFTWARE: {
         const softwareToUpdate = this.damage.softwareDamage.components.get(id);
@@ -378,7 +371,7 @@ class MeetingScenario extends Scenario {
         totalCategoryDamage = totalCategoryDamage.minus(oldDamage);
         totalCategoryDamage = totalCategoryDamage.add(updatedDamage);
         this.damage.softwareDamage.totalDamage = totalCategoryDamage;
-        break
+        break;
       }
       case meetingCategoryDamage.JOURNEY: {
         const journeyToUpdate = this.damage.journeyDamage.components.get(id);
@@ -392,7 +385,7 @@ class MeetingScenario extends Scenario {
         totalCategoryDamage = totalCategoryDamage.minus(oldDamage);
         totalCategoryDamage = totalCategoryDamage.add(updatedDamage);
         this.damage.journeyDamage.totalDamage = totalCategoryDamage;
-        break
+        break;
       }
     }
 
@@ -400,7 +393,7 @@ class MeetingScenario extends Scenario {
     this.damage.totalDamage = this.damage.totalDamage.minus(odlTotalCategoryDamage);
 
     // Add the new total damage value of updated component category to meeting total damage value
-    this.damage.totalDamage = this.damage.totalDamage.add(totalCategoryDamage)
+    this.damage.totalDamage = this.damage.totalDamage.add(totalCategoryDamage);
   }
 }
 

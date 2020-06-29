@@ -50,7 +50,7 @@ function barChart (ctx) {
         text: 'Résultats'
       }
     }
-  })
+  });
 }
 
 function stackedBarChart (ctx, category) {
@@ -76,7 +76,7 @@ function stackedBarChart (ctx, category) {
         }]
       }
     }
-  })
+  });
 }
 
 function barData (damages, scenarios) {
@@ -98,7 +98,7 @@ function barData (damages, scenarios) {
       data: []
     };
 
-    i++
+    i++;
   });
 
   // Populate the datasets by category
@@ -108,14 +108,14 @@ function barData (damages, scenarios) {
 
     // Get the value for each dataset
     categoryDamage.forEach(scenario => {
-      datasets[scenario.meetingScenario].data.push(scenario.value)
-    })
+      datasets[scenario.meetingScenario].data.push(scenario.value);
+    });
   });
 
   // Set the chart datasets to the populated datasets
   Object.values(datasets).forEach(dataset => chartData.datasets.push(dataset));
 
-  return chartData
+  return chartData;
 }
 
 function stackedBarData (damages, scenarios, category) {
@@ -132,7 +132,7 @@ function stackedBarData (damages, scenarios, category) {
   scenarios.forEach(scenario => {
     chartData.labels.push(scenario._name);
     scenarioBarchartPosition.set(scenario._id, i);
-    i++
+    i++;
   });
 
   // Initialize one dataset per component category
@@ -146,7 +146,7 @@ function stackedBarData (damages, scenarios, category) {
       data: []
     };
 
-    i++
+    i++;
   });
 
   // Populate the datasets
@@ -155,12 +155,12 @@ function stackedBarData (damages, scenarios, category) {
     // Get the right scenario barchart position (thanks to the scenarioBarchartPosition )
     const actualScenario = scenarioBarchartPosition.get(damage.meetingScenario);
     Object.keys(componentsCategoriesMap).forEach(componentCategory => {
-      datasets[componentCategory].data[actualScenario] = damage[componentCategory]
-    })
+      datasets[componentCategory].data[actualScenario] = damage[componentCategory];
+    });
   });
 
   // Set the chart datasets to the populated datasets
   Object.values(datasets).forEach(dataset => chartData.datasets.push(dataset));
 
-  return chartData
+  return chartData;
 }

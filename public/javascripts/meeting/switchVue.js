@@ -18,7 +18,7 @@ function switchVue () {
     document.getElementById('resourcesChart').hidden = false;
     document.getElementById('ecosystemQualityChart').hidden = false;
 
-    document.getElementById('switchVue').firstChild.data = 'Revenir aux impacts résumés'
+    document.getElementById('switchVue').firstChild.data = 'Revenir aux impacts résumés';
   } else {
     const ctx = document.getElementById('monoChart').getContext('2d');
     barChart(ctx);
@@ -29,6 +29,6 @@ function switchVue () {
     document.getElementById('resourcesChart').hidden = true;
     document.getElementById('ecosystemQualityChart').hidden = true;
 
-    document.getElementById('switchVue').firstChild.data = 'Voir les impacts détaillés'
+    document.getElementById('switchVue').firstChild.data = 'Voir les impacts détaillés';
   }
 }

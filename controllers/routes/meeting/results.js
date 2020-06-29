@@ -13,13 +13,13 @@ router.get('/:userId', function (req, res, next) {
   const scenarios = [];
   meetingScenarios.forEach(scenario => {
     if (scenario.user === userId) {
-      scenarios.push(scenario)
+      scenarios.push(scenario);
     }
   });
 
   const normalisedDamages = normaliseDamages(scenarios);
 
-  res.render('meeting/results/results', { title: 'Résultats', scenarios, normalisedDamages })
+  res.render('meeting/results/results', { title: 'Résultats', scenarios, normalisedDamages });
 });
 
 module.exports = router;
