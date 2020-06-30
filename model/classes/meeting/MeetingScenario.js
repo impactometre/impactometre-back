@@ -24,10 +24,10 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    * @see CategoryDamage
    */
-  constructor ({ duration, participantCount, hardware, software, journey }) {
+  constructor ({ meetingDuration, numberOfParticipants, hardware, software, journey }) {
     super('user', 'name'); // TODO DELETE
-    this._meetingDuration = duration;
-    this._numberOfParticipants = participantCount;
+    this._meetingDuration = meetingDuration;
+    this._numberOfParticipants = numberOfParticipants;
 
     this._damage = new MeetingDamage(hardware, software, journey);
   }
@@ -97,8 +97,9 @@ class MeetingScenario extends Scenario {
    * the damage caused by the meeting.
    * @see MeetingDamage
    */
-  computeDamage () {
-    this.damage.computeDamage();
+  computeDamage (damagePayload) {
+    console.log('MeetingScenario > compute damage');
+    this.damage.computeDamage(damagePayload);
   }
 
   /**

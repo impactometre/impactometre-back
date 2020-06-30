@@ -14,22 +14,37 @@ function payloadStructureIsCorrect () {
   return true;
 }
 
-app.post('/meeting', (req, res) => {
+app.post('/meeting', async (req, res) => {
   const scenarios = req.body;
   if (!payloadStructureIsCorrect(scenarios)) {
     const errorMessage = { error: 400, message: 'Bad request. Your request contains bad syntax and cannot be processed.' };
     return res.status(400).json(errorMessage);
   } else {
-    const computedScenarios = scenarios.map(scenario => function (scenario) {
-      const s = new MeetingScenario(scenario);
-      return s.computeDamage(scenario);
-    });
-
-    const normalisedDamages = normaliseDamages(computedScenarios);
+    const normalisedDamages = await computeScenarios(scenarios).then(computedScenarios => normaliseDamages(computedScenarios));
     return res.json(normalisedDamages);
   }
 });
 
+async function computeScenarios (scenarios) {
+  let computedScenarios = [];
+  console.log(scenarios);
+  for (const scenario of scenarios) {
+    const s = new MeetingScenario(scenario);
+    const computingProperties = {
+      hardware: { meetingDuration: scenario.meetingDuration, bounds: 'upper' },
+      software: { instancesNumber: scenario.numberOfParticipants, bandwithBound: 'upper', networkBound: 'upper', meetingDuration: scenario.meetingDuration },
+      journey: {}
+    };
+    s.computeDamage(computingProperties);
+    console.log('SCENARIO COMPUTÉ');
+    console.log(s);
+    computedScenarios.push(s);
+  };
+  console.log('-------------------');
+  console.log(computedScenarios);
+  console.log('-------------------');
+  return Promise.resolve(computedScenarios);
+}
 const { normaliseDamages } = require('../../utils/normalise');
 
 module.exports = app;

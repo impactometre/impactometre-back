@@ -46,7 +46,7 @@ function normalise (numbers) {
  * @returns An array that contains JSON objects (like {ECOSYSTEM_QUALITY, meetingScenario1, 90})
  * normaised by their damage values and ordered.
  */
-function normaliseDamages (meetingScenarios) {
+async function normaliseDamages (meetingScenarios) {
   let humanHealthDamages = [];
   let ecosystemQualityDamages = [];
   let climateChangeDamages = [];
@@ -56,7 +56,7 @@ function normaliseDamages (meetingScenarios) {
   // (human health, ecosysteme quality, climate change and resources) of its total damage
   // and its values for all damage category (hardware, software, jounrney)
   for (const meetingScenario of meetingScenarios) {
-    console.log(meetingScenario);
+    console.log(meetingScenario.damage);
     humanHealthDamages = humanHealthDamages.concat(
       [{
         damageEndpoint: damageEndpoints.HUMAN_HEALTH,
@@ -136,8 +136,7 @@ function normaliseDamages (meetingScenarios) {
     });
     return normalisedDamage;
   });
-
-  return normalisedDamages;
+  return Promise.resolve(normalisedDamages);
 }
 
 module.exports = { normalise, normaliseDamages };
