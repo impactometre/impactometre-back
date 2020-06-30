@@ -91,10 +91,11 @@ class MeetingDamage {
    * @param payload - A JSON object send by front end that contains all necessary data to compute
    * the damage caused by the meeting.
    */
-  computeDamage (hardware, software, journey) {
-    this.hardwareDamage.computeDamage(hardware);
-    this.softwareDamage.computeDamage(software);
-    this.journeyDamage.computeDamage(journey);
+  computeDamage ({ hardwareDamageComputeProperties, softwareDamageComputeProperties, journeyDamageComputeProperties }) {
+    console.log('MeetingDamage > compute damage');
+    this.hardwareDamage.computeDamage(hardwareDamageComputeProperties);
+    this.softwareDamage.computeDamage(softwareDamageComputeProperties);
+    this.journeyDamage.computeDamage(journeyDamageComputeProperties);
 
     // Compute the total damage caused by all the components of the meeting thanks to the
     // total damage caused by each category of components.
@@ -105,7 +106,6 @@ class MeetingDamage {
    * Update the category damages (hardware, software, journey) of this meetingDamage object.
    * @param {Object[]} hardwareComponents - An array of JSON objects that contain all necessary data to update the hardware components of the meeting.
    * @param {Object[]} softwareComponents - An array of JSON objects that contain all necessary data to update the software components of the meeting.
-   * @param {Object[]} journeyComponents - An array of JSON objects that contain all necessary data to update the transport components of the meeting.
    * @see CategoryDamage
    */
   update ({ hardwareComponents = {}, softwareComponents = {}, journeyComponents = {} }) {
