@@ -20,9 +20,7 @@ class CategoryDamage {
     this._category = category;
 
     // Create a hashmap that contains components and their id
-    this._components = (components !== null)
-      ? this.arrayToMapComponents(components, category)
-      : new Map();
+    this._components = this.arrayToMapComponents(components, category);
   }
 
   // Getters
@@ -87,19 +85,19 @@ class CategoryDamage {
       case meetingCategoryDamage.HARDWARE:
         components.forEach(c => {
           const component = new Hardware(c);
-          componentsMap.set(component.id, component);
+          componentsMap.set(component.name, component);
         });
         break;
       case meetingCategoryDamage.SOFTWARE:
         components.forEach(c => {
           const component = new Software(c);
-          componentsMap.set(component.id, component);
+          componentsMap.set(component.name, component);
         });
         break;
       case meetingCategoryDamage.JOURNEY:
         components.forEach(c => {
           const component = new Journey(c);
-          componentsMap.set(component.id, component);
+          componentsMap.set(component.mean, component);
         });
         break;
     }

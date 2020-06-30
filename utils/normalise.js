@@ -56,6 +56,7 @@ function normaliseDamages (meetingScenarios) {
   // (human health, ecosysteme quality, climate change and resources) of its total damage
   // and its values for all damage category (hardware, software, jounrney)
   for (const meetingScenario of meetingScenarios) {
+    console.log(meetingScenario);
     humanHealthDamages = humanHealthDamages.concat(
       [{
         damageEndpoint: damageEndpoints.HUMAN_HEALTH,
