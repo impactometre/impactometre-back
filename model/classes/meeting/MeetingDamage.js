@@ -91,10 +91,10 @@ class MeetingDamage {
    * @param payload - A JSON object send by front end that contains all necessary data to compute
    * the damage caused by the meeting.
    */
-  computeDamage (payload) {
-    this.hardwareDamage.computeDamage(payload[meetingCategoryDamage.HARDWARE]);
-    this.softwareDamage.computeDamage(payload[meetingCategoryDamage.SOFTWARE]);
-    this.journeyDamage.computeDamage(payload[meetingCategoryDamage.JOURNEY]);
+  computeDamage (hardware, software, journey) {
+    this.hardwareDamage.computeDamage(hardware);
+    this.softwareDamage.computeDamage(software);
+    this.journeyDamage.computeDamage(journey);
 
     // Compute the total damage caused by all the components of the meeting thanks to the
     // total damage caused by each category of components.
