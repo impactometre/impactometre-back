@@ -117,7 +117,6 @@ class CategoryDamage {
     // Compute the damage caused by each component of the categoryDamage object
     // and add it to the totalDamage caused by the components of the categoryDamage object.
     for (const [_,c] of this.components) {
-      console.log(c.category + ' ' + c.french);
       await c.computeDamage(payload);
       this.totalDamage = await this.totalDamage.add(c.damage);
     };

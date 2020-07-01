@@ -309,9 +309,6 @@ class Hardware extends Component {
 
     this.damage = damage;
 
-    console.log('COMPUTING HARDWARE DAMAGE ─ RESULT');
-    console.log(this.damage);
-
     return Promise.resolve('ok');
   }
 
@@ -325,7 +322,7 @@ class Hardware extends Component {
   async computeTypedDamage (damageType, meetingDuration, bound = null) {
     // Variable we will return
     const typedDamage = await this.getTypedDamage(damageType, bound);
-    let damage = new Damage({ component: this, ...typedDamage });
+    const damage = new Damage({ component: this, ...typedDamage });
 
     // Hardware may not have any value for the required damage
     if (!typedDamage) {

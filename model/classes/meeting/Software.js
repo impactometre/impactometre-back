@@ -239,7 +239,6 @@ class Software extends Component {
    * @param {Number} meetingDuration - The meeting duration in minutes.
    */
   async computeDamage ({ instancesNumber, bandwithBound, networkBound, meetingDuration }) {
-    console.log('compute damage software');
     // Compute the embodied damage (damage caused by downloads)
     const embodied = await this.computeEmbodiedDamage(instancesNumber, networkBound);
     const embodiedDamage = await new Damage(embodied);
@@ -255,8 +254,6 @@ class Software extends Component {
 
     // Return the computed total damage
     this.damage = totalDamage;
-    console.log('COMPUTING SOFTWARE DAMAGE');
-    console.log(this.damage);
     return Promise.resolve(totalDamage);
   }
 
