@@ -111,15 +111,18 @@ class CategoryDamage {
    * @param payload - A JSON object that contains all necessary data to compute
    * the damage caused by each component of the categoryDamage (hardware, software, journeys).
    */
-  computeDamage (payload = {}) {
+  async computeDamage (payload = {}) {
     this.totalDamage = new Damage();
 
     // Compute the damage caused by each component of the categoryDamage object
     // and add it to the totalDamage caused by the components of the categoryDamage object.
-    this.components.forEach(c => {
-      c.computeDamage(payload);
-      this.totalDamage = this.totalDamage.add(c.damage);
-    });
+    for (const [_,c] of this.components) {
+      console.log(c.category + ' ' + c.french);
+      await c.computeDamage(payload);
+      this.totalDamage = await this.totalDamage.add(c.damage);
+    };
+
+    return Promise.resolve(this.totalDamage);
   }
 
   /**

@@ -26,14 +26,14 @@ class Hardware extends Component {
    * with other software application running. Value is between O and 1.
    * @param {Array} componentsPayload - Optional components constructor parameters indexed by component name.
    */
-  constructor ({ name, quantity = 1, size = 1, shareForVisio = 1, componentsPayload = {} }) {
+  constructor ({ name, qty = 1, size = 1, shareForVisio = 1, componentsPayload = {} }) {
     // Get the corresponding JSON object
     const json = hardwareDatabase[name];
 
     super({ french: json.french, category: json.category });
 
     this._name = json.name;
-    this._quantity = quantity;
+    this._quantity = qty;
     this._size = size;
     this._weight = json.weight;
     this._shareForVisio = shareForVisio;
@@ -277,32 +277,42 @@ class Hardware extends Component {
    * of the damages if available, and the contrary if
    * bound equals to 'LOWER'.
    */
-  computeDamage ({ meetingDuration, bound = null }) {
-    let damage;
+  async computeDamage ({ meetingDuration, bound = null }) {
+    let damage = new Damage();
 
     // Hardware may be composed of other hardwares
     if (Object.keys(this.components).length > 0) {
-      damage = new Damage();
       /* For each component, compute its damage
       and add it to composite hardware damage */
-      Object.values(this.components).forEach(component => {
-        component.computeDamage({ meetingDuration, bound });
-        damage = damage.add(component.damage);
-      });
+      for (const key in this.components) {
+        const component = this.components[key];
+        await component.computeDamage({ meetingDuration, bound });
+        damage = await damage.add(component.damage);
+      }
     } else {
-      const operatingVisio = this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound);
-      const embodiedVisio = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound);
-      const operatingStandby = this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound);
-      const embodiedStandby = this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound);
+      const operatingVisio = await this.computeTypedDamage(hardwareDamageTypes.OPERATING_VISIO, meetingDuration, bound);
+      damage = await damage.add(operatingVisio);
 
-      damage = operatingVisio.add(embodiedVisio).add(operatingStandby).add(embodiedStandby);
+      const embodiedVisio = await this.computeTypedDamage(hardwareDamageTypes.EMBODIED_VISIO, meetingDuration, bound);
+      damage = await damage.add(embodiedVisio);
+
+      const operatingStandby = await this.computeTypedDamage(hardwareDamageTypes.OPERATING_STANDBY, meetingDuration, bound);
+      damage = await damage.add(operatingStandby);
+
+      const embodiedStandby = await this.computeTypedDamage(hardwareDamageTypes.EMBODIED_STANDBY, meetingDuration, bound);
+      damage = await damage.add(embodiedStandby);
     }
 
-    damage.mutate(category => {
+    damage.mutate((category) => {
       damage[category] *= this.quantity;
     });
 
     this.damage = damage;
+
+    console.log('COMPUTING HARDWARE DAMAGE ─ RESULT');
+    console.log(this.damage);
+
+    return Promise.resolve('ok');
   }
 
   /**
@@ -312,18 +322,16 @@ class Hardware extends Component {
    * @param {String} - The optional bound.
    * @returns {Damage} The hardware operating damage.
    */
-  computeTypedDamage (damageType, meetingDuration, bound = null) {
+  async computeTypedDamage (damageType, meetingDuration, bound = null) {
     // Variable we will return
-    let damage = this.getTypedDamage(damageType, bound);
+    const typedDamage = await this.getTypedDamage(damageType, bound);
+    let damage = new Damage({ component: this, ...typedDamage });
 
     // Hardware may not have any value for the required damage
-    if (!damage) {
-      damage = new Damage({ component: this });
-
-      return damage;
+    if (!typedDamage) {
+      return Promise.resolve(new Damage());
     }
 
-    damage = new Damage({ component: this, ...damage });
     if (
       damageType === hardwareDamageTypes.OPERATING_STANDBY ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -331,42 +339,43 @@ class Hardware extends Component {
       // Required damage is for operating lifecycle phase
       // Hardware damage may depends on its size
       if (this.isSizeDependent) {
-        damage.mutate(category => {
-          damage[category] *= this.shareForVisio * this.size * this.getVisioOrStandbyDuration(damageType, meetingDuration);
+        await damage.mutate(async (category) => {
+          const v = await this.getVisioOrStandbyDuration(damageType, meetingDuration);
+          damage[category] *= this.shareForVisio * this.size * v;
         });
       } else {
-        damage.mutate(category => {
-          damage[category] *= this.shareForVisio * this.getVisioOrStandbyDuration(damageType, meetingDuration);
+        await damage.mutate(async (category) => {
+          const v = await this.getVisioOrStandbyDuration(damageType, meetingDuration);
+          damage[category] *= this.shareForVisio * v;
         });
       }
-
-      return damage;
+      return Promise.resolve(damage);
     }
 
     // Required damage is for embodied lifecycle phase
     if (this.isSizeDependent) {
-      damage.mutate(category => {
+      await damage.mutate(async (category) => {
         // Embodied damage on the whole lifetime
         damage[category] *= this.size;
 
         // Embodied damage for an hour
-        damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType);
+        damage[category] /= await this.computeVisioOrStandbyTimeOverLife(damageType);
 
         // Embodied damage for a minute
         damage[category] /= hourToMinutes;
 
         // Embodied damage for the meeting
-        damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration);
+        damage[category] *= await this.getVisioOrStandbyDuration(damageType, meetingDuration);
       });
     } else {
-      damage.mutate(category => {
-        damage[category] /= this.computeVisioOrStandbyTimeOverLife(damageType);
+      await damage.mutate(async (category) => {
+        damage[category] /= await this.computeVisioOrStandbyTimeOverLife(damageType);
         damage[category] /= hourToMinutes;
-        damage[category] *= this.getVisioOrStandbyDuration(damageType, meetingDuration);
+        damage[category] *= await this.getVisioOrStandbyDuration(damageType, meetingDuration);
       });
     }
 
-    return damage;
+    return Promise.resolve(damage);
   }
 
   /**
@@ -383,7 +392,7 @@ class Hardware extends Component {
    * @returns {Object} JSON containing the four damage values.
    * @see hardwareDamageTypes
    */
-  getTypedDamage (damageType, bound = null) {
+  async getTypedDamage (damageType, bound = null) {
     if (
       damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.EMBODIED_STANDBY
@@ -409,10 +418,10 @@ class Hardware extends Component {
           weightEmbodied[category] *= boundSpecificWeight;
         });
 
-        return weightEmbodied;
+        return Promise.resolve(weightEmbodied);
       }
 
-      return this.embodied;
+      return Promise.resolve(this.embodied);
     }
 
     // Required damage type is for operating lifecycle phase
@@ -429,11 +438,11 @@ class Hardware extends Component {
         ? this[damageType][bound]
         : this[damageType][bounds.UPPER];
 
-      return boundSpecificValue;
+      return Promise.resolve(boundSpecificValue);
     }
 
     // Else we return the unique value available
-    return this[damageType];
+    return Promise.resolve(this[damageType]);
   }
 
   /**
@@ -444,27 +453,27 @@ class Hardware extends Component {
    * @param {Number} meetingDuration - The meeting duration (in minutes).
    * @returns {Number} The required duration (in minutes).
    */
-  getVisioOrStandbyDuration (damageType, meetingDuration) {
+  async getVisioOrStandbyDuration (damageType, meetingDuration) {
     if (
       damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
     ) {
       // If damage is for visio time we return the meeting duration
-      return meetingDuration;
+      return Promise.resolve(meetingDuration);
     }
 
     /* If damage is for standby time we compute how many hours of
     standby we have for the meeting duration. First we compute how many hours of
-    standby we have for one hour of meeting. */
-    let standbyDurationForOneHourVisio = this.computeVisioOrStandbyTimeOverLife(damageType) / this.computeVisioOrStandbyTimeOverLife(hardwareDamageTypes.OPERATING_VISIO);
-
-    // Convert to minutes
-    standbyDurationForOneHourVisio *= hourToMinutes;
+    standby we have for one hour of meeting, and convert it to minutes
+    */
+    const a = await this.computeVisioOrStandbyTimeOverLife(damageType);
+    const b = await this.computeVisioOrStandbyTimeOverLife(hardwareDamageTypes.OPERATING_VISIO);
+    const standbyDurationForOneHourVisio = await a / b * hourToMinutes;
 
     // Get the corresponding value for the meeting duration (cross product)
-    const standbyDurationForMeeting = meetingDuration * standbyDurationForOneHourVisio / hourToMinutes;
+    const standbyDurationForMeeting = standbyDurationForOneHourVisio * meetingDuration / hourToMinutes;
 
-    return standbyDurationForMeeting;
+    return Promise.resolve(standbyDurationForMeeting);
   }
 
   /**
@@ -473,7 +482,7 @@ class Hardware extends Component {
    * @param {String} - The damage type for which we want to compute the hardware time.
    * @returns {Number} The required time (in hours).
    */
-  computeVisioOrStandbyTimeOverLife (damageType) {
+  async computeVisioOrStandbyTimeOverLife (damageType) {
     if (
       damageType === hardwareDamageTypes.EMBODIED_VISIO ||
       damageType === hardwareDamageTypes.OPERATING_VISIO
@@ -481,7 +490,7 @@ class Hardware extends Component {
       // Damage is for visio time
       // We may not need to compute the value
       if (knownOperatingTimeOverLife[this.name]) {
-        return knownOperatingTimeOverLife[this.name];
+        return Promise.resolve(knownOperatingTimeOverLife[this.name]);
       }
 
       // How many days the hardware is used over its lifetime in years
@@ -490,13 +499,13 @@ class Hardware extends Component {
       // Multiply by the number of hours the hardware is used per day
       time *= this.operatingTimePerDay;
 
-      return time;
+      return Promise.resolve(time);
     }
 
     // Damage is for standby time
     // We infer the standby time per day from the operating time
     const standbyTimePerDay = dayToHours - this.operatingTimePerDay;
-    return this.lifetime * daysWorkedByYear * standbyTimePerDay;
+    return Promise.resolve(this.lifetime * daysWorkedByYear * standbyTimePerDay);
   }
 
   update (payload) {
