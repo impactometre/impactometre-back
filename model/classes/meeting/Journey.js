@@ -160,6 +160,9 @@ class Journey extends Component {
    */
   computeDamage () {
     this.damage = this.computeEmbodiedDamage();
+    console.log('COMPUTING JOURNEY DAMAGE');
+    console.log(this.damage);
+    return Promise.resolve('ok');
   }
 
   update (payload) {

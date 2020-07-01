@@ -171,7 +171,7 @@ class Software extends Component {
    * @param {Number} meetingDuration - The meeting duration in minutes.
    * @returns {Damage} The dammage caused by one minute's use of the software.
    */
-  computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
+  async computeOperatingDamage (instancesNumber, bandwithBound, networkBound, meetingDuration) {
     // Initialize the new operating damage
     const operatingDamage = new Damage({ component: this });
 
@@ -199,7 +199,7 @@ class Software extends Component {
     });
 
     // Return the computed operating damage
-    return operatingDamage;
+    return Promise.resolve(operatingDamage);
   }
 
   /**
@@ -208,7 +208,7 @@ class Software extends Component {
    * @param {string} networkBound - The network bound ('upper' or 'lower').
    * @returns {Damage} The damage caused by all the software dowloads of the meeting.
    */
-  computeEmbodiedDamage (instancesNumber, networkBound) {
+  async computeEmbodiedDamage (instancesNumber, networkBound) {
     // Initialize the embodied damage
     const embodiedDamage = new Damage();
 
@@ -228,7 +228,7 @@ class Software extends Component {
     });
 
     // Return the computed embodied damage
-    return embodiedDamage;
+    return Promise.resolve(embodiedDamage);
   }
 
   /**
@@ -238,18 +238,26 @@ class Software extends Component {
    * @param {String} networkBound - The network bound ('upper' or 'lower').
    * @param {Number} meetingDuration - The meeting duration in minutes.
    */
-  computeDamage ({ instancesNumber, bandwithBound, networkBound, meetingDuration }) {
+  async computeDamage ({ instancesNumber, bandwithBound, networkBound, meetingDuration }) {
+    console.log('compute damage software');
     // Compute the embodied damage (damage caused by downloads)
-    const embodiedDamage = new Damage(this.computeEmbodiedDamage(instancesNumber, networkBound));
+    const embodied = await this.computeEmbodiedDamage(instancesNumber, networkBound);
+    const embodiedDamage = await new Damage(embodied);
 
     // Compute the operating damage (caused by all the software instances usage during all the meeting)
-    const operatingDamage = new Damage(this.computeOperatingDamage(instancesNumber, bandwithBound, networkBound, meetingDuration));
+    const operating = await this.computeOperatingDamage(instancesNumber, bandwithBound, networkBound, meetingDuration);
+    const operatingDamage = await new Damage(operating);
 
     // Add embodied damage and operating damage
-    const totalDamage = new Damage().add(embodiedDamage).add(operatingDamage);
+    let totalDamage = await new Damage();
+    totalDamage = await totalDamage.add(embodiedDamage);
+    totalDamage = await totalDamage.add(operatingDamage);
 
     // Return the computed total damage
     this.damage = totalDamage;
+    console.log('COMPUTING SOFTWARE DAMAGE');
+    console.log(this.damage);
+    return Promise.resolve(totalDamage);
   }
 
   update (payload) {

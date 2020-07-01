@@ -4,6 +4,7 @@ const CategoryDamage = require('./CategoryDamage');
 const {
   meetingCategoryDamage
 } = require('../../../constants/meeting');
+const Damage = require('../shared/Damage');
 
 class MeetingDamage {
   /**
@@ -91,15 +92,21 @@ class MeetingDamage {
    * @param payload - A JSON object send by front end that contains all necessary data to compute
    * the damage caused by the meeting.
    */
-  computeDamage ({ hardwareDamageComputeProperties, softwareDamageComputeProperties, journeyDamageComputeProperties }) {
+  async computeDamage ({ hardware, software, journey }) {
     console.log('MeetingDamage > compute damage');
-    this.hardwareDamage.computeDamage(hardwareDamageComputeProperties);
-    this.softwareDamage.computeDamage(softwareDamageComputeProperties);
-    this.journeyDamage.computeDamage(journeyDamageComputeProperties);
+    let totalDamage = new Damage();
 
-    // Compute the total damage caused by all the components of the meeting thanks to the
-    // total damage caused by each category of components.
-    this.totalDamage = this.softwareDamage.totalDamage.add(this.hardwareDamage.totalDamage).add(this.journeyDamage.totalDamage);
+    const hardwareDamage = await this.hardwareDamage.computeDamage(hardware);
+    totalDamage = await totalDamage.add(hardwareDamage);
+    const softwareDamage = await this.softwareDamage.computeDamage(software);
+    totalDamage = await totalDamage.add(softwareDamage);
+    const journeyDamage = await this.journeyDamage.computeDamage(journey);
+    totalDamage = await totalDamage.add(journeyDamage);
+
+    this.totalDamage = totalDamage;
+    console.log(this.totalDamage);
+
+    return Promise.resolve(this.totalDamage);
   }
 
   /**

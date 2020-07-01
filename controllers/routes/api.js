@@ -11,7 +11,7 @@ const MeetingScenario = require('../../model/classes/meeting/MeetingScenario');
 
 function payloadStructureIsCorrect () {
   // TODO check payload structure
-  return false;
+  return true;
 }
 
 app.post('/meeting', async (req, res) => {

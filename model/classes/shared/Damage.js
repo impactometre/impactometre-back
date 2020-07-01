@@ -60,12 +60,12 @@ class Damage {
    * @param {Function} mutation - The function to apply.
    * @returns {Damage} This mutated damage.
    */
-  mutate (mutation) {
-    Object.keys(this).map(category => {
+  async mutate (mutation) {
+    Object.keys(this).map((category) => {
       mutation(category);
     });
 
-    return this;
+    return Promise.resolve(this);
   }
 
   /**
@@ -73,13 +73,13 @@ class Damage {
    * @param {Damage} - The damage we want to add.
    * @returns {Damage} This bigger damage.
    */
-  add (damage) {
-    return new Damage({
+  async add (damage) {
+    return Promise.resolve(new Damage({
       humanHealth: this.humanHealth + damage.humanHealth,
       ecosystemQuality: this.ecosystemQuality + damage.ecosystemQuality,
       climateChange: this.climateChange + damage.climateChange,
       resources: this.resources + damage.resources
-    });
+    }));
   }
 
   /**
