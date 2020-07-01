@@ -23,72 +23,72 @@ app.post('/meeting', async (req, res) => {
           {
             "damageEndpoint":"HUMAN_HEALTH",
             "meetingScenario":"6mp34fkc3fqrkm",
-            "value":null,
-            "hardware":null,
-            "software":null,
-            "journey":null
+            "value":2,
+            "hardware":1,
+            "software":0.5,
+            "journey":0.5
           },
           {
             "damageEndpoint":"HUMAN_HEALTH",
             "meetingScenario":"6mp34fkc3fqrlf",
-            "value":null,
-            "hardware":null,
-            "software":null,
-            "journey":null
+            "value":3,
+            "hardware":1,
+            "software":1,
+            "journey":1
           }
         ],
         [
           {
             "damageEndpoint":"ECOSYSTEM_QUALITY",
             "meetingScenario":"6mp34fkc3fqrkm",
-            "value":null,
-            "hardware":null,
-            "software":null,
-            "journey":null
+            "value":4,
+            "hardware":1,
+            "software":2,
+            "journey":1
           },
           {
             "damageEndpoint":"ECOSYSTEM_QUALITY",
             "meetingScenario":"6mp34fkc3fqrlf",
-            "value":null,
-            "hardware":null,
-            "software":null,
-            "journey":null
+            "value":4,
+            "hardware":2,
+            "software":1,
+            "journey":1
           }
         ],
         [
           {
             "damageEndpoint":"CLIMATE_CHANGE",
             "meetingScenario":"6mp34fkc3fqrkm",
-            "value":null,
-            "hardware":null,
-            "software":null,
-            "journey":null
+            "value":5,
+            "hardware":0,
+            "software":1,
+            "journey":4
           },
           {
             "damageEndpoint":"CLIMATE_CHANGE",
             "meetingScenario":"6mp34fkc3fqrlf",
-            "value":null,
-            "hardware":null,
-            "software":null,
-            "journey":null
+            "value":4,
+            "hardware":3,
+            "software":0.5,
+            "journey":0.5
           }
         ],
         [
           {
             "damageEndpoint":"RESOURCES",
             "meetingScenario":"6mp34fkc3fqrkm",
-            "value":null,
-            "hardware":null,
-            "software":null,
-            "journey":null
+            "value":2,
+            "hardware":0.5,
+            "software":0.5,
+            "journey":1
           },
           {
             "damageEndpoint":"RESOURCES",
             "meetingScenario":"6mp34fkc3fqrlf",
-            "value":null,
-            "hardware":null,
-            "software":null,
-            "journey":null
+            "value":2,
+            "hardware":1,
+            "software":0.5,
+            "journey":0.5
           }
         ]
       ],
