@@ -7,6 +7,8 @@
 - Intégrer les _équivalents d'impact_
 - Résoudre les bugs d'affichage des charts : lorsqu'on change plusieurs fois de vue détaillée le chart ne se met parfois pas à jour
 - Ajouter les textes sur les différentes pages dédiées
+- Persister dans des cookies
+- Donner la possibilité de directement rentrer un input
 
 #### Back - Front
 - Lier l'API du back au front
