@@ -93,7 +93,6 @@ class MeetingDamage {
    * the damage caused by the meeting.
    */
   async computeDamage ({ hardware, software, journey }) {
-    console.log('MeetingDamage > compute damage');
     let totalDamage = new Damage();
 
     const hardwareDamage = await this.hardwareDamage.computeDamage(hardware);
@@ -104,7 +103,6 @@ class MeetingDamage {
     totalDamage = await totalDamage.add(journeyDamage);
 
     this.totalDamage = totalDamage;
-    console.log(this.totalDamage);
 
     return Promise.resolve(this.totalDamage);
   }

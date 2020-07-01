@@ -33,7 +33,7 @@ app.post('/meeting', async (req, res) => {
 });
 
 async function computeScenarios (scenarios) {
-  let computedScenarios = [];
+  const computedScenarios = [];
   for await (const scenario of scenarios) {
     const s = new MeetingScenario(scenario);
     const computingProperties = {
@@ -41,7 +41,7 @@ async function computeScenarios (scenarios) {
       software: { instancesNumber: scenario.numberOfParticipants, bandwithBound: 'upper', networkBound: 'upper', meetingDuration: scenario.meetingDuration },
       journey: {}
     };
-    const damage = await s.computeDamage(computingProperties);
+    await s.computeDamage(computingProperties);
     computedScenarios.push(s);
   };
 

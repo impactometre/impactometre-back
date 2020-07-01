@@ -98,9 +98,6 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    */
   async computeDamage (damagePayload) {
-    console.log('MeetingScenario > compute damage');
-    console.log(this.damage);
-    console.log('LETS COMPUTE THE DAMAGES');
     const ret = await this.damage.computeDamage(damagePayload);
     return Promise.resolve(ret);
   }
