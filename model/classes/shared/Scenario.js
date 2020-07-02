@@ -10,11 +10,9 @@ class Scenario {
    * Create scenario general attributes.
    * @param {String} user - The user who creates the scenario.
    */
-  constructor (user, name) {
+  constructor (id) {
     if (new.target === Scenario) throw TypeError('Cannot create instance of Scenario because abstract class');
-    this._id = uniqid();
-    this._user = user;
-    this._name = name;
+    this._id = id;
   }
 
   // Getters
