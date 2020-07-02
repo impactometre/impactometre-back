@@ -10,6 +10,32 @@ const validate = require('jsonschema').validate;
 const MeetingScenario = require('../../model/classes/meeting/MeetingScenario');
 // const { meetingCategoryDamage, bounds } = require('../../constants/meeting');
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+app.post('/meeting', async (req, res) => {
+  const scenarios = req.body;
+
+  if (!payloadStructureIsCorrect(scenarios)) {
+    const errorMessage = { error: 400, message: 'Bad request. Your request contains bad syntax and cannot be processed.' };
+    return res.status(400).json(errorMessage);
+  } else {
+    console.log(scenarios);
+    const computedScenarios = await computeScenarios(scenarios);
+    const normalisedDamages = await normaliseDamages(computedScenarios);
+
+    const responseBody = {
+      comparison: normalisedDamages,
+      equivalents: []
+    };
+
+    return res.json(responseBody);
+  }
+});
+
 function payloadStructureIsCorrect (payload) {
   const schema = {
     id: '/PayloadValidationSchema',
@@ -83,34 +109,7 @@ function payloadStructureIsCorrect (payload) {
   };
 
   return validate(payload, schema).valid;
-  // return true;
 }
-
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
-app.post('/meeting', async (req, res) => {
-  const scenarios = req.body;
-
-  if (!payloadStructureIsCorrect(scenarios)) {
-    const errorMessage = { error: 400, message: 'Bad request. Your request contains bad syntax and cannot be processed.' };
-    return res.status(400).json(errorMessage);
-  } else {
-    console.log(scenarios);
-    const computedScenarios = await computeScenarios(scenarios);
-    const normalisedDamages = await normaliseDamages(computedScenarios);
-
-    const responseBody = {
-      comparison: normalisedDamages,
-      equivalents: []
-    };
-
-    return res.json(responseBody);
-  }
-});
 
 async function computeScenarios (scenarios) {
   const computedScenarios = [];
