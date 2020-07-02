@@ -2,6 +2,8 @@
 
 const express = require('express');
 const app = express();
+const Validator = require('jsonschema').Validator;
+const validator = new Validator();
 
 // const hardwareDb = require('../../database/meeting/hardware');
 // const softwareDb = require('../../database/meeting/software');
@@ -9,21 +11,90 @@ const app = express();
 const MeetingScenario = require('../../model/classes/meeting/MeetingScenario');
 // const { meetingCategoryDamage, bounds } = require('../../constants/meeting');
 
-function payloadStructureIsCorrect () {
-  // TODO check payload structure
+function payloadStructureIsCorrect (payload) {
+  const schema = {
+    id: '/SimplePerson',
+    type: 'array',
+    items: {
+      properties: {
+        minItems: 1,
+        maxItems: 3,
+        meetingScenario: {
+          type: 'string'
+        },
+        meetingDuration: {
+          type: 'integer',
+          required: true,
+          minimum: 1
+        },
+        numberOfParticipants: {
+          type: 'integer',
+          required: true,
+          minimum: 1
+        },
+        hardware: {
+          type: 'array',
+          required: true,
+          items: {
+            properties: {
+              name: {
+                type: 'string'
+              },
+              french: {
+                type: 'string'
+              },
+              qty: {
+                type: 'integer',
+                minimum: 0
+              }
+            }
+          }
+        },
+        software: {
+          type: 'object',
+          required: true,
+          properties: {
+            name: {
+              type: 'string'
+            }
+          }
+        },
+        journey: {
+          type: 'array',
+          required: true,
+          items: {
+            properties: {
+              name: {
+                type: 'string'
+              },
+              french: {
+                type: 'string'
+              },
+              qty: {
+                type: 'integer',
+                minimum: 0
+              }
+            }
+          }
+        }
+      },
+    }
+
+  };
+
+  // return validator.validate(payload, schema);
   return true;
 }
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
 app.post('/meeting', async (req, res) => {
-  // set CORS headers
-
   const scenarios = req.body;
+
   if (!payloadStructureIsCorrect(scenarios)) {
     const errorMessage = { error: 400, message: 'Bad request. Your request contains bad syntax and cannot be processed.' };
     return res.status(400).json(errorMessage);
