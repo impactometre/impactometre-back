@@ -14,10 +14,10 @@ function payloadStructureIsCorrect (payload) {
   const schema = {
     id: '/PayloadValidationSchema',
     type: 'array',
+    minItems: 1,
+    maxItems: 3,
     items: {
       properties: {
-        minItems: 1,
-        maxItems: 3,
         meetingScenario: {
           type: 'string',
           required: true
@@ -38,13 +38,15 @@ function payloadStructureIsCorrect (payload) {
           items: {
             properties: {
               name: {
-                type: 'string'
+                type: 'string',
+                required: true
               },
               french: {
                 type: 'string'
               },
               qty: {
                 type: 'integer',
+                required: true,
                 minimum: 0
               }
             }
@@ -80,7 +82,7 @@ function payloadStructureIsCorrect (payload) {
     }
   };
 
-  return validate(payload, schema);
+  return validate(payload, schema).valid;
   // return true;
 }
 
