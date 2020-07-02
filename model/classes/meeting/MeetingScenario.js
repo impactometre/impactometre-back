@@ -24,12 +24,12 @@ class MeetingScenario extends Scenario {
    * @see MeetingDamage
    * @see CategoryDamage
    */
-  constructor ({ meetingDuration, numberOfParticipants, hardware, software, journey }) {
-    super('user', 'name'); // TODO DELETE
+  constructor ({ meetingScenario, meetingDuration, numberOfParticipants, hardware, software, journey }) {
+    super(meetingScenario);
     this._meetingDuration = meetingDuration;
     this._numberOfParticipants = numberOfParticipants;
 
-    this._damage = new MeetingDamage(hardware, software, journey);
+    this._damage = new MeetingDamage(hardware, [software], journey);
   }
 
   // Getters
