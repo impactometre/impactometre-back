@@ -1,7 +1,5 @@
 'use strict';
 
-const uniqid = require('uniqid');
-
 /**
  * Abstract class Scenario.
  */
