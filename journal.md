@@ -9,6 +9,7 @@
 - Ajouter les textes sur les différentes pages dédiées
 - Persister dans des cookies
 - Donner la possibilité de directement rentrer un input
+- Faire en sorte qu'une réunion dure au moins 1 minute et ait au moins 1 personne.
 
 #### Back - Front
 - Lier l'API du back au front
