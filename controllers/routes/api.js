@@ -2,8 +2,7 @@
 
 const express = require('express');
 const app = express();
-const Validator = require('jsonschema').Validator;
-const validator = new Validator();
+const validate = require('jsonschema').validate;
 
 // const hardwareDb = require('../../database/meeting/hardware');
 // const softwareDb = require('../../database/meeting/software');
@@ -13,14 +12,15 @@ const MeetingScenario = require('../../model/classes/meeting/MeetingScenario');
 
 function payloadStructureIsCorrect (payload) {
   const schema = {
-    id: '/SimplePerson',
+    id: '/PayloadValidationSchema',
     type: 'array',
     items: {
       properties: {
         minItems: 1,
         maxItems: 3,
         meetingScenario: {
-          type: 'string'
+          type: 'string',
+          required: true
         },
         meetingDuration: {
           type: 'integer',
@@ -64,26 +64,24 @@ function payloadStructureIsCorrect (payload) {
           required: true,
           items: {
             properties: {
-              name: {
-                type: 'string'
+              mean: {
+                type: 'string',
+                required: true
               },
-              french: {
-                type: 'string'
-              },
-              qty: {
+              distance: {
                 type: 'integer',
-                minimum: 0
+                minimum: 0,
+                required: true
               }
             }
           }
         }
-      },
+      }
     }
-
   };
 
-  // return validator.validate(payload, schema);
-  return true;
+  return validate(payload, schema);
+  // return true;
 }
 
 app.use(function (req, res, next) {
