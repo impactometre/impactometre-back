@@ -52,6 +52,8 @@ async function normaliseDamages (meetingScenarios) {
   let climateChangeDamages = [];
   let resourcesDamages = [];
 
+  const normalisedDamages = {};
+
   // For each meeting scenario, get the values for each damage end point
   // (human health, ecosysteme quality, climate change and resources) of its total damage
   // and its values for all damage category (hardware, software, jounrney)
@@ -101,9 +103,7 @@ async function normaliseDamages (meetingScenarios) {
 
   const damages = [humanHealthDamages, ecosystemQualityDamages, climateChangeDamages, resourcesDamages];
 
-  const normalisedDamages = damages.map(function (damage) {
-    // Sort the damage values array and get the maximum value
-    damage.sort((a, b) => b.value - a.value);
+  for (const damage of damages) {
     const max = damage[0].value;
 
     /* Normalised the damage values
@@ -123,19 +123,20 @@ async function normaliseDamages (meetingScenarios) {
       {HUMAN_HEALTH, meetingScenario2, 10, 10, 0, 0}
     ]
     */
-    const normalisedDamage = damage.map(function (damage) {
+    for (const d of damage) {
+      console.log(d);
       const x = {
-        damageEndpoint: damage.damageEndpoint,
-        meetingScenario: damage.meetingScenario,
-        value: roundTo((damage.value / max) * 100, 2),
-        [meetingCategoryDamage.HARDWARE]: roundTo((damage.hardware / max) * 100, 2),
-        [meetingCategoryDamage.SOFTWARE]: roundTo((damage.software / max) * 100, 2),
-        [meetingCategoryDamage.JOURNEY]: roundTo((damage.journey / max) * 100, 2)
+        damageEndpoint: d.damageEndpoint,
+        meetingScenario: d.meetingScenario,
+        value: roundTo((d.value / max) * 100, 2),
+        [meetingCategoryDamage.HARDWARE]: roundTo((d.hardware / max) * 100, 2),
+        [meetingCategoryDamage.SOFTWARE]: roundTo((d.software / max) * 100, 2),
+        [meetingCategoryDamage.JOURNEY]: roundTo((d.journey / max) * 100, 2)
       };
-      return x;
-    });
-    return normalisedDamage;
-  });
+      normalisedDamages[d.damageEndpoint] = {};
+      normalisedDamages[d.damageEndpoint][d.meetingScenario] = x;
+    };
+  };
   return Promise.resolve(normalisedDamages);
 }
 
