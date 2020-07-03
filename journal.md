@@ -16,4 +16,3 @@
 
 #### Back
 - Générer les données pour les _équivalents d'impact_
-- Rendre la chaine de calcul asynchrone en utilisant des _promises_
