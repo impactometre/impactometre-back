@@ -29,7 +29,10 @@ class MeetingScenario extends Scenario {
     this._meetingDuration = meetingDuration;
     this._numberOfParticipants = numberOfParticipants;
 
-    this._damage = new MeetingDamage(hardware, [software], journey);
+    const softwareName = (software.name.toUpperCase() === 'OTHER') ? 'SKYPE' : software.name;
+    const formattedSoftwarePayload = [{ name: softwareName }];
+
+    this._damage = new MeetingDamage(hardware, formattedSoftwarePayload, journey);
   }
 
   // Getters
