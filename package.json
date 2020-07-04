@@ -4,6 +4,7 @@
   "private": true,
   "browserslist": "last 4 versions",
   "scripts": {
+    "postinstall": "(cd front && npm install);",
     "start": "node ./bin/www",
     "server": "DEBUG=impactometre:* nodemon ./bin/www",
     "front": "cd front && npm run serve",
