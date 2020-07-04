@@ -104,6 +104,7 @@ async function normaliseDamages (meetingScenarios) {
   const damages = [humanHealthDamages, ecosystemQualityDamages, climateChangeDamages, resourcesDamages];
 
   for (const damage of damages) {
+    damage.sort((a, b) => b.value - a.value);
     const max = damage[0].value;
 
     /* Normalised the damage values
