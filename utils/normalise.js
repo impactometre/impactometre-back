@@ -133,7 +133,7 @@ async function normaliseDamages (meetingScenarios) {
         [meetingCategoryDamage.SOFTWARE]: roundTo((d.software / max) * 100, 2),
         [meetingCategoryDamage.JOURNEY]: roundTo((d.journey / max) * 100, 2)
       };
-      normalisedDamages[d.damageEndpoint] = {};
+      normalisedDamages[d.damageEndpoint] = normalisedDamages[d.damageEndpoint] || {};
       normalisedDamages[d.damageEndpoint][d.meetingScenario] = x;
     };
   };
