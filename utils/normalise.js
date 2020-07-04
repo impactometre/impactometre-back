@@ -129,10 +129,10 @@ async function normaliseDamages (meetingScenarios) {
       const x = {
         damageEndpoint: d.damageEndpoint,
         meetingScenario: d.meetingScenario,
-        value: roundTo((d.value / max) * 100, 2),
-        [meetingCategoryDamage.HARDWARE]: roundTo((d.hardware / max) * 100, 2),
-        [meetingCategoryDamage.SOFTWARE]: roundTo((d.software / max) * 100, 2),
-        [meetingCategoryDamage.JOURNEY]: roundTo((d.journey / max) * 100, 2)
+        value: roundTo((d.value / max) * 100, 2) || 0,
+        [meetingCategoryDamage.HARDWARE]: roundTo((d.hardware / max) * 100, 2) || 0,
+        [meetingCategoryDamage.SOFTWARE]: roundTo((d.software / max) * 100, 2) || 0,
+        [meetingCategoryDamage.JOURNEY]: roundTo((d.journey / max) * 100, 2) || 0
       };
       normalisedDamages[d.damageEndpoint] = normalisedDamages[d.damageEndpoint] || {};
       normalisedDamages[d.damageEndpoint][d.meetingScenario] = x;
