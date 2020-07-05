@@ -29,18 +29,22 @@ class MeetingScenario extends Scenario {
     this._meetingDuration = meetingDuration;
     this._numberOfParticipants = numberOfParticipants;
 
-    const formattedSoftwarePayload = [];
+    const formattedSoftware = [];
     switch (software.name.toUpperCase()) {
       case '':
         break;
       case 'OTHER':
-        formattedSoftwarePayload.push({ name: 'SKYPE' });
+        formattedSoftware.push({ name: 'SKYPE' });
         break;
       default:
-        formattedSoftwarePayload.push({ name: software.name });
+        formattedSoftware.push({ name: software.name });
     }
 
-    this._damage = new MeetingDamage(hardware, formattedSoftwarePayload, journey);
+    const formattedJourney = journey.filter((journey) => {
+      return journey.mean !== '';
+    });
+
+    this._damage = new MeetingDamage(hardware, formattedSoftware, formattedJourney);
   }
 
   // Getters
