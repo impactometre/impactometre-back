@@ -4,6 +4,17 @@ const express = require('express');
 const app = express();
 const validate = require('jsonschema').validate;
 
+const roundTo = require('round-to');
+
+const equivalentDamages = {
+  ONE_KM_CAR: {
+    HUMAN_HEALTH: 0.00000025832141,
+    ECOSYSTEM_QUALITY: 0.086025049,
+    CLIMATE_CHANGE: 0.32539061,
+    RESOURCES: 5.0408703
+  }
+};
+
 // const hardwareDb = require('../../database/meeting/hardware');
 // const softwareDb = require('../../database/meeting/software');
 // const transportationMeanDb = require('../../database/meeting/transportationMean');
@@ -23,13 +34,13 @@ app.post('/meeting', async (req, res) => {
     const errorMessage = { error: 400, message: 'Bad request. Your request contains bad syntax and cannot be processed.' };
     return res.status(400).json(errorMessage);
   } else {
-    console.log(scenarios);
     const computedScenarios = await computeScenarios(scenarios);
     const normalisedDamages = await normaliseDamages(computedScenarios);
+    const equivalentDamages = await computeEquivalentDamages(computedScenarios);
 
     const responseBody = {
       comparison: normalisedDamages,
-      equivalents: []
+      equivalents: equivalentDamages
     };
 
     return res.json(responseBody);
@@ -122,10 +133,32 @@ async function computeScenarios (scenarios) {
     };
     await s.computeDamage(computingProperties);
     computedScenarios.push(s);
-  };
+  }
 
   return Promise.resolve(computedScenarios);
 }
+async function computeEquivalentDamages (scenarios) {
+  const ret = {
+    HUMAN_HEALTH: {},
+    ECOSYSTEM_QUALITY: {},
+    CLIMATE_CHANGE: {},
+    RESOURCES: {}
+  };
+  const spheres = ['HUMAN_HEALTH', 'ECOSYSTEM_QUALITY', 'CLIMATE_CHANGE', 'RESOURCES'];
+  for (const sphere of spheres) {
+    for (const equivalent in equivalentDamages) {
+      for (const scenario of scenarios) {
+        ret[sphere][equivalent] = !ret[sphere].hasOwnProperty(equivalent) ? {} : ret[sphere][equivalent];
+        ret[sphere][equivalent][scenario.id] = roundTo(
+          equivalentDamages[equivalent][sphere] / scenario.damage.totalDamage[sphere],
+          1
+        );
+      }
+    }
+  }
+  return Promise.resolve(ret);
+}
+
 const { normaliseDamages } = require('../../utils/normalise');
 
 module.exports = app;
