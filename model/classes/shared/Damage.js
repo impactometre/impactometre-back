@@ -22,7 +22,15 @@ class Damage {
     return this._humanHealth;
   }
 
+  get HUMAN_HEALTH () {
+    return this._humanHealth;
+  }
+
   get ecosystemQuality () {
+    return this._ecosystemQuality;
+  }
+
+  get ECOSYSTEM_QUALITY () {
     return this._ecosystemQuality;
   }
 
@@ -30,7 +38,15 @@ class Damage {
     return this._climateChange;
   }
 
+  get CLIMATE_CHANGE () {
+    return this._climateChange;
+  }
+
   get resources () {
+    return this._resources;
+  }
+
+  get RESOURCES () {
     return this._resources;
   }
 
