@@ -192,7 +192,7 @@ Avec 3 scénarios.
 ```
 ### Exemple de retour JSON pour la requête POST
 
-```JSON
+```json
 {
    "comparison":{
       "HUMAN_HEALTH":{
