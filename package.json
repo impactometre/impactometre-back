@@ -18,12 +18,14 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "impactometre-front": "file:front/",
+    "jsonschema": "^1.2.6",
     "morgan": "~1.9.1",
     "round-to": "^4.1.0",
     "uniqid": "^5.2.0",
-    "jsonschema": "^1.2.6"
+    "vue-cli": "^2.9.6"
   },
   "devDependencies": {
+    "acorn": "^6.4.1",
     "chai": "^4.2.0",
     "concurrently": "^5.2.0",
     "eslint": "^6.8.0",
@@ -32,9 +34,10 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "vue-eslint-parser": "^7.1.0",
+    "jsonschema": "^1.2.6",
+    "jspdf": "^2.1.1",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.2",
-    "jsonschema": "^1.2.6"
+    "vue-eslint-parser": "^7.1.0"
   }
 }
