@@ -54,6 +54,15 @@ Pour vérifier le code :
 $ npm run lint
 ```
 
+### Pour modifier le texte dans le à propos
+Se rendre sur le fichier impactometre/front/src/components/SinglePage.vue et modifier uniquement le texte entre les balises \<p> 
+
+### Pour modifier le texte des formualaires 
+Se rendre sur le fichier impactometre/front/src/components/Scenario.vue et modifier le texte entre les balises \<p>
+
+### Pour modifier le titre Impactomètre et le sous titre "Comparaison d'impact environnemental des réunions"
+Se rendre sur le fichier impactometre/front/src/components/Header.vue et modifier le texte entre les balises \<h1> pour le tire et entre les balises \<b> pour le sous titre
+
 ## Communication entre le front-end et le back-end
 
 Le client effectue une requête POST sur la route `api/meeting` afin d'obtenir les impacts comparatifs et équivalents.
