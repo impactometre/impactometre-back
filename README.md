@@ -28,7 +28,27 @@ Les résultats sont présentés sous forme de pourcentage, par rapport à celui 
 
 Le back-end utilise `Node.js` tandis que le front-end utilise `VueJS`.
 
+## Modification du texte sur l'interface gitlab/github
+
+Il est possible d'éditer directement les fichiers sur gitlab ou github, de façon à mettre à jour simplement les différents textes contenus dans l'application.
+
+### Modification de l'explication pour chaque sphères d'impact
+
+Modifier le texte du fichier JSON `front/src/options/detailled_results_text.js`.
+
+_Vous pouvez aussi changer directement l'intitulé des boutons et labels. Attention, une modification du code peut entraîner le disfonctionnement de l'application._
+
+### Modification du texte de la section "A propos"
+Se rendre sur le fichier `impactometre/front/src/components/SinglePage.vue` et modifier uniquement le texte entre les balises `<p>`.
+
+### Modification des boutons et legendes des formulaires
+Se rendre sur le fichier `impactometre/front/src/components/Scenario.vue` et modifier le texte entre les balises `<p>`.
+
+### Modification du titre et du sous-titre de l'application
+Se rendre sur le fichier `impactometre/front/src/components/Header.vue `et modifier le texte entre les balises `<h1>` pour le titre et entre les balises `<b>` pour le sous-titre.
+
 ## Pour développer
+
 ### Installer Node.js et npm
 Avec Linux :
 ```bash
@@ -54,22 +74,13 @@ Pour vérifier le code :
 $ npm run lint
 ```
 
-### Pour modifier le texte dans le à propos
-Se rendre sur le fichier impactometre/front/src/components/SinglePage.vue et modifier uniquement le texte entre les balises \<p> 
-
-### Pour modifier le texte des formualaires 
-Se rendre sur le fichier impactometre/front/src/components/Scenario.vue et modifier le texte entre les balises \<p>
-
-### Pour modifier le titre Impactomètre et le sous titre "Comparaison d'impact environnemental des réunions"
-Se rendre sur le fichier impactometre/front/src/components/Header.vue et modifier le texte entre les balises \<h1> pour le tire et entre les balises \<b> pour le sous titre
-
 ## Communication entre le front-end et le back-end
 
 Le client effectue une requête POST sur la route `api/meeting` afin d'obtenir les impacts comparatifs et équivalents.
 
 ### Exemple de payload JSON pour la requête POST
 
-Avec 3 scénarios.
+Pour deux scénarios.
 
 ```json
 [
@@ -158,44 +169,6 @@ Avec 3 scénarios.
          }
       ],
       "meetingScenario":"Scenario B"
-   },
-   {
-      "meetingDuration":120,
-      "numberOfParticipants":6,
-      "hardware":[
-         {
-            "name":"LAPTOP",
-            "french":"Ordinateurs portables",
-            "qty":2
-         },
-         {
-            "name":"DESKTOP",
-            "french":"Ordinateurs fixes",
-            "qty":1
-         },
-         {
-            "name":"LOGITECH_KIT",
-            "french":"Kits de vidéo-conférence",
-            "qty":1
-         },
-         {
-            "name":"COMPUTER_SCREEN_LCD",
-            "french":"Ecrans supplémentaires",
-            "qty":0
-         },
-         {
-            "name":"PROJECTOR",
-            "french":"Vidéo-projecteurs",
-            "qty":4
-         }
-      ],
-      "software":{
-         "name":""
-      },
-      "journey":[
-
-      ],
-      "meetingScenario":"Scenario C"
    }
 ]
 ```
@@ -205,14 +178,6 @@ Avec 3 scénarios.
 {
    "comparison":{
       "HUMAN_HEALTH":{
-         "Scenario C":{
-            "damageEndpoint":"HUMAN_HEALTH",
-            "meetingScenario":"Scenario C",
-            "value":100,
-            "hardware":100,
-            "software":0,
-            "journey":0
-         },
          "Scenario A":{
             "damageEndpoint":"HUMAN_HEALTH",
             "meetingScenario":"Scenario A",
@@ -231,14 +196,6 @@ Avec 3 scénarios.
          }
       },
       "ECOSYSTEM_QUALITY":{
-         "Scenario C":{
-            "damageEndpoint":"ECOSYSTEM_QUALITY",
-            "meetingScenario":"Scenario C",
-            "value":100,
-            "hardware":100,
-            "software":0,
-            "journey":0
-         },
          "Scenario B":{
             "damageEndpoint":"ECOSYSTEM_QUALITY",
             "meetingScenario":"Scenario B",
@@ -265,14 +222,6 @@ Avec 3 scénarios.
             "software":0,
             "journey":80.16
          },
-         "Scenario C":{
-            "damageEndpoint":"CLIMATE_CHANGE",
-            "meetingScenario":"Scenario C",
-            "value":56.32,
-            "hardware":56.32,
-            "software":0,
-            "journey":0
-         },
          "Scenario B":{
             "damageEndpoint":"CLIMATE_CHANGE",
             "meetingScenario":"Scenario B",
@@ -283,14 +232,6 @@ Avec 3 scénarios.
          }
       },
       "RESOURCES":{
-         "Scenario C":{
-            "damageEndpoint":"RESOURCES",
-            "meetingScenario":"Scenario C",
-            "value":100,
-            "hardware":100,
-            "software":0,
-            "journey":0
-         },
          "Scenario A":{
             "damageEndpoint":"RESOURCES",
             "meetingScenario":"Scenario A",
@@ -314,28 +255,24 @@ Avec 3 scénarios.
          "ONE_KM_CAR":{
             "Scenario A":0.2,
             "Scenario B":0.2,
-            "Scenario C":0.2
          }
       },
       "ECOSYSTEM_QUALITY":{
          "ONE_KM_CAR":{
             "Scenario A":0.3,
             "Scenario B":0.2,
-            "Scenario C":0.2
          }
       },
       "CLIMATE_CHANGE":{
          "ONE_KM_CAR":{
             "Scenario A":0.2,
             "Scenario B":0.4,
-            "Scenario C":0.3
          }
       },
       "RESOURCES":{
          "ONE_KM_CAR":{
             "Scenario A":0.2,
             "Scenario B":0.2,
-            "Scenario C":0.1
          }
       }
    }
