@@ -22,6 +22,7 @@
     "morgan": "~1.9.1",
     "round-to": "^4.1.0",
     "uniqid": "^5.2.0",
+    "jspdf": "^2.1.1",
     "vue-cli": "^2.9.6"
   },
   "devDependencies": {
@@ -35,7 +36,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jsonschema": "^1.2.6",
-    "jspdf": "^2.1.1",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.2",
     "vue-eslint-parser": "^7.1.0"
