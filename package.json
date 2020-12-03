@@ -1,34 +1,22 @@
 {
-  "name": "impactometre",
-  "version": "0.0.0",
+  "name": "impactometre-back",
+  "version": "1.0.0",
   "private": true,
   "browserslist": "last 4 versions",
   "scripts": {
-    "postinstall": "(cd front && npm install);",
-    "start": "node ./bin/www",
-    "server": "DEBUG=impactometre:* nodemon ./bin/www",
-    "front": "cd front && npm run serve",
-    "devstart": "concurrently \"npm run server\" \"npm run front\"",
-    "lint": "npx eslint . && npx stylelint ./sass --syntax scss --fix",
-    "test": "mocha --recursive \"test/\""
+    "start": "node ./bin/www"
   },
   "dependencies": {
-    "autoprefixer": "^9.7.4",
     "cookie-parser": "~1.4.4",
     "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "impactometre-front": "file:front/",
     "jsonschema": "^1.2.6",
     "morgan": "~1.9.1",
-    "round-to": "^4.1.0",
     "uniqid": "^5.2.0",
-    "jspdf": "^2.1.1",
-    "vue-cli": "^2.9.6"
+    "round-to": "^4.1.0"
   },
   "devDependencies": {
     "acorn": "^6.4.1",
     "chai": "^4.2.0",
-    "concurrently": "^5.2.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.19.1",
@@ -37,7 +25,6 @@
     "eslint-plugin-standard": "^4.0.1",
     "jsonschema": "^1.2.6",
     "mocha": "^6.2.2",
-    "nodemon": "^2.0.2",
     "vue-eslint-parser": "^7.1.0"
   }
 }
