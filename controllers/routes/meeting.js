@@ -150,7 +150,7 @@ async function computeEquivalentDamages (scenarios) {
       ret[sphere][equivalent] = {};
       for (const scenario of scenarios) {
         ret[sphere][equivalent][scenario.id] = roundTo(
-          equivalentDamages[equivalent][sphere] / scenario.damage.totalDamage[sphere],
+          scenario.damage.totalDamage[sphere] / equivalentDamages[equivalent][sphere],
           1
         );
       }
