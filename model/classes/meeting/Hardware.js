@@ -27,6 +27,7 @@ class Hardware extends Component {
    * @param {Array} componentsPayload - Optional components constructor parameters indexed by component name.
    */
   constructor ({ name, qty = 1, size = 1, shareForVisio = 1, componentsPayload = {} }) {
+    // TODO turbo-cleanup, c'est sale.
     // Get the corresponding JSON object
     const json = hardwareDatabase[name];
 
