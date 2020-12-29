@@ -34,7 +34,7 @@ Il est possible d'éditer directement les fichiers sur gitlab ou github, de faç
 
 ### Modification de l'explication pour chaque sphères d'impact
 
-Modifier le texte du fichier JSON `front/src/options/detailled_results_text.js`.
+Modifier le texte du fichier JSON `front/src/options/detailed_results_text.js`.
 
 _Vous pouvez aussi changer directement l'intitulé des boutons et labels. Attention, une modification du code peut entraîner le disfonctionnement de l'application._
 
