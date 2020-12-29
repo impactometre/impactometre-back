@@ -125,7 +125,7 @@ class Hardware extends Component {
    * Get the size dependence property of the hardware.
    * E.g. tv screen damage computing depends on the
    * screen size.
-   * @returns {Boolean} The size dependance boolean.
+   * @returns {Boolean} The size dependence boolean.
    */
   get isSizeDependent () {
     return this._isSizeDependent;
@@ -276,6 +276,7 @@ class Hardware extends Component {
    * If equals to 'UPPER', we will use the upper values
    * of the damages if available, and the contrary if
    * bound equals to 'LOWER'.
+   * @param {number} meetingDuration - the duration of the meeting
    */
   async computeDamage ({ meetingDuration, bound = null }) {
     let damage = new Damage();
@@ -314,9 +315,9 @@ class Hardware extends Component {
 
   /**
    * Compute a damage of a given type for a given duration.
-   * @param {String} - The damage type.
-   * @param {Number} - The meeting duration (in minutes).
-   * @param {String} - The optional bound.
+   * @param {String} damageType - The damage type.
+   * @param {Number} meetingDuration - The meeting duration (in minutes).
+   * @param {String} bound - The optional bound.
    * @returns {Damage} The hardware operating damage.
    */
   async computeTypedDamage (damageType, meetingDuration, bound = null) {
@@ -476,7 +477,7 @@ class Hardware extends Component {
   /**
    * Compute how long the hardware is used for visio
    * or is on standby over its lifetime.
-   * @param {String} - The damage type for which we want to compute the hardware time.
+   * @param {String} damageType - The damage type for which we want to compute the hardware time.
    * @returns {Number} The required time (in hours).
    */
   async computeVisioOrStandbyTimeOverLife (damageType) {
