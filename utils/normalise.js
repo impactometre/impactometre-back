@@ -134,8 +134,8 @@ async function normaliseDamages (meetingScenarios) {
       };
       normalisedDamages[d.damageEndpoint] = normalisedDamages[d.damageEndpoint] || {};
       normalisedDamages[d.damageEndpoint][d.meetingScenario] = x;
-    };
-  };
+    }
+  }
   return Promise.resolve(normalisedDamages);
 }
 

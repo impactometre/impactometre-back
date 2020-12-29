@@ -119,7 +119,7 @@ class CategoryDamage {
     for (const [, c] of this.components) {
       await c.computeDamage(payload);
       this.totalDamage = await this.totalDamage.add(c.damage);
-    };
+    }
 
     return Promise.resolve(this.totalDamage);
   }
