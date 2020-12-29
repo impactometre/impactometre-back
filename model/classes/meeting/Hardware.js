@@ -17,11 +17,11 @@ class Hardware extends Component {
   /**
    * Create a hardware.
    * @param {String} name - The key of an entry from the hardware database.
-   * @param {Quantity} - The instances number of the same hardware in the meeting.
+   * @param {number} qty - The instances number of the same hardware in the meeting.
    * E.g. a Logitech Kit has 4 identical cables.
-   * @param {Number} size - The optional size attached to the hardware.
+   * @param {number} size - The optional size attached to the hardware.
    * E.g. if the hardware is a TV, the size would be the area of the screen in square meter.
-   * @param {Float} shareForVisio - The share of the hardware dedicated to visio.
+   * @param {number} shareForVisio - The share of the hardware dedicated to visio.
    * E.g. if the hardware is a laptop, the user may be multi-tasking during the visio,
    * with other software application running. Value is between O and 1.
    * @param {Array} componentsPayload - Optional components constructor parameters indexed by component name.
@@ -115,14 +115,14 @@ class Hardware extends Component {
    * E.g. if the hardware is a laptop, the user
    * may be multi-tasking during the visio,
    * with other software application running.
-   * @returns {Float} The share for visio (between O and 1).
+   * @returns {number} The share for visio (between O and 1).
    */
   get shareForVisio () {
     return this._shareForVisio;
   }
 
   /**
-   * Get the size dependance property of the hardware.
+   * Get the size dependence property of the hardware.
    * E.g. tv screen damage computing depends on the
    * screen size.
    * @returns {Boolean} The size dependance boolean.
@@ -505,6 +505,7 @@ class Hardware extends Component {
     return Promise.resolve(this.lifetime * daysWorkedByYear * standbyTimePerDay);
   }
 
+  // TODO cleanup / remove duplicate code and make it safer
   update (payload) {
     const name = payload.name;
     // if there is a new hardware name
@@ -558,9 +559,9 @@ class Hardware extends Component {
       this.shareForVisio = shareForVisio;
     }
 
-    // Modifie damage
+    // Modify damage
     // It's necessary to always update damage because it's impossible to know if
-    // bound or meetind duration have changed
+    // bound or meeting duration have changed
     // (there are not stored)
     const damagePayload = payload.damagePayload;
     this.computeDamage({ meetingDuration: damagePayload.meetingDuration, bound: damagePayload.bound });
