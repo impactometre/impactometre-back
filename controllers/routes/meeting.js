@@ -147,8 +147,8 @@ async function computeEquivalentDamages (scenarios) {
   const spheres = ['HUMAN_HEALTH', 'ECOSYSTEM_QUALITY', 'CLIMATE_CHANGE', 'RESOURCES'];
   for (const sphere of spheres) {
     for (const equivalent in equivalentDamages) {
+      ret[sphere][equivalent] = {};
       for (const scenario of scenarios) {
-        ret[sphere][equivalent] = !ret[sphere].hasOwnProperty(equivalent) ? {} : ret[sphere][equivalent];
         ret[sphere][equivalent][scenario.id] = roundTo(
           equivalentDamages[equivalent][sphere] / scenario.damage.totalDamage[sphere],
           1
