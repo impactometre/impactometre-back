@@ -56,22 +56,13 @@ $ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 $ sudo apt-get install -y nodejs
 ```
 Avec Windows : [télécharger le .msi](https://nodejs.org/dist/v12.14.0/node-v12.14.0-x86.msi)
-### Installer Vue CLI
-```bash
-npm install -g @vue/cli
-```
-### Pour lancer le projet
+
+### Pour lancer le serveur
 ```bash
 # Installer les dépendances
 $ npm install
 # Lancer le projet
-$ npm run devstart
-```
-
-### Vérifier la syntaxe
-Pour vérifier le code :
-```bash
-$ npm run lint
+$ npm run serve
 ```
 
 ## Communication entre le front-end et le back-end
