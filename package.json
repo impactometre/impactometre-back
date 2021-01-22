@@ -1,6 +1,24 @@
 {
   "name": "impactometre-back",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "description": "Backend for projet impactometre.fr, meetings environmental impact comparator.",
+  "contributors": [{
+      "name": "Aurélien Beranger ",
+      "url": "https://gitlab.utc.fr/aberange"
+    },
+    {
+      "name": "Clément Brizard",
+      "email": "clementbrizard53@gmail.com"
+    },
+    {
+      "name": "Matt Glorion ",
+      "url": "https://github.com/mglorion"
+    },
+    {
+      "name": "Valentin Le Gauche",
+      "url": "https://gitlab.utc.fr/vlegauch"
+    }
+  ],
   "private": true,
   "browserslist": ["last 4 versions"],
   "scripts": {
