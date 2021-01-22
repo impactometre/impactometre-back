@@ -28,11 +28,7 @@ $ sudo apt-get install -y nodejs
 ```
 Avec Windows : [télécharger le .msi](https://nodejs.org/dist/v12.14.0/node-v12.14.0-x86.msi)
 
-### Installer Vue CLI
-```bash
-npm install -g @vue/cli
-```
-### Pour lancer le projet
+### Pour lancer le serveur
 ```bash
 # Installer les dépendances
 $ npm install
