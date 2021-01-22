@@ -1,6 +1,6 @@
 # Impactometre
 
-**Demo** : https://impactometre2.herokuapp.com
+**Application** : https://impactometre.fr
 
 _This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,39 +13,14 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details._
 
 ## Description
+_Backend for impactometre.fr project, an meetings environmental impact comparator._
 
-Cette application permet de comparer l'impact environnemental de trois différents scénarios de réunions, pour différentes sphères de dommage : impact sur la santé humaine, sur la qualité des écosystèmes, sur le changement climatique et sur les ressources.
+_This API based on node.js returns the environmental impact corresponding to different meeting scenarios, according to different spheres of damage: impact on human health, on the quality of ecosystems, on climate change and finally on resources._
 
-Les résultats sont présentés sous forme de pourcentage, par rapport à celui ayant le plus d'impact.
+Backend du projet `impactometre.fr`, comparateur d'impact environnemental des réunions.
 
-## Captures d'écran
+Cette API basée sur `node.js` renvoie l'impact environnemental correspondant à différents scénarios de réunions, en fonction de différentes sphères de dommage : impact sur la santé humaine, sur la qualité des écosystèmes, sur le changement climatique et sur les ressources.
 
-![](./screenshots/impactometre_screenshot_1.png)
-
-![](./screenshots/impactometre_screenshot_2.png)
-
-## Technologies
-
-Le back-end utilise `Node.js` tandis que le front-end utilise `VueJS`.
-
-## Modification du texte sur l'interface gitlab/github
-
-Il est possible d'éditer directement les fichiers sur gitlab ou github, de façon à mettre à jour simplement les différents textes contenus dans l'application.
-
-### Modification de l'explication pour chaque sphères d'impact
-
-Modifier le texte du fichier JSON `front/src/options/detailed_results_text.js`.
-
-_Vous pouvez aussi changer directement l'intitulé des boutons et labels. Attention, une modification du code peut entraîner le disfonctionnement de l'application._
-
-### Modification du texte de la section "A propos"
-Se rendre sur le fichier `impactometre/front/src/components/SinglePage.vue` et modifier uniquement le texte entre les balises `<p>`.
-
-### Modification des boutons et legendes des formulaires
-Se rendre sur le fichier `impactometre/front/src/components/Scenario.vue` et modifier le texte entre les balises `<p>`.
-
-### Modification du titre et du sous-titre de l'application
-Se rendre sur le fichier `impactometre/front/src/components/Header.vue `et modifier le texte entre les balises `<h1>` pour le titre et entre les balises `<b>` pour le sous-titre.
 
 ## Pour développer
 
@@ -56,6 +31,7 @@ $ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 $ sudo apt-get install -y nodejs
 ```
 Avec Windows : [télécharger le .msi](https://nodejs.org/dist/v12.14.0/node-v12.14.0-x86.msi)
+
 ### Installer Vue CLI
 ```bash
 npm install -g @vue/cli
@@ -65,18 +41,12 @@ npm install -g @vue/cli
 # Installer les dépendances
 $ npm install
 # Lancer le projet
-$ npm run devstart
-```
-
-### Vérifier la syntaxe
-Pour vérifier le code :
-```bash
-$ npm run lint
+$ npm run start
 ```
 
 ## Communication entre le front-end et le back-end
 
-Le client effectue une requête POST sur la route `api/meeting` afin d'obtenir les impacts comparatifs et équivalents.
+Le client effectue une requête POST sur la route `api/meeting` avec les différents paramètres pour chacun des scénarios afin d'obtenir les impacts comparatifs et les équivalents d'impacts en retour.
 
 ### Exemple de payload JSON pour la requête POST
 
