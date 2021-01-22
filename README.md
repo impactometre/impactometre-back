@@ -1,4 +1,5 @@
-# Impactometre
+# impactometre-back
+Backend du projet `impactometre.fr`, comparateur d'impact environnemental des réunions.
 
 **Application** : https://impactometre.fr
 
@@ -13,14 +14,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details._
 
 ## Description
-_Backend for impactometre.fr project, an meetings environmental impact comparator._
-
-_This API based on node.js returns the environmental impact corresponding to different meeting scenarios, according to different spheres of damage: impact on human health, on the quality of ecosystems, on climate change and finally on resources._
-
-Backend du projet `impactometre.fr`, comparateur d'impact environnemental des réunions.
+_This node.js API returns the environmental impact corresponding to different meeting scenarios, according to different spheres of damage: impact on human health, on the quality of ecosystems, on climate change and finally on resources._
 
 Cette API basée sur `node.js` renvoie l'impact environnemental correspondant à différents scénarios de réunions, en fonction de différentes sphères de dommage : impact sur la santé humaine, sur la qualité des écosystèmes, sur le changement climatique et sur les ressources.
-
 
 ## Pour développer
 
