@@ -22,15 +22,17 @@
   "private": true,
   "browserslist": ["last 4 versions"],
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "devstart": "nodemon --exec 'node ./bin/www'"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "express": "~4.16.1",
     "jsonschema": "^1.2.6",
     "morgan": "~1.9.1",
-    "uniqid": "^5.2.0",
-    "round-to": "^4.1.0"
+    "nodemon": "^2.0.7",
+    "round-to": "^4.1.0",
+    "uniqid": "^5.2.0"
   },
   "devDependencies": {
     "acorn": "^6.4.1",
