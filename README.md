@@ -77,7 +77,8 @@ Pour deux scénarios.
          }
       ],
       "software":{
-         "name":"HANGOUTS"
+         "name":"HANGOUTS",
+         "numberOfInstances": 7
       },
       "journey":[
          {
@@ -118,7 +119,8 @@ Pour deux scénarios.
          }
       ],
       "software":{
-         "name":"JITSI"
+         "name":"JITSI",
+         "numberOfInstances": 11
       },
       "journey":[
          {

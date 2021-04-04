@@ -95,6 +95,10 @@ function payloadStructureIsCorrect (payload) {
           properties: {
             name: {
               type: 'string'
+            },
+            numberOfInstances: {
+              type: 'integer',
+              required: true
             }
           }
         },
@@ -128,7 +132,7 @@ async function computeScenarios (scenarios) {
     const s = new MeetingScenario(scenario);
     const computingProperties = {
       hardware: { meetingDuration: scenario.meetingDuration, bounds: 'upper' },
-      software: { instancesNumber: scenario.numberOfParticipants, bandwithBound: 'upper', networkBound: 'upper', meetingDuration: scenario.meetingDuration },
+      software: { instancesNumber: scenario.software.numberOfInstances, bandwithBound: 'upper', networkBound: 'upper', meetingDuration: scenario.meetingDuration },
       journey: {}
     };
     await s.computeDamage(computingProperties);
