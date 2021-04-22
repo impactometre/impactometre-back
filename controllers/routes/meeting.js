@@ -47,6 +47,19 @@ app.post('/meeting', async (req, res) => {
   }
 });
 
+/** Route to get absolute values of scenarios damages */
+app.get('/meeting/absolute-values', async (req, res) => {
+  const scenarios = req.body;
+
+  if (!payloadStructureIsCorrect(scenarios)) {
+    const errorMessage = { error: 400, message: 'Bad request. Your request contains bad syntax and cannot be processed.' };
+    return res.status(400).json(errorMessage);
+  } else {
+    const computedScenarios = await computeScenarios(scenarios);
+    return res.status(200).json({ computedScenarios });
+  }
+})
+
 function payloadStructureIsCorrect (payload) {
   const schema = {
     id: '/PayloadValidationSchema',
