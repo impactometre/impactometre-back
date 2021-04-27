@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const validate = require('jsonschema').validate;
 
+const { formatExportService } = require('../../services/meeting');
 const roundTo = require('round-to');
 
 const equivalentDamages = {
@@ -14,6 +15,11 @@ const equivalentDamages = {
     RESOURCES: 5.0408703
   }
 };
+
+const ACCEPTED_FORMATS = [
+  'csv',
+  'json',
+];
 
 // const hardwareDb = require('../../database/meeting/hardware');
 // const softwareDb = require('../../database/meeting/software');
@@ -46,6 +52,41 @@ app.post('/meeting', async (req, res) => {
     return res.json(responseBody);
   }
 });
+
+/** Route to get absolute values of scenarios damages */
+app.get('/meeting/absolute-values', async (req, res) => {
+  const {
+    body: scenarios,
+    query: {
+      format = 'csv',
+    },
+  } = req;
+
+  if (!ACCEPTED_FORMATS.includes(format)) {
+    const errorMessage = { error: 400, message: 'Bad request. The requested export format is not acepted.' };
+    return res.status(400).json(errorMessage);
+  }
+
+  const areScenariosValid = payloadStructureIsCorrect(scenarios);
+
+  if (!areScenariosValid) {
+    const errorMessage = { error: 400, message: 'Bad request. Your request contains bad syntax and cannot be processed.' };
+    return res.status(400).json(errorMessage);
+  }
+  
+  const computedScenarios = await computeScenarios(scenarios);
+
+  if (format === 'json') {
+    return res.status(200).json({ computedScenarios });
+  }
+
+  if (format === 'csv') {
+    const csv = formatExportService(computedScenarios);
+    res.contentType('text/csv');
+    
+    return res.status(200).send(csv);
+  }
+})
 
 function payloadStructureIsCorrect (payload) {
   const schema = {
