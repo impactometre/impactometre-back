@@ -16,7 +16,7 @@ const equivalentDamages = {
   }
 };
 
-const ACCEPTED_FORMAT = [
+const ACCEPTED_FORMATS = [
   'csv',
   'json',
 ];
@@ -62,7 +62,7 @@ app.get('/meeting/absolute-values', async (req, res) => {
     },
   } = req;
 
-  if (!ACCEPTED_FORMAT.includes(format)) {
+  if (!ACCEPTED_FORMATS.includes(format)) {
     const errorMessage = { error: 400, message: 'Bad request. The requested export format is not acepted.' };
     return res.status(400).json(errorMessage);
   }
