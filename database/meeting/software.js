@@ -91,20 +91,20 @@ const software = {
     french: 'Zoom',
     category: meetingComponents.SOFTWARE,
     // Source Zoom Mac archive (in Mo)
-    fileSize: 25.5, 
+    fileSize: 25.5,
     // Source: https://support.zoom.us/hc/en-us/articles/201362023-System-requirements-for-Windows-macOS-and-Linux (in kbits/s)
     bandwith: {
       inbound: {
         // See 1:1 meeting data
         2: {
           lower: 600,
-          upper: 3000,
+          upper: 3000
         },
         // See group video calling data
         3: {
           lower: 600,
-          higher: 3000
-        },
+          upper: 3000
+        }
       }
     }
   }
