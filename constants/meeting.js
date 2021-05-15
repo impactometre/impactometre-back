@@ -113,6 +113,12 @@ const modificationTypes = {
   REMOVE: 'REMOVE'
 };
 
+/**
+ * Number of virtual meeting done with one software download.
+ * The software dowload damage is spread on those meetings.
+ */
+const softwareSpreading = 100;
+
 exports.hourToMinutes = hourToMinutes;
 exports.dayToHours = dayToHours;
 exports.minuteToSeconds = minuteToSeconds;
@@ -139,3 +145,5 @@ exports.possibleJourneys = possibleJourneys;
 exports.damageEndpoints = damageEndpoints;
 
 exports.modificationTypes = modificationTypes;
+
+exports.softwareSpreading = softwareSpreading;
