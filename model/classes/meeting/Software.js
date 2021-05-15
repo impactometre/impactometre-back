@@ -8,7 +8,8 @@ const {
   moToOctets,
   kbitToBits,
   minuteToSeconds,
-  bounds
+  bounds,
+  softwareSpreading
 } = require('../../../constants/meeting');
 const networkDatabase = require('../../../database/meeting/network');
 const softwareDatabase = require('../../../database/meeting/software');
@@ -32,11 +33,20 @@ class Software extends Component {
 
     super({ french: json.french, category: json.category });
     this.name = json.name;
+    this._isDownloaded = json.isDownloaded;
     this._fileSize = json.fileSize;
     this._bandwith = json.bandwith;
   }
 
   // Getter
+
+  /**
+   * Getter for software isDoawloaded attribute.
+   * True if the software must be downloaded (i.e. not reachable from browser).
+   */
+  get isDownloaded () {
+    return this._isDownloaded;
+  }
 
   /**
    * Getter for software file size.
@@ -67,6 +77,13 @@ class Software extends Component {
   }
 
   // Setters
+
+  /**
+   * Setter for software isDoawloaded attribut.
+   */
+  set isDownloaded (isDownloaded) {
+    this._isDownloaded = isDownloaded;
+  }
 
   /**
    * Setter for software file size.
@@ -222,9 +239,17 @@ class Software extends Component {
     // We get the file size in bits
     const fileSize = this.fileSizeMoToBits();
 
+    /* If the software must be downloaded, get the number of
+       virtual meetings done before a new download.
+       Else, if the software is reachable from browser,
+       the download damage is spread on one use.
+    */
+    const damageSpreading = this.isDownloaded ? softwareSpreading : 1;
+    console.log("softwareSpreading", damageSpreading)
+
     // We compute the total damage for each damage shere (in damageUnit)
     Object.keys(embodiedDamage).forEach((categoryDamage) => {
-      embodiedDamage[categoryDamage] = networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber;
+      embodiedDamage[categoryDamage] = (networkEnergeticIntensity[categoryDamage] * fileSize * instancesNumber) / damageSpreading;
     });
 
     // Return the computed embodied damage
