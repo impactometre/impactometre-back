@@ -9,6 +9,8 @@ const software = {
     name: 'RENAVISIO',
     french: 'Renavisio',
     category: meetingComponents.SOFTWARE,
+    // True if software must be download (i.e. not reachable from browser)
+    isDownloaded: true,
     // in Mo
     fileSize: 18.8,
     // in Kbits/s
@@ -20,6 +22,7 @@ const software = {
     name: 'SKYPE',
     french: 'Skype',
     category: meetingComponents.SOFTWARE,
+    isDownloaded: true,
     fileSize: 65.8,
     // Indexed by number of participants
     // Source : https://support.skype.com/fr/faq/FA1417/quelle-est-la-quantite-de-bande-passante-necessaire-a-skype
@@ -49,6 +52,7 @@ const software = {
     name: 'JITSI',
     french: 'Jitsi',
     category: meetingComponents.SOFTWARE,
+    isDownloaded: false,
     /* Obtained summing size of all requests results when
     we load a launched Jitsi visioconference. Mean realized
     on visioconferences with 2, 3, 4 and 5 people.
@@ -68,6 +72,7 @@ const software = {
     name: 'HANGOUTS',
     french: 'Google Hangouts',
     category: meetingComponents.SOFTWARE,
+    isDownloaded: false,
     // Source : https://support.google.com/hangouts/answer/2944865?hl=fr
     bandwith: {
       inbound: {
@@ -90,6 +95,7 @@ const software = {
     name: 'ZOOM',
     french: 'Zoom',
     category: meetingComponents.SOFTWARE,
+    isDownloaded: true,
     // Source Zoom Mac archive (in Mo)
     fileSize: 25.5,
     // Source: https://support.zoom.us/hc/en-us/articles/201362023-System-requirements-for-Windows-macOS-and-Linux (in kbits/s)
